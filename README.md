@@ -6,6 +6,16 @@ The concept is that every reactive data should be contained in one store
 which is accessible through methods `connect` (for getting data) and `dispatch`
 (for dispatching an syncronous or asyncronous action).
 
+# Usage
+
+To include **quantum** in your project import it's features through CDN: 
+```javascript
+import { createStore } from 'https://tatomyr.github.io/quantum/quantum.js'
+import { html } from 'https://tatomyr.github.io/quantum/html.js'
+```
+
+or download these files into your project's folder and import from inthere.
+
 In your application you can declare components as bare functions. E. g.
 
 ```javascript
