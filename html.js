@@ -2,10 +2,11 @@
 const pipe = (...funcs) => x => funcs.reduce(($, f) => f($), x)
 const filterFalsy = x => (x === undefined || x === null ? '' : x)
 const joinIfArray = x => (Array.isArray(x) ? x.join('') : x)
-const process = x => pipe(
-  filterFalsy,
-  joinIfArray
-)(x)
+const process = x =>
+  pipe(
+    filterFalsy,
+    joinIfArray
+  )(x)
 
 /**
  * [Experimental]
@@ -19,24 +20,32 @@ const process = x => pipe(
 
 export const html = (...Components) => ([first, ...strings], ...args) => {
   console.log('[HTML]', Components, [first, ...strings], args)
-  const str = strings.reduce(($, item, i) => `${$}${process(args[i])}${item}`, first)
-  console.log('[HTML]', str)
-  const response = str.replace(/<([A-Z]\w+)\s(.*?)\/>/gm, (_, componentName, attrs) => {
-    const propsStr = `{${attrs
-      .replace(/=/gm, ':')
-      .replace(/(\w+?)\s*:/gm, (_, param) => `,"${param}":`)
-      .replace(/^\s*?,/, '')}}`
-    const props = JSON.parse(propsStr)
-    const componentFunction = Components.find(({ name }) => name === componentName)
-    console.log(
-      '[HTML]',
-      `<${componentName}`,
-      attrs,
-      '/> -->',
-      `(${componentFunction})(${propsStr})`
-    )
-    return componentFunction(props)
-  })
+  const computedHtml = strings.reduce(
+    ($, item, i) => `${$}${process(args[i])}${item}`,
+    first
+  )
+  console.log('[HTML]', computedHtml)
+  const response = computedHtml.replace(
+    /<([A-Z]\w+)\s(.*?)\/>/gm,
+    (_, componentName, attrs) => {
+      const propsStr = `{${attrs
+        .replace(/=/gm, ':')
+        .replace(/(\w+?)\s*:/gm, (_, param) => `,"${param}":`)
+        .replace(/^\s*?,/, '')}}`
+      const props = JSON.parse(propsStr)
+      const componentFunction = Components.find(
+        ({ name }) => name === componentName
+      )
+      console.log(
+        '[HTML]',
+        `<${componentName}`,
+        attrs,
+        '/> -->',
+        `(${componentFunction})(${propsStr})`
+      )
+      return componentFunction(props)
+    }
+  )
   console.log('[HTML]', response)
   return response
 }
