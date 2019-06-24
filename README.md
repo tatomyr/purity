@@ -53,6 +53,7 @@ const OtherComponent = () => html(Component)`
 
 > Please take into account that not all possible variants could be parsed at the moment.
 > E. g. so far we only support autoclosing components.
+> Also, having `=` sign inside an attribute's value will probably break parsing. 
 
 Also you can use `connect` method to pass all the data from the shared application state like so:
 
@@ -67,8 +68,9 @@ Bare in mind, each changable component or a part of a component
 should have an unique id attribute defined.
 This allows the DOM updater to decouple changed elements
 and replase only them.
-Ideally, you'd always wrap your component in some wrapper tag with an `id` and not change its tags on the spot.
-Use a `static wrapper` around your component, you may say.
+Ideally, you'd always wrap your component in some wrapper tag with an `id` 
+and not change its attributes on the spot.
+Use a **static wrapper** around your component, you may say.
 Your top-level component must always have an id defined on its wrapper.
 Otherwise rerender may run inconsistently.
 
