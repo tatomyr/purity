@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`html should match a snapshot when Parent contains a Child component 1`] = `
+"
+      
+  <div style=\\"background-color: red; padding: 10px;\\">
+                <h2 style=\\"background-color: yellow; text-transform: capitalize;\\">    Hello! | $3.3000000000000003  </h2>        
+  </div>
+
+    "
+`;
+
+exports[`html should match a snapshot when Parent contains a tag and a component 1`] = `
+"
+      
+  <div style=\\"background-color: red; padding: 10px;\\">
+                <h2 style=\\"background-color: yellow; text-transform: capitalize;\\">    Hello! | $3.3000000000000003  </h2>          <h1 style='background-color: green;'>Inner text</h1>        
+  </div>
+
+    "
+`;
+
+exports[`html should match a snapshot when Parent containts a regular html tag 1`] = `
+"
+      
+  <div style=\\"background-color: red; padding: 10px;\\">
+    <h1 style='background-color: green;'>Inner text</h1>
+  </div>
+
+    "
+`;
+
+exports[`html should match a snapshot when Parent is empty 1`] = `
+"
+  <div style=\\"background-color: red; padding: 10px;\\">
+    
+  </div>
+"
+`;

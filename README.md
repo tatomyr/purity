@@ -8,7 +8,8 @@ which is accessible through methods `connect` (for getting data) and `dispatch`
 
 # Usage
 
-To include **quantum** in your project import it's features through CDN: 
+To include **quantum** in your project import it's features through CDN:
+
 ```javascript
 import { createStore } from 'https://tatomyr.github.io/quantum/quantum.js'
 import { html } from 'https://tatomyr.github.io/quantum/html.js'
@@ -140,3 +141,13 @@ This library is heavily inspired by project [innerself](https://github.com/stasm
 # Examples of usage
 
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
+
+# Development
+
+To serve the library locally on port 8081 run `bash bin/serve.sh`.
+
+# Testing
+
+To run tests use `bash bin/test.sh` command from the project root.
+Please notice the auxiliary `.__html__.js` file created.
+Do not commit it.
