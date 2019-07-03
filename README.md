@@ -1,23 +1,23 @@
 # Reactive Store (Quantum)
 
-Implementation of reactive global store for pure JavaScript applications.
+Implementation of a reactive global store for pure JavaScript applications.
 
 The concept is that every reactive data should be contained in one store
 which is accessible through methods `connect` (for getting data) and `dispatch`
-(for dispatching an syncronous or asyncronous action).
+(for dispatching a synchronous or asynchronous action).
 
 # Usage
 
-To include **quantum** in your project import it's features through CDN:
+To include **quantum** in your project import its features through CDN:
 
 ```javascript
 import { createStore } from 'https://tatomyr.github.io/quantum/quantum.js'
 import { html } from 'https://tatomyr.github.io/quantum/html.js'
 ```
 
-or download these files into your project's folder and import from inthere.
+or download these files into your project's folder and import from in there.
 
-In your application you can declare components as bare functions. E. g.
+In your application, you can declare components as bare functions. E. g.
 
 ```javascript
 const Component = props => `<div>${props.text}</div>`
@@ -54,9 +54,8 @@ const OtherComponent = () => html(Component)`
 
 > Please take into account that not all possible variants could be parsed at the moment.
 > E. g. so far we only support autoclosing components.
-> Also, having `=` sign inside an attribute's value will probably break parsing. 
 
-Also you can use `connect` method to pass all the data from the shared application state like so:
+Also, you can use the `connect` method to pass all the data from the shared application state like so:
 
 ```javascript
 import { connect } from '/store-provider.js'
@@ -65,18 +64,18 @@ import { Component } from './Component.js'
 export default connect(Component)
 ```
 
-Bare in mind, each changable component or a part of a component
-should have an unique id attribute defined.
+Bear in mind, each changeable component or a part of a component
+should have a unique id attribute defined on it.
 This allows the DOM updater to decouple changed elements
-and replase only them.
-Ideally, you'd always wrap your component in some wrapper tag with an `id` 
+and replace only them.
+Ideally, you'd always wrap your component in some wrapper tag with an `id`
 and not change its attributes on the spot.
 Use a **static wrapper** around your component, you may say.
 Your top-level component must always have an id defined on its wrapper.
 Otherwise rerender may run inconsistently.
 
-To set up store for your application you have to implement a provider via
-`createStore` method.
+To set up the store for your application,
+you have to implement a provider via `createStore` method.
 
 ```javascript
 import { createStore } from '/quantum.js'
@@ -87,16 +86,16 @@ export const { connect, dispatch, mount } = createStore(
   stateHandler,
   asyncWatcher
 )
-// The last step you have to mount your dispatch function somwhere
+// The last step you have to mount your dispatch function somewhere
 // … to be able to access it in components
-// One of the options apparently is window object
+// One of the options apparently is the 'window' object
 window.dispatch = dispatch
 ```
 
 You have to declare state handler, where should be at least one case of type 'INIT'
 to return a default state.
-Basically, each case should return a `state` changes.
-If there's no changes, it should return an empty object.
+Basically, each case should return `state` changes.
+If there are no changes, it should return an empty object.
 
 ```javascript
 const stateHandler = (state = defaultState, action = {}) => {
@@ -132,8 +131,8 @@ function asyncWatcher(action, state, dispatch) {
 
 # Tips
 
-- Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed.
-- Wrap every component that you want to be rerendered independently with a static wrapper (this one has to have an unique id and its attributes do not rely on state changes).
+- Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
+- Wrap every component that you want to be rerendered independently with a static wrapper (this one has to have a unique id and its attributes do not rely on state changes).
 - Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
 
 # Credits
@@ -151,5 +150,14 @@ To serve the library locally on port 8081 run `bash bin/serve.sh`.
 # Testing
 
 To run tests use `bash bin/test.sh` command from the project root.
-Please notice the auxiliary `.__html__.js` file created.
-Do not commit it.
+You can use on Mac this command as well:
+
+```
+bash bin/test.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/Library/Sounds/Sosumi.aiff
+```
+
+To update snapshots use `bash bin/test-update.sh` instead.
+Please notice the auxiliary `__html__.js` and `__quantum__.js` files created.
+Do not commit them.
+
+To show [coverage report](https://tatomyr.github.io/quantum/coverage/lcov-report/index.html) locally, run `open ./coverage/lcov-report/index.html`.

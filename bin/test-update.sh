@@ -2,5 +2,5 @@
 
 bash ./transform-to-common-js.sh
 
-# Running tests
-npx jest
+# Updating tests
+npx jest -u

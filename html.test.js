@@ -1,13 +1,13 @@
-const { html } = require('./.__html__.js')
+const { html } = require('./__html__.js')
 
-const Parent = ({ children }) => `
+const Parent = ({ children }) => html()`
   <div style="background-color: red; padding: 10px;">
-    ${children || ''}
+    ${children}
   </div>
 `
 
-const Child = ({ text, color, price }) => `
-  <h2 style="background-color: ${color}; text-transform: capitalize;">
+const Child = ({ text, color, price }) => html()`
+  <h2 style="background-color: ${color};">
     ${text} | $${price}
   </h2>
 `
@@ -49,6 +49,18 @@ describe('html', () => {
           <h1 style='background-color: green;'>Inner text</h1>
         "
       />
+    `
+    expect(Component()).toMatchSnapshot()
+  })
+  it('should match a snapshot wher rendering arrays', () => {
+    const items = ['Az', 'Bukh', 'Vedh']
+    const Item = ({ name, id }) => html()`
+      <li id="${id}">${name}</li>
+    `
+    const Component = () => html()`
+      <ul>
+        ${items.map((name, i) => html(Item)`<Item name="${name}" id=${i} />`)}
+      </ul>
     `
     expect(Component()).toMatchSnapshot()
   })

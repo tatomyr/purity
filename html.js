@@ -38,7 +38,7 @@ export const html = (...Components) => ([first, ...strings], ...args) => {
     ($, item, i) => `${$}${process(args[i])}${item}`,
     first
   )
-  const repl = str =>
+  const replaceComponentsWithFunctions = str =>
     str.replace(COMPONENT_RE, (_, componentName, attrs, ...rest) => {
       trace()(componentName, '-->', attrs, rest)
 
@@ -47,7 +47,7 @@ export const html = (...Components) => ([first, ...strings], ...args) => {
         JSON.parse(
           `{${item.replace(ATTR_RE, (_, param, arg) => {
             trace()(_, ':=', param, arg)
-            const replaced = repl(arg)
+            const replaced = replaceComponentsWithFunctions(arg)
 
             return `"${param}":${replaced
               .replace(/(?:\r\n|\r|\n)/g, '')
@@ -68,7 +68,7 @@ export const html = (...Components) => ([first, ...strings], ...args) => {
       return componentFunction(props)
     })
 
-  const response = repl(computedHtml)
+  const response = replaceComponentsWithFunctions(computedHtml)
   trace(false)(response)
   return response
 }
