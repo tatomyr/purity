@@ -70,7 +70,7 @@ export const html = (...Components) => ([first, ...strings], ...args) => {
 
   const response = replaceComponentsWithFunctions(computedHtml)
   trace(false)(response)
-  return response
+  return response.trim() // TODO: check trimming carefully
 }
 
 // TODO: Implement parsing nested elements (aka children)

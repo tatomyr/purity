@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1562186082109" clover="3.2.0">
-  <project timestamp="1562186082109" name="All files">
-    <metrics statements="68" coveredstatements="38" conditionals="22" coveredconditionals="12" methods="26" coveredmethods="19" elements="116" coveredelements="69" complexity="0" loc="68" ncloc="68" packages="1" files="2" classes="2"/>
+<coverage generated="1562274159947" clover="3.2.0">
+  <project timestamp="1562274159947" name="All files">
+    <metrics statements="69" coveredstatements="69" conditionals="22" coveredconditionals="21" methods="27" coveredmethods="27" elements="118" coveredelements="117" complexity="0" loc="69" ncloc="69" packages="1" files="2" classes="2"/>
     <file name="__html__.js" path="/Users/tatomyr/projects/quantum/__html__.js">
-      <metrics statements="32" coveredstatements="32" conditionals="11" coveredconditionals="11" methods="18" coveredmethods="18"/>
+      <metrics statements="32" coveredstatements="32" conditionals="11" coveredconditionals="10" methods="18" coveredmethods="18"/>
       <line num="2" count="50" type="stmt"/>
       <line num="3" count="25" type="cond" truecount="4" falsecount="0"/>
       <line num="4" count="25" type="cond" truecount="2" falsecount="0"/>
@@ -13,7 +13,7 @@
       <line num="12" count="1" type="stmt"/>
       <line num="20" count="1" type="stmt"/>
       <line num="22" count="58" type="cond" truecount="1" falsecount="0"/>
-      <line num="23" count="58" type="cond" truecount="2" falsecount="0"/>
+      <line num="23" count="58" type="cond" truecount="1" falsecount="1"/>
       <line num="35" count="17" type="stmt"/>
       <line num="36" count="17" type="stmt"/>
       <line num="37" count="17" type="stmt"/>
@@ -38,42 +38,43 @@
       <line num="77" count="1" type="stmt"/>
     </file>
     <file name="__quantum__.js" path="/Users/tatomyr/projects/quantum/__quantum__.js">
-      <metrics statements="36" coveredstatements="6" conditionals="11" coveredconditionals="1" methods="8" coveredmethods="1"/>
+      <metrics statements="37" coveredstatements="37" conditionals="11" coveredconditionals="11" methods="9" coveredmethods="9"/>
       <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
-      <line num="8" count="1" type="stmt"/>
-      <line num="14" count="1" type="stmt"/>
-      <line num="15" count="0" type="stmt"/>
-      <line num="16" count="0" type="stmt"/>
-      <line num="17" count="0" type="stmt"/>
-      <line num="18" count="0" type="stmt"/>
-      <line num="19" count="0" type="stmt"/>
-      <line num="20" count="0" type="stmt"/>
-      <line num="22" count="0" type="stmt"/>
-      <line num="28" count="0" type="stmt"/>
-      <line num="32" count="0" type="stmt"/>
-      <line num="33" count="0" type="stmt"/>
-      <line num="35" count="0" type="stmt"/>
-      <line num="36" count="0" type="stmt"/>
-      <line num="42" count="0" type="stmt"/>
-      <line num="43" count="0" type="stmt"/>
-      <line num="44" count="0" type="stmt"/>
-      <line num="45" count="0" type="cond" truecount="0" falsecount="4"/>
-      <line num="46" count="0" type="stmt"/>
-      <line num="47" count="0" type="stmt"/>
-      <line num="48" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="49" count="0" type="cond" truecount="0" falsecount="4"/>
-      <line num="50" count="0" type="stmt"/>
-      <line num="51" count="0" type="stmt"/>
-      <line num="53" count="0" type="stmt"/>
-      <line num="54" count="0" type="stmt"/>
-      <line num="57" count="0" type="stmt"/>
-      <line num="61" count="0" type="stmt"/>
-      <line num="65" count="0" type="stmt"/>
-      <line num="66" count="0" type="stmt"/>
-      <line num="67" count="0" type="stmt"/>
-      <line num="68" count="0" type="stmt"/>
-      <line num="71" count="1" type="stmt"/>
-      <line num="73" count="1" type="stmt"/>
+      <line num="8" count="8" type="stmt"/>
+      <line num="14" count="8" type="stmt"/>
+      <line num="15" count="12" type="stmt"/>
+      <line num="16" count="12" type="stmt"/>
+      <line num="17" count="12" type="stmt"/>
+      <line num="18" count="29" type="stmt"/>
+      <line num="19" count="29" type="stmt"/>
+      <line num="20" count="17" type="stmt"/>
+      <line num="22" count="29" type="stmt"/>
+      <line num="28" count="12" type="stmt"/>
+      <line num="32" count="7" type="stmt"/>
+      <line num="33" count="7" type="stmt"/>
+      <line num="35" count="7" type="stmt"/>
+      <line num="36" count="7" type="stmt"/>
+      <line num="42" count="5" type="stmt"/>
+      <line num="43" count="5" type="stmt"/>
+      <line num="44" count="12" type="stmt"/>
+      <line num="45" count="12" type="cond" truecount="4" falsecount="0"/>
+      <line num="46" count="6" type="stmt"/>
+      <line num="47" count="6" type="stmt"/>
+      <line num="48" count="6" type="cond" truecount="2" falsecount="0"/>
+      <line num="49" count="5" type="cond" truecount="4" falsecount="0"/>
+      <line num="50" count="4" type="stmt"/>
+      <line num="51" count="4" type="stmt"/>
+      <line num="53" count="1" type="stmt"/>
+      <line num="54" count="1" type="stmt"/>
+      <line num="57" count="1" type="stmt"/>
+      <line num="61" count="5" type="stmt"/>
+      <line num="65" count="5" type="stmt"/>
+      <line num="66" count="5" type="stmt"/>
+      <line num="67" count="5" type="stmt"/>
+      <line num="68" count="5" type="stmt"/>
+      <line num="71" count="8" type="stmt"/>
+      <line num="74" count="11" type="stmt"/>
+      <line num="75" count="2" type="stmt"/>
       <line num="79" count="1" type="stmt"/>
     </file>
   </project>

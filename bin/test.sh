@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bash ./transform-to-common-js.sh
+bash bin/transform-to-common-js.sh
 
 # Running tests
 npx jest
