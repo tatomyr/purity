@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1562274159947" clover="3.2.0">
-  <project timestamp="1562274159947" name="All files">
-    <metrics statements="69" coveredstatements="69" conditionals="22" coveredconditionals="21" methods="27" coveredmethods="27" elements="118" coveredelements="117" complexity="0" loc="69" ncloc="69" packages="1" files="2" classes="2"/>
-    <file name="__html__.js" path="/Users/tatomyr/projects/quantum/__html__.js">
-      <metrics statements="32" coveredstatements="32" conditionals="11" coveredconditionals="10" methods="18" coveredmethods="18"/>
+<coverage generated="1562349286235" clover="3.2.0">
+  <project timestamp="1562349286235" name="All files">
+    <metrics statements="69" coveredstatements="69" conditionals="22" coveredconditionals="22" methods="27" coveredmethods="27" elements="118" coveredelements="118" complexity="0" loc="69" ncloc="69" packages="1" files="2" classes="2"/>
+    <file name="__html__.js" path="/Users/tatomyr/projects/purity/__html__.js">
+      <metrics statements="32" coveredstatements="32" conditionals="11" coveredconditionals="11" methods="18" coveredmethods="18"/>
       <line num="2" count="50" type="stmt"/>
       <line num="3" count="25" type="cond" truecount="4" falsecount="0"/>
       <line num="4" count="25" type="cond" truecount="2" falsecount="0"/>
@@ -13,7 +13,7 @@
       <line num="12" count="1" type="stmt"/>
       <line num="20" count="1" type="stmt"/>
       <line num="22" count="58" type="cond" truecount="1" falsecount="0"/>
-      <line num="23" count="58" type="cond" truecount="1" falsecount="1"/>
+      <line num="23" count="58" type="cond" truecount="2" falsecount="0"/>
       <line num="35" count="17" type="stmt"/>
       <line num="36" count="17" type="stmt"/>
       <line num="37" count="17" type="stmt"/>
@@ -37,7 +37,7 @@
       <line num="73" count="17" type="stmt"/>
       <line num="77" count="1" type="stmt"/>
     </file>
-    <file name="__quantum__.js" path="/Users/tatomyr/projects/quantum/__quantum__.js">
+    <file name="__purity__.js" path="/Users/tatomyr/projects/purity/__purity__.js">
       <metrics statements="37" coveredstatements="37" conditionals="11" coveredconditionals="11" methods="9" coveredmethods="9"/>
       <line num="7" count="1" type="cond" truecount="1" falsecount="0"/>
       <line num="8" count="8" type="stmt"/>

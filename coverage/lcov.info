@@ -1,5 +1,5 @@
 TN:
-SF:/Users/tatomyr/projects/quantum/__html__.js
+SF:/Users/tatomyr/projects/purity/__html__.js
 FN:2,(anonymous_0)
 FN:2,(anonymous_1)
 FN:2,(anonymous_2)
@@ -79,15 +79,15 @@ BRDA:3,1,1,24
 BRDA:4,2,0,1
 BRDA:4,2,1,24
 BRDA:22,3,0,41
-BRDA:23,4,0,0
-BRDA:23,4,1,58
+BRDA:23,4,0,41
+BRDA:23,4,1,17
 BRDA:45,5,0,8
 BRDA:45,5,1,1
 BRF:11
-BRH:10
+BRH:11
 end_of_record
 TN:
-SF:/Users/tatomyr/projects/quantum/__quantum__.js
+SF:/Users/tatomyr/projects/purity/__purity__.js
 FN:7,(anonymous_0)
 FN:7,(anonymous_1)
 FN:14,(anonymous_2)

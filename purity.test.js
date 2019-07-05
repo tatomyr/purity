@@ -1,4 +1,4 @@
-const { createStore } = require('./__quantum__.js')
+const { createStore } = require('./__purity__.js')
 
 const SimpleComponent = () => `<div id="root">SOMETHING</div>`
 const ComplexComponent = ({ something }) =>
@@ -22,7 +22,7 @@ const ConditionalComponent = ({ something }) =>
     </div>
   `.trim()
 
-describe('quantum', () => {
+describe('purity', () => {
   let store
   beforeEach(() => {
     defaultState = {

@@ -27,7 +27,7 @@ const trace = (condition = true) => (...args) =>
  *
  * Higer order tagged template to parse JSX-like syntax
  * @param  {[function]} Components - an array of functions
- *    which describe Quantum components used in the string literal
+ *    which describe Purity components used in the string literal
  * @returns tagged template that accepts a string literal
  * and @returns a string that could be parsed as a valid HTML
  */

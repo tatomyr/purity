@@ -71,7 +71,7 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
   return {
     mount,
     dispatch,
-    connect: component => ownProps => component({ ...state, ...ownProps }),
+    connect: component => ownProps => component(Object.assign(state, ownProps)),
     getState: () => state,
     rerender,
   }
