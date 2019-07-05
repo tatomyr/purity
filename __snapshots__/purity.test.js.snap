@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`purity should deal with a compound component 1`] = `
+"<div id=\\"root\\">
+        
+        <h1 id=\\"title\\" style=\\"color: red;\\">TITLE</h1>
+        <p id=\\"something\\">something</p>
+      
+      </div>"
+`;

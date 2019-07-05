@@ -68,11 +68,11 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     asyncWatcher(action, state, dispatch)
   }
 
-  const connect = component => ownProps => component({ ...state, ...ownProps })
-
   return {
     mount,
-    connect,
     dispatch,
+    connect: component => ownProps => component(Object.assign(state, ownProps)),
+    getState: () => state,
+    rerender,
   }
 }
