@@ -46,11 +46,13 @@ import { html } from '/modules/html.js'
 const OtherComponent = () => html(Component)`
  <div>
    ...
-   <Component text="Hello World!" />
+   <Component text=${'Hello World!'} />
    ...
  </div>
 `
 ```
+
+> Each prop declaration should follow this pattern: `prop=${value}`.
 
 > Please take into account that not all possible variants could be parsed at the moment.
 > E. g. so far we only support autoclosing components.

@@ -2,25 +2,24 @@
 const pipe = (...funcs) => x => funcs.reduce(($, f) => f($), x)
 const filterFalsy = x => (x === undefined || x === null ? '' : x)
 const joinIfArray = x => (Array.isArray(x) ? x.join('') : x)
+const trace = x => {
+  console.log('HTML', x)
+  return x
+}
 const process = x =>
   pipe(
     filterFalsy,
-    joinIfArray
+    joinIfArray,
+    trace
   )(x)
 
-const ATTR_RE = /(\w+)\s*=\s*("[^"]+"|'[^']+'|\S+)/
-const COMPONENT_RE = new RegExp(
-  `<([A-Z]\\w+)((\\s+?${ATTR_RE.source})*)\\s*\\/>`,
-  'gm'
-)
-/*
-  Originally component regex looks like:
-  /<([A-Z]\w+)((\s+?(\w+)\s*=\s*("[^"]+"|'[^']+'|\S+))*)\s*\/>/gm,
-*/
+// Patterns
+const ARG_RE = /__\[(\d+)\]__/
+const ARGS_RE = new RegExp(ARG_RE, 'gm')
+const ATTR_RE = /(\w+)\s*=\s*__\[(\d+)\]__/
 const ATTRS_RE = new RegExp(ATTR_RE, 'gm')
-
-const trace = (condition = true) => (...args) =>
-  condition ? console.log('[HTML]', ...args) : undefined
+const COMPONENT_RE = /<([A-Z]\w*)\s+([^\/>]*)\/>/
+const COMPONENTS_RE = new RegExp(COMPONENT_RE, 'gm')
 
 /**
  * [Experimental]
@@ -32,45 +31,31 @@ const trace = (condition = true) => (...args) =>
  * and @returns a string that could be parsed as a valid HTML
  */
 
+//  TODO: rename to 'htmx' (hyper text markup: extented)
 export const html = (...Components) => ([first, ...strings], ...args) => {
-  trace()(Components, [first, ...strings], args)
-  const computedHtml = strings.reduce(
-    ($, item, i) => `${$}${process(args[i])}${item}`,
+  const precomputedHTML = strings.reduce(
+    ($, item, i) => `${$}__[${i}]__${item}`,
     first
   )
-  const replaceComponentsWithFunctions = str =>
-    str.replace(COMPONENT_RE, (_, componentName, attrs, ...rest) => {
-      trace()(componentName, '-->', attrs, rest)
 
-      const attrsArr = attrs ? attrs.match(ATTRS_RE) : []
-      const attrsArrOfObj = attrsArr.map(item =>
-        JSON.parse(
-          `{${item.replace(ATTR_RE, (_, param, arg) => {
-            trace()(_, ':=', param, arg)
-            const replaced = replaceComponentsWithFunctions(arg)
-
-            return `"${param}":${replaced
-              .replace(/(?:\r\n|\r|\n)/g, '')
-              .replace(/"/g, '\\"')
-              .replace(/^\\"/, '"')
-              .replace(/\\"$/, '"')
-              .replace(/^'([^']+)'$/, (_, val) => `"${val}"`)}`
-          })}}`
-        )
-      )
-
-      const props = attrsArrOfObj.reduce(($, item) => ({ ...$, ...item }), {})
-
-      const componentFunction = Components.find(
-        ({ name }) => name === componentName
-      )
-
-      return componentFunction(props)
+  const computeComponent = (_, componentName, attrs, ...rest) => {
+    const attrsArr = !!attrs ? attrs.match(ATTRS_RE) : []
+    const attrsArrOfObj = attrsArr.map(item => {
+      const [_, param, argIndex] = item.match(ATTR_RE)
+      return {
+        [param]: args[argIndex],
+      }
     })
+    const props = attrsArrOfObj.reduce(($, item) => ({ ...$, ...item }), {})
+    const Component = Components.find(({ name }) => name === componentName)
+    return Component(props)
+  }
 
-  const response = replaceComponentsWithFunctions(computedHtml)
-  trace(false)(response)
-  return response.trim() // TODO: check trimming carefully
+  const response = precomputedHTML
+    .replace(COMPONENTS_RE, computeComponent)
+    .replace(ARGS_RE, (_, index) => process(args[+index]))
+    .trim()
+  return response
 }
 
 // TODO: Implement parsing nested elements (aka children)
