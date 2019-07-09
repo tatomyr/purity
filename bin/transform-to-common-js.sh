@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Transforming html.js to CommonJS module
-file_content=`cat ./html.js`
+# Transforming htmx.js to CommonJS module
+file_content=`cat ./htmx.js`
 file_content="${file_content/export const/const}"
 file_content+="
-;module.exports={html}"
-echo "$file_content" > __html__.js
+;module.exports={htmx}"
+echo "$file_content" > __htmx__.js
 
 # Transforming purity.js to CommonJS module
 file_content=`cat ./purity.js`
