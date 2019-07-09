@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`html should match a snapshot when Parent contains a Child component 1`] = `
+exports[`htmx should match a snapshot when Parent contains a Child component 1`] = `
 "<div style=\\"background-color: red; padding: 10px;\\">
     <h2 style=\\"background-color: yellow;\\">
     Some good | $3.3000000000000003
@@ -8,7 +8,7 @@ exports[`html should match a snapshot when Parent contains a Child component 1`]
   </div>"
 `;
 
-exports[`html should match a snapshot when Parent contains a tag and a component 1`] = `
+exports[`htmx should match a snapshot when Parent contains a tag and a component 1`] = `
 "<div style=\\"background-color: red; padding: 10px;\\">
     <h1 style='background-color: green;'>Inner text</h1>
           <h2 style=\\"background-color: yellow;\\">
@@ -17,19 +17,19 @@ exports[`html should match a snapshot when Parent contains a tag and a component
   </div>"
 `;
 
-exports[`html should match a snapshot when Parent containts a regular html tag 1`] = `
+exports[`htmx should match a snapshot when Parent containts a regular htmx tag 1`] = `
 "<div style=\\"background-color: red; padding: 10px;\\">
     <h1 style=\\"background-color: green;\\">Inner text</h1>
   </div>"
 `;
 
-exports[`html should match a snapshot when Parent is empty 1`] = `
+exports[`htmx should match a snapshot when Parent is empty 1`] = `
 "<div style=\\"background-color: red; padding: 10px;\\">
     
   </div>"
 `;
 
-exports[`html should match a snapshot when an array is provided as a prop 1`] = `
+exports[`htmx should match a snapshot when an array is provided as a prop 1`] = `
 "<div style=\\"background-color: red; padding: 10px;\\">
     <ol style=\\"border: 1px solid green;\\">
         <li id=\\"item-1\\">Az</li><li id=\\"item-2\\">Bukh</li><li id=\\"item-3\\">Vedh</li>
@@ -37,7 +37,7 @@ exports[`html should match a snapshot when an array is provided as a prop 1`] = 
   </div>"
 `;
 
-exports[`html should match a snapshot when rendering arrays 1`] = `
+exports[`htmx should match a snapshot when rendering arrays 1`] = `
 "<ul>
         <li id=\\"list-0\\">Az</li><li id=\\"list-1\\">Bukh</li><li id=\\"list-2\\">Vedh</li>
       </ul>"

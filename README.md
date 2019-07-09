@@ -12,7 +12,7 @@ To include **purity** in your project import its features through CDN:
 
 ```javascript
 import { createStore } from 'https://tatomyr.github.io/purity/purity.js'
-import { html } from 'https://tatomyr.github.io/purity/html.js'
+import { htmx } from 'https://tatomyr.github.io/purity/htmx.js'
 ```
 
 or download these files into your project's folder and import from in there.
@@ -37,13 +37,13 @@ const OtherComponent = () => `
 
 > EXPERIMENTAL FEATURE
 
-> You can write JSX-like syntax by wrapping a string literal into `html(...Components)` tagged template.
+> You can write JSX-like syntax by wrapping a string literal into `htmx(...Components)` tagged template.
 > The code above could be written like so:
 
 ```javascript
-import { html } from '/modules/html.js'
+import { htmx } from '/modules/htmx.js'
 
-const OtherComponent = () => html(Component)`
+const OtherComponent = () => htmx(Component)`
  <div>
    ...
    <Component text=${'Hello World!'} />
@@ -159,7 +159,7 @@ bash bin/test.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/Li
 ```
 
 To update snapshots use `bash bin/test-update.sh` instead.
-Please notice the auxiliary `__html__.js` and `__purity__.js` files created.
+Please notice the auxiliary `__htmx__.js` and `__purity__.js` files created.
 Do not commit them.
 
 To show [coverage report](https://tatomyr.github.io/purity/coverage/lcov-report/index.html) locally, run `open ./coverage/lcov-report/index.html`.

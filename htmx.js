@@ -3,7 +3,7 @@ const pipe = (...funcs) => x => funcs.reduce(($, f) => f($), x)
 const filterFalsy = x => (x === undefined || x === null ? '' : x)
 const joinIfArray = x => (Array.isArray(x) ? x.join('') : x)
 const trace = x => {
-  console.log('HTML', x)
+  console.log('HTMX', x)
   return x
 }
 const process = x =>
@@ -29,11 +29,12 @@ const COMPONENTS_RE = new RegExp(COMPONENT_RE, 'gm')
  *    which describe Purity components used in the string literal
  * @returns tagged template that accepts a string literal
  * and @returns a string that could be parsed as a valid HTML
+ *
+ * HTMX stands for extended hypertext markup
  */
 
-//  TODO: rename to 'htmx' (hyper text markup: extented)
-export const html = (...Components) => ([first, ...strings], ...args) => {
-  const precomputedHTML = strings.reduce(
+export const htmx = (...Components) => ([first, ...strings], ...args) => {
+  const precomputedHTMX = strings.reduce(
     ($, item, i) => `${$}__[${i}]__${item}`,
     first
   )
@@ -51,7 +52,7 @@ export const html = (...Components) => ([first, ...strings], ...args) => {
     return Component(props)
   }
 
-  const response = precomputedHTML
+  const response = precomputedHTMX
     .replace(COMPONENTS_RE, computeComponent)
     .replace(ARGS_RE, (_, index) => process(args[+index]))
     .trim()
