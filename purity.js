@@ -76,3 +76,5 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     rerender,
   }
 }
+
+// TODO: rename into create-store?

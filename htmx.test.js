@@ -14,29 +14,44 @@ const Child = ({ text, color, price }) => htmx()`
 
 describe('htmx', () => {
   it('should match a snapshot when Parent is empty', () => {
-    const Component = () => htmx(Parent)`<Parent />`
+    const Component = () => htmx({ Parent })`<Parent />`
     expect(Component()).toMatchSnapshot()
+    expect(Component()).toEqual(Parent({}))
   })
   it('should match a snapshot when Parent containts a regular htmx tag', () => {
-    const Component = () => htmx(Parent)`
+    const Component = () => htmx({ Parent })`
       <Parent children=${`<h1 style="background-color: green;">Inner text</h1>`} />
     `
     expect(Component()).toMatchSnapshot()
+    expect(Component()).toEqual(
+      Parent({
+        children: `<h1 style="background-color: green;">Inner text</h1>`,
+      })
+    )
   })
   it('should match a snapshot when Parent contains a Child component', () => {
-    const Component = () => htmx(Parent)`
+    const Component = () => htmx({ Parent })`
       <Parent
-        children=${htmx(Child)`
+        children=${htmx({ Child })`
           <Child price=${1.1 + 2.2} color=${'yellow'} text=${'Some good'} />
         `}
       />
     `
     expect(Component()).toMatchSnapshot()
+    expect(Component()).toEqual(
+      Parent({
+        children: Child({
+          price: 1.1 + 2.2,
+          color: 'yellow',
+          text: 'Some good',
+        }),
+      })
+    )
   })
   it('should match a snapshot when Parent contains a tag and a component', () => {
-    const Component = () => htmx(Parent)`
+    const Component = () => htmx({ Parent })`
       <Parent
-        children=${htmx(Child)`
+        children=${htmx({ Child })`
           <h1 style='background-color: green;'>Inner text</h1>
           <Child
             price=${1.1 + 2.2}
@@ -55,7 +70,7 @@ describe('htmx', () => {
     `
     const Component = () => htmx()`
       <ul>
-        ${items.map((name, i) => htmx(Item)`<Item name=${name} id=${i} />`)}
+        ${items.map((name, i) => htmx({ Item })`<Item name=${name} id=${i} />`)}
       </ul>
     `
     expect(Component()).toMatchSnapshot()
@@ -72,11 +87,9 @@ describe('htmx', () => {
         ${items.map(Item)}
       </ol>
     `
-    const Component = () => htmx(Parent)`
-      <Parent children=${htmx(Letters)`<Letters items=${letters} />`} />
+    const Component = () => htmx({ Parent })`
+      <Parent children=${htmx({ Letters })`<Letters items=${letters} />`} />
     `
     expect(Component()).toMatchSnapshot()
   })
 })
-
-// TODO: test if it works with CONNECTED InnerComponents

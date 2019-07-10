@@ -43,7 +43,7 @@ const OtherComponent = () => `
 ```javascript
 import { htmx } from '/modules/htmx.js'
 
-const OtherComponent = () => htmx(Component)`
+const OtherComponent = () => htmx({ Component })`
  <div>
    ...
    <Component text=${'Hello World!'} />
@@ -131,6 +131,16 @@ function asyncWatcher(action, state, dispatch) {
 }
 ```
 
+# Virtual dom
+
+You can think of your application as a tree where each tag with the `id` attribute is represented by a node.
+The most important part of the virtual DOM is **rerenderer**.
+It calculates new virtual DOM and traverses it doing a shallow comparison of each node.
+If a node differs from the previous one,
+it additionally checks if the wrapper tag has changed itself or only its content.
+In the first case, **rerenderer** replaces all node with the virtual node and all its successors.
+Otherwise, it only updates `innerHTML` of the node.
+
 # Tips
 
 - Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
@@ -140,6 +150,7 @@ function asyncWatcher(action, state, dispatch) {
 # Credits
 
 This library is heavily inspired by project [innerself](https://github.com/stasm/innerself).
+And obviously I was thinking of [React](https://github.com/facebook/react/), [Redux](https://github.com/reduxjs/redux) & [Redux-Saga](https://github.com/redux-saga/redux-saga/).
 
 # Examples of usage
 

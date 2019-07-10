@@ -2,8 +2,8 @@
 const pipe = (...funcs) => x => funcs.reduce(($, f) => f($), x)
 const filterFalsy = x => (x === undefined || x === null ? '' : x)
 const joinIfArray = x => (Array.isArray(x) ? x.join('') : x)
-const trace = x => {
-  console.log('HTMX', x)
+const trace = (x, ...rest) => {
+  console.log('HTMX', x, ...rest)
   return x
 }
 const process = x =>
@@ -25,7 +25,7 @@ const COMPONENTS_RE = new RegExp(COMPONENT_RE, 'gm')
  * [Experimental]
  *
  * Higer order tagged template to parse JSX-like syntax
- * @param  {[function]} Components - an array of functions
+ * @param  {[function]} components - object that contains functions
  *    which describe Purity components used in the string literal
  * @returns tagged template that accepts a string literal
  * and @returns a string that could be parsed as a valid HTML
@@ -33,12 +33,11 @@ const COMPONENTS_RE = new RegExp(COMPONENT_RE, 'gm')
  * HTMX stands for extended hypertext markup
  */
 
-export const htmx = (...Components) => ([first, ...strings], ...args) => {
+export const htmx = components => ([first, ...strings], ...args) => {
   const precomputedHTMX = strings.reduce(
     ($, item, i) => `${$}__[${i}]__${item}`,
     first
   )
-
   const computeComponent = (_, componentName, attrs, ...rest) => {
     const attrsArr = !!attrs ? attrs.match(ATTRS_RE) : []
     const attrsArrOfObj = attrsArr.map(item => {
@@ -48,8 +47,7 @@ export const htmx = (...Components) => ([first, ...strings], ...args) => {
       }
     })
     const props = attrsArrOfObj.reduce(($, item) => ({ ...$, ...item }), {})
-    const Component = Components.find(({ name }) => name === componentName)
-    return Component(props)
+    return components[componentName](props)
   }
 
   const response = precomputedHTMX

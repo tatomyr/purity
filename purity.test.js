@@ -39,7 +39,7 @@ describe('purity', () => {
       }
     }
     store = createStore(stateHandler)
-    document.body.innerHTML = '<div id=root></div>'
+    document.body.innerHTML = '<div id="root"></div>'
   })
   it('should match default state after created', () => {
     expect(store.getState()).toEqual(defaultState)
