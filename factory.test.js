@@ -1,4 +1,4 @@
-const { createStore } = require('./__purity__.js')
+const { createStore } = require('./__factory__.js')
 
 const SimpleComponent = () => `<div id="root">SOMETHING</div>`
 const ComplexComponent = ({ something }) =>
@@ -22,7 +22,7 @@ const ConditionalComponent = ({ something }) =>
     </div>
   `.trim()
 
-describe('purity', () => {
+describe('factory', () => {
   let store
   beforeEach(() => {
     defaultState = {
@@ -39,7 +39,7 @@ describe('purity', () => {
       }
     }
     store = createStore(stateHandler)
-    document.body.innerHTML = '<div id=root></div>'
+    document.body.innerHTML = '<div id="root"></div>'
   })
   it('should match default state after created', () => {
     expect(store.getState()).toEqual(defaultState)

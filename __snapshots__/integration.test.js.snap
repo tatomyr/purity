@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`factory & htmx should reflect state changes 1`] = `
+"<div id=\\"root\\">
+        <h1>Hello!</h1>
+        <p>new thing</p>
+      </div>"
+`;
+
+exports[`factory & htmx should render connected component properly 1`] = `
+"<div id=\\"root\\">
+        <h1>Hello!</h1>
+        <p>something</p>
+      </div>"
+`;
