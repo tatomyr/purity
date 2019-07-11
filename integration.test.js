@@ -1,7 +1,7 @@
-const { createStore } = require('./__purity__.js')
+const { createStore } = require('./__factory__.js')
 const { htmx } = require('./__htmx__.js')
 
-describe('purity & htmx', () => {
+describe('factory & htmx', () => {
   let store, Component, Connected
   beforeEach(() => {
     defaultState = {

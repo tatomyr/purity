@@ -36,6 +36,7 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     document
       .getElementById(rootId)
       .replaceWith(domElementsMap.get(rootId).element)
+    setTimeout(asyncWatcher({ type: 'INIT' }, state, dispatch))
   }
 
   function rerender() {
@@ -65,7 +66,7 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     const changes = stateHandler(state, action)
     Object.assign(state, changes)
     rerender()
-    asyncWatcher(action, state, dispatch)
+    setTimeout(asyncWatcher(action, state, dispatch))
   }
 
   return {
@@ -76,5 +77,3 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     rerender,
   }
 }
-
-// TODO: rename into create-store?

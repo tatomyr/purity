@@ -1,7 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1562789575924" clover="3.2.0">
-  <project timestamp="1562789575924" name="All files">
-    <metrics statements="65" coveredstatements="65" conditionals="19" coveredconditionals="19" methods="23" coveredmethods="23" elements="107" coveredelements="107" complexity="0" loc="65" ncloc="65" packages="1" files="2" classes="2"/>
+<coverage generated="1562870935172" clover="3.2.0">
+  <project timestamp="1562870935173" name="All files">
+    <metrics statements="66" coveredstatements="66" conditionals="19" coveredconditionals="19" methods="23" coveredmethods="23" elements="108" coveredelements="108" complexity="0" loc="66" ncloc="66" packages="1" files="2" classes="2"/>
+    <file name="__factory__.js" path="/Users/tatomyr/projects/purity/__factory__.js">
+      <metrics statements="38" coveredstatements="38" conditionals="11" coveredconditionals="11" methods="9" coveredmethods="9"/>
+      <line num="7" count="2" type="cond" truecount="1" falsecount="0"/>
+      <line num="8" count="10" type="stmt"/>
+      <line num="14" count="10" type="stmt"/>
+      <line num="15" count="15" type="stmt"/>
+      <line num="16" count="15" type="stmt"/>
+      <line num="17" count="15" type="stmt"/>
+      <line num="18" count="32" type="stmt"/>
+      <line num="19" count="32" type="stmt"/>
+      <line num="20" count="17" type="stmt"/>
+      <line num="22" count="32" type="stmt"/>
+      <line num="28" count="15" type="stmt"/>
+      <line num="32" count="9" type="stmt"/>
+      <line num="33" count="9" type="stmt"/>
+      <line num="35" count="9" type="stmt"/>
+      <line num="36" count="9" type="stmt"/>
+      <line num="39" count="9" type="stmt"/>
+      <line num="43" count="6" type="stmt"/>
+      <line num="44" count="6" type="stmt"/>
+      <line num="45" count="13" type="stmt"/>
+      <line num="46" count="13" type="cond" truecount="4" falsecount="0"/>
+      <line num="47" count="7" type="stmt"/>
+      <line num="48" count="7" type="stmt"/>
+      <line num="49" count="7" type="cond" truecount="2" falsecount="0"/>
+      <line num="50" count="6" type="cond" truecount="4" falsecount="0"/>
+      <line num="51" count="5" type="stmt"/>
+      <line num="52" count="5" type="stmt"/>
+      <line num="54" count="1" type="stmt"/>
+      <line num="55" count="1" type="stmt"/>
+      <line num="58" count="1" type="stmt"/>
+      <line num="62" count="6" type="stmt"/>
+      <line num="66" count="6" type="stmt"/>
+      <line num="67" count="6" type="stmt"/>
+      <line num="68" count="6" type="stmt"/>
+      <line num="69" count="6" type="stmt"/>
+      <line num="72" count="10" type="stmt"/>
+      <line num="75" count="16" type="stmt"/>
+      <line num="76" count="2" type="stmt"/>
+      <line num="80" count="2" type="stmt"/>
+    </file>
     <file name="__htmx__.js" path="/Users/tatomyr/projects/purity/__htmx__.js">
       <metrics statements="28" coveredstatements="28" conditionals="8" coveredconditionals="8" methods="14" coveredmethods="14"/>
       <line num="2" count="93" type="stmt"/>
@@ -32,46 +73,6 @@
       <line num="55" count="31" type="stmt"/>
       <line num="57" count="40" type="stmt"/>
       <line num="61" count="2" type="stmt"/>
-    </file>
-    <file name="__purity__.js" path="/Users/tatomyr/projects/purity/__purity__.js">
-      <metrics statements="37" coveredstatements="37" conditionals="11" coveredconditionals="11" methods="9" coveredmethods="9"/>
-      <line num="7" count="2" type="cond" truecount="1" falsecount="0"/>
-      <line num="8" count="10" type="stmt"/>
-      <line num="14" count="10" type="stmt"/>
-      <line num="15" count="15" type="stmt"/>
-      <line num="16" count="15" type="stmt"/>
-      <line num="17" count="15" type="stmt"/>
-      <line num="18" count="32" type="stmt"/>
-      <line num="19" count="32" type="stmt"/>
-      <line num="20" count="17" type="stmt"/>
-      <line num="22" count="32" type="stmt"/>
-      <line num="28" count="15" type="stmt"/>
-      <line num="32" count="9" type="stmt"/>
-      <line num="33" count="9" type="stmt"/>
-      <line num="35" count="9" type="stmt"/>
-      <line num="36" count="9" type="stmt"/>
-      <line num="42" count="6" type="stmt"/>
-      <line num="43" count="6" type="stmt"/>
-      <line num="44" count="13" type="stmt"/>
-      <line num="45" count="13" type="cond" truecount="4" falsecount="0"/>
-      <line num="46" count="7" type="stmt"/>
-      <line num="47" count="7" type="stmt"/>
-      <line num="48" count="7" type="cond" truecount="2" falsecount="0"/>
-      <line num="49" count="6" type="cond" truecount="4" falsecount="0"/>
-      <line num="50" count="5" type="stmt"/>
-      <line num="51" count="5" type="stmt"/>
-      <line num="53" count="1" type="stmt"/>
-      <line num="54" count="1" type="stmt"/>
-      <line num="57" count="1" type="stmt"/>
-      <line num="61" count="6" type="stmt"/>
-      <line num="65" count="6" type="stmt"/>
-      <line num="66" count="6" type="stmt"/>
-      <line num="67" count="6" type="stmt"/>
-      <line num="68" count="6" type="stmt"/>
-      <line num="71" count="10" type="stmt"/>
-      <line num="74" count="16" type="stmt"/>
-      <line num="75" count="2" type="stmt"/>
-      <line num="81" count="2" type="stmt"/>
     </file>
   </project>
 </coverage>

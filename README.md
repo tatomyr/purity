@@ -11,7 +11,7 @@ which is accessible through methods `connect` (for getting data) and `dispatch`
 To include **purity** in your project import its features through CDN:
 
 ```javascript
-import { createStore } from 'https://tatomyr.github.io/purity/purity.js'
+import { createStore } from 'https://tatomyr.github.io/purity/factory.js'
 import { htmx } from 'https://tatomyr.github.io/purity/htmx.js'
 ```
 
@@ -80,7 +80,7 @@ To set up the store for your application,
 you have to implement a provider via `createStore` method.
 
 ```javascript
-import { createStore } from '/purity.js'
+import { createStore } from '/factory.js'
 import { stateHandler } from './state-handler.js'
 import { asyncWatcher } from './async-handler.js'
 
@@ -170,7 +170,7 @@ bash bin/test.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/Li
 ```
 
 To update snapshots use `bash bin/test-update.sh` instead.
-Please notice the auxiliary `__htmx__.js` and `__purity__.js` files created.
+Please notice the auxiliary `__htmx__.js` and `__factory__.js` files created.
 Do not commit them.
 
 To show [coverage report](https://tatomyr.github.io/purity/coverage/lcov-report/index.html) locally, run `open ./coverage/lcov-report/index.html`.
