@@ -1,3 +1,6 @@
+// Helpers
+const isEmpty = obj => !obj || !Object.keys(obj).length
+
 /**
  * Store module factory that should be invoked once to create a single store with reactive state
  * @param {callback} stateHandler - a synchronous reducer
@@ -43,19 +46,17 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     const newElementsMap = parseHTML(rootComponent())
     for (const [id, domEl] of domElementsMap) {
       const newEl = newElementsMap.get(id)
-      if (domEl.shallowHTML !== (newEl && newEl.shallowHTML)) {
-        console.log(`@${id}:`)
+      // Since we depend on the shallow comparison, we must only care about updating changed nodes.
+      if (newEl && domEl.shallowHTML !== newEl.shallowHTML) {
         const elementById = document.getElementById(id)
-        if (elementById) {
-          if (domEl.wrapperHTML === (newEl && newEl.wrapperHTML)) {
-            console.log('└─ change')
-            elementById.innerHTML = newEl.element.innerHTML
-          } else {
-            console.log('└─ replace')
-            elementById.replaceWith(newEl.element)
-          }
+        if (domEl.wrapperHTML === newEl.wrapperHTML) {
+          // Wrapper remains static, so we only have to refresh content down to the node.
+          elementById.innerHTML = newEl.element.innerHTML
+          console.log(`↻ #${id}`)
         } else {
-          console.log('└─ ✗')
+          // Wrapper has changed, so we should replace the entire node
+          elementById.replaceWith(newEl.element)
+          console.log(`↔ #${id}`)
         }
       }
     }
@@ -64,15 +65,18 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
 
   function dispatch(action) {
     const changes = stateHandler(state, action)
-    Object.assign(state, changes)
-    rerender()
+    if (!isEmpty(changes)) {
+      Object.assign(state, changes)
+      rerender()
+    }
     asyncWatcher(action, state, dispatch)
   }
 
   return {
     mount,
     dispatch,
-    connect: component => ownProps => component(Object.assign(state, ownProps)),
+    connect: component => ownProps =>
+      component(Object.assign({}, state, ownProps)),
     getState: () => state,
     rerender,
   }

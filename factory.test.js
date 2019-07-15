@@ -44,6 +44,10 @@ describe('factory', () => {
   it('should match default state after created', () => {
     expect(store.getState()).toEqual(defaultState)
   })
+  it('should not change after an unknown action', () => {
+    store.dispatch({ type: 'UNKNOWN_ACTION', some: 'payload' })
+    expect(store.getState()).toEqual(defaultState)
+  })
   it('should mount a simple component', () => {
     store.mount(SimpleComponent)
     expect(document.body.innerHTML).toEqual(SimpleComponent())

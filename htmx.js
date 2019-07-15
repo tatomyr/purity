@@ -9,8 +9,7 @@ const trace = (x, ...rest) => {
 const process = x =>
   pipe(
     filterFalsy,
-    joinIfArray,
-    trace
+    joinIfArray
   )(x)
 
 // Patterns
