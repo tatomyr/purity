@@ -173,4 +173,4 @@ To update snapshots use `bash bin/test-update.sh` instead.
 Please notice the auxiliary `__htmx__.js` and `__factory__.js` files created.
 Do not commit them.
 
-To show [coverage report](https://tatomyr.github.io/purity/coverage/lcov-report/index.html) locally, run `open ./coverage/lcov-report/index.html`.
+To show coverage report locally, run `open ./coverage/lcov-report/index.html`.
