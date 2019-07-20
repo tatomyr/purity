@@ -25,7 +25,6 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
       elementsMap.set(element.id, {
         element,
         shallowHTML: shallow.outerHTML,
-        wrapperHTML: shallow.cloneNode(false).outerHTML,
       })
     }
     return elementsMap
@@ -43,7 +42,6 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
   }
 
   // TODO: try to use real DOM instead of domElementsMap
-  // TODO: try to update atributes to avoid replacing
   function rerender() {
     const newElementsMap = parseHTML(rootComponent())
     for (const [id, domEl] of domElementsMap) {
@@ -51,15 +49,18 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
       // Since we depend on the shallow comparison, we must only care about updating changed nodes.
       if (newEl && domEl.shallowHTML !== newEl.shallowHTML) {
         const elementById = document.getElementById(id)
-        if (domEl.wrapperHTML === newEl.wrapperHTML) {
-          // Wrapper remains static, so we only have to refresh content down to the node.
-          elementById.innerHTML = newEl.element.innerHTML
-          console.log(`↻ #${id}`)
-        } else {
-          // Wrapper has changed, so we should replace the entire node
-          elementById.replaceWith(newEl.element)
-          console.log(`↔ #${id}`)
+        elementById.innerHTML = newEl.element.innerHTML
+        for (let attr of elementById.attributes) {
+          if (attr.name !== 'id') {
+            elementById.removeAttribute(attr)
+          }
         }
+        for (let { name, value } of newEl.element.attributes) {
+          if (name !== 'id') {
+            elementById.setAttribute(name, value)
+          }
+        }
+        console.log(`↻ #${id}`)
       }
     }
     domElementsMap = newElementsMap
