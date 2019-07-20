@@ -12,58 +12,59 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
 
   let rootComponent
 
-  let domElementsMap
+  let domNodesMap
 
   const parseHTML = html => {
     const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
-    const elementsMap = new Map()
-    for (const element of virtualDocument.querySelectorAll('*[id]')) {
-      const shallow = element.cloneNode(true)
-      for (const innerElement of shallow.querySelectorAll('*[id]')) {
-        innerElement.outerHTML = `<!-- key="${innerElement.id}" -->`
+    const nodesMap = new Map()
+    for (const node of virtualDocument.querySelectorAll('*[id]')) {
+      const shallow = node.cloneNode(true)
+      for (const innerNode of shallow.querySelectorAll('*[id]')) {
+        innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`
       }
-      elementsMap.set(element.id, {
-        element,
+      nodesMap.set(node.id, {
+        node,
         shallowHTML: shallow.outerHTML,
       })
     }
-    return elementsMap
+    return nodesMap
   }
 
   function mount(f) {
     rootComponent = f
-    domElementsMap = parseHTML(rootComponent())
+    domNodesMap = parseHTML(rootComponent())
     // Top-level component should always have an id equal to parent element's id
-    const rootId = domElementsMap.keys().next().value
-    document
-      .getElementById(rootId)
-      .replaceWith(domElementsMap.get(rootId).element)
+    const rootId = domNodesMap.keys().next().value
+    document.getElementById(rootId).replaceWith(domNodesMap.get(rootId).node)
     asyncWatcher({ type: 'INIT' }, state, dispatch)
   }
 
-  // TODO: try to use real DOM instead of domElementsMap
+  function updateAttributes(element, newNode) {
+    for (let attr of element.attributes) {
+      if (attr.name !== 'id') {
+        element.removeAttribute(attr)
+      }
+    }
+    for (let { name, value } of newNode.node.attributes) {
+      if (name !== 'id') {
+        element.setAttribute(name, value)
+      }
+    }
+  }
+
   function rerender() {
-    const newElementsMap = parseHTML(rootComponent())
-    for (const [id, domEl] of domElementsMap) {
-      const newEl = newElementsMap.get(id)
+    const newNodesMap = parseHTML(rootComponent())
+    for (const [id, domNode] of domNodesMap) {
+      const newNode = newNodesMap.get(id)
       // Since we depend on the shallow comparison, we must only care about updating changed nodes.
-      if (newEl && domEl.shallowHTML !== newEl.shallowHTML) {
+      if (newNode && domNode.shallowHTML !== newNode.shallowHTML) {
         const elementById = document.getElementById(id)
-        elementById.innerHTML = newEl.element.innerHTML
-        for (let attr of elementById.attributes) {
-          if (attr.name !== 'id') {
-            elementById.removeAttribute(attr)
-          }
-        }
-        for (let { name, value } of newEl.element.attributes) {
-          if (name !== 'id') {
-            elementById.setAttribute(name, value)
-          }
-        }
+        elementById.innerHTML = newNode.node.innerHTML
+        updateAttributes(elementById, newNode)
         console.log(`↻ #${id}`)
       }
     }
-    domElementsMap = newElementsMap
+    domNodesMap = newNodesMap
   }
 
   function dispatch(action) {
