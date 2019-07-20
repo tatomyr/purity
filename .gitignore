@@ -2,3 +2,4 @@
 __htmx__.js
 __factory__.js
 coverage/
+cypress/videos/

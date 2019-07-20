@@ -131,6 +131,17 @@ function asyncWatcher(action, state, dispatch) {
 }
 ```
 
+Finally you have to mount your app to the DOM:
+
+```javascript
+import { mount } from '/store-provider.js'
+
+mount(App)
+```
+
+Make sure your root component has the same `id` as the root defined in `index.html`,
+and you have connected your script with `<script type="module" src="..."></script>`.
+
 # Virtual dom
 
 You can think of your application as a tree where each tag with the `id` attribute is represented by a node.
@@ -154,6 +165,7 @@ And obviously I was thinking of [React](https://github.com/facebook/react/), [Re
 
 # Examples of usage
 
+- [Dead simple example](./example/)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
 
 # Development
@@ -162,15 +174,31 @@ To serve the library locally on port 8081 run `bash bin/serve.sh`.
 
 # Testing
 
-To run tests use `bash bin/test.sh` command from the project root.
-You can use on Mac this command as well:
+To run unit tests use `bash bin/jest.sh` command from the project root.
 
-```
-bash bin/test.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/Library/Sounds/Sosumi.aiff
-```
-
-To update snapshots use `bash bin/test-update.sh` instead.
+To update snapshots use `bash bin/jest-update.sh` instead.
 Please notice the auxiliary `__htmx__.js` and `__factory__.js` files created.
 Do not commit them.
 
 To show coverage report locally, run `open ./coverage/lcov-report/index.html`.
+
+This repository has `example` project covered with end-to-end tests.
+To run them continioulsy use `bash bin/cypress.sh`.
+Run `bash bin/e2e.sh` to run e2e tests in headless Chrome.
+
+All test could be run with `bash bin/test.sh`.
+
+# Technical debts
+
+Use `bash bin/debts.sh` to check all `TODO`s and `FIXME`s in the project.
+The result will be stored in `.debts` file.
+You may commit it.
+
+# Precommit
+
+To run all checks use `bash bin/check.sh` script.
+On Mac you can use this command as well:
+
+```
+bash bin/check.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/Library/Sounds/Sosumi.aiff
+```
