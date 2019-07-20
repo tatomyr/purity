@@ -42,6 +42,8 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     asyncWatcher({ type: 'INIT' }, state, dispatch)
   }
 
+  // TODO: try to use real DOM instead of domElementsMap
+  // TODO: try to update atributes to avoid replacing
   function rerender() {
     const newElementsMap = parseHTML(rootComponent())
     for (const [id, domEl] of domElementsMap) {

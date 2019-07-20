@@ -1,6 +1,4 @@
 #!/bin/bash
 
-bash bin/transform-to-common-js.sh
-
-# Running tests
-npx jest
+bash bin/jest.sh
+bash bin/e2e.sh
