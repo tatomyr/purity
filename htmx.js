@@ -19,6 +19,7 @@ const ATTR_RE = /(\w+)\s*=\s*__\[(\d+)\]__/
 const ATTRS_RE = new RegExp(ATTR_RE, 'gm')
 const COMPONENT_RE = /<([A-Z]\w*)\s+([^\/>]*)\/>/
 const COMPONENTS_RE = new RegExp(COMPONENT_RE, 'gm')
+const BOUND_EVENTS_RE = new RegExp(`::${ATTR_RE.source}`, 'gm')
 
 /**
  * [Experimental]
@@ -31,6 +32,9 @@ const COMPONENTS_RE = new RegExp(COMPONENT_RE, 'gm')
  *
  * HTMX stands for extended hypertext markup
  */
+
+//  TODO: Make purity_key stable
+let purity_key = 0
 
 export const htmx = components => ([first, ...strings], ...args) => {
   const precomputedHTMX = strings.reduce(
@@ -51,9 +55,21 @@ export const htmx = components => ([first, ...strings], ...args) => {
 
   const response = precomputedHTMX
     .replace(COMPONENTS_RE, computeComponent)
+    .replace(BOUND_EVENTS_RE, (_, event, index) => {
+      // TODO: Investigate how does the event bundler work
+      const key = `${purity_key}-${index}`
+      console.log(event, index, key)
+      setTimeout(() => {
+        let element = document.querySelector(`*[data-purity_key="${key}"]`)
+        if (element) element[`on${event}`] = args[index]
+      })
+      return `data-purity_key="${key}"`
+    })
     .replace(ARGS_RE, (_, index) => process(args[+index]))
     .trim()
+  purity_key++
   return response
 }
 
 // TODO: Implement parsing nested elements (aka children)
+// TODO: Maybe add "quotes" to string args automatically?

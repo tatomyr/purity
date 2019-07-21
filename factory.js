@@ -24,7 +24,7 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
       }
       nodesMap.set(node.id, {
         node,
-        shallowHTML: shallow.outerHTML,
+        shallow,
       })
     }
     return nodesMap
@@ -57,9 +57,11 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     for (const [id, domNode] of domNodesMap) {
       const newNode = newNodesMap.get(id)
       // Since we depend on the shallow comparison, we must only care about updating changed nodes.
-      if (newNode && domNode.shallowHTML !== newNode.shallowHTML) {
+      if (newNode && domNode.shallow.outerHTML !== newNode.shallow.outerHTML) {
         const elementById = document.getElementById(id)
-        elementById.innerHTML = newNode.node.innerHTML
+        if (domNode.shallow.innerHTML !== newNode.shallow.innerHTML) {
+          elementById.innerHTML = newNode.node.innerHTML
+        }
         updateAttributes(elementById, newNode)
         console.log(`↻ #${id}`)
       }
@@ -81,7 +83,7 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     dispatch,
     connect: component => ownProps =>
       component(Object.assign({}, state, ownProps)),
-    getState: () => state,
     rerender,
+    getState: () => state,
   }
 }
