@@ -59,11 +59,11 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
       // Since we depend on the shallow comparison, we must only care about updating changed nodes.
       if (newNode && domNode.shallow.outerHTML !== newNode.shallow.outerHTML) {
         const elementById = document.getElementById(id)
+        updateAttributes(elementById, newNode)
         if (domNode.shallow.innerHTML !== newNode.shallow.innerHTML) {
           elementById.innerHTML = newNode.node.innerHTML
+          console.log(`↻ #${id}`)
         }
-        updateAttributes(elementById, newNode)
-        console.log(`↻ #${id}`)
       }
     }
     domNodesMap = newNodesMap

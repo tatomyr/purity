@@ -2,10 +2,6 @@
 const pipe = (...funcs) => x => funcs.reduce(($, f) => f($), x)
 const filterFalsy = x => (x === undefined || x === null ? '' : x)
 const joinIfArray = x => (Array.isArray(x) ? x.join('') : x)
-const trace = (x, ...rest) => {
-  console.log('HTMX', x, ...rest)
-  return x
-}
 const process = x =>
   pipe(
     filterFalsy,
@@ -41,6 +37,7 @@ export const htmx = components => ([first, ...strings], ...args) => {
     ($, item, i) => `${$}__[${i}]__${item}`,
     first
   )
+
   const computeComponent = (_, componentName, attrs, ...rest) => {
     const attrsArr = !!attrs ? attrs.match(ATTRS_RE) : []
     const attrsArrOfObj = attrsArr.map(item => {
@@ -53,18 +50,19 @@ export const htmx = components => ([first, ...strings], ...args) => {
     return components[componentName](props)
   }
 
+  const bindEventHandlers = (_, event, index) => {
+    // TODO: Investigate how does the event bundler work
+    const key = `${purity_key}-${index}`
+    setTimeout(() => {
+      let element = document.querySelector(`*[data-purity_key="${key}"]`)
+      if (element) element[`on${event}`] = args[index]
+    })
+    return `data-purity_key="${key}"`
+  }
+
   const response = precomputedHTMX
     .replace(COMPONENTS_RE, computeComponent)
-    .replace(BOUND_EVENTS_RE, (_, event, index) => {
-      // TODO: Investigate how does the event bundler work
-      const key = `${purity_key}-${index}`
-      console.log(event, index, key)
-      setTimeout(() => {
-        let element = document.querySelector(`*[data-purity_key="${key}"]`)
-        if (element) element[`on${event}`] = args[index]
-      })
-      return `data-purity_key="${key}"`
-    })
+    .replace(BOUND_EVENTS_RE, bindEventHandlers)
     .replace(ARGS_RE, (_, index) => process(args[+index]))
     .trim()
   purity_key++
@@ -72,4 +70,3 @@ export const htmx = components => ([first, ...strings], ...args) => {
 }
 
 // TODO: Implement parsing nested elements (aka children)
-// TODO: Maybe add "quotes" to string args automatically?

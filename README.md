@@ -172,7 +172,7 @@ At the same time, it allows a programmer to fully control the updating process.
 - Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
 - Wrap every component that you want to be rerendered independently with a tag with an unique id.
 - Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
-- A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which returns in the **createStore** function (see [example](./example/ui/StatefulCounter.js)).
+- A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which returns in the **createStore** function (see [example](./simple-todo-example/ui/StatefulCounter.js)).
 
 # Credits
 
@@ -183,7 +183,9 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 # Examples of usage
 
-- [Dead simple example](./example/)
+- [Dead simple example](./dead-simple-expamle/)
+- [Simple todo example](./simple-todo-example/)
+- [Colored input example](./colored-input-expamle/)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
 
 # Development
@@ -194,13 +196,13 @@ To serve the library locally on port 8081 run `bash bin/serve.sh`.
 
 To run unit tests use `bash bin/jest.sh` command from the project root.
 
-To update snapshots use `bash bin/jest-update.sh` instead.
+To update snapshots use `bash bin/update-jest.sh` instead.
 Please notice the auxiliary `__htmx__.js` and `__factory__.js` files created.
 Do not commit them.
 
 To show coverage report locally, run `open ./coverage/lcov-report/index.html`.
 
-This repository has `example` project covered with end-to-end tests.
+This repository has example projects covered with end-to-end tests.
 To run them continioulsy use `bash bin/cypress.sh`.
 Run `bash bin/e2e.sh` to run e2e tests in headless Chrome.
 
