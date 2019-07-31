@@ -35,28 +35,6 @@ const OtherComponent = () => `
 `
 ```
 
-> EXPERIMENTAL FEATURE
-
-> You can write JSX-like syntax by wrapping a string literal into `htmx(...Components)` tagged template.
-> The code above could be written like so:
-
-```javascript
-import { htmx } from '/modules/htmx.js'
-
-const OtherComponent = () => htmx({ Component })`
- <div>
-   ...
-   <Component text=${'Hello World!'} />
-   ...
- </div>
-`
-```
-
-> Each prop declaration should follow this pattern: `prop=${value}`.
-
-> Please take into account that not all possible variants could be parsed at the moment.
-> E. g. so far we only support autoclosing components.
-
 Also, you can use the `connect` method to pass all the data from the shared application state like so:
 
 ```javascript
@@ -66,13 +44,11 @@ import { Component } from './Component.js'
 export default connect(Component)
 ```
 
-Bear in mind, each changeable component or a part of a component
+Bear in mind, each changeable **node**
 should have a unique id attribute defined on it.
-This allows the DOM updater to decouple changed elements
-and replace only them.
-Ideally, you'd always wrap your component in some wrapper tag with an `id`
-and not change its attributes on the spot.
-Use a **static wrapper** around your component, you may say.
+This allows the DOM rerenderer to decouple changed nodes
+and update only them.
+It has nothing to do with **components** which are just functions to calculate the html.
 Your top-level component must always have an id defined on its wrapper.
 Otherwise rerender may run inconsistently.
 
@@ -111,7 +87,7 @@ const stateHandler = (state = defaultState, action = {}) => {
 }
 ```
 
-Async handlers a just an asynchronoys funcions
+Async handlers are just asynchronoys funcions
 and should be triggered when async watcher encounters a specific action:
 
 ```javascript
@@ -142,30 +118,74 @@ mount(App)
 Make sure your root component has the same `id` as the root defined in `index.html`,
 and you have connected your script with `<script type="module" src="..."></script>`.
 
+# HTMX
+
+> EXPERIMENTAL FEATURE
+
+> You can write JSX-like syntax by wrapping a string literal into `htmx(components)` tagged template.
+> For example you can write:
+
+```javascript
+import { htmx } from '/modules/htmx.js'
+import { Component } from './Component.js'
+
+const OtherComponent = () => htmx({ Component })`
+ <div>
+   ...
+   <Component text=${'Hello World!'} />
+   ...
+ </div>
+`
+```
+
+> Each prop declaration should follow this pattern: `prop=${value}`.
+
+> Biding event handlers is also possible with **htmx**.
+> You can write simething like that:
+
+```javascript
+const Component = () => htmx({})`
+  <button
+    ::click=${e => console.log(e.target)}
+  >
+    Click me
+  </button>
+`
+```
+
+> Please take into account that not all possible variants could be parsed at the moment.
+> E. g. so far we only support autoclosing components.
+
 # Virtual dom
 
-You can think of your application as a tree where each tag with the `id` attribute is represented by a node.
+You can think of your application as a tree where each tag with the `id` attribute is represented by a **node**.
 The most important part of the virtual DOM is **rerenderer**.
-It calculates new virtual DOM and traverses it doing a shallow comparison of each node.
-If a node differs from the previous one,
-it additionally checks if the wrapper tag has changed itself or only its content.
-In the first case, **rerenderer** replaces all node with the virtual node and all its successors.
-Otherwise, it only updates `innerHTML` of the node.
+It calculates new virtual DOM and traverses through each existing **node**.
+If a new corresponding **node** exists, and it shallowly differs from the previous one,
+the **rerenderer** replaces `innerHTML` of the **node** and attributes of a wrapper tag.
+
+This way the **rerenderer** could preserve text inputs cursor position, scrolling progress, etc.
+At the same time, it allows a programmer to fully control the updating process.
 
 # Tips
 
 - Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
-- Wrap every component that you want to be rerendered independently with a static wrapper (this one has to have a unique id and its attributes do not rely on state changes).
+- Wrap every component that you want to be rerendered independently with a tag with an unique id.
 - Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
+- A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which returns in the **createStore** function (see [example](./simple-todo-example/ui/StatefulCounter.js)).
 
 # Credits
 
 This library is heavily inspired by project [innerself](https://github.com/stasm/innerself).
 And obviously I was thinking of [React](https://github.com/facebook/react/), [Redux](https://github.com/reduxjs/redux) & [Redux-Saga](https://github.com/redux-saga/redux-saga/).
 
+The decision to use bare ES modules appears to be the consequence of listening to the brilliant Ryan Dahl's talk on [Deno](https://deno.land).
+
 # Examples of usage
 
-- [Dead simple example](./example/)
+- [Dead simple example](./dead-simple-expamle/)
+- [Simple todo example](./simple-todo-example/)
+- [Colored input example](./colored-input-expamle/)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
 
 # Development
@@ -176,13 +196,13 @@ To serve the library locally on port 8081 run `bash bin/serve.sh`.
 
 To run unit tests use `bash bin/jest.sh` command from the project root.
 
-To update snapshots use `bash bin/jest-update.sh` instead.
+To update snapshots use `bash bin/update-jest.sh` instead.
 Please notice the auxiliary `__htmx__.js` and `__factory__.js` files created.
 Do not commit them.
 
 To show coverage report locally, run `open ./coverage/lcov-report/index.html`.
 
-This repository has `example` project covered with end-to-end tests.
+This repository has example projects covered with end-to-end tests.
 To run them continioulsy use `bash bin/cypress.sh`.
 Run `bash bin/e2e.sh` to run e2e tests in headless Chrome.
 

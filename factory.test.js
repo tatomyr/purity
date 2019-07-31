@@ -103,4 +103,29 @@ describe('factory', () => {
     store.mount(CompundComponent)
     expect(document.body.innerHTML).toMatchSnapshot()
   })
+  it(`
+    should not change innerHTML when only attributes have changed in the wrapper tag
+    (input's value should remain the same)
+  `, () => {
+    const Component = store.connect(
+      ({ something }) => `
+      <div id="root">
+        <input id="color" style="color: ${something};" />
+        <button
+          onclick="dispatch({
+            type: 'CHANGE_COLOR',
+            color: document.querySelector('#color').value
+          })"
+        >
+          Apply color
+        </button>
+      </div>
+    `
+    )
+    store.mount(Component)
+    document.querySelector('#color').value = 'red'
+    store.dispatch({ type: 'CHANGE_SOMETHING', something: 'red' })
+    expect(document.body.innerHTML).toMatchSnapshot()
+    expect(document.querySelector('#color').value).toEqual('red')
+  })
 })
