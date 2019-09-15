@@ -185,6 +185,7 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 - [Dead simple example](./dead-simple-expamle/)
 - [Simple todo example](./simple-todo-example/)
+- [Asynchronous todo example](./async-todo-example/) (see [README](./async-todo-example/README.md))
 - [Colored input example](./colored-input-expamle/)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
 
