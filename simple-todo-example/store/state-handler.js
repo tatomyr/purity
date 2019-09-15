@@ -12,7 +12,8 @@ export const stateHandler = (state = defaultState, action = {}) => {
         items: [
           ...state.items,
           {
-            ...action.item,
+            text: action.text,
+            checked: false,
             id: generateNextId(state.items),
           },
         ],
