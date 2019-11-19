@@ -10,10 +10,6 @@ const isEmpty = obj => !obj || !Object.keys(obj).length
 export const createStore = (stateHandler, asyncWatcher = () => {}) => {
   const state = stateHandler(undefined, { type: 'INIT' })
 
-  let rootComponent
-
-  let domNodesMap
-
   const parseHTML = html => {
     const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
     const nodesMap = new Map()
@@ -30,7 +26,10 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     return nodesMap
   }
 
+  let rootComponent
+  let domNodesMap
   function mount(f) {
+    // Setting up rootComponent
     rootComponent = f
     domNodesMap = parseHTML(rootComponent())
     // Top-level component should always have an id equal to parent element's id

@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Examples</title>
+    <style>
+      a {
+        all: unset;
+        display: block;
+        padding: 4px;
+      }
+      a:hover {
+        cursor: pointer;
+        color: orange;
+      }
+      a:hover::after {
+        content: '▸';
+        font-size: 0.8em;
+        padding-left: 0.2em;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/dead-simple-example/">Dead Simple Example</a>
+    <a href="/simple-todo-example/">Simple ToDo</a>
+    <a href="/async-todo-example/">Async ToDo</a>
+    <a href="/colored-input-example/">Colored Input</a>
+  </body>
+</html>
