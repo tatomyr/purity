@@ -189,6 +189,8 @@ The decision to use bare ES modules appears to be the consequence of listening t
 - [Colored input example](./colored-input-expamle/)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
 
+You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples.html`.
+
 # Development
 
 To serve the library locally on port 8081 run `bash bin/serve.sh`.
