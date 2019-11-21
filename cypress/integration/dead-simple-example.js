@@ -1,6 +1,6 @@
 describe('Dead simple example', () => {
   beforeEach(() => {
-    cy.visit('/dead-simple-example/')
+    cy.visit('/examples/dead-simple-example/')
   })
   it('passes all the flow', () => {
     cy.get('button#inc')
