@@ -1,7 +1,6 @@
 import { connect } from '../store/provider.js'
 import { ListItem } from './ListItem.js'
 import { InputForm } from './InputForm.js'
-import { StatefulCounter } from './StatefulCounter.js'
 
 export const App = connect(
   ({ items, input }) => `
@@ -14,7 +13,6 @@ export const App = connect(
           .join('')}
       </ol>
       ${InputForm({})}
-      ${StatefulCounter({ id: 'counter' })}
     </div>
   `
 )

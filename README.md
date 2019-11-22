@@ -140,7 +140,7 @@ const OtherComponent = () => htmx({ Component })`
 
 > Each prop declaration should follow this pattern: `prop=${value}`.
 
-> Biding event handlers is also possible with **htmx**.
+> Binding event handlers is also possible with **htmx**.
 > You can write simething like that:
 
 ```javascript
@@ -167,12 +167,27 @@ the **rerenderer** replaces `innerHTML` of the **node** and attributes of a wrap
 This way the **rerenderer** could preserve text inputs cursor position, scrolling progress, etc.
 At the same time, it allows a programmer to fully control the updating process.
 
+<!-- TODO: Describe rerenderering flow -->
+
+```mermaid
+graph TD
+  subgraph 2
+    A2 --> B2
+           C2 --> C2
+  end
+
+  subgraph 1
+    A1 --> B1
+    A1 --> C1
+  end
+```
+
 # Tips
 
 - Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
 - Wrap every component that you want to be rerendered independently with a tag with an unique id.
 - Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
-- A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which returns in the **createStore** function (see [example](./simple-todo-example/ui/StatefulCounter.js)).
+- A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **createStore** function (see [example](./simple-todo-example/ui/StatefulCounter.js)).
 
 # Credits
 
@@ -183,13 +198,14 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 # Examples of usage
 
-- [Dead simple example](./dead-simple-expamle/)
-- [Simple todo example](./simple-todo-example/)
-- [Asynchronous todo example](./async-todo-example/) (see [README](./async-todo-example/README.md))
-- [Colored input example](./colored-input-expamle/)
+- [Dead simple example](./examples/dead-simple-example/)
+- [Simple todo](./examples/simple-todo-example/)
+- [Asynchronous todo](./examples/async-todo-example/) (see [README](./examples/async-todo-example/README.md))
+- [Colored input](./examples/colored-input-example/)
+- [Stateful counters](./examples/use-state-example/)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
 
-You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples.html`.
+You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples`.
 
 # Development
 
@@ -205,7 +221,7 @@ Do not commit them.
 
 To show coverage report locally, run `open ./coverage/lcov-report/index.html`.
 
-This repository has example projects covered with end-to-end tests.
+This repository contains example projects covered with end-to-end tests.
 To run them continioulsy use `bash bin/cypress.sh`.
 Run `bash bin/e2e.sh` to run e2e tests in headless Chrome.
 
