@@ -1,22 +1,26 @@
 // TODO: implement asynchronously searchable list (use fake responses)
 
-import { htmx } from '/htmx.js'
+import { render } from '/index.js'
 import { connect, dispatch } from '../store/provider.js'
 import { types } from '../types.js'
+import { SuggestionsList } from './SuggestionsList.js'
+import { ErrorBanner } from './ErrorBanner.js'
+import { Spinner } from './Spinner.js'
+import { ChosenItems } from './ChosenItems.js'
 
-// FIXME: WHY input RERENDERS WITHOUT AN id????
+// FIXME: WHY input RERENDERS WITHOUT AN id???? That's because of data-purity_key changing!!
 
-export const App = connect(
-  ({ isLoading }) => htmx({})`
+export const App = () => render`
   <div id="root">
+    ${ChosenItems()}
     <input
-      id="search-query"
       placeholder="Search query"
       ::keyup=${e => {
         dispatch({ type: types.GET_ITEMS__STARTED, query: e.target.value })
       }}
     />
-    <div id="status">${isLoading}</div>
+    ${Spinner()}
+    ${SuggestionsList()}
+    ${ErrorBanner()}
   </div>
 `
-)

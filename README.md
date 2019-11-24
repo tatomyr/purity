@@ -120,6 +120,8 @@ and you have connected your script with `<script type="module" src="..."></scrip
 
 # HTMX
 
+<!-- TODO: describe `render` function. Drop `htmx` -->
+
 > EXPERIMENTAL FEATURE
 
 > You can write JSX-like syntax by wrapping a string literal into `htmx(components)` tagged template.
@@ -204,6 +206,7 @@ The decision to use bare ES modules appears to be the consequence of listening t
 - [Colored input](./examples/colored-input-example/)
 - [Stateful counters](./examples/use-state-example/)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
+- [Async search](TODO: make links accessible)
 
 You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples`.
 

@@ -18,10 +18,13 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
       for (const innerNode of shallow.querySelectorAll('*[id]')) {
         innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`
       }
-      nodesMap.set(node.id, {
-        node,
-        shallow,
-      })
+      // Removing the `data-purity_key`s attached in render() function
+      // TODO: try to avoid the situation when we have to remove…
+      // …something added in another module.
+      for (const innerNode of shallow.querySelectorAll('*[data-purity_key]')) {
+        innerNode.removeAttribute('data-purity_key')
+      }
+      nodesMap.set(node.id, { node, shallow })
     }
     return nodesMap
   }
@@ -39,12 +42,12 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
   }
 
   function updateAttributes(element, newNode) {
-    for (let attr of element.attributes) {
+    for (const attr of element.attributes) {
       if (attr.name !== 'id') {
         element.removeAttribute(attr)
       }
     }
-    for (let { name, value } of newNode.node.attributes) {
+    for (const { name, value } of newNode.node.attributes) {
       if (name !== 'id') {
         element.setAttribute(name, value)
       }
