@@ -1,15 +1,17 @@
-import { mount, connect } from './store-provider.js'
+import { render } from '/core.js'
+import { mount, connect, dispatch } from './store-provider.js'
 
 const App = connect(
-  ({ color }) => `
+  ({ color }) => render`
     <div id="root">
       <input
         id="color"
         style="color: ${color};"
-        onkeyup="dispatch({
-          type: 'CHANGE_COLOR',
-          color: event.target.value
-        })"
+        ::keyup=${e =>
+          dispatch({
+            type: 'CHANGE_COLOR',
+            color: e.target.value,
+          })}
       />
     </div>
   `

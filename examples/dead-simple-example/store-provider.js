@@ -20,5 +20,3 @@ export const stateHandler = (state = initialState, action = {}) => {
 }
 
 export const { mount, connect, dispatch } = createStore(stateHandler)
-
-window.dispatch = dispatch

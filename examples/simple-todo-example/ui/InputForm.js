@@ -1,26 +1,33 @@
-export const InputForm = () => `
+import { render } from '/core.js'
+import { dispatch } from '../store/provider.js'
+
+export const InputForm = () => render`
   <form
     id="input-form"
-    onsubmit="
-      event.preventDefault()
+    ::submit=${e => {
+      e.preventDefault()
       dispatch({
         type: 'ADD_ITEM',
-        text: event.target.text.value
+        text: e.target.text.value,
       })
-    "
+    }}
   >
     <input
       name="text"
       placeholder="Enter text"
-      onkeyup="dispatch({
-        type: 'CHANGE_INPUT',
-        input: event.target.value,
-      })"
+      ::keyup=${e => {
+        dispatch({
+          type: 'CHANGE_INPUT',
+          input: e.target.value,
+        })
+      }}
     />
     <button type="submit">Add</button>
     <button
       type="reset"
-      onclick="dispatch({ type: 'CHANGE_INPUT', input: ''})"
+      ::click=${e => {
+        dispatch({ type: 'CHANGE_INPUT', input: '' })
+      }}
     >
       Clear
     </button>

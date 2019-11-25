@@ -1,4 +1,7 @@
-export async function addItem(action, state, dispatch) {
+// TODO: maybe we should pass dispatch & state to asyncWatcher to not create circular dependencies
+import { dispatch, getState } from './provider.js'
+
+export async function addItem(action) {
   try {
     const item = await fetch('http://localhost:3000/items', {
       method: 'POST',
@@ -12,7 +15,7 @@ export async function addItem(action, state, dispatch) {
   }
 }
 
-export async function getItems(action, state, dispatch) {
+export async function getItems(action) {
   try {
     const items = await fetch('http://localhost:3000/items').then(res =>
       res.json()
@@ -23,7 +26,7 @@ export async function getItems(action, state, dispatch) {
   }
 }
 
-export async function toggleItem(action, state, dispatch) {
+export async function toggleItem(action) {
   try {
     const item = await fetch(`http://localhost:3000/items/${action.id}`, {
       method: 'PATCH',
@@ -36,7 +39,7 @@ export async function toggleItem(action, state, dispatch) {
   }
 }
 
-export async function deleteItem(action, state, dispatch) {
+export async function deleteItem(action) {
   try {
     await fetch(`http://localhost:3000/items/${action.id}`, {
       method: 'DELETE',
@@ -48,26 +51,26 @@ export async function deleteItem(action, state, dispatch) {
   }
 }
 
-export function failure(action, state) {
+export function failure(action) {
   alert(action.message)
 }
 
-export function asyncWatcher(action, state, dispatch) {
+export function asyncWatcher(action) {
   switch (action.type) {
     case 'ADD_ITEM':
-      addItem(action, state, dispatch)
+      addItem(action)
       break
     case 'GET_ITEMS':
-      getItems(action, state, dispatch)
+      getItems(action)
       break
     case 'TOGGLE_ITEM':
-      toggleItem(action, state, dispatch)
+      toggleItem(action)
       break
     case 'DELETE_ITEM':
-      deleteItem(action, state, dispatch)
+      deleteItem(action)
       break
     case 'FAILURE':
-      failure(action, state)
+      failure(action)
       break
   }
 }

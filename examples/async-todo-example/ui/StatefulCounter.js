@@ -1,4 +1,4 @@
-import { htmx } from '/htmx.js'
+import { render } from '/core.js'
 import { useState } from './useState.js'
 import { createOnMount } from './onMount.js'
 import { dispatch } from '../store/provider.js'
@@ -36,7 +36,7 @@ export const StatefulCounter = ({ id }) => {
     dispatch({ type: 'HIDE_SPINNER' })
   }
 
-  return htmx({})`
+  return render`
     <h1 id="title">Counter</h1>
     <pre id="${id}-count">${state.count}</pre>
 
