@@ -8,11 +8,10 @@ which is accessible through methods `connect` (for getting data) and `dispatch`
 
 # Usage
 
-To include **purity** in your project import its features through CDN:
+To include **Purity** in your project import its features through CDN:
 
 ```javascript
-import { createStore } from 'https://tatomyr.github.io/purity/factory.js'
-import { htmx } from 'https://tatomyr.github.io/purity/htmx.js'
+import { createStore } from 'https://tatomyr.github.io/purity/core.js'
 ```
 
 or download these files into your project's folder and import from in there.
@@ -20,13 +19,13 @@ or download these files into your project's folder and import from in there.
 In your application, you can declare components as bare functions. E. g.
 
 ```javascript
-const Component = props => `<div>${props.text}</div>`
+const Component = props => render`<div>${props.text}</div>`
 ```
 
 Then you can use the component inside an other one:
 
 ```javascript
-const OtherComponent = () => `
+const OtherComponent = () => render`
   <div>
     ...
     ${Component({ text: 'Hello World!' })}
@@ -56,7 +55,7 @@ To set up the store for your application,
 you have to implement a provider via `createStore` method.
 
 ```javascript
-import { createStore } from '/factory.js'
+import { createStore } from '/core.js'
 import { stateHandler } from './state-handler.js'
 import { asyncWatcher } from './async-handler.js'
 
@@ -91,16 +90,16 @@ Async handlers are just asynchronoys funcions
 and should be triggered when async watcher encounters a specific action:
 
 ```javascript
-async function someAction(action, state, dispatch) {
+async function someAction(action) {
   // Make API calls
   // Do asynchronous stuff
   // Dispatch other actions
 }
 
-function asyncWatcher(action, state, dispatch) {
+function asyncWatcher(action) {
   switch (action.type) {
     case 'SOME_ACTION':
-      return function someAction(action, state, dispatch)
+      return function someAction(action)
     default:
       return undefined
   }
@@ -169,18 +168,22 @@ the **rerenderer** replaces `innerHTML` of the **node** and attributes of a wrap
 This way the **rerenderer** could preserve text inputs cursor position, scrolling progress, etc.
 At the same time, it allows a programmer to fully control the updating process.
 
-<!-- TODO: Describe rerenderering flow -->
+DOM nodes get rerendered depending on how `id`s are placed across them. Basically Purity will rerender everything inside the closest common ancestor with an `id` defined on it. You can see the difference in the graph below (it's the [Mermaid](https://mermaidjs.github.io/#/) graph).
 
 ```mermaid
 graph TD
-  subgraph 2
-    A2 --> B2
-           C2 --> C2
+  subgraph State
+    state[$count: 0 -> 1 *]
   end
 
-  subgraph 1
-    A1 --> B1
-    A1 --> C1
+  subgraph Id
+    root2[#root] --> span2[span#count] --> count2[$count *] == rerender the nearest # ==> span2
+    root2 --> button2[button::click] == increment ==> state
+  end
+
+  subgraph NoId
+    root[#root] --> span[span] --> count[$count *] == rerender the nearest # ==> root
+    root --> button[button::click] == increment ==> state
   end
 ```
 
@@ -219,7 +222,7 @@ To serve the library locally on port 8081 run `bash bin/serve.sh`.
 To run unit tests use `bash bin/jest.sh` command from the project root.
 
 To update snapshots use `bash bin/update-jest.sh` instead.
-Please notice the auxiliary `__htmx__.js` and `__factory__.js` files created.
+Please notice the auxiliary `__htmx__.js` and `__core__.js` files created.
 Do not commit them.
 
 To show coverage report locally, run `open ./coverage/lcov-report/index.html`.

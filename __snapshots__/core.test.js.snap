@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`core 
+    should not change innerHTML when only attributes have changed in the wrapper tag
+    (input's value should remain the same)
+   1`] = `"<div id=\\"root\\"> <input id=\\"color\\" style=\\"color: red;\\"> <button> Apply color </button> </div>"`;
+
+exports[`core should bind an event 1`] = `"<button id=\\"root\\">Click me</button>"`;
+
+exports[`core should deal with a compound component 1`] = `"<div id=\\"root\\"> <h1 id=\\"title\\" style=\\"color: red;\\">TITLE</h1> <p id=\\"something\\">something</p> </div>"`;

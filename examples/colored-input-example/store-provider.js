@@ -1,4 +1,4 @@
-import { createStore } from '/factory.js'
+import { createStore } from '/core.js'
 
 const initialState = {
   color: 'black',

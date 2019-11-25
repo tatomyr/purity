@@ -1,6 +1,6 @@
 // TODO: implement asynchronously searchable list (use fake responses)
 
-import { render } from '/index.js'
+import { render } from '/core.js'
 import { connect, dispatch } from '../store/provider.js'
 import { types } from '../types.js'
 import { SuggestionsList } from './SuggestionsList.js'

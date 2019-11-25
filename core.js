@@ -1,5 +1,8 @@
 // Helpers
 const isEmpty = obj => !obj || !Object.keys(obj).length
+const pipe = (...funcs) => x => funcs.reduce(($, f) => f($), x)
+const filterFalsy = x => (x === undefined || x === null || x === false ? '' : x)
+const joinIfArray = x => (Array.isArray(x) ? x.join('') : x)
 
 /**
  * Store module factory that should be invoked once to create a single store with reactive state
@@ -75,9 +78,9 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     const changes = stateHandler(state, action)
     if (!isEmpty(changes)) {
       Object.assign(state, changes)
-      rerender()
+      rerender() // TODO: use debounce to batch multiple successing rerenders
     }
-    asyncWatcher(action, state, dispatch)
+    asyncWatcher(action)
   }
 
   return {
@@ -85,7 +88,57 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     dispatch,
     connect: component => ownProps =>
       component(Object.assign({}, state, ownProps)),
-    rerender,
     getState: () => state,
+    rerender,
   }
+}
+
+// Patterns
+const ARGS_RE = /__\[(\d+)\]__/gm
+const BOUND_EVENTS_RE = /::(\w+)\s*=\s*__\[(\d+)\]__/gm
+
+let purity_key = 0
+
+/**
+ * Tagged template to compute the html string from a string literal
+ * @params {[string parts], ...args} - string literal
+ * @returns a string that could be parsed as a valid HTML
+ */
+export const render = ([first, ...strings], ...args) => {
+  const precomputedString = strings.reduce(
+    ($, item, i) => `${$}__[${i}]__${item}`,
+    first
+  )
+
+  const bindEventHandlers = (_, event, index) => {
+    const key = `${purity_key}-${index}`
+    setTimeout(() => {
+      // Asynchronously bind event handlers after rendering everything to DOM
+      let element = document.querySelector(`*[data-purity_key="${key}"]`)
+      if (element) {
+        element[`on${event}`] = args[index]
+        element.removeAttribute('data-purity_key')
+        console.log('bind', key, '@', element.innerHTML.substring(0, 60))
+      }
+    })
+    return `data-purity_key="${key}"`
+  }
+
+  const stringToRender = precomputedString
+    .replace(BOUND_EVENTS_RE, bindEventHandlers)
+    .replace(ARGS_RE, (_, index) =>
+      pipe(filterFalsy, joinIfArray)(args[+index])
+    )
+    .trim()
+    .replace(/\n\s*/g, ' ') // FIXME: wouldn't it slow down too much? In the end of the day we don't really need this
+
+  purity_key++
+  setTimeout(() => {
+    // Clear purity_key after calculating each stringToRender
+    console.log('clear after', purity_key)
+    // console.groupEnd()
+    purity_key = 0
+  })
+
+  return stringToRender
 }

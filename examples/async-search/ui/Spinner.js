@@ -1,4 +1,4 @@
-import { render } from '/index.js'
+import { render } from '/core.js'
 import { connect, dispatch } from '../store/provider.js'
 
 export const Spinner = connect(

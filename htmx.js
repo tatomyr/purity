@@ -1,3 +1,5 @@
+// TODO: remove later on
+
 // Helpers
 const pipe = (...funcs) => x => funcs.reduce(($, f) => f($), x)
 const filterFalsy = x => (x === undefined || x === null || x === false ? '' : x)
@@ -62,46 +64,4 @@ export const htmx = components => ([first, ...strings], ...args) => {
     .trim()
   purity_key++
   return response
-}
-
-// FIXME: test this
-export const render = ([first, ...strings], ...args) => {
-  const precomputedHTMX = strings.reduce(
-    ($, item, i) => `${$}__[${i}]__${item}`,
-    first
-  )
-
-  const bindEventHandlers = (_, event, index) => {
-    const key = `${purity_key}-${index}`
-    setTimeout(() => {
-      // Asynchronously bind event handlers after rendering everything to DOM
-      let element = document.querySelector(`*[data-purity_key="${key}"]`)
-      if (element) {
-        element[`on${event}`] = args[index]
-        element.removeAttribute('data-purity_key')
-        console.log('bind', key, '@', element.innerHTML.substring(0, 60))
-      } else {
-        console.error(key)
-      }
-    })
-    return `data-purity_key="${key}"`
-  }
-
-  const stringToRender = precomputedHTMX
-    .replace(BOUND_EVENTS_RE, bindEventHandlers)
-    .replace(ARGS_RE, (_, index) => process(args[+index]))
-    .trim()
-    .replace(/\n\s*/g, ' ') // FIXME: wouldn't it slow down too much? In the end of the day we don't really need this
-
-  purity_key++ // FIXME: can we avoid this?
-  setTimeout(() => {
-    // Clear purity_key after calculating each stringToRender
-    console.log('clear after', purity_key)
-    // console.groupEnd()
-    purity_key = 0
-  })
-  // console.group()
-  console.log('render', stringToRender)
-
-  return stringToRender
 }
