@@ -203,11 +203,11 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 # Examples of usage
 
-- [Dead simple example](./examples/dead-simple-example/)
-- [Simple todo](./examples/simple-todo-example/)
-- [Asynchronous todo](./examples/async-todo-example/) (see [README](./examples/async-todo-example/README.md))
-- [Colored input](./examples/colored-input-example/)
-- [Stateful counters](./examples/use-state-example/)
+- [Dead simple example](./examples/dead-simple-example)
+- [Simple todo](./examples/simple-todo-example)
+- [Asynchronous todo](./examples/async-todo-example) (see [README](./examples/async-todo-example/README.md))
+- [Colored input](./examples/colored-input-example)
+- [Stateful counters](./examples/use-state-example)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
 - [Async search](TODO: make links accessible)
 
@@ -247,3 +247,8 @@ On Mac you can use this command as well:
 ```
 bash bin/check.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/Library/Sounds/Sosumi.aiff
 ```
+
+# Miscellaneous
+
+The library also includes a handful of algorithms from different sources, exported as ES modules to use with **Purity** or without.
+They can be found in the [lib/](./lib) folder.

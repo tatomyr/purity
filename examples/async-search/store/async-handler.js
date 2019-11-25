@@ -1,6 +1,6 @@
 import { dispatch, getState } from '../store/provider.js'
 import { types } from '../types.js'
-import { fakeEndpoint, delay } from '../helpers.js'
+import { fakeEndpoint } from '../helpers.js'
 
 async function getItems(action) {
   try {

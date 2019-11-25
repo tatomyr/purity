@@ -121,8 +121,6 @@ describe('core', () => {
     should not change innerHTML when only attributes have changed in the wrapper tag
     (input's value should remain the same)
   `, async () => {
-    // let dispatch = jest.fn()
-
     const handleClick = e => {
       store.dispatch({
         type: 'CHANGE_SOMETHING',
@@ -146,20 +144,8 @@ describe('core', () => {
     await delay(0)
     document.querySelector('#color').value = 'red'
     await delay(0)
-
-    // console.log(
-    //   document.querySelector('button').onclick,
-    //   document.querySelector('button').onclick === handleClick
-    // )
     document.querySelector('button').onclick()
     await delay(0)
-
-    // expect(dispatch).toHaveBeenCalledWith({
-    //   type: 'CHANGE_SOMETHING',
-    //   something: 'red',
-    // })
-    // store.dispatch({ type: 'CHANGE_SOMETHING', something: 'red' })
-
     expect(document.querySelector('#color').value).toEqual('red')
     expect(document.querySelector('#color').style.color).toEqual('red')
     expect(document.body.innerHTML).toMatchSnapshot()

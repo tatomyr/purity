@@ -26,5 +26,3 @@ export const fakeEndpoint = request =>
       resolve(items.filter(byName(request)))
     }, Math.ceil((Math.random() + Math.random() + Math.random()) * 1000))
   })
-
-export const delay = t => ({ then: resolve => setTimeout(resolve, t) })
