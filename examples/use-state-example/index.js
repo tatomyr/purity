@@ -1,6 +1,6 @@
 import { createStore } from '/core.js'
-import { App } from './App.js'
+import { Root } from './Root.js'
 
 export const { mount, rerender } = createStore(() => ({}))
 
-mount(App)
+mount(Root)

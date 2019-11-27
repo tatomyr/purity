@@ -3,26 +3,22 @@ import { useState } from './useState.js'
 import { Button } from './Button.js'
 
 export const StatefulCounter = ({ id }) => {
-  let [count, setCount] = useState(id)(0)
+  let count = useState(id)(0)
   const handleClick = e => {
     const {
       target: {
         dataset: { counter },
       },
     } = e
-    setCount({ inc: count + 1, dec: count - 1, reset: 0 }[counter])
-  }
-  const buttonProps = {
-    parentId: id,
-    handleClick,
+    count.set({ inc: count.get() + 1, dec: count.get() - 1, reset: 0 }[counter])
   }
 
   return render`
     <div id="${id}">
-      <pre id="${id}-count">${count}</pre>
-      ${Button({ ...buttonProps, action: 'inc', caption: 'Increment' })}
-      ${Button({ ...buttonProps, action: 'dec', caption: 'Decrement' })}
-      ${Button({ ...buttonProps, action: 'reset', caption: 'Reset' })}
+      <pre id="${id}-count">${count.get()}</pre>
+      ${Button({ action: 'inc', caption: 'Increment', handleClick })}
+      ${Button({ action: 'dec', caption: 'Decrement', handleClick })}
+      ${Button({ action: 'reset', caption: 'Reset', handleClick })}
     </div>
   `
 }

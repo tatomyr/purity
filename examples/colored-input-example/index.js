@@ -1,7 +1,19 @@
-import { render } from '/core.js'
-import { mount, connect, dispatch } from './store-provider.js'
+import { createStore, render } from '/core.js'
 
-const App = connect(
+const stateHandler = (state = { color: 'black' }, action = {}) => {
+  switch (action.type) {
+    case 'CHANGE_COLOR':
+      return { color: action.color }
+    case 'INIT':
+      return state
+    default:
+      return undefined
+  }
+}
+
+const { mount, connect, dispatch } = createStore(stateHandler)
+
+const Root = connect(
   ({ color }) => render`
     <div id="root">
       <input
@@ -17,4 +29,4 @@ const App = connect(
   `
 )
 
-mount(App)
+mount(Root)

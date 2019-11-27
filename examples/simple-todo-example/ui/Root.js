@@ -3,7 +3,7 @@ import { connect } from '../store/provider.js'
 import { ListItem } from './ListItem.js'
 import { InputForm } from './InputForm.js'
 
-export const App = connect(
+export const Root = connect(
   ({ items, input }) => render`
     <div id="root">
       <h1 id="title">The List (${items.length})</h1>

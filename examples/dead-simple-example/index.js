@@ -1,7 +1,7 @@
 import { render } from '/core.js'
 import { mount, connect, dispatch } from './store-provider.js'
 
-const App = connect(
+const Root = connect(
   ({ count }) => render`
     <div id="root">
       <h1>Counter</h1>
@@ -19,4 +19,4 @@ const App = connect(
   `
 )
 
-mount(App)
+mount(Root)
