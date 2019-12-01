@@ -8,10 +8,10 @@ which is accessible through methods `connect` (for getting data) and `dispatch`
 
 # Usage
 
-To include **Purity** in your project import its features through CDN:
+To include **Purity** in your project import its features through CDN (make sure your root script injected in html has [type="module"]):
 
 ```javascript
-import { createStore } from 'https://tatomyr.github.io/purity/core.js'
+import { createStore, render } from 'https://tatomyr.github.io/purity/core.js'
 ```
 
 or download these files into your project's folder and import from in there.
