@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start testing server
-npx static-server -p 8085 &
+npx static-server -p 8085 -c "*" &
 # Run tests with Cypress
 npx cypress run --config baseUrl=http://localhost:8085
 # Catch the most recent command response

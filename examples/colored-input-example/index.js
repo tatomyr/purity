@@ -1,18 +1,30 @@
-import { mount, connect } from './store-provider.js'
+import { createStore, render } from '/core.js'
 
-const App = connect(
-  ({ color }) => `
+const stateHandler = (state = { color: 'black' }, action = {}) => {
+  switch (action.type) {
+    case 'CHANGE_COLOR':
+      return { color: action.color }
+    case 'INIT':
+      return state
+    default:
+      return undefined
+  }
+}
+
+const { mount, connect, dispatch } = createStore(stateHandler)
+
+const Root = connect(
+  ({ color }) => render`
     <div id="root">
       <input
         id="color"
         style="color: ${color};"
-        onkeyup="dispatch({
-          type: 'CHANGE_COLOR',
-          color: event.target.value
-        })"
+        ::keyup=${e => {
+          dispatch({ type: 'CHANGE_COLOR', color: e.target.value })
+        }}
       />
     </div>
   `
 )
 
-mount(App)
+mount(Root)

@@ -1,4 +1,4 @@
 import { mount } from './store/provider.js'
-import { App } from './ui/App.js'
+import { Root } from './ui/Root.js'
 
-mount(App)
+mount(Root)

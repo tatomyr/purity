@@ -8,5 +8,5 @@ export const useState = id => initial => {
     state[id] = newState
     rerender()
   }
-  return [state[id], setState]
+  return { get: () => state[id], set: setState }
 }

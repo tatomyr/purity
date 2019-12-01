@@ -1,4 +1,4 @@
-import { createStore } from '/factory.js'
+import { createStore } from '/core.js'
 
 const initialState = {
   count: 0,
@@ -20,5 +20,3 @@ export const stateHandler = (state = initialState, action = {}) => {
 }
 
 export const { mount, connect, dispatch } = createStore(stateHandler)
-
-window.dispatch = dispatch

@@ -8,11 +8,10 @@ which is accessible through methods `connect` (for getting data) and `dispatch`
 
 # Usage
 
-To include **purity** in your project import its features through CDN:
+To include **Purity** in your project import its features through CDN:
 
 ```javascript
-import { createStore } from 'https://tatomyr.github.io/purity/factory.js'
-import { htmx } from 'https://tatomyr.github.io/purity/htmx.js'
+import { createStore } from 'https://tatomyr.github.io/purity/core.js'
 ```
 
 or download these files into your project's folder and import from in there.
@@ -20,13 +19,15 @@ or download these files into your project's folder and import from in there.
 In your application, you can declare components as bare functions. E. g.
 
 ```javascript
-const Component = props => `<div>${props.text}</div>`
+const Component = props => render`<div>${props.text}</div>`
 ```
+
+> Please note, in order to use some handy features (like event bindings) we have to wrap a component's output into the `render` tag.
 
 Then you can use the component inside an other one:
 
 ```javascript
-const OtherComponent = () => `
+const OtherComponent = () => render`
   <div>
     ...
     ${Component({ text: 'Hello World!' })}
@@ -35,7 +36,19 @@ const OtherComponent = () => `
 `
 ```
 
-Also, you can use the `connect` method to pass all the data from the shared application state like so:
+You can bind event handlers with double colon notation:
+
+```javascript
+const Component = () => render`
+  <button
+    ::click=${e => console.log(e.target)}
+  >
+    Click me
+  </button>
+`
+```
+
+You can use the `connect` method to pass all the data from the shared application state:
 
 ```javascript
 import { connect } from '/store-provider.js'
@@ -56,18 +69,14 @@ To set up the store for your application,
 you have to implement a provider via `createStore` method.
 
 ```javascript
-import { createStore } from '/factory.js'
+import { createStore } from '/core.js'
 import { stateHandler } from './state-handler.js'
 import { asyncWatcher } from './async-handler.js'
 
-export const { connect, dispatch, mount } = createStore(
+export const { mount, dispatch, connect } = createStore(
   stateHandler,
   asyncWatcher
 )
-// The last step you have to mount your dispatch function somewhere
-// … to be able to access it in components
-// One of the options apparently is the 'window' object
-window.dispatch = dispatch
 ```
 
 You have to declare state handler, where should be at least one case of type 'INIT'
@@ -91,16 +100,16 @@ Async handlers are just asynchronoys funcions
 and should be triggered when async watcher encounters a specific action:
 
 ```javascript
-async function someAction(action, state, dispatch) {
+async function someAction(action) {
   // Make API calls
   // Do asynchronous stuff
   // Dispatch other actions
 }
 
-function asyncWatcher(action, state, dispatch) {
+function asyncWatcher(action) {
   switch (action.type) {
     case 'SOME_ACTION':
-      return function someAction(action, state, dispatch)
+      return function someAction(action)
     default:
       return undefined
   }
@@ -118,44 +127,6 @@ mount(App)
 Make sure your root component has the same `id` as the root defined in `index.html`,
 and you have connected your script with `<script type="module" src="..."></script>`.
 
-# HTMX
-
-> EXPERIMENTAL FEATURE
-
-> You can write JSX-like syntax by wrapping a string literal into `htmx(components)` tagged template.
-> For example you can write:
-
-```javascript
-import { htmx } from '/modules/htmx.js'
-import { Component } from './Component.js'
-
-const OtherComponent = () => htmx({ Component })`
- <div>
-   ...
-   <Component text=${'Hello World!'} />
-   ...
- </div>
-`
-```
-
-> Each prop declaration should follow this pattern: `prop=${value}`.
-
-> Binding event handlers is also possible with **htmx**.
-> You can write simething like that:
-
-```javascript
-const Component = () => htmx({})`
-  <button
-    ::click=${e => console.log(e.target)}
-  >
-    Click me
-  </button>
-`
-```
-
-> Please take into account that not all possible variants could be parsed at the moment.
-> E. g. so far we only support autoclosing components.
-
 # Virtual dom
 
 You can think of your application as a tree where each tag with the `id` attribute is represented by a **node**.
@@ -167,19 +138,47 @@ the **rerenderer** replaces `innerHTML` of the **node** and attributes of a wrap
 This way the **rerenderer** could preserve text inputs cursor position, scrolling progress, etc.
 At the same time, it allows a programmer to fully control the updating process.
 
-<!-- TODO: Describe rerenderering flow -->
+DOM nodes get rerendered depending on how `id`s are placed across them. Basically Purity will rerender everything inside the closest common ancestor with an `id` defined on it. You can see the difference in the graph below (it's the [Mermaid](https://mermaidjs.github.io/#/) graph).
 
 ```mermaid
 graph TD
-  subgraph 2
-    A2 --> B2
-           C2 --> C2
+  subgraph State
+    state[$count: 0 -> 1 *]
   end
 
-  subgraph 1
-    A1 --> B1
-    A1 --> C1
+  subgraph Id
+    root2[#root] --> span2[span#count] --> count2[$count *] == rerender the nearest # ==> span2
+    root2 --> button2[button::click] == increment ==> state
   end
+
+  subgraph NoId
+    root[#root] --> span[span] --> count[$count *] == rerender the nearest # ==> root
+    root --> button[button::click] == increment ==> state
+  end
+```
+
+# Registering async handlers
+
+You can use either `switch - case` notation:
+
+```js
+export function asyncWatcher(action, dispatch, state) {
+  switch (action.type) {
+    case types.GET_ITEMS__STARTED:
+      getItems(action, dispatch, state)
+      break
+  }
+}
+```
+
+or the `register-async` utilite:
+
+```js
+import { registerAsync } from '/register-async.js'
+
+export const asyncWatcher = registerAsync({
+  [types.GET_ITEMS__STARTED]: getItems,
+})
 ```
 
 # Tips
@@ -188,6 +187,7 @@ graph TD
 - Wrap every component that you want to be rerendered independently with a tag with an unique id.
 - Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
 - A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **createStore** function (see [example](./simple-todo-example/ui/StatefulCounter.js)).
+- The library doesn't sanitize your inputs. Please do it by yourself or use `/lib/sanitize.js` module.
 
 # Credits
 
@@ -198,12 +198,13 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 # Examples of usage
 
-- [Dead simple example](./examples/dead-simple-example/)
-- [Simple todo](./examples/simple-todo-example/)
-- [Asynchronous todo](./examples/async-todo-example/) (see [README](./examples/async-todo-example/README.md))
-- [Colored input](./examples/colored-input-example/)
-- [Stateful counters](./examples/use-state-example/)
+- [Dead simple example](./examples/dead-simple-example)
+- [Simple todo](./examples/simple-todo-example)
+- [Asynchronous todo](./examples/async-todo-example) (see [README](./examples/async-todo-example/README.md))
+- [Colored input](./examples/colored-input-example)
+- [Stateful counters](./examples/use-state-example)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
+- [Async search](TODO: make links accessible)
 
 You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples`.
 
@@ -216,8 +217,8 @@ To serve the library locally on port 8081 run `bash bin/serve.sh`.
 To run unit tests use `bash bin/jest.sh` command from the project root.
 
 To update snapshots use `bash bin/update-jest.sh` instead.
-Please notice the auxiliary `__htmx__.js` and `__factory__.js` files created.
-Do not commit them.
+Please notice the auxiliary `__core__.js` file created.
+Do not commit it.
 
 To show coverage report locally, run `open ./coverage/lcov-report/index.html`.
 
@@ -241,3 +242,8 @@ On Mac you can use this command as well:
 ```
 bash bin/check.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/Library/Sounds/Sosumi.aiff
 ```
+
+# Miscellaneous
+
+The library also includes a handful of algorithms from different sources, exported as ES modules to use with **Purity** or without.
+They can be found in the [lib/](./lib) folder.

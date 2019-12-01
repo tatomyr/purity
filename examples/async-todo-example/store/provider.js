@@ -1,4 +1,4 @@
-import { createStore } from '/factory.js'
+import { createStore } from '/core.js'
 import { stateHandler } from './state-handler.js'
 import { asyncWatcher } from './async-handler.js'
 
@@ -7,6 +7,4 @@ export const { mount, connect, dispatch, rerender, getState } = createStore(
   asyncWatcher
 )
 
-window.dispatch = dispatch
-window.rerender = rerender
 window.getState = getState

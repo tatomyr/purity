@@ -1,28 +1,30 @@
-const { createStore } = require('./__factory__.js')
+const { createStore, render } = require('./__core__.js')
 
-const SimpleComponent = () => `<div id="root">SOMETHING</div>`
+const delay = t => ({ then: resolve => setTimeout(resolve, t) })
+
+const SimpleComponent = () => render`<div id="root">SOMETHING</div>`
 const ComplexComponent = ({ something }) =>
-  `
+  render`
     <div id="root">
       <h1 id="title">TITLE</h1>
       <p id="something">${something}</p>
     </div>
-  `.trim()
-const DymamicComponent = ({ something }) =>
   `
+const DymamicComponent = ({ something }) =>
+  render`
     <div id="root">
       <h1 id="title">TITLE</h1>
       <p id="something" title="${something}">${something}</p>
     </div>
-  `.trim()
-const ConditionalComponent = ({ something }) =>
   `
+const ConditionalComponent = ({ something }) =>
+  render`
     <div id="root">
-      ${!!something ? null : `<p id="something">${something}</p>`}
+      ${something && render`<p id="something">${something}</p>`}
     </div>
-  `.trim()
+  `
 
-describe('factory', () => {
+describe('core', () => {
   let store
   beforeEach(() => {
     defaultState = {
@@ -90,12 +92,12 @@ describe('factory', () => {
   })
   it('should deal with a compound component', () => {
     const InnerComponent = store.connect(
-      ({ something, style }) => `
+      ({ something, style }) => render`
         <h1 id="title" style="${style}">TITLE</h1>
         <p id="something">${something}</p>
       `
     )
-    const CompundComponent = () => `
+    const CompundComponent = () => render`
       <div id="root">
         ${InnerComponent({ style: 'color: red;' })}
       </div>
@@ -103,29 +105,62 @@ describe('factory', () => {
     store.mount(CompundComponent)
     expect(document.body.innerHTML).toMatchSnapshot()
   })
+  it('should bind an event', async () => {
+    let eventHandler = jest.fn()
+    const ClickableComponent = () => render`
+      <button id="root" ::click=${eventHandler}>Click me</button>
+    `
+    store.mount(ClickableComponent)
+    // Awaiting for the eventHandler to be set in setTimeout
+    await delay(0)
+    expect(document.body.innerHTML).toMatchSnapshot()
+    document.querySelector('button#root').click()
+    expect(eventHandler).toHaveBeenCalled()
+  })
   it(`
     should not change innerHTML when only attributes have changed in the wrapper tag
     (input's value should remain the same)
-  `, () => {
+  `, async () => {
+    const handleClick = e => {
+      store.dispatch({
+        type: 'CHANGE_SOMETHING',
+        something: document.querySelector('#color').value,
+      })
+    }
+
     const Component = store.connect(
-      ({ something }) => `
-      <div id="root">
-        <input id="color" style="color: ${something};" />
-        <button
-          onclick="dispatch({
-            type: 'CHANGE_COLOR',
-            color: document.querySelector('#color').value
-          })"
-        >
-          Apply color
-        </button>
-      </div>
-    `
+      ({ something }) => render`
+        <div id="root">
+          <input id="color" style="color: ${something};" />
+          <button
+            ::click=${handleClick}
+          >
+            Apply color
+          </button>
+        </div>
+      `
     )
     store.mount(Component)
+    await delay(0)
     document.querySelector('#color').value = 'red'
-    store.dispatch({ type: 'CHANGE_SOMETHING', something: 'red' })
-    expect(document.body.innerHTML).toMatchSnapshot()
+    await delay(0)
+    document.querySelector('button').onclick()
+    await delay(0)
     expect(document.querySelector('#color').value).toEqual('red')
+    expect(document.querySelector('#color').style.color).toEqual('red')
+    expect(document.body.innerHTML).toMatchSnapshot()
+  })
+  it('should handle conditional rendering & process arrays', () => {
+    const Component = ({ maybeArr }) => render`
+      <div id="root">
+        <ul>
+          ${!!maybeArr && maybeArr.map(item => render`<li>${item}</li>`)}
+        </ul>
+      </div>
+    `
+    store.mount(() => Component({}))
+    expect(document.body.innerHTML).toMatchSnapshot()
+    store.mount(() => Component({ maybeArr: ['🍎', '🍌', '🍰'] }))
+    expect(document.body.innerHTML).toMatchSnapshot()
   })
 })
