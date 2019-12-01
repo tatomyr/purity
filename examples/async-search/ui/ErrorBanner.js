@@ -9,7 +9,9 @@ export const ErrorBanner = connect(
         render`
           <pre
             class="error-banner"
-            ::click=${() => dispatch({ type: types.CLEAR_MESSAGE })}
+            ::click=${() => {
+              dispatch({ type: types.CLEAR_MESSAGE })
+            }}
           >
             ${error}
           </pre>

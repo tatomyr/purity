@@ -1,8 +1,7 @@
-import { dispatch, getState } from '../store/provider.js'
 import { types } from '../types.js'
 import { fakeEndpoint } from '../helpers.js'
 
-async function getItems(action) {
+async function getItems(action, dispatch, state) {
   try {
     if (!action.query) {
       dispatch({ type: types.GET_ITEMS_CANCELLED })
@@ -16,11 +15,11 @@ async function getItems(action) {
   }
 }
 
-export function asyncWatcher(action) {
+export function asyncWatcher(action, dispatch, state) {
   console.info(action)
   switch (action.type) {
     case types.GET_ITEMS__STARTED:
-      getItems(action)
+      getItems(action, dispatch, state)
       break
   }
 }

@@ -41,13 +41,13 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     // Top-level component should always have an id equal to parent element's id
     const rootId = domNodesMap.keys().next().value
     document.getElementById(rootId).replaceWith(domNodesMap.get(rootId).node)
-    asyncWatcher({ type: 'INIT' }, state, dispatch)
+    asyncWatcher({ type: 'INIT' }, dispatch, state)
   }
 
   function updateAttributes(element, newNode) {
-    for (const attr of element.attributes) {
-      if (attr.name !== 'id') {
-        element.removeAttribute(attr)
+    for (const { name } of element.attributes) {
+      if (name !== 'id') {
+        element.removeAttribute(name)
       }
     }
     for (const { name, value } of newNode.node.attributes) {
@@ -80,7 +80,7 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
       Object.assign(state, changes)
       rerender() // TODO: use debounce to batch multiple successing rerenders
     }
-    asyncWatcher(action)
+    asyncWatcher(action, dispatch, state)
   }
 
   return {
@@ -88,8 +88,8 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     dispatch,
     connect: component => ownProps =>
       component(Object.assign({}, state, ownProps)),
-    getState: () => state,
     rerender,
+    getState: () => state,
   }
 }
 

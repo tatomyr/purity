@@ -150,4 +150,17 @@ describe('core', () => {
     expect(document.querySelector('#color').style.color).toEqual('red')
     expect(document.body.innerHTML).toMatchSnapshot()
   })
+  it('should handle conditional rendering & process arrays', () => {
+    const Component = ({ maybeArr }) => render`
+      <div id="root">
+        <ul>
+          ${!!maybeArr && maybeArr.map(item => render`<li>${item}</li>`)}
+        </ul>
+      </div>
+    `
+    store.mount(() => Component({}))
+    expect(document.body.innerHTML).toMatchSnapshot()
+    store.mount(() => Component({ maybeArr: ['🍎', '🍌', '🍰'] }))
+    expect(document.body.innerHTML).toMatchSnapshot()
+  })
 })

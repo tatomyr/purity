@@ -8,3 +8,7 @@ exports[`core
 exports[`core should bind an event 1`] = `"<button id=\\"root\\">Click me</button>"`;
 
 exports[`core should deal with a compound component 1`] = `"<div id=\\"root\\"> <h1 id=\\"title\\" style=\\"color: red;\\">TITLE</h1> <p id=\\"something\\">something</p> </div>"`;
+
+exports[`core should handle conditional rendering & process arrays 1`] = `"<div id=\\"root\\"> <ul> </ul> </div>"`;
+
+exports[`core should handle conditional rendering & process arrays 2`] = `"<div id=\\"root\\"> <ul> <li>🍎</li><li>🍌</li><li>🍰</li> </ul> </div>"`;

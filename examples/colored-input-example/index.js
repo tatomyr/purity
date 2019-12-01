@@ -19,11 +19,9 @@ const Root = connect(
       <input
         id="color"
         style="color: ${color};"
-        ::keyup=${e =>
-          dispatch({
-            type: 'CHANGE_COLOR',
-            color: e.target.value,
-          })}
+        ::keyup=${e => {
+          dispatch({ type: 'CHANGE_COLOR', color: e.target.value })
+        }}
       />
     </div>
   `

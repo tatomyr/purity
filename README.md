@@ -22,6 +22,8 @@ In your application, you can declare components as bare functions. E. g.
 const Component = props => render`<div>${props.text}</div>`
 ```
 
+> Please note, in order to use some handy features (like event bindings) we have to wrap a component's output into the `render` tag.
+
 Then you can use the component inside an other one:
 
 ```javascript
@@ -34,7 +36,19 @@ const OtherComponent = () => render`
 `
 ```
 
-Also, you can use the `connect` method to pass all the data from the shared application state like so:
+You can bind event handlers with double colon notation:
+
+```javascript
+const Component = () => render`
+  <button
+    ::click=${e => console.log(e.target)}
+  >
+    Click me
+  </button>
+`
+```
+
+You can use the `connect` method to pass all the data from the shared application state:
 
 ```javascript
 import { connect } from '/store-provider.js'
@@ -59,14 +73,10 @@ import { createStore } from '/core.js'
 import { stateHandler } from './state-handler.js'
 import { asyncWatcher } from './async-handler.js'
 
-export const { connect, dispatch, mount } = createStore(
+export const { mount, dispatch, connect } = createStore(
   stateHandler,
   asyncWatcher
 )
-// The last step you have to mount your dispatch function somewhere
-// … to be able to access it in components
-// One of the options apparently is the 'window' object
-window.dispatch = dispatch
 ```
 
 You have to declare state handler, where should be at least one case of type 'INIT'
@@ -117,46 +127,6 @@ mount(App)
 Make sure your root component has the same `id` as the root defined in `index.html`,
 and you have connected your script with `<script type="module" src="..."></script>`.
 
-# HTMX
-
-<!-- TODO: describe `render` function. Drop `htmx` -->
-
-> EXPERIMENTAL FEATURE
-
-> You can write JSX-like syntax by wrapping a string literal into `htmx(components)` tagged template.
-> For example you can write:
-
-```javascript
-import { htmx } from '/modules/htmx.js'
-import { Component } from './Component.js'
-
-const OtherComponent = () => htmx({ Component })`
- <div>
-   ...
-   <Component text=${'Hello World!'} />
-   ...
- </div>
-`
-```
-
-> Each prop declaration should follow this pattern: `prop=${value}`.
-
-> Binding event handlers is also possible with **htmx**.
-> You can write simething like that:
-
-```javascript
-const Component = () => htmx({})`
-  <button
-    ::click=${e => console.log(e.target)}
-  >
-    Click me
-  </button>
-`
-```
-
-> Please take into account that not all possible variants could be parsed at the moment.
-> E. g. so far we only support autoclosing components.
-
 # Virtual dom
 
 You can think of your application as a tree where each tag with the `id` attribute is represented by a **node**.
@@ -187,12 +157,37 @@ graph TD
   end
 ```
 
+# Registering async handlers
+
+You can use either `switch - case` notation:
+
+```js
+export function asyncWatcher(action, dispatch, state) {
+  switch (action.type) {
+    case types.GET_ITEMS__STARTED:
+      getItems(action, dispatch, state)
+      break
+  }
+}
+```
+
+or the `register-async` utilite:
+
+```js
+import { registerAsync } from '/register-async.js'
+
+export const asyncWatcher = registerAsync({
+  [types.GET_ITEMS__STARTED]: getItems,
+})
+```
+
 # Tips
 
 - Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
 - Wrap every component that you want to be rerendered independently with a tag with an unique id.
 - Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
 - A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **createStore** function (see [example](./simple-todo-example/ui/StatefulCounter.js)).
+- The library doesn't sanitize your inputs. Please do it by yourself or use `/lib/sanitize.js` module.
 
 # Credits
 
@@ -222,8 +217,8 @@ To serve the library locally on port 8081 run `bash bin/serve.sh`.
 To run unit tests use `bash bin/jest.sh` command from the project root.
 
 To update snapshots use `bash bin/update-jest.sh` instead.
-Please notice the auxiliary `__htmx__.js` and `__core__.js` files created.
-Do not commit them.
+Please notice the auxiliary `__core__.js` file created.
+Do not commit it.
 
 To show coverage report locally, run `open ./coverage/lcov-report/index.html`.
 

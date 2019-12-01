@@ -8,13 +8,25 @@ const Root = connect(
       <div id="count">${count}</div>
       <button
         id="inc"
-        ::click=${e => dispatch({ type: 'INCREMENT' })}
-      >⊕</button>
+        ::click=${e => {
+          dispatch({ type: 'INCREMENT' })
+        }}
+      >
+        ⊕
+      </button>
       <button
         id="dec"
-        ::click=${e => dispatch({ type: 'DECREMENT' })}
-      >⊖</button>
-      <button id="reset" ::click=${e => dispatch({ type: 'RESET' })}>⊗</button>
+        ::click=${e => {
+          dispatch({ type: 'DECREMENT' })
+        }}
+      >
+        ⊖
+      </button>
+      <button id="reset" ::click=${e => {
+        dispatch({ type: 'RESET' })
+      }}>
+        ⊗
+      </button>
     </div>
   `
 )

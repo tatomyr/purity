@@ -1,5 +1,5 @@
 .DS_Store
-__htmx__.js
 __core__.js
 coverage/
 cypress/videos/
+cypress/screenshots/

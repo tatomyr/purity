@@ -6,20 +6,14 @@ export const InputForm = () => render`
     id="input-form"
     ::submit=${e => {
       e.preventDefault()
-      dispatch({
-        type: 'ADD_ITEM',
-        text: e.target.text.value,
-      })
+      dispatch({ type: 'ADD_ITEM', text: e.target.text.value })
     }}
   >
     <input
       name="text"
       placeholder="Enter text"
       ::keyup=${e => {
-        dispatch({
-          type: 'CHANGE_INPUT',
-          input: e.target.value,
-        })
+        dispatch({ type: 'CHANGE_INPUT', input: e.target.value })
       }}
     />
     <button type="submit">Add</button>

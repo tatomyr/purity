@@ -7,6 +7,4 @@ export const { mount, connect, dispatch, rerender, getState } = createStore(
   asyncWatcher
 )
 
-window.dispatch = dispatch
-window.rerender = rerender
 window.getState = getState
