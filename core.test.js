@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 const { createStore, render } = require('./__core__.js')
 
 const delay = t => ({ then: resolve => setTimeout(resolve, t) })
