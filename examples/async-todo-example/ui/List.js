@@ -1,4 +1,4 @@
-import { connect } from '../store/provider.js'
+import { connect, dispatch } from '../store/provider.js'
 import { ListItem } from './ListItem.js'
 import { createOnMount } from './onMount.js'
 

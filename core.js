@@ -78,7 +78,7 @@ export const createStore = (stateHandler, asyncWatcher = () => {}) => {
     const changes = stateHandler(state, action)
     if (!isEmpty(changes)) {
       Object.assign(state, changes)
-      rerender() // TODO: use debounce to batch multiple successing rerenders
+      rerender() // TODO: maybe use debounce to batch multiple successing rerenders?
     }
     asyncWatcher(action, dispatch, state)
   }
@@ -118,7 +118,6 @@ export const render = ([first, ...strings], ...args) => {
       if (element) {
         element[`on${event}`] = args[index]
         element.removeAttribute('data-purity_key')
-        console.log('bind', key, '@', element.innerHTML.substring(0, 60))
       }
     })
     return `data-purity_key="${key}"`
@@ -135,8 +134,6 @@ export const render = ([first, ...strings], ...args) => {
   purity_key++
   setTimeout(() => {
     // Clear purity_key after calculating each stringToRender
-    console.log('clear after', purity_key)
-    // console.groupEnd()
     purity_key = 0
   })
 

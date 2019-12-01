@@ -100,7 +100,7 @@ Async handlers are just asynchronoys funcions
 and should be triggered when async watcher encounters a specific action:
 
 ```javascript
-async function someAction(action) {
+async function someAction(action, dispatch, state) {
   // Make API calls
   // Do asynchronous stuff
   // Dispatch other actions
@@ -109,11 +109,21 @@ async function someAction(action) {
 function asyncWatcher(action) {
   switch (action.type) {
     case 'SOME_ACTION':
-      return function someAction(action)
+      return function someAction(action, dispatch, state)
     default:
       return undefined
   }
 }
+```
+
+Also you can use `register-async` utility:
+
+```js
+import { registerAsync } from '/register-async.js'
+
+export const asyncWatcher = registerAsync({
+  SOME_ACTION: someAction,
+})
 ```
 
 Finally you have to mount your app to the DOM:
@@ -155,30 +165,6 @@ graph TD
     root[#root] --> span[span] --> count[$count *] == rerender the nearest # ==> root
     root --> button[button::click] == increment ==> state
   end
-```
-
-# Registering async handlers
-
-You can use either `switch - case` notation:
-
-```js
-export function asyncWatcher(action, dispatch, state) {
-  switch (action.type) {
-    case types.GET_ITEMS__STARTED:
-      getItems(action, dispatch, state)
-      break
-  }
-}
-```
-
-or the `register-async` utilite:
-
-```js
-import { registerAsync } from '/register-async.js'
-
-export const asyncWatcher = registerAsync({
-  [types.GET_ITEMS__STARTED]: getItems,
-})
 ```
 
 # Tips
