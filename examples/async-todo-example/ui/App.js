@@ -11,7 +11,7 @@ export const App = () => render`
       <a
         href="#"
         ::click=${() => {
-          setTimeout(() => rerender())
+          setTimeout(rerender)
         }}
       >
         Items List
@@ -19,7 +19,7 @@ export const App = () => render`
       <a
         href="#counter"
         ::click=${() => {
-          setTimeout(() => rerender())
+          setTimeout(rerender)
         }}
       >
         Stateful Counter

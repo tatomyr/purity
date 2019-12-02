@@ -128,7 +128,9 @@ export const render = ([first, ...strings], ...args) => {
     .replace(BOUND_EVENTS_RE, bindEventHandlers)
     .replace(ARGS_RE, processArgs)
     .trim()
-    .replace(/\n\s*/g, ' ') // FIXME: wouldn't it slow down too much? In the end of the day we don't really need this
+    // FIXME: wouldn't it slow down too much? In the end of the day we don't really need this
+    .replace(/\n\s*</g, '<')
+    .replace(/>\n\s*/g, '>')
 
   purity_key++
   setTimeout(() => {
