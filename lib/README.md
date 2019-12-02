@@ -63,3 +63,15 @@ import { delay } from 'https://tatomyr.github.io/purity/lib/delay.js'
 delay(<time>)
 …
 ```
+
+## Pipe
+
+Usage:
+
+```javascript
+import { pipe } from 'https://tatomyr.github.io/purity/lib/pipe.js'
+
+…
+pipe(x => x ** 2, x => x / 2)(3) // 3.5
+…
+```

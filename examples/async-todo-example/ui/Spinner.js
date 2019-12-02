@@ -1,10 +1,11 @@
+import { render } from '/core.js'
 import { connect } from '../store/provider.js'
 
 export const Spinner = connect(
-  ({ spinner }) => `
+  ({ spinner }) => render`
     <div
       id="spinner"
-      class="${spinner ? 'visible' : ''}"
+      ${spinner && 'class="visible"'}
     ></div>
   `
 )

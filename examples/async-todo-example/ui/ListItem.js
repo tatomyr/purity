@@ -1,4 +1,7 @@
-export const ListItem = ({ id, text, checked, justAdded }) => `
+import { render } from '/core.js'
+import { dispatch } from '../store/provider.js'
+
+export const ListItem = ({ id, text, checked, justAdded }) => render`
   <li
     id="${id}"
     class="${checked ? 'checked' : ''} ${justAdded ? 'highlighted' : ''}"
@@ -7,16 +10,16 @@ export const ListItem = ({ id, text, checked, justAdded }) => `
     <input
       type="checkbox"
       ${checked ? 'checked' : ''}
-      onchange="dispatch({
-        type: 'TOGGLE_ITEM',
-        id: '${id}',
-        checked: event.target.checked
-      })"
+      ::change=${({ target: { checked } }) => {
+        dispatch({ type: 'TOGGLE_ITEM', id, checked })
+      }}
     />
     <span>${text}</span>
     <button
       type="button"
-      onclick="dispatch({ type: 'DELETE_ITEM', id: '${id}' })"
+      ::click=${e => {
+        dispatch({ type: 'DELETE_ITEM', id })
+      }}
     >
       x
     </button>

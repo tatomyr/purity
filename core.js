@@ -1,6 +1,5 @@
 // Helpers
 const isEmpty = obj => !obj || !Object.keys(obj).length
-const pipe = (...funcs) => x => funcs.reduce(($, f) => f($), x)
 const filterFalsy = x => (x === undefined || x === null || x === false ? '' : x)
 const joinIfArray = x => (Array.isArray(x) ? x.join('') : x)
 
@@ -123,11 +122,11 @@ export const render = ([first, ...strings], ...args) => {
     return `data-purity_key="${key}"`
   }
 
+  const processArgs = (_, index) => joinIfArray(filterFalsy(args[+index]))
+
   const stringToRender = precomputedString
     .replace(BOUND_EVENTS_RE, bindEventHandlers)
-    .replace(ARGS_RE, (_, index) =>
-      pipe(filterFalsy, joinIfArray)(args[+index])
-    )
+    .replace(ARGS_RE, processArgs)
     .trim()
     .replace(/\n\s*/g, ' ') // FIXME: wouldn't it slow down too much? In the end of the day we don't really need this
 
