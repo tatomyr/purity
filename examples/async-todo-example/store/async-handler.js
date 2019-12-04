@@ -1,7 +1,6 @@
-// TODO: maybe we should pass dispatch & state to asyncWatcher to not create circular dependencies
-import { dispatch, getState } from './provider.js'
+import { registerAsync } from '/register-async.js'
 
-export async function addItem(action) {
+export async function addItem(action, dispatch, state) {
   try {
     const item = await fetch('http://localhost:3000/items', {
       method: 'POST',
@@ -15,7 +14,7 @@ export async function addItem(action) {
   }
 }
 
-export async function getItems(action) {
+export async function getItems(action, dispatch, state) {
   try {
     const items = await fetch('http://localhost:3000/items').then(res =>
       res.json()
@@ -26,8 +25,9 @@ export async function getItems(action) {
   }
 }
 
-export async function toggleItem(action) {
+export async function toggleItem(action, dispatch, state) {
   try {
+    console.log(action)
     const item = await fetch(`http://localhost:3000/items/${action.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -39,7 +39,7 @@ export async function toggleItem(action) {
   }
 }
 
-export async function deleteItem(action) {
+export async function deleteItem(action, dispatch, state) {
   try {
     await fetch(`http://localhost:3000/items/${action.id}`, {
       method: 'DELETE',
@@ -51,26 +51,14 @@ export async function deleteItem(action) {
   }
 }
 
-export function failure(action) {
+export function failure(action, dispatch, state) {
   alert(action.message)
 }
 
-export function asyncWatcher(action) {
-  switch (action.type) {
-    case 'ADD_ITEM':
-      addItem(action)
-      break
-    case 'GET_ITEMS':
-      getItems(action)
-      break
-    case 'TOGGLE_ITEM':
-      toggleItem(action)
-      break
-    case 'DELETE_ITEM':
-      deleteItem(action)
-      break
-    case 'FAILURE':
-      failure(action)
-      break
-  }
-}
+export const asyncWatcher = registerAsync({
+  ADD_ITEM: addItem,
+  GET_ITEMS: getItems,
+  TOGGLE_ITEM: toggleItem,
+  DELETE_ITEM: deleteItem,
+  FAILURE: failure,
+})

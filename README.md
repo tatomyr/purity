@@ -8,13 +8,14 @@ which is accessible through methods `connect` (for getting data) and `dispatch`
 
 # Usage
 
-To include **Purity** in your project import its features through CDN (make sure your root script injected in html has [type="module"]):
+To include **Purity** in a project import its features through CDN
+(make sure your root script injected in html has `[type="module"]`):
 
 ```javascript
 import { createStore, render } from 'https://tatomyr.github.io/purity/core.js'
 ```
 
-or download these files into your project's folder and import from in there.
+or download this file into your project's folder and import from in there.
 
 In your application, you can declare components as bare functions. E. g.
 
@@ -109,7 +110,7 @@ async function someAction(action, dispatch, state) {
 function asyncWatcher(action) {
   switch (action.type) {
     case 'SOME_ACTION':
-      return function someAction(action, dispatch, state)
+      return someAction(action, dispatch, state)
     default:
       return undefined
   }
@@ -197,6 +198,14 @@ You can access them locally using `bash bin/serve.sh` and opening `http://localh
 # Development
 
 To serve the library locally on port 8081 run `bash bin/serve.sh`.
+
+# Code minification
+
+To minify files run `bash bin/minify.sh` script.
+
+# Code linting
+
+Use `bash bin/lint.sh` to lint the code.
 
 # Testing
 
