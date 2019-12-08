@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-const { createStore } = require('./__core__.js')
+const { createStore } = require('../__core__.js')
 const { registerAsync } = require('./__register-async__.js')
 
 describe('register-async', () => {
@@ -8,7 +8,7 @@ describe('register-async', () => {
   beforeEach(() => {
     handleAsyncFlow = jest.fn()
     store = createStore(
-      () => ({}),
+      undefined,
       registerAsync({
         HANDLE_ASYNC_FLOW: handleAsyncFlow,
       })

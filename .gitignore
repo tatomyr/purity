@@ -2,5 +2,4 @@
 coverage/
 cypress/videos/
 cypress/screenshots/
-__core__.js
-__register-async__.js
+__*__.js

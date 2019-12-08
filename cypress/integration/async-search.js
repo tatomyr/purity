@@ -40,10 +40,11 @@ describe('Async search', () => {
       .should('have.value', randomChar)
   })
   it('shows and hides the error', () => {
-    cy.get('input').type('b!')
+    cy.get('input').type('b')
     cy.get('#list li').should('have.length', 1)
     cy.get('#list li').contains('Bartolomew')
     cy.get('input')
+      .type('!')
       .should('have.focus')
       .should('have.value', 'b!')
     cy.get('#error-banner pre')
@@ -98,12 +99,14 @@ describe('Async search', () => {
     cy.get('#error-banner pre').should('not.exist')
   })
   it('handles many clicks on long lists', () => {
-    cy.get('input').type('n!')
+    cy.get('input').type('n')
     cy.get('#list li').should('have.length', 9)
     cy.get('#list li:nth-child(1)').click()
     cy.get('#list li:nth-child(2)').click()
     cy.get('#list li:nth-child(3)').click()
     cy.get('#list li:nth-child(4)').click()
+    // Send the request to simulate error
+    cy.get('input').type('!')
     cy.get('#list li:nth-child(5)').click()
     cy.get('#list li:nth-child(6)').click()
     cy.get('#list li:nth-child(7)').click()

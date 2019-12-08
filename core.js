@@ -9,7 +9,10 @@ const joinIfArray = x => (Array.isArray(x) ? x.join('') : x)
  * @param {callback} asyncWatcher - function that registers asynchronous action handlers
  * @returns an object that contains public methods to manage the store created
  */
-export const createStore = (stateHandler, asyncWatcher = () => {}) => {
+export const createStore = (
+  stateHandler = () => ({}),
+  asyncWatcher = () => {}
+) => {
   const state = stateHandler(undefined, { type: 'INIT' })
 
   const parseHTML = html => {
