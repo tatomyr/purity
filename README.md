@@ -120,7 +120,7 @@ function asyncWatcher(action) {
 Also you can use `register-async` utility:
 
 ```js
-import { registerAsync } from '/register-async.js'
+import { registerAsync } from '/utils/register-async.js'
 
 export const asyncWatcher = registerAsync({
   SOME_ACTION: someAction,
@@ -212,8 +212,8 @@ Use `bash bin/lint.sh` to lint the code.
 To run unit tests use `bash bin/jest.sh` command from the project root.
 
 To update snapshots use `bash bin/update-jest.sh` instead.
-Please notice the auxiliary `__core__.js` file created.
-Do not commit it.
+Please notice the auxiliary `__core__.js` and other similar files created.
+Do not commit them.
 
 To show coverage report locally, run `open ./coverage/lcov-report/index.html`.
 
