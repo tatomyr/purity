@@ -97,7 +97,7 @@ const stateHandler = (state = defaultState, action = {}) => {
 }
 ```
 
-Async handlers are just asynchronoys funcions
+Async handlers are just asynchronous funcions
 and should be triggered when async watcher encounters a specific action:
 
 ```javascript
@@ -231,7 +231,15 @@ You may commit it.
 
 # Precommit
 
-To run all checks use `bash bin/check.sh` script.
+Before commiting to the project,
+code must pass all necessary checks described in `bin/check.sh`.
+To add the git hook to the project run this command from the project root:
+
+```
+ln -s ../../bin/pre-commit.sh .git/hooks/pre-commit
+```
+
+You may also run `bash bin/check.sh` manually each time before commit.
 On Mac you can use this command as well:
 
 ```

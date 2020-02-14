@@ -1,6 +1,6 @@
 // Helpers
 const isEmpty = obj => !obj || !Object.keys(obj).length
-const filterFalsy = x => (x === undefined || x === null || x === false ? '' : x)
+const clearFalsy = x => (x === undefined || x === null || x === false ? '' : x)
 const joinIfArray = x => (Array.isArray(x) ? x.join('') : x)
 
 /**
@@ -125,7 +125,7 @@ export const render = ([first, ...strings], ...args) => {
     return `data-purity_key="${key}"`
   }
 
-  const processArgs = (_, index) => joinIfArray(filterFalsy(args[+index]))
+  const processArgs = (_, index) => joinIfArray(clearFalsy(args[+index]))
 
   const stringToRender = precomputedString
     .replace(BOUND_EVENTS_RE, bindEventHandlers)
