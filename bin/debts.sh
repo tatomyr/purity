@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Find all technical debt marks in the project
-fixmes=$(grep -r FIXME: . --exclude=*{.snap,.md,__.js} --exclude-dir=coverage --exclude-dir=bin | wc -l)
-todos=$(grep -r TODO: . --exclude=*{.snap,.md,__.js} --exclude-dir=coverage --exclude-dir=bin | wc -l)
+fixmes=$(grep -r FIXME: . --exclude=*{.snap,__.js} --exclude-dir=coverage --exclude-dir=bin | wc -l)
+todos=$(grep -r TODO: . --exclude=*{.snap,__.js} --exclude-dir=coverage --exclude-dir=bin | wc -l)
 total=$((fixmes+todos))
 
 # Check whether the .debts file exists and if no - create one

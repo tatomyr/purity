@@ -187,11 +187,14 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 - [Dead simple example](./examples/dead-simple-example)
 - [Simple todo](./examples/simple-todo-example)
-- [Asynchronous todo](./examples/async-todo-example) (see [README](./examples/async-todo-example/README.md))
+- [Asynchronous todo](./examples/async-todo-example)
 - [Colored input](./examples/colored-input-example)
 - [Stateful counters](./examples/use-state-example)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
-- [Async search](TODO: make links accessible)
+- [Async search](./examples/async-search)
+- [Multiple Applications in the same page](./examples/multiple-apps)
+
+Please find the examples [here](https://tatomyr.github.io/examples/)
 
 You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples`.
 
