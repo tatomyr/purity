@@ -173,7 +173,7 @@ graph TD
 - Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
 - Wrap every component that you want to be rerendered independently with a tag with an unique id.
 - Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
-- A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **createStore** function (see [example](./simple-todo-example/ui/StatefulCounter.js)).
+- A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **createStore** function (see [example](./examples/use-state-example/StatefulCounter.js)).
 - The library doesn't sanitize your inputs. Please do it by yourself or use `/lib/sanitize.js` module.
 
 # Credits
@@ -194,9 +194,9 @@ The decision to use bare ES modules appears to be the consequence of listening t
 - [Async search](./examples/async-search)
 - [Multiple Applications in the same page](./examples/multiple-apps)
 
-Please find the examples [here](https://tatomyr.github.io/examples/)
+Please find the examples [here](https://tatomyr.github.io/purity/examples/)
 
-You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples`.
+You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples/`.
 
 # Development
 

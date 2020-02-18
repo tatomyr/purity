@@ -9,11 +9,13 @@
         display: block;
         padding: 4px;
       }
-      a:hover {
+      a:hover,
+      a:focus {
         cursor: pointer;
         color: orange;
       }
-      a:hover::after {
+      a:hover::after,
+      a:focus::after {
         content: '▸';
         font-size: 0.8em;
         padding-left: 0.2em;
@@ -21,14 +23,33 @@
     </style>
   </head>
   <body>
-    <a href="/examples/dead-simple-example/">Dead Simple Example</a>
-    <a href="/examples/simple-todo-example/">Simple ToDo</a>
-    <a href="/examples/async-todo-example/">Async ToDo</a>
-    <a href="/examples/colored-input-example/">Colored Input</a>
-    <a href="/examples/use-state-example/">Stateful Counters</a>
-    <a href="./examples/async-search/">Async Search</a>
-    <a href="./examples/multiple-apps/">
-      Multiple Applications in the Same Page
-    </a>
+    <ul id="root"></ul>
+    <script type="module">
+      import { createStore, render } from '/core.js'
+
+      const { mount } = createStore()
+
+      const decorateWithSlash = url => (url.endsWith('/') ? url : url + '/')
+
+      const list = [
+        ['dead-simple-example/', 'Dead Simple Example'],
+        ['simple-todo-example/', 'Simple ToDo'],
+        ['async-todo-example/', 'Async ToDo'],
+        ['colored-input-example/', 'Colored Input'],
+        ['use-state-example/', 'Stateful Counters'],
+        ['async-search/', 'Async Search'],
+        ['multiple-apps/', 'Multiple Applications in the Same Page'],
+      ]
+
+      const Item = ([href, title]) => render`
+        <li>
+          <a href="${decorateWithSlash(window.location.href) + href}">
+            ${title}
+          </a>
+        </li>
+      `
+
+      mount(() => render`<ul id="root">${list.map(Item)}</ul>`)
+    </script>
   </body>
 </html>
