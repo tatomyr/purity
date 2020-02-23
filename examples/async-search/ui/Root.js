@@ -1,5 +1,5 @@
 import { render } from '../../../core.js'
-import { debounce } from '/lib/debounce.js'
+import { debounce } from '../../../lib/debounce.js'
 import { dispatch } from '../store/provider.js'
 import { types } from '../types.js'
 import { SuggestionsList } from './SuggestionsList.js'

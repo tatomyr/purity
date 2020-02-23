@@ -1,4 +1,4 @@
-import { registerAsync } from '/utils/register-async.js'
+import { registerAsync } from '../../../utils/register-async.js'
 
 export async function addItem(action, dispatch, state) {
   try {
