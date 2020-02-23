@@ -1,4 +1,4 @@
-import { render } from '/core.js'
+import { render } from '../../../core.js'
 import { connect } from '../store/provider.js'
 import { ListItem } from './ListItem.js'
 import { InputForm } from './InputForm.js'

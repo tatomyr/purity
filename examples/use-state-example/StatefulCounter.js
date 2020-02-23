@@ -1,4 +1,4 @@
-import { render } from '/core.js'
+import { render } from '../../core.js'
 import { useState } from './useState.js'
 import { Button } from './Button.js'
 

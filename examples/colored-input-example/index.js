@@ -1,4 +1,4 @@
-import { createStore, render } from '/core.js'
+import { createStore, render } from '../../core.js'
 
 const stateHandler = (state = { color: 'black' }, action = {}) => {
   switch (action.type) {

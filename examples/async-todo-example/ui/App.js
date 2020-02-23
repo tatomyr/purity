@@ -1,4 +1,4 @@
-import { render } from '/core.js'
+import { render } from '../../../core.js'
 import { rerender } from '../store/provider.js'
 import { List } from './List.js'
 import { InputForm } from './InputForm.js'
