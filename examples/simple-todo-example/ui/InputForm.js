@@ -1,4 +1,4 @@
-import { render } from '/core.js'
+import { render } from '../../../core.js'
 import { dispatch } from '../store/provider.js'
 
 export const InputForm = () => render`

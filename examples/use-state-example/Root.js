@@ -1,4 +1,4 @@
-import { render } from '/core.js'
+import { render } from '../../core.js'
 import { StatefulCounter } from './StatefulCounter.js'
 
 export const Root = () => render`

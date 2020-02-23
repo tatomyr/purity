@@ -1,4 +1,4 @@
-import { render } from '/core.js'
+import { render } from '../../core.js'
 import { mount, connect, dispatch } from './store-provider.js'
 
 const Root = connect(

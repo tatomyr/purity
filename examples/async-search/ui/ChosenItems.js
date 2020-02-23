@@ -1,4 +1,4 @@
-import { render } from '/core.js'
+import { render } from '../../../core.js'
 import { connect, dispatch } from '../store/provider.js'
 import { types } from '../types.js'
 

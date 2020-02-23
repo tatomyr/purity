@@ -1,4 +1,4 @@
-import { createStore, render } from '/core.js'
+import { createStore, render } from '../../core.js'
 
 // App #1
 
