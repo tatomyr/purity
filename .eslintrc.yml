@@ -14,3 +14,8 @@ rules:
     - unix
   no-unused-vars:
     - off
+ignorePatterns:
+  - '**/__*__.js'
+  - '**/*.min.js'
+  - cypress/
+  - jest.config.js

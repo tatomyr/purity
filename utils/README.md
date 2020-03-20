@@ -1,6 +1,6 @@
-# Shared ES modules library
+# Useful utils
 
-A handful of algorithms from different sources converted to new syntax for using with **Purity** or without it.
+A handful of algorithms from different sources for using with **Purity** or without it.
 
 ## MD5 hashing algorithm
 
@@ -74,4 +74,32 @@ import { pipe } from 'https://tatomyr.github.io/purity/lib/pipe.js'
 …
 pipe(x => x ** 2, x => x / 2)(3) // 3.5
 …
+```
+
+## Sanitize
+
+Sanitizes input.
+Wrap any input you use into this function
+any time you put the input value into your application code
+(when submitting a form, listening to typing in a `textarea` &c.).
+
+## Register async handlers for Purity Store
+
+An easy way of creating async watchers:
+
+```js
+import { registerAsync } from '/utils/register-async.js'
+
+export const asyncWatcher = registerAsync({
+  SOME_ACTION: async function(action, dispatch, state) {
+    // Make API calls
+    // Do asynchronous stuff
+    // Dispatch other actions
+  },
+  // Other actions...
+  // Optional callback
+  (action, state) => {
+    // Useful for logging
+  }
+})
 ```
