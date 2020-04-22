@@ -108,7 +108,19 @@ export const createStore = (
 const ARGS_RE = /__\[(\d+)\]__/gm
 const BOUND_EVENTS_RE = /::(\w+)\s*=\s*__\[(\d+)\]__/gm
 
-let purity_key = 0
+const applyPurityKey = (() => {
+  let purityKey = 0
+  let timeout
+  return () => {
+    if (timeout) {
+      clearTimeout(timeout)
+    }
+    timeout = setTimeout(() => {
+      purityKey = 0
+    })
+    return purityKey++
+  }
+})()
 
 /**
  * Tagged template to compute the html string from a string literal
@@ -122,8 +134,7 @@ export const render = ([first, ...strings], ...args) => {
   )
 
   const bindEventHandlers = (_, event, index) => {
-    const key = `${purity_key}_${index}`
-    let dataName = `data-${PURITY_KEYWORD}_${event}_${key}`
+    let dataName = `data-${PURITY_KEYWORD}_${event}_${applyPurityKey()}`
     setTimeout(() => {
       // Asynchronously bind event handlers after rendering everything to DOM
       let element = document.querySelector(`[${dataName}]`)
@@ -145,12 +156,6 @@ export const render = ([first, ...strings], ...args) => {
     // FIXME: wouldn't it slow down too much? In the end of the day we don't really need this
     .replace(/\n\s*</g, '<')
     .replace(/>\n\s*/g, '>')
-
-  purity_key++
-  setTimeout(() => {
-    // Clear purity_key after calculating each stringToRender
-    purity_key = 0
-  })
 
   return stringToRender
 }
