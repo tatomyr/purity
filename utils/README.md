@@ -91,15 +91,11 @@ An easy way of creating async watchers:
 import { registerAsync } from '/utils/register-async.js'
 
 export const asyncWatcher = registerAsync({
-  SOME_ACTION: async function(action, dispatch, state) {
+  SOME_ACTION: async function (action, dispatch, state) {
     // Make API calls
     // Do asynchronous stuff
     // Dispatch other actions
   },
   // Other actions...
-  // Optional callback
-  (action, state) => {
-    // Useful for logging
-  }
 })
 ```
