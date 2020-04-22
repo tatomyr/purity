@@ -9,7 +9,7 @@ Borrowed [here](http://www.myersdaily.org/joseph/javascript/md5-text.html).
 Usage:
 
 ```javascript
-import { md5 } from 'https://tatomyr.github.io/purity/lib/md5.js'
+import { md5 } from 'https://tatomyr.github.io/purity/utils/md5.js'
 
 console.log(md5('some string'))
 ```
@@ -21,7 +21,7 @@ Taken [here](https://vanillajstoolkit.com/helpers/isinviewport/)
 Usage:
 
 ```javascript
-import { trackVisibility } from 'https://tatomyr.github.io/purity/lib/visibility-sensor.js'
+import { trackVisibility } from 'https://tatomyr.github.io/purity/utils/visibility-sensor.js'
 
 …
 trackVisibility($element, isInViewport => {
@@ -37,7 +37,7 @@ trackVisibility($element, isInViewport => {
 Usage:
 
 ```javascript
-import { debounce } from 'https://tatomyr.github.io/purity/lib/debounce.js'
+import { debounce } from 'https://tatomyr.github.io/purity/utils/debounce.js'
 
 …
 render`
@@ -57,7 +57,7 @@ Use a positive `timeout` for triggering the callback on the leading edge and a n
 Usage:
 
 ```javascript
-import { delay } from 'https://tatomyr.github.io/purity/lib/delay.js'
+import { delay } from 'https://tatomyr.github.io/purity/utils/delay.js'
 
 …
 delay(<time>)
@@ -69,7 +69,7 @@ delay(<time>)
 Usage:
 
 ```javascript
-import { pipe } from 'https://tatomyr.github.io/purity/lib/pipe.js'
+import { pipe } from 'https://tatomyr.github.io/purity/utils/pipe.js'
 
 …
 pipe(x => x ** 2, x => x / 2)(3) // 3.5
