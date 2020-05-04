@@ -7,7 +7,7 @@ export const Spinner = connect(
       ${isLoading &&
         render`
           <img
-            src="../spinner.svg"
+            src="./spinner.svg"
             alt="spinner"
             class="spinner"
           />

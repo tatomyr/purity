@@ -3,7 +3,7 @@
 # Start testing server
 npx static-server -p 8085 -c "*" &
 # Run tests with Cypress
-npx cypress@3.7 run --config baseUrl=http://localhost:8085
+npx cypress@4.4.1 run --config baseUrl=http://localhost:8085
 # Catch the most recent command response
 RESULT=$?
 # Find the testing server PID

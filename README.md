@@ -174,7 +174,7 @@ graph TD
 - Wrap every component that you want to be rerendered independently with a tag with an unique id.
 - Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
 - A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **createStore** function (see [example](./examples/use-state-example/StatefulCounter.js)).
-- The library doesn't sanitize your inputs. Please do it by yourself or use `/lib/sanitize.js` module.
+- The library doesn't sanitize your inputs. Please do it by yourself or use `/utils/sanitize.js` module.
 
 # Credits
 
@@ -234,9 +234,10 @@ You may commit it.
 
 # Precommit
 
-Before commiting to the project,
+Before being committed to the project,
 code must pass all necessary checks described in `bin/check.sh`.
-To add the git hook to the project run this command from the project root:
+To add the git hook to the project,
+run the following command from the project root:
 
 ```
 ln -s ../../bin/pre-commit.sh .git/hooks/pre-commit
@@ -252,4 +253,4 @@ bash bin/check.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/L
 # Miscellaneous
 
 The library also includes a handful of algorithms from different sources, exported as ES modules to use with **Purity** or without.
-They can be found in the [lib/](./lib) folder.
+They can be found in the [utils/](./utils) folder.
