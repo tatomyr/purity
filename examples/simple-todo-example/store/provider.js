@@ -1,8 +1,5 @@
-import { createStore } from '../../../core.js'
-import { stateHandler } from './state-handler.js'
-
-export const { mount, connect, dispatch, rerender, getState } = createStore(
-  stateHandler
-)
-
-window.getState = getState
+import { init } from '../../../core.js';
+export const { mount, rerender, getState, setState } = init({
+    items: [],
+    input: '',
+});

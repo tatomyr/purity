@@ -1,23 +1,26 @@
-import { render } from '../../../core.js'
-import { dispatch } from '../store/provider.js'
-
-export const ListItem = ({ id, text, checked }) => render`
+import { render } from '../../../core.js';
+import { setState } from '../store/provider.js';
+export const ListItem = ({ id, text, checked }) => render `
   <li id="${id}" class="${checked ? 'checked' : ''}" title="${id}">
     <input
       type="checkbox"
       ${checked ? 'checked' : ''}
       ::change=${e => {
-        dispatch({ type: 'TOGGLE_ITEM', id, checked: e.target.checked })
-      }}
+    setState(({ items }) => ({
+        items: items.map(item => item.id === id ? { ...item, checked: !item.checked } : item),
+    }));
+}}
     />
     <span>${text}</span>
     <button
       type="button"
       ::click=${() => {
-        dispatch({ type: 'DELETE_ITEM', id })
-      }}
+    setState(({ items }) => ({
+        items: items.filter(item => item.id !== id),
+    }));
+}}
     >
       x
     </button>
   </li>
-`
+`;

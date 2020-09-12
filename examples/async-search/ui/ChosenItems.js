@@ -1,21 +1,19 @@
-import { render } from '../../../core.js'
-import { connect, dispatch } from '../store/provider.js'
-import { types } from '../types.js'
-
-const Item = ({ name, id }) => render`
+import { render } from '../../../core.js';
+import { idIsNotEqual } from '../helpers.js';
+import { getState, setState } from '../store/provider.js';
+const Item = ({ name, id }) => render `
   <li
     ::click=${() => {
-      dispatch({ type: types.REMOVE_FROM_CHOSEN, id })
-    }}
+    setState(({ chosenItems }) => ({
+        chosenItems: chosenItems.filter(idIsNotEqual(id)),
+    }));
+}}
   >
     ${name}
   </li>
-`
-
-export const ChosenItems = connect(
-  ({ chosenItems }) => render`
-    <ul id="chosen-items" class="chosen-items">
-      ${chosenItems.map(Item)}
-    </ul>
-  `
-)
+`;
+export const ChosenItems = () => render `
+  <ul id="chosen-items" class="chosen-items">
+    ${getState().chosenItems.map(Item)}
+  </ul>
+`;

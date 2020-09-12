@@ -1,0 +1,191 @@
+// Helpers
+type Rejected = undefined | null | false
+
+type Simple = Allowed | Rejected
+// type Argument = Simple | Simple[]
+type Argument = Simple | string[]
+
+type Allowed = string | number // | true
+// type AlmostVerified = Allowed | Simple[]
+type Verified = Allowed | string[]
+
+const clearFalsy = <T extends Verified>(x: T | Rejected): T | '' =>
+  x === undefined || x === null || x === false ? '' : x
+
+const joinIfArray = (x: Verified) => {
+  if (Array.isArray(x)) {
+    x.forEach(item => {
+      if (typeof item !== 'string') {
+        console.error('ITEM IS NOT A STRING!', item)
+      }
+    })
+  }
+
+  return Array.isArray(x) ? x.join('') : x
+}
+
+// Constants
+const PURITY_KEYWORD = 'purity'
+const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
+
+/**
+ * Store module factory that should be invoked once to create a single store with reactive state
+ * @param {object} initialState - an initial state
+ * @returns object that contains public methods to manage the store created
+ */
+export const init = <State>(initialState: State) => {
+  let state = initialState
+
+  const parseHTML = (
+    html: string
+  ): Map<string, { node: Element; shallow: HTMLElement }> => {
+    const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
+    const nodesMap = new Map()
+    for (const node of virtualDocument.querySelectorAll('[id]')) {
+      const shallow = node.cloneNode(true) as HTMLElement // FIXME: null?
+      for (const innerNode of shallow.querySelectorAll('[id]')) {
+        innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`
+      }
+      // Removing the `data-purity_*` attributes attached in render() function
+      // TODO: try to avoid the situation when we have to remove…
+      // …something added in another module.
+      for (const innerNode of shallow.querySelectorAll(
+        `[${DATA_PURITY_FLAG}]`
+      )) {
+        for (let key in (innerNode as HTMLElement).dataset) {
+          if (key.startsWith(PURITY_KEYWORD)) {
+            innerNode.removeAttribute(`data-${key}`)
+          }
+        }
+      }
+      nodesMap.set(node.id, { node, shallow })
+    }
+    return nodesMap
+  }
+
+  let rootComponent
+  let domNodesMap
+  function mount(f) {
+    // Setting up rootComponent
+    rootComponent = f
+    domNodesMap = parseHTML(rootComponent())
+    // Top-level component should always have an id equal to parent element's id
+    const rootId = domNodesMap.keys().next().value
+    document.getElementById(rootId).replaceWith(domNodesMap.get(rootId).node)
+    // asyncWatcher({ type: 'INIT' }, dispatch, state)
+  }
+
+  function updateAttributes(element, newNode) {
+    for (const { name } of element.attributes) {
+      if (name !== 'id') {
+        element.removeAttribute(name)
+      }
+    }
+    for (const { name, value } of newNode.node.attributes) {
+      if (name !== 'id') {
+        element.setAttribute(name, value)
+      }
+    }
+  }
+
+  /**
+   * Forces html re-rendering
+   */
+  function rerender() {
+    const newNodesMap = parseHTML(rootComponent())
+    for (const [id, domNode] of domNodesMap) {
+      const newNode = newNodesMap.get(id)
+      // Since we depend on the shallow comparison, we must only care about updating changed nodes.
+      if (newNode && domNode.shallow.outerHTML !== newNode.shallow.outerHTML) {
+        const elementById = document.getElementById(id)
+        updateAttributes(elementById, newNode)
+        if (domNode.shallow.innerHTML !== newNode.shallow.innerHTML) {
+          elementById.innerHTML = newNode.node.innerHTML
+          console.log(`↻ #${id}`)
+        }
+      }
+    }
+    domNodesMap = newNodesMap
+  }
+
+  // function dispatch(action) {
+  //   const changes = stateHandler(state, action)
+  //   if (!isEmpty(changes)) {
+  //     Object.assign(state, changes)
+  //     rerender() // TODO: maybe use debounce to batch multiple successing rerenders?
+  //   }
+  //   asyncWatcher(action, dispatch, state)
+  // }
+
+  return {
+    mount,
+    // connect: component => ownProps =>
+    //   component(Object.assign({}, state, ownProps)),
+    rerender,
+    getState: () => state,
+    setState(callback: (state: State) => Partial<State>) {
+      Object.assign(state, callback(state))
+      rerender()
+    },
+  }
+}
+
+// Patterns
+const ARGS_RE = /__\[(\d+)\]__/gm
+const BOUND_EVENTS_RE = /::(\w+)\s*=\s*__\[(\d+)\]__/gm
+
+const applyPurityKey = (() => {
+  let purityKey = 0
+  let timeout: number
+  return () => {
+    if (timeout) {
+      clearTimeout(timeout)
+    }
+    timeout = setTimeout(() => {
+      purityKey = 0
+    })
+    return purityKey++
+  }
+})()
+
+/**
+ * Tagged template to compute the html string from a string literal
+ * @params {[string parts], ...args} - string literal
+ * @returns a string that could be parsed as a valid HTML
+ */
+export const render = (
+  [first, ...strings]: TemplateStringsArray,
+  ...args: Array<Argument | EventHandlerNonNull>
+): string => {
+  const precomputedString = strings.reduce(
+    ($, item, i) => `${$}__[${i}]__${item}`,
+    first
+  )
+
+  const bindEventHandlers = (_, event: string, index: number) => {
+    const dataName = `data-${PURITY_KEYWORD}_${event}_${applyPurityKey()}`
+    setTimeout(() => {
+      // Asynchronously bind event handlers after rendering everything to DOM
+      let element = document.querySelector(`[${dataName}]`)
+      if (element) {
+        element[`on${event}`] = args[index] as EventHandlerNonNull
+        // Remove residuals
+        element.removeAttribute(dataName)
+      }
+    })
+    return `${dataName} ${DATA_PURITY_FLAG}`
+  }
+
+  const processArgs = (_, index: number): string =>
+    joinIfArray(clearFalsy(args[+index] as Argument)) as string
+
+  const stringToRender = precomputedString
+    .replace(BOUND_EVENTS_RE, bindEventHandlers)
+    .replace(ARGS_RE, processArgs)
+    .trim()
+    // FIXME: wouldn't it slow down too much? In the end of the day we don't really need this
+    .replace(/\n\s*</g, '<')
+    .replace(/>\n\s*/g, '>')
+
+  return stringToRender
+}

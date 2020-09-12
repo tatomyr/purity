@@ -1,29 +1,42 @@
-import { render } from '../../../core.js'
-import { dispatch } from '../store/provider.js'
-
-export const InputForm = () => render`
+import { render } from '../../../core.js';
+import { generateNextId } from '../helpers.js';
+import { setState } from '../store/provider.js';
+export const InputForm = () => render `
   <form
     id="input-form"
     ::submit=${e => {
-      e.preventDefault()
-      dispatch({ type: 'ADD_ITEM', text: e.target.text.value })
-    }}
+    e.preventDefault();
+    setState(({ items }) => ({
+        items: [
+            ...items,
+            {
+                text: e.target.text.value,
+                checked: false,
+                id: generateNextId(items),
+            },
+        ],
+    }));
+}}
   >
     <input
       name="text"
       placeholder="Enter text"
-      ::keyup=${e => {
-        dispatch({ type: 'CHANGE_INPUT', input: e.target.value })
-      }}
+      ::input=${e => {
+    setState(() => ({
+        input: e.target.value,
+    }));
+}}
     />
     <button type="submit">Add</button>
     <button
       type="reset"
       ::click=${e => {
-        dispatch({ type: 'CHANGE_INPUT', input: '' })
-      }}
+    setState(() => ({
+        input: '',
+    }));
+}}
     >
       Clear
     </button>
   </form>
-`
+`;

@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-const { createStore, render } = require('./__core__.js')
+const { init, render } = require('./__core__.js')
 
 const delay = t => ({ then: resolve => setTimeout(resolve, t) })
 
@@ -42,7 +42,7 @@ describe('core', () => {
           return {}
       }
     }
-    store = createStore(stateHandler)
+    store = init(stateHandler)
     document.body.innerHTML = '<div id="root"></div>'
   })
   it('should match default state after created', () => {

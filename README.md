@@ -179,7 +179,7 @@ graph TD
 # Credits
 
 This library is heavily inspired by project [innerself](https://github.com/stasm/innerself).
-And obviously I was thinking of [React](https://github.com/facebook/react/), [Redux](https://github.com/reduxjs/redux) & [Redux-Saga](https://github.com/redux-saga/redux-saga/).
+And obviously I was thinking of [React](https://github.com/facebook/react/).
 
 The decision to use bare ES modules appears to be the consequence of listening to the brilliant Ryan Dahl's talk on [Deno](https://deno.land).
 

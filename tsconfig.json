@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "isolatedModules": true,
+    "removeComments": true
+  },
+  "include": ["core.ts", "examples/**/*"]
+}

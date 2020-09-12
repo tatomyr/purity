@@ -1,30 +1,17 @@
-import { createStore, render } from '../../core.js'
-
-const stateHandler = (state = { color: 'black' }, action = {}) => {
-  switch (action.type) {
-    case 'CHANGE_COLOR':
-      return { color: action.color }
-    case 'INIT':
-      return state
-    default:
-      return undefined
-  }
-}
-
-const { mount, connect, dispatch } = createStore(stateHandler)
-
-const Root = connect(
-  ({ color }) => render`
-    <div id="root">
-      <input
-        id="color"
-        style="color: ${color};"
-        ::keyup=${e => {
-          dispatch({ type: 'CHANGE_COLOR', color: e.target.value })
-        }}
-      />
-    </div>
-  `
-)
-
-mount(Root)
+import { init, render } from '../../core.js';
+const { mount, getState, setState } = init({
+    color: 'black',
+});
+const handleInput = (e) => {
+    setState(() => ({ color: e.target.value }));
+};
+const Root = () => render `
+  <div id="root">
+    <input
+      id="color"
+      style="color: ${getState().color};"
+      ::input=${handleInput}
+    />
+  </div>
+`;
+mount(Root);

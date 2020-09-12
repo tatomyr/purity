@@ -1,10 +1,6 @@
-import { createStore } from '../../../core.js'
-import { stateHandler } from './state-handler.js'
-import { asyncWatcher } from './async-handler.js'
-
-export const { mount, connect, dispatch, rerender, getState } = createStore(
-  stateHandler,
-  asyncWatcher
-)
-
-window.getState = getState
+import { init } from '../../../core.js';
+export const { mount, rerender, getState, setState } = init({
+    items: [],
+    input: '',
+    spinner: false,
+});

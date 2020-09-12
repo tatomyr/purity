@@ -1,21 +1,22 @@
-import { render } from '../../../core.js'
-import { connect, dispatch } from '../store/provider.js'
-import { types } from '../types.js'
-
-const Item = ({ name, id }) => render`
+import { render } from '../../../core.js';
+import { idEquals } from '../helpers.js';
+import { getState, setState } from '../store/provider.js';
+const Item = ({ name, id }) => render `
   <li
     ::click=${() => {
-      dispatch({ type: types.CHOOSE_ITEM, id })
-    }}
+    setState(({ items, chosenItems }) => ({
+        chosenItems: [
+            ...chosenItems,
+            !chosenItems.some(idEquals(id)) && items.find(idEquals(id)),
+        ].filter(Boolean),
+    }));
+}}
   >
     ${name}
   </li>
-`
-
-export const SuggestionsList = connect(
-  ({ items }) => render`
-    <ul id="list">
-      ${items.map(Item)}
-    </ul>
-  `
-)
+`;
+export const SuggestionsList = () => render `
+  <ul id="list">
+    ${getState().items.map(Item)}
+  </ul>
+`;

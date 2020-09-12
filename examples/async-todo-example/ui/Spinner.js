@@ -1,11 +1,8 @@
-import { render } from '../../../core.js'
-import { connect } from '../store/provider.js'
-
-export const Spinner = connect(
-  ({ spinner }) => render`
-    <div
-      id="spinner"
-      ${spinner && 'class="visible"'}
-    ></div>
-  `
-)
+import { render } from '../../../core.js';
+import { getState } from '../store/provider.js';
+export const Spinner = () => render `
+  <div
+    id="spinner"
+    ${getState().spinner && 'class="visible"'}
+  ></div>
+`;

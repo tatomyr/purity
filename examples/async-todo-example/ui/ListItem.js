@@ -1,7 +1,7 @@
-import { render } from '../../../core.js'
-import { dispatch } from '../store/provider.js'
-
-export const ListItem = ({ id, text, checked, justAdded }) => render`
+import { render } from '../../../core.js';
+import { deleteItem, getItems, toggleItem } from '../store/api.js';
+import { setState } from '../store/provider.js';
+export const ListItem = ({ id, text, checked, justAdded }) => render `
   <li
     id="${id}"
     class="${checked ? 'checked' : ''} ${justAdded ? 'highlighted' : ''}"
@@ -10,18 +10,46 @@ export const ListItem = ({ id, text, checked, justAdded }) => render`
     <input
       type="checkbox"
       ${checked ? 'checked' : ''}
-      ::change=${({ target: { checked } }) => {
-        dispatch({ type: 'TOGGLE_ITEM', id, checked })
-      }}
+      ::change=${async (e) => {
+    const { checked } = e.target;
+    setState(() => ({ spinner: true }));
+    try {
+        const toggledItem = await toggleItem(id, checked);
+        setState(({ items }) => ({
+            items: items.map(item => (item.id === id ? toggledItem : item)),
+        }));
+    }
+    catch (err) {
+        alert(err.message);
+    }
+    finally {
+        setState(() => ({
+            spinner: false,
+        }));
+    }
+}}
     />
     <span>${text}</span>
     <button
       type="button"
-      ::click=${e => {
-        dispatch({ type: 'DELETE_ITEM', id })
-      }}
+      ::click=${async (e) => {
+    setState(() => ({ spinner: true }));
+    try {
+        await deleteItem(id);
+        const items = await getItems();
+        setState(() => ({ items }));
+    }
+    catch (err) {
+        alert(err.message);
+    }
+    finally {
+        setState(() => ({
+            spinner: false,
+        }));
+    }
+}}
     >
       x
     </button>
   </li>
-`
+`;
