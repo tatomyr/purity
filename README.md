@@ -1,10 +1,17 @@
-# Purity (Reactive state & DOM manager)
+# Purity. Reactive state & DOM manager
 
 Declarative UI library for using the most of today's Javascript.
+It doesn't require any bundlers or using npm at all, it fully leverages native ECMAScript modules system.
+
+**Purity** exposes two main instruments to manipulate an application:
+
+- `init` which initializes the app with a default state
+
+- `render` tag which wraps string templates that represent app components
 
 # Usage
 
-To include **Purity** in a project first describe your `index.html` file where you put the application root element and plug in the main application script:
+To include **Purity** in a project you have to put in your **index.html** a root element where your app will be mounted into, and script tag of `[type=module]` which points to the main js file:
 
 ```html
 <html>
@@ -15,14 +22,27 @@ To include **Purity** in a project first describe your `index.html` file where y
 </html>
 ```
 
-To include **Purity** in a project import its features through CDN
-(make sure your root script injected in html has `[type="module"]`):
+Import **Purity** from a local file or a public URL, e. g.:
 
-```javascript
-import {createStore, render} from 'https://tatomyr.github.io/purity/core.js'
+```js
+import {init, render} from 'https://some.domain/purity.js'
 ```
 
-or download this file into your project's folder and import from in there.
+Next, you init the app with some default state. This will return a bunch of mehtods you can use in your app:
+
+```js
+const {mount, getState, setState} = init(defaultState)
+```
+
+Then you describe your app using the `render` tag:
+
+```js
+const App = () => render`
+  <div id="root">Hello Purity!</div>
+`
+```
+
+<!-- TODO: Update README -->
 
 In your application, you can declare components as bare functions. E. g.
 
