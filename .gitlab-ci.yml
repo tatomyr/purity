@@ -1,0 +1,12 @@
+# image: alpine:latest
+
+pages:
+  stage: deploy
+  script:
+    - mkdir public
+    - cp core.js public
+  artifacts:
+    paths:
+      - public
+  # only:
+  #   - test
