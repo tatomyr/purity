@@ -1,7 +1,6 @@
 #!/bin/bash
 
 npx minify src/purity.js > src/purity.min.js
-npx minify src/register-async.js > src/register-async.min.js
 npx minify src/debounce.js > src/debounce.min.js
 npx minify src/delay.js > src/delay.min.js
 # npx minify src/md5.js > src/md5.min.js

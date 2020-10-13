@@ -9,7 +9,7 @@ It doesn't require any bundlers or using npm at all, it fully leverages native E
 
 - `render` tag which wraps string templates that represent app components
 
-# Usage
+## Usage
 
 To include **Purity** in a project you have to put in your **index.html** a root element where your app will be mounted into, and script tag of `[type=module]` which points to the main js file:
 
@@ -165,7 +165,7 @@ mount(App)
 Make sure your root component has the same `id` as the root defined in `index.html`,
 and you have connected your script with `<script type="module" src="..."></script>`.
 
-# Virtual dom
+## Virtual dom
 
 You can think of your application as a tree where each tag with the `id` attribute is represented by a **node**.
 The most important part of the virtual DOM is **rerenderer**.
@@ -195,7 +195,7 @@ graph TD
   end
 ```
 
-# Tips
+## Tips
 
 - Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
 - Wrap every component that you want to be rerendered independently with a tag with an unique id.
@@ -203,14 +203,14 @@ graph TD
 - A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **createStore** function (see [example](./examples/use-state-example/StatefulCounter.js)).
 - The library doesn't sanitize your inputs. Please do it by yourself or use `/utils/sanitize.js` module.
 
-# Credits
+## Credits
 
 This library is heavily inspired by project [innerself](https://github.com/stasm/innerself).
 And obviously I was thinking of [React](https://github.com/facebook/react/).
 
 The decision to use bare ES modules appears to be the consequence of listening to the brilliant Ryan Dahl's talk on [Deno](https://deno.land).
 
-# Examples of usage
+## Examples of usage
 
 - [Dead simple example](./examples/dead-simple-example)
 - [Simple todo](./examples/simple-todo-example)
@@ -225,25 +225,23 @@ Please find the examples [here](https://tatomyr.github.io/purity/examples/)
 
 You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples/`.
 
-# Development
+## Development
 
 To serve the library locally on port 8081 run `bash bin/serve.sh`.
 
-# Code minification
+Install prerequisites: `npm i -D ts-jest typescript jest minify eslint cypress@4.4.1 @typescript-eslint/eslint-plugin@latest @typescript-eslint/parser@latest eslint@latest`
+
+## Code minification
 
 To minify files run `bash bin/minify.sh` script.
 
-# Code linting
+## Code linting
 
 Use `bash bin/lint.sh` to lint the code.
 
-# Testing
+## Testing
 
 To run unit tests use `bash bin/jest.sh` command from the project root.
-
-To update snapshots use `bash bin/update-jest.sh` instead.
-Please notice the auxiliary `__core__.js` and other similar files created.
-Do not commit them.
 
 To show coverage report locally, run `open ./coverage/lcov-report/index.html`.
 
@@ -253,13 +251,13 @@ Run `bash bin/e2e.sh` to run e2e tests in headless Chrome.
 
 All test could be run with `bash bin/test.sh`.
 
-# Technical debts
+## Technical debts
 
 Use `bash bin/debts.sh` to check all `TODO`s and `FIXME`s in the project.
 The result will be stored in `.debts` file.
 You may commit it.
 
-# Precommit
+## Precommit
 
 Before being committed to the project,
 code must pass all necessary checks described in `bin/check.sh`.
@@ -277,7 +275,6 @@ On Mac you can use this command as well:
 bash bin/check.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/Library/Sounds/Sosumi.aiff
 ```
 
-# Miscellaneous
+## Miscellaneous
 
 The library also includes a handful of algorithms from different sources, exported as ES modules to use with **Purity** or without.
-They can be found in the [utils/](./utils) folder.

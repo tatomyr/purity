@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`core should bind an event 1`] = `"<button id=\\"root\\" data-purity_flag=\\"\\">Click me</button>"`;
-
-exports[`core should bind multiple events 1`] = `"<input type=\\"text\\" id=\\"root\\" data-purity_flag=\\"\\">"`;
-
-exports[`core should handle conditional rendering & process arrays 1`] = `"<div id=\\"root\\"><ul></ul></div>"`;
-
-exports[`core should handle conditional rendering & process arrays 2`] = `"<div id=\\"root\\"><ul><li>🍎</li><li>🍌</li><li>🍰</li></ul></div>"`;

@@ -1,10 +1,7 @@
-// const {init, render} = require('./__purity__.js')
-import {App, Component, init, render} from './purity'
-import {delay} from './delay'
+import {App, Component, init, render} from '../src/purity'
+import {delay} from '../src/delay'
 
 export type AnyObject = {[key: string]: any}
-
-// const delay = t => ({then: resolve => setTimeout(resolve, t)})
 
 // const SimpleComponent = () => render`<div id="root">SOMETHING</div>`
 // const ComplexComponent = ({something}) =>
@@ -35,6 +32,7 @@ describe('purity', () => {
   })
   afterEach(() => {
     document.body.innerHTML = ''
+    // @ts-ignore
     app = undefined
   })
 
@@ -69,11 +67,13 @@ describe('purity', () => {
     const ClickableComponent = () => render`
       <button id="root" ::click=${eventHandler}>Click me</button>
     `
-    // app = init({})
+    app = init({})
     app.mount(ClickableComponent)
     // Awaiting for the eventHandler to be set in setTimeout
     await delay(0)
-    expect(document.body.innerHTML).toMatchSnapshot()
+    expect(document.body.innerHTML).toEqual(
+      `<button id="root" data-purity_flag="">Click me</button>`
+    )
     // @ts-ignore
     document.querySelector('button#root').click()
     expect(eventHandler).toHaveBeenCalled()
@@ -136,34 +136,7 @@ describe('purity', () => {
   //   app.mount(CompundComponent)
   //   expect(document.body.innerHTML).toMatchSnapshot()
   // })
-  // it('should bind an event', async () => {
-  //   let eventHandler = jest.fn()
-  //   const ClickableComponent = () => render`
-  //     <button id="root" ::click=${eventHandler}>Click me</button>
-  //   `
-  //   app.mount(ClickableComponent)
-  //   // Awaiting for the eventHandler to be set in setTimeout
-  //   await delay(0)
-  //   expect(document.body.innerHTML).toMatchSnapshot()
-  //   document.querySelector('button#root').click()
-  //   expect(eventHandler).toHaveBeenCalled()
-  // })
-  // it('should bind multiple events', async () => {
-  //   let clickHandler = jest.fn()
-  //   let blurHandler = jest.fn()
-  //   const ClickableComponent = () => render`
-  //     <input type="text" id="root" ::click=${clickHandler} ::blur=${blurHandler} />
-  //   `
-  //   app.mount(ClickableComponent)
-  //   // Awaiting for the eventHandler to be set in setTimeout
-  //   await delay(0)
-  //   expect(document.body.innerHTML).toMatchSnapshot()
-  //   document.querySelector('input#root').click()
-  //   expect(clickHandler).toHaveBeenCalled()
-  //   document.querySelector('input#root').focus()
-  //   document.querySelector('input#root').blur()
-  //   expect(blurHandler).toHaveBeenCalled()
-  // })
+
   // it(`
   //   should not change innerHTML when only attributes have changed in the wrapper tag
   //   (input's value should remain the same)
@@ -197,17 +170,20 @@ describe('purity', () => {
   //   expect(document.querySelector('#color').style.color).toEqual('red')
   //   expect(document.body.innerHTML).toMatchSnapshot()
   // })
-  // it('should handle conditional rendering & process arrays', () => {
-  //   const Component = ({maybeArr}) => render`
-  //     <div id="root">
-  //       <ul>
-  //         ${!!maybeArr && maybeArr.map(item => render`<li>${item}</li>`)}
-  //       </ul>
-  //     </div>
-  //   `
-  //   app.mount(() => Component({}))
-  //   expect(document.body.innerHTML).toMatchSnapshot()
-  //   app.mount(() => Component({maybeArr: ['🍎', '🍌', '🍰']}))
-  //   expect(document.body.innerHTML).toMatchSnapshot()
-  // })
+  it('should handle conditional rendering & process arrays', () => {
+    const Component = ({maybeArr}: {maybeArr?: any[]}) => render`
+      <div id="root">
+        <ul>
+          ${!!maybeArr && maybeArr.map(item => render`<li>${item}</li>`)}
+        </ul>
+      </div>
+    `
+    app = init({})
+    app.mount(() => Component({}))
+    expect(document.body.innerHTML).toEqual(`<div id="root"><ul></ul></div>`)
+    app.mount(() => Component({maybeArr: ['🍎', '🍌', '🍰']}))
+    expect(document.body.innerHTML).toEqual(
+      `<div id="root"><ul><li>🍎</li><li>🍌</li><li>🍰</li></ul></div>`
+    )
+  })
 })

@@ -44,5 +44,5 @@
     // "useDefineForClassFields": false
   },
   "include": ["src/**/*.ts", "examples/**/*.ts"],
-  "exclude": ["src/**/*.test.ts", "examples/**/*.test.ts"]
+  "exclude": ["*.test.ts"]
 }
