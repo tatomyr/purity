@@ -9,7 +9,7 @@ Borrowed [here](http://www.myersdaily.org/joseph/javascript/md5-text.html).
 Usage:
 
 ```javascript
-import { md5 } from 'https://tatomyr.github.io/purity/utils/md5.js'
+import {md5} from 'https://tatomyr.github.io/purity/utils/md5.js'
 
 console.log(md5('some string'))
 ```
@@ -82,23 +82,6 @@ Sanitizes input.
 Wrap any input you use into this function
 any time you put the input value into your application code
 (when submitting a form, listening to typing in a `textarea` &c.).
-
-## Register async handlers for Purity Store
-
-An easy way of creating async watchers:
-
-```js
-import { registerAsync } from '/utils/register-async.js'
-
-export const asyncWatcher = registerAsync({
-  SOME_ACTION: async function (action, dispatch, state) {
-    // Make API calls
-    // Do asynchronous stuff
-    // Dispatch other actions
-  },
-  // Other actions...
-})
-```
 
 ## Array Partition
 

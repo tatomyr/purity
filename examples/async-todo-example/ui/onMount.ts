@@ -1,3 +1,5 @@
+// @ts-nocheck FIXME:
+
 let mounted = {}
 
 export const onMount = (id: symbol) => (callback: () => void) => {

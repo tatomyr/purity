@@ -1,12 +1,12 @@
-import { render } from '../../../core.js'
-import { idIsNotEqual } from '../helpers.js'
-import { getState, setState } from '../store/provider.js'
-import { Item } from '../types.js'
+import {render} from '../../../core.js'
+import {getState, setState} from '../app.js'
+import {idIsNotEqual} from '../helpers.js'
+import {Item} from '../types.js'
 
-const Item = ({ name, id }: Item) => render`
+const Item = ({name, id}: Item) => render`
   <li
     ::click=${() => {
-      setState(({ chosenItems }) => ({
+      setState(({chosenItems}) => ({
         chosenItems: chosenItems.filter(idIsNotEqual(id)),
       }))
     }}

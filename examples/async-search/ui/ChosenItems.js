@@ -1,6 +1,6 @@
 import { render } from '../../../core.js';
+import { getState, setState } from '../app.js';
 import { idIsNotEqual } from '../helpers.js';
-import { getState, setState } from '../store/provider.js';
 const Item = ({ name, id }) => render `
   <li
     ::click=${() => {

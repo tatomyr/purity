@@ -1,6 +1,6 @@
-import { rerender } from '../store/provider.js';
+import { rerender } from '../app.js';
 export function useState(state) {
-    return changes => {
+    return (changes) => {
         Object.assign(state, changes);
         rerender();
     };

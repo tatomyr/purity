@@ -1,10 +1,10 @@
 import { render } from '../../../core.js';
-import { getItems } from '../store/api.js';
-import { getState, setState } from '../store/provider.js';
+import { getState, setState } from '../app.js';
+import { getItems } from '../api.js';
 import { ListItem } from './ListItem.js';
 import { createOnMount } from './onMount.js';
 const onMount = createOnMount();
-const matches = input => ({ text }) => text.indexOf(input) !== -1;
+const matches = (input) => ({ text }) => text.indexOf(input) !== -1;
 export const List = () => {
     const { items, input } = getState();
     onMount(async () => {

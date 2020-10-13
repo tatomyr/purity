@@ -1,4 +1,4 @@
-import { init } from '../../../core.js';
+import { init } from '../../core.js';
 export const { mount, getState, setState } = init({
     input: '',
     items: [],

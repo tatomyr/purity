@@ -1,5 +1,5 @@
 import { render } from '../../../core.js';
-import { getState } from '../store/provider.js';
+import { getState } from '../app.js';
 export const Spinner = () => render `
   <span id="status">
     ${getState().isLoading &&

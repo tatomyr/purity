@@ -1,5 +1,5 @@
-import { render } from '../../../core.js'
-import { getState } from '../store/provider.js'
+import {render} from '../../../core.js'
+import {getState} from '../app.js'
 
 export const Spinner = () => render`
   <div

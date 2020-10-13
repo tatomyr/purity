@@ -4,7 +4,7 @@ import { Button } from './Button.js';
 export const StatefulCounter = ({ id }) => {
     let count = useState(id)(0);
     const handleClick = e => {
-        const { target: { dataset: { counter }, }, } = e;
+        const { counter } = e.target.dataset;
         count.set({ inc: count.get() + 1, dec: count.get() - 1, reset: 0 }[counter]);
     };
     return render `

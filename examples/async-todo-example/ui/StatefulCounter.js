@@ -1,7 +1,7 @@
 import { render } from '../../../core.js';
 import { useState } from './useState.js';
 import { createOnMount } from './onMount.js';
-import { setState } from '../store/provider.js';
+import { setState } from '../app.js';
 const onMount = createOnMount();
 let state = { count: 0 };
 export const StatefulCounter = ({ id }) => {

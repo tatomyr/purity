@@ -1,18 +1,25 @@
 # Purity (Reactive state & DOM manager)
 
-Implementation of a reactive global store for pure JavaScript applications.
-
-The concept is that every reactive data should be contained in one store
-which is accessible through methods `connect` (for getting data) and `dispatch`
-(for dispatching a synchronous or asynchronous action).
+Declarative UI library for using the most of today's Javascript.
 
 # Usage
+
+To include **Purity** in a project first describe your `index.html` file where you put the application root element and plug in the main application script:
+
+```html
+<html>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./main.js">
+  </body>
+</html>
+```
 
 To include **Purity** in a project import its features through CDN
 (make sure your root script injected in html has `[type="module"]`):
 
 ```javascript
-import { createStore, render } from 'https://tatomyr.github.io/purity/core.js'
+import {createStore, render} from 'https://tatomyr.github.io/purity/core.js'
 ```
 
 or download this file into your project's folder and import from in there.
@@ -31,7 +38,7 @@ Then you can use the component inside an other one:
 const OtherComponent = () => render`
   <div>
     ...
-    ${Component({ text: 'Hello World!' })}
+    ${Component({text: 'Hello World!'})}
     ...
   </div>
 `
@@ -52,8 +59,8 @@ const Component = () => render`
 You can use the `connect` method to pass all the data from the shared application state:
 
 ```javascript
-import { connect } from '/store-provider.js'
-import { Component } from './Component.js'
+import {connect} from '/store-provider.js'
+import {Component} from './Component.js'
 
 export default connect(Component)
 ```
@@ -70,11 +77,11 @@ To set up the store for your application,
 you have to implement a provider via `createStore` method.
 
 ```javascript
-import { createStore } from '/core.js'
-import { stateHandler } from './state-handler.js'
-import { asyncWatcher } from './async-handler.js'
+import {createStore} from '/core.js'
+import {stateHandler} from './state-handler.js'
+import {asyncWatcher} from './async-handler.js'
 
-export const { mount, dispatch, connect } = createStore(
+export const {mount, dispatch, connect} = createStore(
   stateHandler,
   asyncWatcher
 )
@@ -120,7 +127,7 @@ function asyncWatcher(action) {
 Also you can use `register-async` utility:
 
 ```js
-import { registerAsync } from '/utils/register-async.js'
+import {registerAsync} from '/utils/register-async.js'
 
 export const asyncWatcher = registerAsync({
   SOME_ACTION: someAction,
@@ -130,7 +137,7 @@ export const asyncWatcher = registerAsync({
 Finally you have to mount your app to the DOM:
 
 ```javascript
-import { mount } from '/store-provider.js'
+import {mount} from '/store-provider.js'
 
 mount(App)
 ```

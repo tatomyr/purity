@@ -1,25 +1,26 @@
-/* eslint-disable no-undef */
+// @ts-nocheck
 
-const { init, render } = require('./__core__.js')
+const {init, render} = require('./__core__.js')
+// import {init, render} from './core.ts'
 
-const delay = t => ({ then: resolve => setTimeout(resolve, t) })
+const delay = t => ({then: resolve => setTimeout(resolve, t)})
 
 const SimpleComponent = () => render`<div id="root">SOMETHING</div>`
-const ComplexComponent = ({ something }) =>
+const ComplexComponent = ({something}) =>
   render`
     <div id="root">
       <h1 id="title">TITLE</h1>
       <p id="something">${something}</p>
     </div>
   `
-const DymamicComponent = ({ something }) =>
+const DymamicComponent = ({something}) =>
   render`
     <div id="root">
       <h1 id="title">TITLE</h1>
       <p id="something" title="${something}">${something}</p>
     </div>
   `
-const ConditionalComponent = ({ something }) =>
+const ConditionalComponent = ({something}) =>
   render`
     <div id="root">
       ${something && render`<p id="something">${something}</p>`}
@@ -37,7 +38,7 @@ describe('core', () => {
         case 'INIT':
           return state
         case 'CHANGE_SOMETHING':
-          return { ...state, something: action.something }
+          return {...state, something: action.something}
         default:
           return {}
       }
@@ -49,7 +50,7 @@ describe('core', () => {
     expect(store.getState()).toEqual(defaultState)
   })
   it('should not change after an unknown action', () => {
-    store.dispatch({ type: 'UNKNOWN_ACTION', some: 'payload' })
+    store.dispatch({type: 'UNKNOWN_ACTION', some: 'payload'})
     expect(store.getState()).toEqual(defaultState)
   })
   it('should mount a simple component', () => {
@@ -59,49 +60,49 @@ describe('core', () => {
   it('should connect a component with the state', () => {
     store.mount(store.connect(ComplexComponent))
     expect(document.body.innerHTML).toEqual(
-      ComplexComponent({ something: 'something' })
+      ComplexComponent({something: 'something'})
     )
   })
   it('should handle the state changes', () => {
     store.mount(store.connect(ComplexComponent))
-    store.dispatch({ type: 'CHANGE_SOMETHING', something: 'new thing' })
-    expect(store.getState()).toEqual({ something: 'new thing' })
+    store.dispatch({type: 'CHANGE_SOMETHING', something: 'new thing'})
+    expect(store.getState()).toEqual({something: 'new thing'})
   })
   it('should handle changes for a component with a static wrapper', () => {
     store.mount(store.connect(ComplexComponent))
-    store.dispatch({ type: 'CHANGE_SOMETHING', something: 'new thing' })
+    store.dispatch({type: 'CHANGE_SOMETHING', something: 'new thing'})
     expect(document.body.innerHTML).toEqual(
-      ComplexComponent({ something: 'new thing' })
+      ComplexComponent({something: 'new thing'})
     )
   })
   it('should handle changes for a component with a dynamic wrapper', () => {
     store.mount(store.connect(DymamicComponent))
-    store.dispatch({ type: 'CHANGE_SOMETHING', something: 'new thing' })
+    store.dispatch({type: 'CHANGE_SOMETHING', something: 'new thing'})
     expect(document.body.innerHTML).toEqual(
-      DymamicComponent({ something: 'new thing' })
+      DymamicComponent({something: 'new thing'})
     )
   })
   it('should handle a conditional component', () => {
     store.mount(store.connect(ConditionalComponent))
-    store.dispatch({ type: 'CHANGE_SOMETHING', something: '' })
+    store.dispatch({type: 'CHANGE_SOMETHING', something: ''})
     expect(document.body.innerHTML).toEqual(
-      ConditionalComponent({ something: '' })
+      ConditionalComponent({something: ''})
     )
-    store.dispatch({ type: 'CHANGE_SOMETHING', something: 'new thing' })
+    store.dispatch({type: 'CHANGE_SOMETHING', something: 'new thing'})
     expect(document.body.innerHTML).toEqual(
-      ConditionalComponent({ something: 'new thing' })
+      ConditionalComponent({something: 'new thing'})
     )
   })
   it('should deal with a compound component', () => {
     const InnerComponent = store.connect(
-      ({ something, style }) => render`
+      ({something, style}) => render`
         <h1 id="title" style="${style}">TITLE</h1>
         <p id="something">${something}</p>
       `
     )
     const CompundComponent = () => render`
       <div id="root">
-        ${InnerComponent({ style: 'color: red;' })}
+        ${InnerComponent({style: 'color: red;'})}
       </div>
     `
     store.mount(CompundComponent)
@@ -147,7 +148,7 @@ describe('core', () => {
     }
 
     const Component = store.connect(
-      ({ something }) => render`
+      ({something}) => render`
         <div id="root">
           <input id="color" style="color: ${something};" />
           <button
@@ -169,7 +170,7 @@ describe('core', () => {
     expect(document.body.innerHTML).toMatchSnapshot()
   })
   it('should handle conditional rendering & process arrays', () => {
-    const Component = ({ maybeArr }) => render`
+    const Component = ({maybeArr}) => render`
       <div id="root">
         <ul>
           ${!!maybeArr && maybeArr.map(item => render`<li>${item}</li>`)}
@@ -178,7 +179,7 @@ describe('core', () => {
     `
     store.mount(() => Component({}))
     expect(document.body.innerHTML).toMatchSnapshot()
-    store.mount(() => Component({ maybeArr: ['🍎', '🍌', '🍰'] }))
+    store.mount(() => Component({maybeArr: ['🍎', '🍌', '🍰']}))
     expect(document.body.innerHTML).toMatchSnapshot()
   })
 })

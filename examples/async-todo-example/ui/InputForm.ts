@@ -1,6 +1,6 @@
-import { render } from '../../../core.js'
-import { addItem, getItems } from '../store/api.js'
-import { setState } from '../store/provider.js'
+import {render} from '../../../core.js'
+import {setState} from '../app.js'
+import {addItem, getItems} from '../api.js'
 
 export const InputForm = () => render`
   <form
@@ -8,7 +8,7 @@ export const InputForm = () => render`
     ::submit=${async e => {
       e.preventDefault()
       // dispatch({ type: 'ADD_ITEM', text: e.target.text.value })
-      setState(() => ({ spinner: true }))
+      setState(() => ({spinner: true}))
       // ...
       const text = (e.target as HTMLFormElement).text.value
 
@@ -23,7 +23,7 @@ export const InputForm = () => render`
 
         setState(() => ({
           items: items.map(item =>
-            item.id === justAddedItem.id ? { ...item, justAdded: true } : item
+            item.id === justAddedItem.id ? {...item, justAdded: true} : item
           ),
           // spinner: false,
         }))

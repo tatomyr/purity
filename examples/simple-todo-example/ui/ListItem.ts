@@ -1,16 +1,16 @@
-import { render } from '../../../core.js'
-import { setState } from '../store/provider.js'
-import { Item } from '../types.js'
+import {render} from '../../../core.js'
+import {setState} from '../app.js'
+import {Item} from '../types.js'
 
-export const ListItem = ({ id, text, checked }: Item) => render`
+export const ListItem = ({id, text, checked}: Item) => render`
   <li id="${id}" class="${checked ? 'checked' : ''}" title="${id}">
     <input
       type="checkbox"
       ${checked ? 'checked' : ''}
       ::change=${e => {
-        setState(({ items }) => ({
+        setState(({items}) => ({
           items: items.map(item =>
-            item.id === id ? { ...item, checked: !item.checked } : item
+            item.id === id ? {...item, checked: !item.checked} : item
           ),
         }))
       }}
@@ -19,7 +19,7 @@ export const ListItem = ({ id, text, checked }: Item) => render`
     <button
       type="button"
       ::click=${() => {
-        setState(({ items }) => ({
+        setState(({items}) => ({
           items: items.filter(item => item.id !== id),
         }))
       }}

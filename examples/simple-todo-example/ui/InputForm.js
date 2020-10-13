@@ -1,6 +1,6 @@
 import { render } from '../../../core.js';
 import { generateNextId } from '../helpers.js';
-import { setState } from '../store/provider.js';
+import { setState } from '../app.js';
 export const InputForm = () => render `
   <form
     id="input-form"

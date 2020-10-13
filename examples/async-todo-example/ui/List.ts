@@ -1,20 +1,20 @@
-import { render } from '../../../core.js'
-import { getItems } from '../store/api.js'
-import { getState, setState } from '../store/provider.js'
-import { ListItem } from './ListItem.js'
-import { createOnMount } from './onMount.js'
+import {render} from '../../../core.js'
+import {getState, Item, setState} from '../app.js'
+import {getItems} from '../api.js'
+import {ListItem} from './ListItem.js'
+import {createOnMount} from './onMount.js'
 
 const onMount = createOnMount()
 
-const matches = input => ({ text }) => text.indexOf(input) !== -1
+const matches = (input: string) => ({text}: Item) => text.indexOf(input) !== -1
 
 export const List = () => {
-  const { items, input } = getState()
+  const {items, input} = getState()
 
   onMount(async () => {
     // dispatch({ type: 'GET_ITEMS' })
     const items = await getItems()
-    setState(() => ({ items }))
+    setState(() => ({items}))
   })
 
   return render`

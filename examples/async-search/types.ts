@@ -3,7 +3,7 @@ export type Item = {
   name: string
 }
 
-export type State = {
+export type AppState = {
   input: string
   items: Item[]
   isLoading: boolean

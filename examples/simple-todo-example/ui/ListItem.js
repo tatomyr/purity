@@ -1,5 +1,5 @@
 import { render } from '../../../core.js';
-import { setState } from '../store/provider.js';
+import { setState } from '../app.js';
 export const ListItem = ({ id, text, checked }) => render `
   <li id="${id}" class="${checked ? 'checked' : ''}" title="${id}">
     <input

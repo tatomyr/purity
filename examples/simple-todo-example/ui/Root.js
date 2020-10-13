@@ -1,5 +1,5 @@
 import { render } from '../../../core.js';
-import { getState } from '../store/provider.js';
+import { getState } from '../app.js';
 import { ListItem } from './ListItem.js';
 import { InputForm } from './InputForm.js';
 export const Root = () => {

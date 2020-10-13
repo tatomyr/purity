@@ -1,16 +1,18 @@
 import { render } from '../../core.js'
 import { useState } from './useState.js'
-import { Button } from './Button.js'
+import { Button, Actions } from './Button.js'
 
-export const StatefulCounter = ({ id }) => {
+export type StatefulCounterProps = { id: string }
+
+export const StatefulCounter = ({ id }: StatefulCounterProps) => {
   let count = useState(id)(0)
-  const handleClick = e => {
-    const {
-      target: {
-        dataset: { counter },
-      },
-    } = e
-    count.set({ inc: count.get() + 1, dec: count.get() - 1, reset: 0 }[counter])
+  const handleClick: EventHandlerNonNull = e => {
+    const { counter } = (e.target as HTMLButtonElement).dataset
+    count.set(
+      { inc: count.get() + 1, dec: count.get() - 1, reset: 0 }[
+        counter as Actions
+      ]
+    )
   }
 
   return render`

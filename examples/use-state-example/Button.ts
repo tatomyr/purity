@@ -1,6 +1,14 @@
 import { render } from '../../core.js'
 
-export const Button = ({ action, caption, handleClick }) => render`
+export type Actions = 'inc' | 'dec' | 'reset'
+
+export type ButtonProps = {
+  action: Actions
+  caption: string
+  handleClick: EventHandlerNonNull
+}
+
+export const Button = ({ action, caption, handleClick }: ButtonProps) => render`
   <button data-counter="${action}" ::click=${handleClick}>
     ${caption}
   </button>

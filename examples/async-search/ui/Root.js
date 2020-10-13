@@ -1,6 +1,6 @@
 import { render } from '../../../core.js';
 import { debounce } from '../../../utils/debounce.js';
-import { setState } from '../store/provider.js';
+import { setState } from '../app.js';
 import { SuggestionsList } from './SuggestionsList.js';
 import { ErrorBanner } from './ErrorBanner.js';
 import { Spinner } from './Spinner.js';

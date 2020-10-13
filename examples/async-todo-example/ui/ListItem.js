@@ -1,6 +1,6 @@
 import { render } from '../../../core.js';
-import { deleteItem, getItems, toggleItem } from '../store/api.js';
-import { setState } from '../store/provider.js';
+import { setState } from '../app.js';
+import { deleteItem, getItems, toggleItem } from '../api.js';
 export const ListItem = ({ id, text, checked, justAdded }) => render `
   <li
     id="${id}"

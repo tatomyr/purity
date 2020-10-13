@@ -1,3 +1,3 @@
-import { mount } from './store/provider.js';
+import { mount } from './app.js';
 import { App } from './ui/App.js';
 mount(App);

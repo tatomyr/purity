@@ -1,14 +1,5 @@
 const clearFalsy = (x) => x === undefined || x === null || x === false ? '' : x;
-const joinIfArray = (x) => {
-    if (Array.isArray(x)) {
-        x.forEach(item => {
-            if (typeof item !== 'string') {
-                console.error('ITEM IS NOT A STRING!', item);
-            }
-        });
-    }
-    return Array.isArray(x) ? x.join('') : x;
-};
+const joinIfArray = (x) => Array.isArray(x) ? x.join('') : x;
 const PURITY_KEYWORD = 'purity';
 const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`;
 export const init = (initialState) => {
@@ -18,11 +9,11 @@ export const init = (initialState) => {
         const nodesMap = new Map();
         for (const node of virtualDocument.querySelectorAll('[id]')) {
             const shallow = node.cloneNode(true);
-            for (const innerNode of shallow.querySelectorAll('[id]')) {
+            for (let innerNode of shallow.querySelectorAll('[id]')) {
                 innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`;
             }
-            for (const innerNode of shallow.querySelectorAll(`[${DATA_PURITY_FLAG}]`)) {
-                for (let key in innerNode.dataset) {
+            for (let innerNode of shallow.querySelectorAll(`[${DATA_PURITY_FLAG}]`)) {
+                for (const key in innerNode.dataset) {
                     if (key.startsWith(PURITY_KEYWORD)) {
                         innerNode.removeAttribute(`data-${key}`);
                     }
@@ -38,18 +29,21 @@ export const init = (initialState) => {
         rootComponent = f;
         domNodesMap = parseHTML(rootComponent());
         const rootId = domNodesMap.keys().next().value;
-        document.getElementById(rootId).replaceWith(domNodesMap.get(rootId).node);
+        const root = document.getElementById(rootId);
+        const rootNode = domNodesMap.get(rootId)?.node;
+        if (root && rootNode) {
+            root.replaceWith(rootNode);
+        }
+        else {
+            throw new Error(`Root DOM element's id does not correspond to the defined application root id ${rootId}.`);
+        }
     }
     function updateAttributes(element, newNode) {
         for (const { name } of element.attributes) {
-            if (name !== 'id') {
-                element.removeAttribute(name);
-            }
+            element.removeAttribute(name);
         }
         for (const { name, value } of newNode.node.attributes) {
-            if (name !== 'id') {
-                element.setAttribute(name, value);
-            }
+            element.setAttribute(name, value);
         }
     }
     function rerender() {
@@ -58,10 +52,18 @@ export const init = (initialState) => {
             const newNode = newNodesMap.get(id);
             if (newNode && domNode.shallow.outerHTML !== newNode.shallow.outerHTML) {
                 const elementById = document.getElementById(id);
-                updateAttributes(elementById, newNode);
-                if (domNode.shallow.innerHTML !== newNode.shallow.innerHTML) {
-                    elementById.innerHTML = newNode.node.innerHTML;
-                    console.log(`↻ #${id}`);
+                if (elementById) {
+                    updateAttributes(elementById, newNode);
+                    if (domNode.shallow.innerHTML !== newNode.shallow.innerHTML) {
+                        elementById.innerHTML = newNode.node.innerHTML;
+                        console.log(`↻ #${id}`);
+                    }
+                    else {
+                        console.log(`± #${id}`);
+                    }
+                }
+                else {
+                    throw new Error(`There is no element in DOM with id ${id}.`);
                 }
             }
         }
@@ -99,6 +101,7 @@ export const render = ([first, ...strings], ...args) => {
         setTimeout(() => {
             let element = document.querySelector(`[${dataName}]`);
             if (element) {
+                ;
                 element[`on${event}`] = args[index];
                 element.removeAttribute(dataName);
             }

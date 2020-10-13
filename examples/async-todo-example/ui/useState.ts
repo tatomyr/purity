@@ -1,7 +1,7 @@
-import { rerender } from '../store/provider.js'
+import {rerender} from '../app.js'
 
-export function useState(state) {
-  return changes => {
+export function useState(state: object) {
+  return (changes: object) => {
     Object.assign(state, changes)
     rerender()
   }

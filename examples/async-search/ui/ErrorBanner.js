@@ -1,5 +1,5 @@
 import { render } from '../../../core.js';
-import { getState, setState } from '../store/provider.js';
+import { getState, setState } from '../app.js';
 export const ErrorBanner = () => {
     const { error } = getState();
     return render `

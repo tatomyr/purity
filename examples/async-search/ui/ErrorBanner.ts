@@ -1,8 +1,8 @@
-import { render } from '../../../core.js'
-import { getState, setState } from '../store/provider.js'
+import {render} from '../../../core.js'
+import {getState, setState} from '../app.js'
 
 export const ErrorBanner = () => {
-  const { error } = getState()
+  const {error} = getState()
   return render`
     <div id="error-banner">
       ${
@@ -11,7 +11,7 @@ export const ErrorBanner = () => {
           <pre
             class="error-banner"
             ::click=${() => {
-              setState(() => ({ error: '' }))
+              setState(() => ({error: ''}))
             }}
           >
             ${error}

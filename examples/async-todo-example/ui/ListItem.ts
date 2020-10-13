@@ -1,8 +1,8 @@
-import { render } from '../../../core.js'
-import { deleteItem, getItems, toggleItem } from '../store/api.js'
-import { setState } from '../store/provider.js'
+import {render} from '../../../core.js'
+import {Item, setState} from '../app.js'
+import {deleteItem, getItems, toggleItem} from '../api.js'
 
-export const ListItem = ({ id, text, checked, justAdded }) => render`
+export const ListItem = ({id, text, checked, justAdded}: Item) => render`
   <li
     id="${id}"
     class="${checked ? 'checked' : ''} ${justAdded ? 'highlighted' : ''}"
@@ -13,14 +13,14 @@ export const ListItem = ({ id, text, checked, justAdded }) => render`
       ${checked ? 'checked' : ''}
       ::change=${async e => {
         // dispatch({ type: 'TOGGLE_ITEM', id, checked })
-        const { checked } = e.target as HTMLInputElement
-        setState(() => ({ spinner: true }))
+        const {checked} = e.target as HTMLInputElement
+        setState(() => ({spinner: true}))
 
         try {
           const toggledItem = await toggleItem(id, checked)
           // dispatch({ type: 'UPDATE_ITEM', item })
 
-          setState(({ items }) => ({
+          setState(({items}) => ({
             items: items.map(item => (item.id === id ? toggledItem : item)),
             // spinner: false,
           }))
@@ -39,13 +39,13 @@ export const ListItem = ({ id, text, checked, justAdded }) => render`
       ::click=${async e => {
         // dispatch({ type: 'DELETE_ITEM', id })
 
-        setState(() => ({ spinner: true }))
+        setState(() => ({spinner: true}))
 
         try {
           await deleteItem(id)
           // dispatch({ type: 'UPDATE_ITEM', item })
           const items = await getItems()
-          setState(() => ({ items }))
+          setState(() => ({items}))
         } catch (err) {
           alert(err.message)
         } finally {

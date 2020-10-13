@@ -1,6 +1,6 @@
 import { render } from '../../../core.js';
-import { addItem, getItems } from '../store/api.js';
-import { setState } from '../store/provider.js';
+import { setState } from '../app.js';
+import { addItem, getItems } from '../api.js';
 export const InputForm = () => render `
   <form
     id="input-form"
