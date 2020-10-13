@@ -1,4 +1,4 @@
-import { render } from '../../../core.js';
+import { render } from '../../../src/purity.js';
 import { generateNextId } from '../helpers.js';
 import { setState } from '../app.js';
 export const InputForm = () => render `

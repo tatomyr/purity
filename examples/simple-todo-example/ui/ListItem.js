@@ -1,4 +1,4 @@
-import { render } from '../../../core.js';
+import { render } from '../../../src/purity.js';
 import { setState } from '../app.js';
 export const ListItem = ({ id, text, checked }) => render `
   <li id="${id}" class="${checked ? 'checked' : ''}" title="${id}">

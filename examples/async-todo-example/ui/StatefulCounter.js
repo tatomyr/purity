@@ -1,4 +1,4 @@
-import { render } from '../../../core.js';
+import { render } from '../../../src/purity.js';
 import { useState } from './useState.js';
 import { createOnMount } from './onMount.js';
 import { setState } from '../app.js';

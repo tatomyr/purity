@@ -1,4 +1,4 @@
-import { render } from '../../../core.js';
+import { render } from '../../../src/purity.js';
 import { getState, setState } from '../app.js';
 import { idIsNotEqual } from '../helpers.js';
 const Item = ({ name, id }) => render `

@@ -1,4 +1,4 @@
-import { render } from '../../core.js';
+import { render } from '../../src/purity.js';
 import { StatefulCounter } from './StatefulCounter.js';
 export const Root = () => render `
     <div id="root">

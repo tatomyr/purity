@@ -1,6 +1,6 @@
-import { init } from '../../core.js'
-import { Root } from './Root.js'
+import {init} from '../../src/purity.js'
+import {Root} from './Root.js'
 
-export const { mount, rerender } = init({})
+export const {mount, rerender} = init({})
 
 mount(Root)

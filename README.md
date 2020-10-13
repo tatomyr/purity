@@ -25,7 +25,7 @@ To include **Purity** in a project you have to put in your **index.html** a root
 Import **Purity** from a local file or a public URL, e. g.:
 
 ```js
-import {init, render} from 'https://some.domain/purity.js'
+import {init, render} from 'https://tatomyr.gitlab.io/purity/purity.js'
 ```
 
 Next, you init the app with some default state. This will return a bunch of mehtods you can use in your app:

@@ -1,11 +1,11 @@
 #!/bin/bash
 
-npx minify core.js > core.min.js
-npx minify utils/register-async.js > utils/register-async.min.js
-npx minify utils/debounce.js > utils/debounce.min.js
-npx minify utils/delay.js > utils/delay.min.js
-# npx minify utils/md5.js > utils/md5.min.js
-npx minify utils/sanitize.js > utils/sanitize.min.js
-npx minify utils/visibility-sensor.js > utils/visibility-sensor.min.js
+npx minify src/purity.js > src/purity.min.js
+npx minify src/register-async.js > src/register-async.min.js
+npx minify src/debounce.js > src/debounce.min.js
+npx minify src/delay.js > src/delay.min.js
+# npx minify src/md5.js > src/md5.min.js
+npx minify src/sanitize.js > src/sanitize.min.js
+npx minify src/visibility-sensor.js > src/visibility-sensor.min.js
 
-git add core.min.js utils/*.min.js
+git add src/*.min.js

@@ -1,4 +1,4 @@
-import { render } from '../../../core.js';
+import { render } from '../../../src/purity.js';
 import { rerender } from '../app.js';
 import { List } from './List.js';
 import { InputForm } from './InputForm.js';

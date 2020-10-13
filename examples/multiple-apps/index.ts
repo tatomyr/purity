@@ -1,8 +1,8 @@
-import { init, render } from '../../core.js'
+import {init, render} from '../../src/purity.js'
 
 // App #1
 
-const store1 = init({ text: 'Initial Text' })
+const store1 = init({text: 'Initial Text'})
 
 const App1 = () => render`
   <form
@@ -25,14 +25,14 @@ store1.mount(App1)
 
 // App #2
 
-const store2 = init({ counter: 0 })
+const store2 = init({counter: 0})
 
 const App2 = () => render`
   <div id="root-2">
     <span id="counter">${store2.getState().counter}</span>
     <button
       ::click=${e => {
-        store2.setState(({ counter }) => ({ counter: counter + 1 }))
+        store2.setState(({counter}) => ({counter: counter + 1}))
       }}
     >
       Click Me 2

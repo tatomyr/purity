@@ -4,12 +4,18 @@ type Rejected = undefined | null | false
 type Simple = Allowed | Rejected
 type Argument = Simple | string[]
 type Verified = Allowed | string[]
-type Component = <P>(props?: P, ...rest: any[]) => string
+export type Component = <P>(props?: P, ...rest: any[]) => string
 type VirtualNodes = {
   node: HTMLElement
   shallow: HTMLElement
 }
 type DomNodesMap = Map<string, VirtualNodes> // FIXME: Element/HTMLElement - pick one
+export type App<State> = {
+  mount: (f: Component) => void
+  rerender: () => void
+  getState: () => State
+  setState(callback: (state: State) => Partial<State>): void
+}
 
 // Helpers
 const clearFalsy = <T extends Verified>(x: T | Rejected): T | '' =>
@@ -25,7 +31,7 @@ const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
 /**
  * App factory that should be invoked once to create a single store with reactive state
  */
-export const init = <State>(initialState: State) => {
+export const init = <State>(initialState: State): App<State> => {
   let state = initialState
 
   /**

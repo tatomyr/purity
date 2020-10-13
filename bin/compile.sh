@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # Clear previously compiled file(s)
-rm ./core.js 
+# rm ...
 
 npx typescript -w

@@ -1,4 +1,4 @@
-import { render, init } from '../../core.js';
+import { render, init } from '../../src/purity.js';
 const { mount, getState, setState } = init({
     count: 0,
 });

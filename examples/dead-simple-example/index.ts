@@ -1,14 +1,14 @@
-import { render, init } from '../../core.js'
+import {render, init} from '../../src/purity.js'
 
-const { mount, getState, setState } = init({
+const {mount, getState, setState} = init({
   count: 0,
 })
 
-const increment = () => setState(({ count }) => ({ count: count + 1 }))
+const increment = () => setState(({count}) => ({count: count + 1}))
 
-const decrement = () => setState(({ count }) => ({ count: count - 1 }))
+const decrement = () => setState(({count}) => ({count: count - 1}))
 
-const reset = () => setState(() => ({ count: 0 }))
+const reset = () => setState(() => ({count: 0}))
 
 const Root = () => render`
   <div id="root">

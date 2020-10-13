@@ -1,4 +1,4 @@
-import { init, render } from '../../core.js';
+import { init, render } from '../../src/purity.js';
 const { mount, getState, setState } = init({ text: '' });
 const App = () => render `
   <div id="root">

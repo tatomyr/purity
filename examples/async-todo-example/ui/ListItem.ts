@@ -1,4 +1,4 @@
-import {render} from '../../../core.js'
+import {render} from '../../../src/purity.js'
 import {Item, setState} from '../app.js'
 import {deleteItem, getItems, toggleItem} from '../api.js'
 

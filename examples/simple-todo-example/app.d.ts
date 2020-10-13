@@ -7,4 +7,4 @@ export declare type AppState = {
     items: Item[];
     input: string;
 };
-export declare const mount: (f: <P>(props?: P | undefined, ...rest: any[]) => string) => void, rerender: () => void, getState: () => AppState, setState: (callback: (state: AppState) => Partial<AppState>) => void;
+export declare const mount: (f: import("../../src/purity.js").Component) => void, rerender: () => void, getState: () => AppState, setState: (callback: (state: AppState) => Partial<AppState>) => void;

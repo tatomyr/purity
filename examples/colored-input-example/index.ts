@@ -1,11 +1,11 @@
-import { init, render } from '../../core.js'
+import {init, render} from '../../src/purity.js'
 
-const { mount, getState, setState } = init({
+const {mount, getState, setState} = init({
   color: 'black',
 })
 
 const handleInput = (e: Event) => {
-  setState(() => ({ color: (e.target as HTMLInputElement).value }))
+  setState(() => ({color: (e.target as HTMLInputElement).value}))
 }
 
 const Root = () => render`

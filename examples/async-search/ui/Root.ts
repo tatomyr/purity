@@ -1,5 +1,5 @@
-import {render} from '../../../core.js'
-import {debounce} from '../../../utils/debounce.js'
+import {render} from '../../../src/purity.js'
+import {debounce} from '../../../src/debounce.js'
 import {setState} from '../app.js'
 import {SuggestionsList} from './SuggestionsList.js'
 import {ErrorBanner} from './ErrorBanner.js'
