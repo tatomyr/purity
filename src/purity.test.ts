@@ -1,5 +1,5 @@
-import {App, Component, init, render} from '../src/purity'
-import {delay} from '../src/delay'
+import {App, Component, init, render} from './purity'
+import {delay} from './delay'
 
 export type AnyObject = {[key: string]: any}
 
