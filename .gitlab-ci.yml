@@ -1,6 +1,18 @@
+image: cypress/base:14
+
+check:
+  script:
+    - set
+    - node -v
+    - npm i
+    - bash ./bin/check.sh
+  only:
+    - merge_requests
+
 pages:
   stage: deploy
   script:
+    - echo "Deploy public repository to GitLab Pages"
     # - mkdir public
     # - cp src/* public
   artifacts:
