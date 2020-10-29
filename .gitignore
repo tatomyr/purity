@@ -1,14 +1,10 @@
-.DS_Store
-
 # E2E testing
 coverage/
 cypress/videos/
 cypress/screenshots/
 
-# Unit testing
+# Misc
 node_modules/
 package-lock.json
-*.test.js
-*.test.d.ts
-src/**/*.js
-src/**/*.d.ts
+.DS_Store
+

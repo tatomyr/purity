@@ -1,4 +1,4 @@
-# Purity. Reactive state & DOM manager
+# Purity. Declarative State & DOM Manager
 
 Declarative UI library for using the most of today's Javascript.
 It doesn't require any bundlers or using npm at all, it fully leverages native ECMAScript modules system.
@@ -227,6 +227,8 @@ You can access them locally using `bash bin/serve.sh` and opening `http://localh
 
 ## Development
 
+Use **node 14+**.
+
 Install prerequisites once: `bash bin/install.sh`.
 
 To serve the library locally on port 8081 run `bash bin/serve.sh`.
@@ -251,8 +253,6 @@ This repository contains example projects covered with end-to-end tests.
 To run them continioulsy use `bash bin/cypress.sh`.
 Run `bash bin/e2e.sh` to run e2e tests in headless Chrome.
 
-All test could be run with `bash bin/test.sh`.
-
 ## Technical debts
 
 Use `bash bin/debts.sh` to check all `TODO`s and `FIXME`s in the project.
@@ -261,10 +261,8 @@ You may commit it.
 
 ## Precommit
 
-Before being committed to the project,
-code must pass all necessary checks described in `bin/check.sh`.
-To add the git hook to the project,
-run the following command from the project root:
+Before being committed to the project, code must pass all necessary checks described in `bin/check.sh`.
+To add the git hook to the project, run the following command from the project root:
 
 ```
 ln -s ../../bin/pre-commit.sh .git/hooks/pre-commit

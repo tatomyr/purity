@@ -6,5 +6,3 @@ npx minify public/delay.js > public/delay.min.js
 # npx minify public/md5.js > public/md5.min.js
 npx minify public/sanitize.js > public/sanitize.min.js
 npx minify public/visibility-sensor.js > public/visibility-sensor.min.js
-
-git add public/*.min.js

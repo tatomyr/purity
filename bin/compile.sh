@@ -1,6 +1,5 @@
 #!/bin/bash
 
-rm -rf public/examples public/*.js public/*.d.ts
-cp -r src/examples public
+bash bin/pre-build.sh &&
 
 npx typescript -w
