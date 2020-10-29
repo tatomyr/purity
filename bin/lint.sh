@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npx eslint .
+npx eslint **/*.ts

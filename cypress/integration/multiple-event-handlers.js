@@ -1,6 +1,6 @@
 describe('Multiple event handlers', () => {
   beforeEach(() => {
-    cy.visit('/examples/multiple-event-handlers/index.html')
+    cy.visit('/public/examples/multiple-event-handlers/index.html')
   })
   it('handle both type & click events', () => {
     cy.get('input').type('test')

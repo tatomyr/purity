@@ -1,6 +1,6 @@
 describe('Multiple applications mounted simultaneously', () => {
   beforeEach(() => {
-    cy.visit('/examples/multiple-apps/index.html')
+    cy.visit('/public/examples/multiple-apps/index.html')
   })
   it('interacts with App 1', () => {
     cy.get('#root-1 #text').contains('Initial Text')

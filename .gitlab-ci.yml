@@ -1,12 +1,33 @@
-# image: alpine:latest
+image: cypress/base:14
+
+stages:
+  - check
+  - deploy
+
+lint-jest-e2e:
+  stage: check
+  script:
+    - set
+    - npm i
+    - bash bin/pre-build.sh
+    - npx typescript
+    - echo "Check code quality"
+    - bash ./bin/check.sh
+  only:
+    - merge_requests
 
 pages:
   stage: deploy
   script:
-    - mkdir public
-    - cp core.js public
+    - set
+    - npm i
+    - bash bin/pre-build.sh
+    - npx typescript
+    - rm -rf public/examples/**/*.ts
+    - echo "Deploy public/ folder to GitLab Pages"
+    - bash bin/minify.sh
   artifacts:
     paths:
       - public
-  # only:
-  #   - test
+  only:
+    - master

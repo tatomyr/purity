@@ -1,5 +1,13 @@
-.DS_Store
+# Public
+public/*
+!public/.gitkeep
+
+# E2E testing
 coverage/
 cypress/videos/
 cypress/screenshots/
-__*__.js
+
+# Misc
+node_modules/
+package-lock.json
+.DS_Store

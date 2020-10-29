@@ -1,6 +1,6 @@
 describe('Colored input example', () => {
   beforeEach(() => {
-    cy.visit('/examples/colored-input-example/')
+    cy.visit('/public/examples/colored-input-example/')
   })
   it('should change the color, persist the input value & the focus', () => {
     cy.get('#color')

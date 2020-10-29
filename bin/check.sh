@@ -1,5 +1,5 @@
 #!/bin/bash
 
-bash bin/minify.sh &&
 bash bin/lint.sh &&
-bash bin/test.sh
+bash bin/jest.sh &&
+bash bin/e2e.sh
