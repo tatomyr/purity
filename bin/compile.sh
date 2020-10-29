@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Clear previously compiled file(s)
-# rm ...
+rm -rf public/examples public/*.js public/*.d.ts
+cp -r src/examples public
 
 npx typescript -w

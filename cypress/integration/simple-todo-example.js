@@ -1,6 +1,6 @@
 describe('Simple todo example', () => {
   beforeEach(() => {
-    cy.visit('/examples/simple-todo-example/')
+    cy.visit('/public/examples/simple-todo-example/')
   })
   it('passes all the flow', () => {
     cy.get('#input-form input').type('first')

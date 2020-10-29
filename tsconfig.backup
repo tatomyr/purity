@@ -5,6 +5,8 @@
 
     "skipLibCheck": true,
 
+    "outDir": "public",
+
     "removeComments": true,
     // "allowJs": true,
     "declaration": true,
@@ -43,6 +45,6 @@
     "suppressImplicitAnyIndexErrors": false
     // "useDefineForClassFields": false
   },
-  "include": ["src/**/*.ts", "examples/**/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["*.test.ts"]
 }

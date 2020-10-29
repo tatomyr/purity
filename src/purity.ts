@@ -41,14 +41,15 @@ export const init = <State>(initialState: State): App<State> => {
     const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
     const nodesMap: DomNodesMap = new Map()
     for (const node of virtualDocument.querySelectorAll('[id]')) {
-      const shallow = (node as HTMLElement).cloneNode(true) as HTMLElement // FIXME: null?
+      let shallow = (node as HTMLElement).cloneNode(true) as HTMLElement // FIXME: null?
       for (let innerNode of shallow.querySelectorAll('[id]')) {
         innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`
       }
       // Removing the `data-purity_*` attributes attached in render() function
-      // TODO: try to avoid the situation when we have to remove…
-      // …something added in another module.
+      // TODO: try to avoid the situation when we have to remove something added in another module.
+      console.log('shallow--->', shallow.outerHTML)
       for (let innerNode of shallow.querySelectorAll(`[${DATA_PURITY_FLAG}]`)) {
+        console.log('         |-->', innerNode.outerHTML)
         for (const key in (innerNode as HTMLElement).dataset) {
           if (key.startsWith(PURITY_KEYWORD)) {
             innerNode.removeAttribute(`data-${key}`)
@@ -77,7 +78,7 @@ export const init = <State>(initialState: State): App<State> => {
       root.replaceWith(rootNode)
     } else {
       throw new Error(
-        `Root DOM element's id does not correspond to the defined application root id ${rootId}.`
+        `Root DOM element's id does not correspond to the defined application root id (${rootId}).`
       )
     }
   }

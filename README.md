@@ -223,13 +223,15 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 Please find the examples [here](https://tatomyr.github.io/purity/examples/)
 
-You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/examples/`.
+You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/public/examples/`.
 
 ## Development
 
+Install prerequisites once: `bash bin/install.sh`.
+
 To serve the library locally on port 8081 run `bash bin/serve.sh`.
 
-Install prerequisites: `npm i -D ts-jest typescript jest minify eslint cypress@4.4.1 @typescript-eslint/eslint-plugin@latest @typescript-eslint/parser@latest eslint@latest`
+Make sure your code is compiled (run `bash bin/compile.sh` to start compilation in watch mode; if you've changed a file that isn't a typescript file, you have to re-run this command).
 
 ## Code minification
 
@@ -267,6 +269,8 @@ run the following command from the project root:
 ```
 ln -s ../../bin/pre-commit.sh .git/hooks/pre-commit
 ```
+
+If you've run the install script, the hook should be already in place.
 
 You may also run `bash bin/check.sh` manually each time before commit.
 On Mac you can use this command as well:

@@ -1,6 +1,6 @@
 describe('Simple todo example', () => {
   beforeEach(() => {
-    cy.visit('/examples/use-state-example/')
+    cy.visit('/public/examples/use-state-example/')
   })
   it('should track each counter separately', () => {
     cy.get('#counter [data-counter=inc]')
