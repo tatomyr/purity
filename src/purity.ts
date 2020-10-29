@@ -4,7 +4,7 @@ type Rejected = undefined | null | false
 type Simple = Allowed | Rejected
 type Argument = Simple | string[]
 type Verified = Allowed | string[]
-export type Component = <P>(props?: P, ...rest: any[]) => string
+export type Component = <P>(props?: P, ...rest: any[]) => string // FIXME: it doesn't allow calling without an argument
 type VirtualNodes = {
   node: HTMLElement
   shallow: HTMLElement
@@ -16,13 +16,6 @@ export type App<State> = {
   getState: () => State
   setState(callback: (state: State) => Partial<State>): void
 }
-
-// Helpers
-const clearFalsy = <T extends Verified>(x: T | Rejected): T | '' =>
-  x === undefined || x === null || x === false ? '' : x
-
-const joinIfArray = (x: Verified): Allowed =>
-  Array.isArray(x) ? x.join('') : x
 
 // Constants
 const PURITY_KEYWORD = 'purity'
@@ -136,6 +129,13 @@ export const init = <State>(initialState: State): App<State> => {
 const ARGS_RE = /__\[(\d+)\]__/gm
 const BOUND_EVENTS_RE = /::(\w+)\s*=\s*__\[(\d+)\]__/gm
 
+// Helpers
+const clearFalsy = <T extends Verified>(x: T | Rejected): T | '' =>
+  x === undefined || x === null || x === false ? '' : x
+
+const joinIfArray = (x: Verified): Allowed =>
+  Array.isArray(x) ? x.join('') : x
+
 /**
  * Increases the Purity Key and resets it after all sync operations completed
  */
@@ -192,9 +192,8 @@ export const render = (
     .replace(BOUND_EVENTS_RE, bindEventHandlers)
     .replace(ARGS_RE, processArgs)
     .trim()
-    // FIXME: wouldn't it slow down too much? In the end of the day we don't really need this
-    .replace(/\n\s*</g, '<')
-    .replace(/>\n\s*/g, '>')
+  // .replace(/\n\s*</g, '<')
+  // .replace(/>\n\s*/g, '>')
 
   return stringToRender
 }

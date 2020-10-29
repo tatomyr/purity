@@ -9,9 +9,9 @@ lint-jest-e2e:
   script:
     - set
     - npm i
-    - bash bin/pre-build.sh
-    - npx typescript
-    - echo "Check code quality"
+    - echo "Building the project"
+    - bash bin/build.sh
+    - echo "Checking the code quality"
     - bash ./bin/check.sh
   only:
     - merge_requests
@@ -20,11 +20,8 @@ pages:
   stage: deploy
   script:
     - set
-    - bash bin/pre-build.sh
-    - npx typescript
-    - rm -rf public/examples/**/*.ts
-    - echo "Deploy public/ folder to GitLab Pages"
-    - bash bin/minify.sh
+    - echo "Deploying public/ folder to GitLab Pages"
+    - bash bin/build.sh
   artifacts:
     paths:
       - public

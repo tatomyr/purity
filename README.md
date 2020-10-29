@@ -11,7 +11,9 @@ It doesn't require any bundlers or using npm at all, it fully leverages native E
 
 ## Usage
 
-To include **Purity** in a project you have to put in your **index.html** a root element where your app will be mounted into, and script tag of `[type=module]` which points to the main js file:
+### Basic Syntax
+
+To use **Purity** in a project you have to put in your **index.html** a root element where your app will be mounted into, and script tag of `[type=module]` which points to the main js file:
 
 ```html
 <html>
@@ -34,7 +36,7 @@ Next, you init the app with some default state. This will return a bunch of meht
 const {mount, getState, setState} = init(defaultState)
 ```
 
-Then you describe your app using the `render` tag:
+Then you declare a component using the `render` tag:
 
 ```js
 const App = () => render`
@@ -42,9 +44,106 @@ const App = () => render`
 `
 ```
 
+Make sure, your root element has the same `id` attribute as the root defined **index.html**.
+
+Finally, you have to mount the App to DOM:
+
+```js
+mount(App)
+```
+
+That's it, the simplest possible Purity application is ready to be deployed!
+
+### Nested Components
+
+Since our components are merely bare functions that return a string, we can embed other functions called with some arguments, that return a string:
+
+```js
+const Child = ({name}) => render`
+  <div>Hello ${name}!</div>
+`
+
+const Parent = () => render`
+  <div>
+    <h1>Welcome page</h1>
+    ${Child({name: 'Guest'})}
+  </div>
+`
+```
+
+### Event Binding
+
+We can add some interactivity by binding events:
+
+```js
+const Clickable = () => render`
+  <button ::click=${() => console.log('Hello!')}>
+    Click Me
+  </button>
+`
+```
+
+Please notice the double-colon syntax. The pattern is `::event-name=${<event-handler>}`.
+
+**Purity** binds events to DOM asynchronously, so be careful when writing test.
+You need delay(0) before you can simulate an event after DOM got updated.
+
+### Virtual DOM
+
+Bear in mind, each changeable node should have a unique id attribute defined on it.
+This allows the DOM re-renderer to decouple changed nodes and update only them.
+It has nothing to do with **components** which are just functions to calculate the html.
+
+You can think of your application as of a tree where each tag with the `id` attribute is represented by a **virtual node**.
+The most important part of the virtual DOM is **rerenderer**.
+It calculates new virtual DOM and traverses through each existing **virtual node**.
+If a new corresponding **virtual node** exists, and it shallowly differs from the previous one, the **rerenderer** replaces `innerHTML` of the **node** and attributes of a wrapper tag.
+
+This way **rerenderer** could preserve text inputs cursor position, scrolling progress, &c.
+At the same time, it allows a programmer to fully control the updating process.
+
+DOM nodes get rerendered depending on how `id`s are placed across them.
+Basically Purity will rerender everything inside the closest common ancestor with an `id` defined on it.
+
+To get better understanding, let's consider two applications that differ only by one `id` attribute.
+
+..........................................
+
+You can see the difference in the graph below (it's the [Mermaid](https://mermaidjs.github.io/#/) graph):
+
+```mermaid
+graph TD
+  subgraph State
+    state[$count: 0 -> 1 *]
+  end
+
+  subgraph Id
+    root2[#root] --> span2[span#count] --> count2[$count *] == rerender the nearest # ==> span2
+    root2 --> button2[button::click] == increment ==> state
+  end
+
+  subgraph NoId
+    root[#root] --> span[span] --> count[$count *] == rerender the nearest # ==> root
+    root --> button[button::click] == increment ==> state
+  end
+```
+
+### Tips
+
+- Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
+- Wrap every component that you want to be rerendered independently with a tag with an unique id.
+- Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
+- A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **createStore** function (see [example](./src/examples/use-state-example/StatefulCounter.js)).
+- The library doesn't sanitize your inputs. Please do it by yourself or use `/utils/sanitize.js` module.
+- Due to its asynchronous nature, Purity requires special testing for applications that use it. Make sure you make delay(0) after the DOM has changed (see examples in [purity.test.ts](./src/purity.test.ts)).
+
 <!-- TODO: Update README -->
 
-In your application, you can declare components as bare functions. E. g.
+<!-- Essentially, your components are merely a bare functions, they don't represent any entity.
+What matters, is any unique component should have a unique id attribute.
+You can find out more about it in **Virtual DOM** section. -->
+
+<!-- In your application, you can declare components as bare functions. E. g.
 
 ```javascript
 const Component = props => render`<div>${props.text}</div>`
@@ -83,17 +182,9 @@ import {connect} from '/store-provider.js'
 import {Component} from './Component.js'
 
 export default connect(Component)
-```
+``` -->
 
-Bear in mind, each changeable **node**
-should have a unique id attribute defined on it.
-This allows the DOM rerenderer to decouple changed nodes
-and update only them.
-It has nothing to do with **components** which are just functions to calculate the html.
-Your top-level component must always have an id defined on its wrapper.
-Otherwise rerender may run inconsistently.
-
-To set up the store for your application,
+<!-- To set up the store for your application,
 you have to implement a provider via `createStore` method.
 
 ```javascript
@@ -160,48 +251,7 @@ Finally you have to mount your app to the DOM:
 import {mount} from '/store-provider.js'
 
 mount(App)
-```
-
-Make sure your root component has the same `id` as the root defined in `index.html`,
-and you have connected your script with `<script type="module" src="..."></script>`.
-
-## Virtual dom
-
-You can think of your application as a tree where each tag with the `id` attribute is represented by a **node**.
-The most important part of the virtual DOM is **rerenderer**.
-It calculates new virtual DOM and traverses through each existing **node**.
-If a new corresponding **node** exists, and it shallowly differs from the previous one,
-the **rerenderer** replaces `innerHTML` of the **node** and attributes of a wrapper tag.
-
-This way the **rerenderer** could preserve text inputs cursor position, scrolling progress, etc.
-At the same time, it allows a programmer to fully control the updating process.
-
-DOM nodes get rerendered depending on how `id`s are placed across them. Basically Purity will rerender everything inside the closest common ancestor with an `id` defined on it. You can see the difference in the graph below (it's the [Mermaid](https://mermaidjs.github.io/#/) graph).
-
-```mermaid
-graph TD
-  subgraph State
-    state[$count: 0 -> 1 *]
-  end
-
-  subgraph Id
-    root2[#root] --> span2[span#count] --> count2[$count *] == rerender the nearest # ==> span2
-    root2 --> button2[button::click] == increment ==> state
-  end
-
-  subgraph NoId
-    root[#root] --> span[span] --> count[$count *] == rerender the nearest # ==> root
-    root --> button[button::click] == increment ==> state
-  end
-```
-
-## Tips
-
-- Use uncontrolled text inputs and put them wisely, so they won't be rerendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
-- Wrap every component that you want to be rerendered independently with a tag with an unique id.
-- Root component must have the same id as the html element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
-- A **component**'s local state management considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **createStore** function (see [example](./examples/use-state-example/StatefulCounter.js)).
-- The library doesn't sanitize your inputs. Please do it by yourself or use `/utils/sanitize.js` module.
+``` -->
 
 ## Credits
 
@@ -235,15 +285,15 @@ To serve the library locally on port 8081 run `bash bin/serve.sh`.
 
 Make sure your code is compiled (run `bash bin/compile.sh` to start compilation in watch mode; if you've changed a file that isn't a typescript file, you have to re-run this command).
 
-## Code minification
+### Code minification
 
 To minify files run `bash bin/minify.sh` script.
 
-## Code linting
+### Code linting
 
 Use `bash bin/lint.sh` to lint the code.
 
-## Testing
+### Testing
 
 To run unit tests use `bash bin/jest.sh` command from the project root.
 
@@ -253,13 +303,13 @@ This repository contains example projects covered with end-to-end tests.
 To run them continioulsy use `bash bin/cypress.sh`.
 Run `bash bin/e2e.sh` to run e2e tests in headless Chrome.
 
-## Technical debts
+### Technical debts
 
 Use `bash bin/debts.sh` to check all `TODO`s and `FIXME`s in the project.
 The result will be stored in `.debts` file.
 You may commit it.
 
-## Precommit
+### Precommit
 
 Before being committed to the project, code must pass all necessary checks described in `bin/check.sh`.
 To add the git hook to the project, run the following command from the project root:
