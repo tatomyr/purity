@@ -221,7 +221,7 @@ The decision to use bare ES modules appears to be the consequence of listening t
 - [Async search](./examples/async-search)
 - [Multiple Applications in the same page](./examples/multiple-apps)
 
-Please find the examples [here](https://tatomyr.github.io/purity/examples/)
+Please find the examples [here](https://tatomyr.gitlab.io/purity/examples/)
 
 You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/public/examples/`.
 
