@@ -20,7 +20,6 @@ pages:
   stage: deploy
   script:
     - set
-    - npm i
     - bash bin/pre-build.sh
     - npx typescript
     - rm -rf public/examples/**/*.ts
