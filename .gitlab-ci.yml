@@ -1,10 +1,17 @@
 image: cypress/base:14
 
-check:
+stages:
+  - check
+  - deploy
+
+lint-jest-e2e:
+  stage: check
   script:
     - set
-    - node -v
     - npm i
+    - bash bin/pre-build.sh
+    - npx typescript
+    - echo "Check code quality"
     - bash ./bin/check.sh
   only:
     - merge_requests
@@ -12,9 +19,13 @@ check:
 pages:
   stage: deploy
   script:
-    - echo "Deploy public repository to GitLab Pages"
-    # - mkdir public
-    # - cp src/* public
+    - set
+    - npm i
+    - bash bin/pre-build.sh
+    - npx typescript
+    - rm -rf public/examples/**/*.ts
+    - echo "Deploy public/ folder to GitLab Pages"
+    - bash bin/minify.sh
   artifacts:
     paths:
       - public

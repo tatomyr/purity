@@ -1,3 +1,7 @@
+# Public
+public/*
+!public/.gitkeep
+
 # E2E testing
 coverage/
 cypress/videos/
@@ -7,4 +11,3 @@ cypress/screenshots/
 node_modules/
 package-lock.json
 .DS_Store
-
