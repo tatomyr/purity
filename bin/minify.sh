@@ -7,3 +7,4 @@ npx minify public/delay.js > public/delay.min.js
 npx minify public/sanitize.js > public/sanitize.min.js
 npx minify public/visibility-sensor.js > public/visibility-sensor.min.js
 npx minify public/selection-insert.js > public/selection-insert.min.js
+npx minify public/lz-string.js > public/lz-string.min.js

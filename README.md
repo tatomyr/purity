@@ -262,14 +262,14 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 ## Examples of usage
 
-- [Dead simple example](./examples/dead-simple-example)
-- [Simple todo](./examples/simple-todo-example)
-- [Asynchronous todo](./examples/async-todo-example)
-- [Colored input](./examples/colored-input-example)
-- [Stateful counters](./examples/use-state-example)
+- [Dead simple example](./src/examples/dead-simple-example)
+- [Simple todo](./src/examples/simple-todo-example)
+- [Asynchronous todo](./src/examples/async-todo-example)
+- [Colored input](./src/examples/colored-input-example)
+- [Stateful counters](./src/examples/use-state-example)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
-- [Async search](./examples/async-search)
-- [Multiple Applications in the same page](./examples/multiple-apps)
+- [Async search](./src/examples/async-search)
+- [Multiple Applications in the same page](./src/examples/multiple-apps)
 
 Please find the examples [here](https://tatomyr.gitlab.io/purity/examples/)
 
