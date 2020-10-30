@@ -24,7 +24,9 @@ const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
 /**
  * App factory that should be invoked once to create a single store with reactive state
  */
-export const init = <State>(initialState: State): App<State> => {
+export const init = <State extends Record<string, unknown>>(
+  initialState: State
+): App<State> => {
   let state = initialState
 
   /**
@@ -40,9 +42,7 @@ export const init = <State>(initialState: State): App<State> => {
       }
       // Removing the `data-purity_*` attributes attached in render() function
       // TODO: try to avoid the situation when we have to remove something added in another module.
-      console.log('shallow--->', shallow.outerHTML)
       for (let innerNode of shallow.querySelectorAll(`[${DATA_PURITY_FLAG}]`)) {
-        console.log('         |-->', innerNode.outerHTML)
         for (const key in (innerNode as HTMLElement).dataset) {
           if (key.startsWith(PURITY_KEYWORD)) {
             innerNode.removeAttribute(`data-${key}`)
@@ -71,7 +71,7 @@ export const init = <State>(initialState: State): App<State> => {
       root.replaceWith(rootNode)
     } else {
       throw new Error(
-        `Root DOM element's id does not correspond to the defined application root id (${rootId}).`
+        `Root DOM element's id does not correspond to the defined application root id "${rootId}".`
       )
     }
   }
@@ -107,7 +107,7 @@ export const init = <State>(initialState: State): App<State> => {
             console.log(`± #${id}`)
           }
         } else {
-          throw new Error(`There is no element in DOM with id ${id}.`)
+          throw new Error(`There is no element in DOM with id "${id}".`)
         }
       }
     }
@@ -192,8 +192,8 @@ export const render = (
     .replace(BOUND_EVENTS_RE, bindEventHandlers)
     .replace(ARGS_RE, processArgs)
     .trim()
-  // .replace(/\n\s*</g, '<')
-  // .replace(/>\n\s*/g, '>')
+    .replace(/\n\s*</g, '<')
+    .replace(/>\n\s*/g, '>')
 
   return stringToRender
 }

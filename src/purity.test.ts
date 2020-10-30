@@ -138,12 +138,12 @@ describe('purity', () => {
     expect(() => {
       app.mount(WrongRoot)
     }).toThrow(
-      `Root DOM element's id does not correspond to the defined application root id (wrong-root).`
+      `Root DOM element's id does not correspond to the defined application root id "wrong-root".`
     )
     expect(() => {
       app.mount(NoRoot)
     }).toThrow(
-      `Root DOM element's id does not correspond to the defined application root id (undefined).`
+      `Root DOM element's id does not correspond to the defined application root id "undefined".`
     )
   })
   it(`
