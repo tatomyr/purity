@@ -1,11 +1,14 @@
-image: cypress/base:14
-
 stages:
   - check
   - deploy
 
+cache:
+  paths:
+    - node_modules/
+
 lint-jest-e2e:
   stage: check
+  image: cypress/base:14
   script:
     - set
     - npm i
@@ -18,6 +21,7 @@ lint-jest-e2e:
 
 pages:
   stage: deploy
+  image: node:14
   script:
     - set
     - echo "Deploying public/ folder to GitLab Pages"
