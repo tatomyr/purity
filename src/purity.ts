@@ -4,7 +4,7 @@ type Rejected = undefined | null | false
 type Simple = Allowed | Rejected
 type Argument = Simple | string[]
 type Verified = Allowed | string[]
-export type Component = <P>(props?: P, ...rest: any[]) => string
+export type Component = <P>(props?: P, ...rest: any[]) => string // FIXME: it doesn't allow calling without an argument
 type VirtualNodes = {
   node: HTMLElement
   shallow: HTMLElement
@@ -17,13 +17,6 @@ export type App<State> = {
   setState(callback: (state: State) => Partial<State>): void
 }
 
-// Helpers
-const clearFalsy = <T extends Verified>(x: T | Rejected): T | '' =>
-  x === undefined || x === null || x === false ? '' : x
-
-const joinIfArray = (x: Verified): Allowed =>
-  Array.isArray(x) ? x.join('') : x
-
 // Constants
 const PURITY_KEYWORD = 'purity'
 const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
@@ -31,7 +24,9 @@ const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
 /**
  * App factory that should be invoked once to create a single store with reactive state
  */
-export const init = <State>(initialState: State): App<State> => {
+export const init = <State extends Record<string, unknown>>(
+  initialState: State
+): App<State> => {
   let state = initialState
 
   /**
@@ -47,9 +42,7 @@ export const init = <State>(initialState: State): App<State> => {
       }
       // Removing the `data-purity_*` attributes attached in render() function
       // TODO: try to avoid the situation when we have to remove something added in another module.
-      console.log('shallow--->', shallow.outerHTML)
       for (let innerNode of shallow.querySelectorAll(`[${DATA_PURITY_FLAG}]`)) {
-        console.log('         |-->', innerNode.outerHTML)
         for (const key in (innerNode as HTMLElement).dataset) {
           if (key.startsWith(PURITY_KEYWORD)) {
             innerNode.removeAttribute(`data-${key}`)
@@ -78,7 +71,7 @@ export const init = <State>(initialState: State): App<State> => {
       root.replaceWith(rootNode)
     } else {
       throw new Error(
-        `Root DOM element's id does not correspond to the defined application root id (${rootId}).`
+        `Root DOM element's id does not correspond to the defined application root id "${rootId}".`
       )
     }
   }
@@ -114,7 +107,7 @@ export const init = <State>(initialState: State): App<State> => {
             console.log(`± #${id}`)
           }
         } else {
-          throw new Error(`There is no element in DOM with id ${id}.`)
+          throw new Error(`There is no element in DOM with id "${id}".`)
         }
       }
     }
@@ -135,6 +128,13 @@ export const init = <State>(initialState: State): App<State> => {
 // Patterns
 const ARGS_RE = /__\[(\d+)\]__/gm
 const BOUND_EVENTS_RE = /::(\w+)\s*=\s*__\[(\d+)\]__/gm
+
+// Helpers
+const clearFalsy = <T extends Verified>(x: T | Rejected): T | '' =>
+  x === undefined || x === null || x === false ? '' : x
+
+const joinIfArray = (x: Verified): Allowed =>
+  Array.isArray(x) ? x.join('') : x
 
 /**
  * Increases the Purity Key and resets it after all sync operations completed
@@ -192,7 +192,6 @@ export const render = (
     .replace(BOUND_EVENTS_RE, bindEventHandlers)
     .replace(ARGS_RE, processArgs)
     .trim()
-    // FIXME: wouldn't it slow down too much? In the end of the day we don't really need this
     .replace(/\n\s*</g, '<')
     .replace(/>\n\s*/g, '>')
 
