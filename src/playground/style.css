@@ -11,8 +11,8 @@
 }
 
 #editor {
-  height: 100%;
   width: 50%;
+  height: 100%;
 }
 
 #editor textarea {
@@ -25,7 +25,8 @@
 }
 
 #root {
-  height: 100%;
   width: 50%;
+  height: 100%;
+  overflow-y: auto;
   border: 1px dotted blueviolet;
 }
