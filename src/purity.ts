@@ -32,7 +32,7 @@ export const init = <State extends Record<string, unknown>>(
   /**
    * Parses html string and returns so called 'nodeMap' which represents virtual DOM
    */
-  const parseHTML = (html: string): DomNodesMap => {
+  const buildNodesMap = (html: string): DomNodesMap => {
     const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
     const nodesMap: DomNodesMap = new Map()
     for (const node of virtualDocument.querySelectorAll('[id]')) {
@@ -54,15 +54,15 @@ export const init = <State extends Record<string, unknown>>(
     return nodesMap
   }
 
-  let rootComponent: Component
+  let rootComponent: () => DomNodesMap
   let domNodesMap: DomNodesMap
   /**
    * Mounts an App to DOM
    */
   function mount(f: Component) {
     // Setting up rootComponent
-    rootComponent = f
-    domNodesMap = parseHTML(rootComponent())
+    rootComponent = () => buildNodesMap(f())
+    domNodesMap = rootComponent()
     // Top-level component should always have an id equal to a root element's id
     const rootId: string = domNodesMap.keys().next().value
     const root = document.getElementById(rootId)
@@ -92,7 +92,7 @@ export const init = <State extends Record<string, unknown>>(
    * Forces html re-rendering with the current state
    */
   function rerender() {
-    const newNodesMap = parseHTML(rootComponent())
+    const newNodesMap = rootComponent()
     for (const [id, domNode] of domNodesMap) {
       const newNode = newNodesMap.get(id)
       // Since we depend on the shallow comparison, we must only care about updating changed nodes.
