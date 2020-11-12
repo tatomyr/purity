@@ -1,4 +1,4 @@
-import {App, Component, init, render} from './purity'
+import {App, Component, init, render} from './purity7'
 import {delay} from './delay'
 
 export type AnyObject = {[key: string]: any}
@@ -31,9 +31,7 @@ describe('purity', () => {
     })
     it('should mount a component depending on the default state', () => {
       app.mount(CounterApp)
-      expect(document.body.innerHTML).toEqual(
-        `<div id="root"><h1>COUNTER</h1><span id="count"></span></div>`
-      )
+      expect(document.body.innerHTML).toEqual(CounterApp())
     })
     it('should change state after updates depending on previous state', () => {
       app.mount(CounterApp)
@@ -52,7 +50,7 @@ describe('purity', () => {
     // Awaiting for the eventHandler to be set in setTimeout
     await delay(0)
     expect(document.body.innerHTML).toEqual(
-      `<button id="root">Click Me</button>`
+      `<button id="root" data-purity_flag="">Click Me</button>`
     )
     ;(document.querySelector('button#root') as HTMLElement).click()
     expect(eventHandler).toHaveBeenCalledTimes(1)
@@ -67,7 +65,9 @@ describe('purity', () => {
     app.mount(ClickableComponent)
     // Awaiting for the eventHandler to be set in setTimeout
     await delay(0)
-    expect(document.body.innerHTML).toEqual('<input type="text" id="root">')
+    expect(document.body.innerHTML).toEqual(
+      '<input type="text" id="root" data-purity_flag="">'
+    )
     ;(document.querySelector('input#root') as HTMLElement).click()
     expect(clickHandler).toHaveBeenCalledTimes(1)
     ;(document.querySelector('input#root') as HTMLElement).focus()
@@ -91,7 +91,7 @@ describe('purity', () => {
     app.mount(RootWithClickableElement)
     await delay(0)
     expect(document.body.innerHTML).toEqual(
-      `<div id="root"><button data-other="something">Click Me Not a Node</button></div>`
+      `<div id="root"><button data-purity_flag="" data-other="something">Click Me Not a Node</button></div>`
     )
   })
   it('should add and remove components in DOM', async () => {
@@ -108,7 +108,7 @@ describe('purity', () => {
           ${
             {first: Child1(), second: Child2()}[
               selected as 'first' | 'second'
-            ] as HTMLElement | undefined
+            ] as string | undefined
           }
         </div>
       `
@@ -119,14 +119,10 @@ describe('purity', () => {
     expect(document.body.innerHTML).toEqual(`<div id="root"></div>`)
     app.setState(() => ({selected: 'first'}))
     await delay(0)
-    expect(document.body.innerHTML).toEqual(
-      `<div id="root"><h1 id="first">First</h1></div>`
-    )
+    expect(document.body.innerHTML).toEqual(`<div id="root">${Child1()}</div>`)
     app.setState(() => ({selected: 'second'}))
     await delay(0)
-    expect(document.body.innerHTML).toEqual(
-      `<div id="root"><h2 id="second">Second</h2></div>`
-    )
+    expect(document.body.innerHTML).toEqual(`<div id="root">${Child2()}</div>`)
   })
   it(`
     should handle the case when the App root id differs from a defined one in html
@@ -182,14 +178,14 @@ describe('purity', () => {
       (document.querySelector('#color') as HTMLInputElement).style.color
     ).toEqual('red')
     expect(document.body.innerHTML).toEqual(
-      '<div id="root"><input style="color: red;" id="color"><button>Apply color</button></div>'
+      '<div id="root"><input style="color: red;" id="color"><button data-purity_flag="">Apply color</button></div>'
     )
   })
   it('should handle conditional rendering & process arrays', () => {
     const Component = ({maybeArr}: {maybeArr?: any[]}) => render`
       <div id="root">
         <ul>
-          ${maybeArr?.map(item => render`<li>${item}</li>`) as any}
+          ${maybeArr?.map(item => render`<li>${item}</li>`)}
         </ul>
       </div>
     `
