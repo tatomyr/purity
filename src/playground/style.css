@@ -13,20 +13,11 @@
 #editor {
   width: 50%;
   height: 100%;
-}
-
-#editor textarea {
-  width: 100%;
-  height: 100%;
-  padding: 8px;
-  white-space: pre;
-  color: #333;
-  background: #eee;
+  resize: horizontal;
+  overflow: auto;
 }
 
 #root {
-  width: 50%;
-  height: 100%;
   overflow-y: auto;
-  border: 1px dotted blueviolet;
+  flex-grow: 1;
 }
