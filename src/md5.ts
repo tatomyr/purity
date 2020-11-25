@@ -1,10 +1,7 @@
+/* eslint-disable */
 // @ts-nocheck
 
-/*
-  MD5 implementation
-  by http://www.myersdaily.org/joseph/javascript/md5-text.html
-*/
-
+// Source: http://www.myersdaily.org/joseph/javascript/md5-text.html
 function md5cycle(x, k) {
   let a = x[0]
   let b = x[1]

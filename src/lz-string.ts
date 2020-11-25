@@ -1,9 +1,7 @@
+/* eslint-disable */
 // @ts-nocheck
 
-/**
- * Taken from here: https://github.com/pieroxy/lz-string/blob/master/libs/lz-string.js
- */
-
+// Source: https://github.com/pieroxy/lz-string/blob/master/libs/lz-string.js
 export const LZString = (function () {
   // private property
   let f = String.fromCharCode

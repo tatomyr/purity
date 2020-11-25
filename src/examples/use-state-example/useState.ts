@@ -1,12 +1,18 @@
-import { rerender } from './index.js'
+import {rerender} from './index.js'
 
-let state: { [key: string]: any } = {}
+// eslint-disable-next-line prefer-const
+let state: {[key: string]: unknown} = {}
 
-export const useState = (id: string) => (initial: any) => {
+export type UseState<T> = {
+  get: () => T
+  set: (newState: T) => void
+}
+
+export const useState = (id: string) => <T>(initial: T): UseState<T> => {
   state[id] = state[id] || initial
   return {
-    get: () => state[id],
-    set: (newState: any) => {
+    get: () => state[id] as T,
+    set: (newState: T) => {
       state[id] = newState
       rerender()
     },
