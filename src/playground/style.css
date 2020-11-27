@@ -12,9 +12,16 @@
 
 #editor {
   width: 50%;
+  min-width: 10vw;
+  max-width: 90vw;
   height: 100%;
-  resize: horizontal;
-  overflow: auto;
+  overflow-y: hidden;
+}
+
+.resizer {
+  width: 8px;
+  background: red;
+  cursor: col-resize;
 }
 
 #root {
