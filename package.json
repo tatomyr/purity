@@ -4,6 +4,7 @@
   "description": "We need package.json since npx jest doesn't work correcty",
   "main": "src/purity.ts",
   "dependencies": {
+    "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "cypress": "^4.4.1",

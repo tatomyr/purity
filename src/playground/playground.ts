@@ -10,10 +10,9 @@ const initDrag = useDrag('editor')
   initDrag
 )
 
+// TODO: ingore resizing errors
 window.onerror = err => {
-  ;(document.getElementById('root') as HTMLElement).innerHTML = `
-    <div style="text-align: center; color: red; ">
-      ${err}
-    </div>
+  ;(document.getElementById('root') as HTMLElement).innerHTML += `
+    <pre id="error">${err}</pre>
   `
 }
