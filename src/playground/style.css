@@ -27,4 +27,17 @@
 #root {
   overflow-y: auto;
   flex-grow: 1;
+  position: relative;
+}
+
+#error {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  padding: 8px;
+  max-height: calc(100% - 20px);
+  overflow-y: auto;
+  color: red;
+  background: black;
 }
