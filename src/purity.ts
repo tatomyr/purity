@@ -150,7 +150,7 @@ const applyPurityKey = (() => {
     if (timeout) {
       clearTimeout(timeout)
     }
-    timeout = setTimeout(() => {
+    timeout = window.setTimeout(() => {
       purityKey = 0
     })
     return purityKey++
