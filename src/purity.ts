@@ -4,12 +4,16 @@ type Rejected = undefined | null | false
 type Simple = Allowed | Rejected
 type Argument = Simple | string[]
 type Verified = Allowed | string[]
-export type Component = <P>(props?: P, ...rest: any[]) => string // FIXME: it doesn't allow calling without an argument
+
+export type Component<P extends void | unknown = void> = P extends void
+  ? () => string
+  : (p: P, ...rest: any[]) => string
+
 type VirtualNodes = {
   node: HTMLElement
   shallow: HTMLElement
 }
-type DomNodesMap = Map<string, VirtualNodes> // FIXME: Element/HTMLElement - pick one
+type DomNodesMap = Map<string, VirtualNodes>
 export type App<State> = {
   mount: (f: Component) => void
   rerender: () => void
@@ -22,7 +26,7 @@ const PURITY_KEYWORD = 'purity'
 const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
 
 /**
- * App factory that should be invoked once to create a single store with reactive state
+ * App factory that should be invoked once to create the reactive state
  */
 export const init = <State extends Record<string, unknown>>(
   initialState: State

@@ -151,15 +151,15 @@ describe('purity', () => {
     (input's value should remain the same)
   `, async () => {
     app = init({})
-    const Component = () => render`
+    const StaticComponent = () => render`
         <div id="root">
           <input id="color" style="color: ${app.getState().something};" />
           <button
             ::click=${() => {
               app.setState(() => ({
-                something: (document.querySelector(
-                  '#color'
-                ) as HTMLInputElement).value,
+                something: (
+                  document.querySelector('#color') as HTMLInputElement
+                ).value,
               }))
             }}
           >
@@ -167,7 +167,7 @@ describe('purity', () => {
           </button>
         </div>
       `
-    app.mount(Component)
+    app.mount(StaticComponent)
     await delay(0)
     ;(document.querySelector('#color') as HTMLInputElement).value = 'red'
     ;(document.querySelector('button') as HTMLElement).click()
@@ -182,7 +182,7 @@ describe('purity', () => {
     )
   })
   it('should handle conditional rendering & process arrays', () => {
-    const Component = ({maybeArr}: {maybeArr?: any[]}) => render`
+    const ConditionalComponent = ({maybeArr}: {maybeArr?: any[]}) => render`
       <div id="root">
         <ul>
           ${maybeArr?.map(item => render`<li>${item}</li>`)}
@@ -190,9 +190,9 @@ describe('purity', () => {
       </div>
     `
     app = init({})
-    app.mount(() => Component({}))
+    app.mount(() => ConditionalComponent({}))
     expect(document.body.innerHTML).toEqual(`<div id="root"><ul></ul></div>`)
-    app.mount(() => Component({maybeArr: ['🍎', '🍌', '🍰']}))
+    app.mount(() => ConditionalComponent({maybeArr: ['🍎', '🍌', '🍰']}))
     expect(document.body.innerHTML).toEqual(
       `<div id="root"><ul><li>🍎</li><li>🍌</li><li>🍰</li></ul></div>`
     )
