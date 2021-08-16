@@ -20,8 +20,20 @@
 
 .resizer {
   width: 8px;
-  background: red;
+  background-color: #80008026;
+  border-left: 2px dashed purple;
+  position: relative;
+}
+
+.resizer .handler {
+  width: 8px;
+  height: 24px;
+  background-color: purple;
+  position: absolute;
+  top: calc(50% - 24px / 2);
   cursor: col-resize;
+  border-radius: 0 4px 4px 0;
+  left: -2px;
 }
 
 #root {

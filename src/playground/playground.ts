@@ -4,13 +4,21 @@ import {useDrag} from './drag.js'
 
 configureMonacoEditor(defaultCode, updateScript)
 
-const initDrag = useDrag('editor')
-;(document.querySelector('.resizer') as HTMLElement).addEventListener(
-  'mousedown',
-  initDrag
-)
+const $resizable = document.getElementById('editor')
 
-// TODO: ingore resizing errors
+if (localStorage.playgroundEditorWidth && $resizable) {
+  $resizable.style.width = localStorage.playgroundEditorWidth
+}
+
+const initDrag = useDrag($resizable, width => {
+  localStorage.playgroundEditorWidth = width
+})
+
+const $resizer = document.querySelector('.resizer') as HTMLElement
+
+$resizer.addEventListener('mousedown', initDrag)
+
+// TODO: ingore resizing (and other outer) errors
 window.onerror = err => {
   ;(document.getElementById('root') as HTMLElement).innerHTML += `
     <pre id="error">${err}</pre>
