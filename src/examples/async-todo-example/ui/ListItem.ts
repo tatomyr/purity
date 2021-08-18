@@ -25,7 +25,7 @@ export const ListItem = ({id, text, checked, justAdded}: Item) => render`
             // spinner: false,
           }))
         } catch (err) {
-          alert(err.message)
+          window.alert(err.message)
         } finally {
           setState(() => ({
             spinner: false,
@@ -47,7 +47,7 @@ export const ListItem = ({id, text, checked, justAdded}: Item) => render`
           const items = await getItems()
           setState(() => ({items}))
         } catch (err) {
-          alert(err.message)
+          window.alert(err.message)
         } finally {
           setState(() => ({
             spinner: false,

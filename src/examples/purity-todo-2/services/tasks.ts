@@ -7,7 +7,7 @@ import {getJSON, saveJSON} from './storage.js'
 // It should be called inside a view component to get access to the fetched data...
 export const useTasks = () => {
   const {data: tasks = [], ...rest} = useQuery('tasks', async () =>
-    getJSON('tasks', [] as Task[])
+    getJSON({tasks: [] as Task[]})
   )
   return {tasks, ...rest}
 }
@@ -30,14 +30,12 @@ export const postTask = async (description: string): Promise<Task> => {
     updatedAt: now,
     image: {
       link: IMAGES.LOADING,
-      queries: {
-        request: [],
-      },
+      queries: {},
     },
   }
   tasks.unshift(task)
 
-  saveJSON('tasks', tasks)
+  saveJSON({tasks})
   fire()
   return task
 }
@@ -54,7 +52,7 @@ export const patchTask = async (
   const now = Date.now()
   Object.assign(prevTask, {...task, updatedAt: now})
 
-  saveJSON('tasks', tasks)
+  saveJSON({tasks})
   fire()
   return prevTask
 }
@@ -67,10 +65,9 @@ export const removeTask = async (id: string): Promise<Task> => {
     throw new Error('There is no task with this id in the list')
   }
 
-  saveJSON(
-    'tasks',
-    tasks.filter(task => task.id !== id)
-  )
+  saveJSON({
+    tasks: tasks.filter(task => task.id !== id),
+  })
   fire()
   return currentTask
 }
@@ -105,16 +102,6 @@ export const toggleTaskState = ({
   patchTask({id, completed: !completed, tmpFlag: true})
 }
 
-// TODO: remove
-// const migrate = (task: any): Task => ({
-//   ...task,
-//   images: undefined,
-//   image: {
-//     link: task.images[0],
-//     queries: {},
-//   },
-// })
-
 export const groomTasks = async (): Promise<void> => {
   const {unwrap, fire} = useTasks()
   const tasks = await unwrap()
@@ -123,10 +110,6 @@ export const groomTasks = async (): Promise<void> => {
   const groomedTasks: Task[] = tasks
     .map(({tmpFlag, ...task}) => task)
     .sort((a, b) => b.updatedAt - a.updatedAt)
-  saveJSON(
-    'tasks',
-    groomedTasks
-    // .map(migrate)
-  )
+  saveJSON({tasks: groomedTasks})
   fire()
 }
