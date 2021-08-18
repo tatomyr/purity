@@ -1,7 +1,7 @@
-import {setState} from '../app'
-import {saveJSON} from './storage'
-import {useTasks} from './tasks'
-import {download, textFileReader} from './text-file-manager'
+import {setState} from '../app.js'
+import {saveJSON} from './storage.js'
+import {useTasks} from './tasks.js'
+import {download, textFileReader} from './text-file-manager.js'
 
 export const downloadUserData = async (): Promise<void> => {
   try {
