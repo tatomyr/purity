@@ -1,7 +1,8 @@
-import {Component, render} from '../../../purity.js'
+import {Component, render} from '../../../index.js'
 import {startup} from '../services/startup.js'
 import {Header} from './Header.js'
 import {InputForm} from './InputForm.js'
+import {Settings} from './Settings.js'
 import {TaskList} from './TaskList.js'
 
 startup()
@@ -39,5 +40,6 @@ export const App: Component = () => render`
     ${TaskList()}
     ${InputForm()}
     ${AppStyle()}
+    ${Settings()}
   </div>
 `

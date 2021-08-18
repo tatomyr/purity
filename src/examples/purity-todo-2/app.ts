@@ -1,11 +1,16 @@
 import {init, makeQuery} from '../../index.js'
-import {ImageSearchResponse} from './services/google-api.js'
+import {QueryType} from './services/google-api.js'
 
-export type View = 'active' | 'completed'
+export type ViewFilter = 'active' | 'completed'
 
 export type Image = {
   link: string
-} & Pick<ImageSearchResponse, 'queries'>
+  queries: {
+    request?: Pick<QueryType, 'startIndex'>
+    nextPage?: Pick<QueryType, 'startIndex'>
+    previousPage?: Pick<QueryType, 'startIndex'>
+  }
+}
 
 export type Task = {
   id: string
@@ -18,14 +23,16 @@ export type Task = {
 }
 
 export type AppState = {
-  view: View
+  view: ViewFilter
   input: string
   error?: string
+  settingsModal: 'open' | ''
 }
 
 export const initialState: AppState = {
   view: 'active',
   input: '',
+  settingsModal: '',
 }
 
 export const state = {...initialState}

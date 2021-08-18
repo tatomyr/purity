@@ -1,8 +1,8 @@
 import {Component, render} from '../../../purity.js'
-import {setState, state, View} from '../app.js'
+import {setState, state, ViewFilter} from '../app.js'
 import {groomTasks} from '../services/tasks.js'
 
-export type FilterOptionType = {value: View; label: string}
+export type FilterOptionType = {value: ViewFilter; label: string}
 
 export const NavItem: Component<FilterOptionType> = ({
   value,

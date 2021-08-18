@@ -24,8 +24,10 @@ const ListStyle: Component = () => render`
     ul#task-list .task-item .description {
       flex-grow: 1;
       padding: 2px 8px;
-      overflow-x: hidden;
-      text-overflow: ellipsis;
+      max-height: 3rem;
+      width: 100%;
+      word-break: break-word;
+      overflow: hidden;
     }
 
     ul#task-list .task-item.completed .description {
@@ -35,15 +37,22 @@ const ListStyle: Component = () => render`
     ul#task-list .task-item .toggle-button {
       all: unset;
       width: 3rem;
+      min-width: 3rem;
       height: 3rem;
       text-align: center;
       font-size: 2rem;
       line-height: 1;
     }
 
+    ul#task-list .task-item .toggle-button:active {
+      background-color: lightgrey;
+    }
+
     ul#task-list .task-item > img {
       height: 3rem;
+      min-height: 3rem;
       width: 3rem;
+      min-width: 3rem;
       object-fit: cover;
     }
 

@@ -1,7 +1,8 @@
-import {Component, render} from '../../../purity.js'
+import {render} from '../../../index.js'
+import {setState} from '../app.js'
 import {NavItem} from './NavItem.js'
 
-const HeaderStyle: Component = () => render`
+const HeaderStyle = (): string => render`
   <style id="header-style">
     #header {
       background-color: lightgrey;
@@ -26,6 +27,9 @@ const HeaderStyle: Component = () => render`
       all: unset;
       font-size: 2rem;
       line-height: 1;
+      width: 2rem;
+      height: 2rem;
+      text-align: center;
     }
 
     #header .nav-option.chosen {
@@ -35,11 +39,21 @@ const HeaderStyle: Component = () => render`
   </style>
 `
 
-export const Header: Component = () => render`
+export const Header = (): string => render`
   <nav id="header">
     <ul>
       ${NavItem({value: 'active', label: '⊡'})}
       ${NavItem({value: 'completed', label: '⊠'})}
+      <li>
+        <button
+          class="nav-option"
+          ::click=${e => {
+            setState(() => ({settingsModal: 'open'}))
+          }}
+        >
+          ⋮
+        </button>
+      </li>
     </ul>
   </nav>
   ${HeaderStyle()}

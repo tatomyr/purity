@@ -31,7 +31,7 @@ export const InputForm: Component = () => render`
 
         // console.log('POST', item)
       } catch (err) {
-        alert(err.message)
+        window.alert(err.message)
       } finally {
         setState(() => ({
           spinner: false,

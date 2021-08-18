@@ -2,7 +2,7 @@ import {GOOGLE} from '../config/google-api.js'
 
 export const makeQueryString = (query: string, start = 1): string =>
   `${GOOGLE.API_PATH}?${new URLSearchParams({
-    q: encodeURIComponent(query),
+    q: query,
     searchType: 'image',
     imgSize: 'medium',
     num: '1',
