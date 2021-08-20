@@ -7,11 +7,8 @@
 
     "outDir": "public",
 
-    // "removeComments": true,
-    // "allowJs": true,
     "declaration": true,
     // "emitDeclarationOnly": true
-    // "noImplicitAny": true
 
     "allowJs": false,
     "allowUmdGlobalAccess": false,
@@ -22,8 +19,6 @@
     "checkJs": false,
     "disableSizeLimit": false,
     // "generateCpuProfile": "profile.cpuprofile",
-    // "jsx": "react",
-    // "jsxFactory": "React.createElement",
     // "lib": [],
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": true,
@@ -34,7 +29,6 @@
     "noUnusedLocals": false,
     // "noUnusedParameters": false,
     // "preserveConstEnums": false,
-    // "removeComments": false,
     // "resolveJsonModule": true,
     "strict": true,
     // "strictBindCallApply": true,

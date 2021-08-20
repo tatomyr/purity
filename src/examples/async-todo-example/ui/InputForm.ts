@@ -1,8 +1,8 @@
-import {Component, render} from '../../../purity.js'
+import {render} from '../../../purity.js'
 import {setState} from '../app.js'
 import {addItem, getItems} from '../api.js'
 
-export const InputForm: Component = () => render`
+export const InputForm = () => render`
   <form
     id="input-form"
     ::submit=${async e => {

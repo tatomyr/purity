@@ -1,5 +1,4 @@
 export {init, render} from './purity.js'
-export type {Component} from './purity.js'
 export {sanitize} from './sanitize.js'
 export {partition} from './array-partition.js'
 export {debounce} from './debounce.js'

@@ -5,17 +5,13 @@ type Simple = Allowed | Rejected
 type Argument = Simple | string[]
 type Verified = Allowed | string[]
 
-export type Component<P extends void | unknown = void> = P extends void
-  ? () => string
-  : (p: P, ...rest: any[]) => string
-
 type VirtualNodes = {
   node: HTMLElement
   shallow: HTMLElement
 }
 type DomNodesMap = Map<string, VirtualNodes>
 export type App<State> = {
-  mount: (f: Component) => void
+  mount: (f: () => string) => void
   rerender: () => void
   getState: () => State
   setState(callback: (state: State) => Partial<State>): void
@@ -67,7 +63,7 @@ export const init = <State extends Record<string, unknown>>(
   /**
    * Mounts an App to DOM
    */
-  function mount(f: Component) {
+  function mount(f: () => string) {
     // Setting up rootComponent
     rootComponent = () => buildNodesMap(f())
     domNodesMap = rootComponent()
