@@ -58,11 +58,17 @@ const SettingsStyle = () => render`
     .modal-content ul li label {
       all: unset;
       width: 3rem;
+      min-width: 3rem;
       height: 3rem;
       text-align: center;
       font-size: 2rem;
       line-height: 1;
       cursor: default;
+    }
+
+    .modal-content ul li button:active,
+    .modal-content ul li label:active {
+      background-color: grey;
     }
 
     #backup {
