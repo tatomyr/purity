@@ -79,8 +79,15 @@ const SettingsStyle = () => render`
 `
 
 export const Settings = () => render`
-  <div id="settings" class="${state.settingsModal}">
-    <div class="modal-content">
+  <div
+    id="settings"
+    class="${state.settingsModal}"
+    ::click=${e => setState(() => ({settingsModal: ''}))}
+  >
+    <div
+      class="modal-content"
+      ::click=${e => e.stopPropagation()}
+    >
       <ul>
         <li class="header">
           <p>Settings</p>
@@ -96,8 +103,8 @@ export const Settings = () => render`
         </li>
         <li>
           <p>Restore</p>
-            <label for="backup">
-              ↥
+          <label for="backup">
+            ↥
             <input
               type="file"
               accept=".json"
@@ -107,9 +114,8 @@ export const Settings = () => render`
                 uploadUserData(file)
               }}
             />
-            </label>
+          </label>
         </li>
-
       </ul>
     </div>
   </div>
