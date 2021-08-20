@@ -1,4 +1,4 @@
-import {App, Component, init, render} from './purity'
+import {App, init, render} from './purity'
 import {delay} from './delay'
 
 export type AnyObject = {[key: string]: any}
@@ -15,7 +15,7 @@ describe('purity', () => {
   })
 
   describe('counter app', () => {
-    let CounterApp: Component
+    let CounterApp: () => string
     beforeEach(() => {
       defaultState = {title: 'COUNTER', counter: 0}
       app = init(defaultState)

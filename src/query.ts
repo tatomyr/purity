@@ -1,45 +1,45 @@
-// TODO: refactor
-
-export type FnVoid = () => void
-
 export type QueryStatus = 'pending' | 'success' | 'error'
 
 type QueryCache<T> = {
   status: QueryStatus
   data?: T
   error?: Error
-  expires?: number
+  expires: number
 }
 
 export type QueryResponse<T> = QueryCache<T> & {
-  fire: FnVoid
+  fire: () => Promise<void>
   unwrap: () => T | Promise<T>
 }
 
-export const makeQuery = (rerender: FnVoid) => {
-  let queryCache: Record<string, QueryCache<unknown> | undefined> = {}
+export const makeQuery = (rerender: () => void) => {
+  const cache: Record<string, QueryCache<unknown> | undefined> = {}
   return {
     useQuery: <T>(
       key: string,
       call: () => Promise<T>,
       {expiration = 3600000} = {}
     ): QueryResponse<T> => {
-      const fire: FnVoid = async () => {
+      if (!(key in cache)) {
+        console.log(`Creating cache for [${key}] for the first time`)
+        cache[key] = {status: 'pending', expires: 0}
+      }
+
+      const fire = async () => {
+        ;(cache[key] as QueryCache<T>).status = 'pending'
         try {
-          console.log('FETCH!')
-          ;(queryCache[key] as QueryCache<T>).status = 'pending'
-          delete (queryCache[key] as QueryCache<T>).expires
           const data = await call()
-          queryCache[key] = {
+          cache[key] = {
             data,
             status: 'success',
             expires: Date.now() + expiration,
           }
         } catch (err) {
-          queryCache[key] = {
-            data: (queryCache[key] as QueryCache<T>).data,
+          cache[key] = {
+            data: (cache[key] as QueryCache<T>).data,
             error: err,
             status: 'error',
+            expires: Date.now() + expiration,
           }
         } finally {
           rerender()
@@ -47,28 +47,23 @@ export const makeQuery = (rerender: FnVoid) => {
       }
 
       const unwrap = (): T | Promise<T> => {
-        if (queryCache[key]?.status === 'success') {
-          console.log(queryCache[key])
-          return (queryCache[key] as QueryCache<T>).data as T
+        if (
+          (cache[key] as QueryCache<T>).status === 'success' &&
+          (cache[key] as QueryCache<T>).expires > Date.now()
+        ) {
+          return (cache[key] as QueryCache<T>).data as T
         } else {
           return call()
         }
       }
 
-      console.log(key, (key as string) in queryCache, {...queryCache})
-
-      if (key in queryCache) {
-        const cacheExpires = (queryCache[key] as QueryCache<T>).expires
-        // TODO: refactor
-        if (cacheExpires !== undefined && cacheExpires <= Date.now()) {
-          fire()
-        }
-        return {fire, ...(queryCache[key] as QueryCache<T>), unwrap}
-      } else {
-        queryCache[key] = {status: 'pending'}
+      if ((cache[key] as QueryCache<T>).expires <= Date.now()) {
+        console.log(`Executing the call for a newly created or expired cache`)
         fire()
-        return {fire, ...(queryCache[key] as QueryCache<T>), unwrap}
       }
+
+      return {...(cache[key] as QueryCache<T>), fire, unwrap}
     },
+    // TODO: re-introduce useAsync as we have to track status of post/put/delete operations as well
   }
 }

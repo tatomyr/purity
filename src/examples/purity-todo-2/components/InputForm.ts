@@ -1,8 +1,8 @@
-import {Component, render} from '../../../index.js'
+import {render} from '../../../index.js'
 import {setState} from '../app.js'
 import {createTask} from '../services/input-form.js'
 
-const InputFormStyle: Component = () => render`
+const InputFormStyle = () => render`
   <style id="task-form-style">
     form#task-form {
       width: 100%;
@@ -25,7 +25,7 @@ const InputFormStyle: Component = () => render`
   </style>
 `
 
-export const InputForm: Component = () => render`
+export const InputForm = () => render`
   <form id="task-form" ::submit=${createTask}>
     <input
       name="task"

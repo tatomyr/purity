@@ -1,6 +1,5 @@
-// TODO: refactor
+// TODO: refactor; maybe incapsulate in registerRouter?
 
-import {Component} from './purity.js'
 // ----------------------- Hash Router ----------------------
 
 type Match = Record<string, string> | undefined
@@ -10,7 +9,7 @@ let match: Match
 export const getParams = (): Match => match
 
 export const Switch = (routes: {
-  [path: string]: Component<Match>
+  [path: string]: (match: Match) => string
 }): string | undefined => {
   for (const path in routes) {
     const params = (path.match(/:(\w+)/g) || []).map(param => param.slice(1))

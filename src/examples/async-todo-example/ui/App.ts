@@ -1,11 +1,11 @@
-import {Component, render} from '../../../purity.js'
+import {render} from '../../../purity.js'
 import {rerender} from '../app.js'
 import {List} from './List.js'
 import {InputForm} from './InputForm.js'
 import {StatefulCounter} from './StatefulCounter.js'
 import {Spinner} from './Spinner.js'
 
-export const App: Component = () => render`
+export const App = () => render`
   <div id="root">
     <nav>
       <a

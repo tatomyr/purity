@@ -1,9 +1,9 @@
-import {Component, render} from '../../../purity.js'
+import {render} from '../../../purity.js'
 import {getState} from '../app.js'
 import {ListItem} from './ListItem.js'
 import {InputForm} from './InputForm.js'
 
-export const Root: Component = () => {
+export const Root = () => {
   const {items, input} = getState()
   return render`
     <div id="root">

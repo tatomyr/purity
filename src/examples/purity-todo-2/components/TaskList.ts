@@ -1,10 +1,10 @@
-import {Component, render} from '../../../purity.js'
+import {render} from '../../../index.js'
 import {Task} from '../app.js'
 import {resetInput} from '../services/input-form.js'
 import {usePreparedTasks, toggleTaskState} from '../services/tasks.js'
 import {TaskItem} from './TaskItem.js'
 
-const ListStyle: Component = () => render`
+const ListStyle = () => render`
   <style id="task-list-style">
     ul#task-list {
       padding: 3rem 0;
@@ -73,7 +73,7 @@ const handleClick = (e: Event): void => {
   }
 }
 
-export const TaskList: Component = () => {
+export const TaskList = () => {
   const {tasks, status} = usePreparedTasks()
 
   return render`

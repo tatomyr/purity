@@ -1,13 +1,8 @@
-import {Component, render} from '../../../purity.js'
+import {render} from '../../../index.js'
 import {Task} from '../app.js'
 import {IMAGES} from '../config/images.js'
 
-export const TaskItem: Component<Task> = ({
-  description,
-  id,
-  completed,
-  image,
-}) => render`
+export const TaskItem = ({description, id, completed, image}: Task) => render`
   <li id="${id}" class="task-item ${completed && 'completed'}">
     <img
       src="${image.link}"

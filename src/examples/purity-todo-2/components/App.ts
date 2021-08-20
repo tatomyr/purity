@@ -1,4 +1,4 @@
-import {Component, render} from '../../../index.js'
+import {render} from '../../../index.js'
 import {startup} from '../services/startup.js'
 import {Header} from './Header.js'
 import {InputForm} from './InputForm.js'
@@ -7,7 +7,7 @@ import {TaskList} from './TaskList.js'
 
 startup()
 
-const AppStyle: Component = () => render`
+const AppStyle = () => render`
   <style id="root-style">
     ul {
       width: 100%;
@@ -25,7 +25,7 @@ const AppStyle: Component = () => render`
   </style>
 `
 
-export const App: Component = () => render`
+export const App = () => render`
   <div id="root">
     ${Header()}
     ${TaskList()}
