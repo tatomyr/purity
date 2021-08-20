@@ -18,6 +18,7 @@ export const TaskItem: Component<Task> = ({
       ${description}
     </div>
     <button
+      id="toggle-${id}"
       class="toggle-button"
       data-id="${id}"
       data-completed="${completed && 'true'}"

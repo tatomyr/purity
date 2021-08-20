@@ -27,9 +27,14 @@ const HeaderStyle = (): string => render`
       all: unset;
       font-size: 2rem;
       line-height: 1;
-      width: 2rem;
-      height: 2rem;
+      width: 3rem;
+      min-width: 3rem;
+      height: 3rem;
       text-align: center;
+    }
+
+    #header .nav-option:active {
+      background-color: grey;
     }
 
     #header .nav-option.chosen {

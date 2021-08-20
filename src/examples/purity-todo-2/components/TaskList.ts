@@ -45,7 +45,7 @@ const ListStyle: Component = () => render`
     }
 
     ul#task-list .task-item .toggle-button:active {
-      background-color: lightgrey;
+      background-color: grey;
     }
 
     ul#task-list .task-item > img {

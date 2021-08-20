@@ -9,15 +9,6 @@ startup()
 
 const AppStyle: Component = () => render`
   <style id="root-style">
-    * {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-      font-family: sans-serif;
-      font-size: 20px;
-      color: #555555;
-    }
-
     ul {
       width: 100%;
       list-style-type: none;
