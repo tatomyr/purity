@@ -17,12 +17,23 @@ export type App<State> = {
   setState(callback: (state: State) => Partial<State>): void
 }
 
+type EventName = keyof Omit<
+  GlobalEventHandlersEventMap,
+  | 'beforeinput'
+  | 'compositionend'
+  | 'compositionstart'
+  | 'compositionupdate'
+  | 'error'
+  | 'focusin'
+  | 'focusout'
+>
+
 // Constants
 const PURITY_KEYWORD = 'purity'
 const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
 
 /**
- * App factory that should be invoked once to create the reactive state
+ * App factory that should be invoked once to create an application state
  */
 export const init = <State extends Record<string, unknown>>(
   initialState: State
@@ -162,27 +173,22 @@ const applyPurityKey = (() => {
  */
 export const render = (
   [first, ...strings]: TemplateStringsArray,
-  ...args: Array<Argument | EventHandlerNonNull>
+  ...args: Array<Argument | EventListener>
 ): string => {
   const precomputedString: string = strings.reduce(
     ($, item, i) => `${$}__[${i}]__${item}`,
     first
   )
 
-  const bindEventHandlers = (
-    _: any,
-    event: keyof HTMLElementEventMap,
-    index: number
-  ) => {
+  const bindEventHandlers = (_: unknown, event: EventName, index: number) => {
     const dataName = `data-${PURITY_KEYWORD}_${event}_${applyPurityKey()}`
     setTimeout(() => {
       // Asynchronously bind event handlers after rendering everything to DOM
       // eslint-disable-next-line prefer-const
       let element: HTMLElement | null = document.querySelector(`[${dataName}]`)
-      if (element) {
-        ;(element as {[key: string]: any})[`on${event}`] = args[
-          index
-        ] as EventHandlerNonNull
+      const prop = args[index]
+      if (element && typeof prop === 'function') {
+        element[`on${event}`] = prop
         // Remove residuals
         element.removeAttribute(dataName)
       }
@@ -190,7 +196,7 @@ export const render = (
     return `${dataName} ${DATA_PURITY_FLAG}`
   }
 
-  const processArgs = (_: any, index: number): string =>
+  const processArgs = (_: unknown, index: number): string =>
     joinIfArray(clearFalsy(args[+index] as Argument)) as string
 
   const stringToRender = precomputedString

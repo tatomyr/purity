@@ -11,7 +11,7 @@ export const ListItem = ({id, text, checked, justAdded}: Item) => render`
     <input
       type="checkbox"
       ${checked ? 'checked' : ''}
-      ::change=${async e => {
+      ::change=${async (e: Event) => {
         // dispatch({ type: 'TOGGLE_ITEM', id, checked })
         const {checked} = e.target as HTMLInputElement
         setState(() => ({spinner: true}))
@@ -25,7 +25,7 @@ export const ListItem = ({id, text, checked, justAdded}: Item) => render`
             // spinner: false,
           }))
         } catch (err) {
-          window.alert(err.message)
+          window.alert((err as Error).message)
         } finally {
           setState(() => ({
             spinner: false,
@@ -36,7 +36,7 @@ export const ListItem = ({id, text, checked, justAdded}: Item) => render`
     <span>${text}</span>
     <button
       type="button"
-      ::click=${async e => {
+      ::click=${async () => {
         // dispatch({ type: 'DELETE_ITEM', id })
 
         setState(() => ({spinner: true}))
@@ -47,7 +47,7 @@ export const ListItem = ({id, text, checked, justAdded}: Item) => render`
           const items = await getItems()
           setState(() => ({items}))
         } catch (err) {
-          window.alert(err.message)
+          window.alert((err as Error).message)
         } finally {
           setState(() => ({
             spinner: false,

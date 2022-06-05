@@ -52,7 +52,7 @@ export const Header = (): string => render`
       <li>
         <button
           class="nav-option"
-          ::click=${e => {
+          ::click=${() => {
             setState(() => ({settingsModal: 'open'}))
           }}
         >

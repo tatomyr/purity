@@ -1,5 +1,7 @@
 # Purity. Declarative State & DOM Manager
 
+<!-- TODO: rename to Prosto? -->
+
 Declarative UI library for using the most of today's Javascript.
 It doesn't require any bundlers or using npm at all, it fully leverages native ECMAScript modules system.
 
@@ -312,9 +314,9 @@ You may commit it.
 ### Precommit
 
 Before being committed to the project, code must pass all necessary checks described in `bin/check.sh`.
-To add the git hook to the project, run the following command from the project root:
+To add the git hook to the project, run the following command from the project root (no need if you ran the install script):
 
-```
+```bash
 ln -s ../../bin/pre-commit.sh .git/hooks/pre-commit
 ```
 
@@ -323,7 +325,7 @@ If you've run the install script, the hook should be already in place.
 You may also run `bash bin/check.sh` manually each time before commit.
 On Mac you can use this command as well:
 
-```
+```bash
 bash bin/check.sh && afplay /System/Library/Sounds/Ping.aiff || afplay /System/Library/Sounds/Sosumi.aiff
 ```
 

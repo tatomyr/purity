@@ -1,16 +1,18 @@
 import {md5} from '../../../index.js'
-import {AppState, state, Task, useQuery} from '../app.js'
+import {AppState, state, Task, useAsync} from '../app.js'
 import {IMAGES} from '../config/images.js'
 import {getJSON, saveJSON} from './storage.js'
 
 // This is a 'hook' (it's better to name it with the 'use' prefix).
 // It should be called inside a view component to get access to the fetched data...
 export const useTasks = () => {
-  const {data: tasks = [], ...rest} = useQuery('tasks', async () =>
+  const {data: tasks = [], ...rest} = useAsync('get:tasks', async () =>
     getJSON({tasks: [] as Task[]})
-  )
+  ).call()
   return {tasks, ...rest}
 }
+
+// FIXME: it is overcomplicated! use useAsync to simplify the async flow!
 
 // Otherwise, to unwrap the hook you should use the 'unwrap' function inside an async function.
 // In that case you no longer have to name it with the 'use' prefix

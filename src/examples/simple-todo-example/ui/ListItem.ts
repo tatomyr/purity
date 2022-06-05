@@ -7,7 +7,7 @@ export const ListItem = ({id, text, checked}: Item) => render`
     <input
       type="checkbox"
       ${checked ? 'checked' : ''}
-      ::change=${e => {
+      ::change=${() => {
         setState(({items}) => ({
           items: items.map(item =>
             item.id === id ? {...item, checked: !item.checked} : item

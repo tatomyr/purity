@@ -6,7 +6,7 @@ export type StatefulCounterProps = {id: string}
 
 export const StatefulCounter = ({id}: StatefulCounterProps) => {
   let count = useState(id)(0)
-  const handleClick: EventHandlerNonNull = e => {
+  const handleClick: EventListener = e => {
     const {counter} = (e.target as HTMLButtonElement).dataset
     count.set(
       {inc: count.get() + 1, dec: count.get() - 1, reset: 0}[counter as Actions]

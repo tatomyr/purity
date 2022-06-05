@@ -31,7 +31,7 @@ export const InputForm = () => render`
     <button type="submit">Add</button>
     <button
       type="reset"
-      ::click=${e => {
+      ::click=${() => {
         setState(() => ({
           input: '',
         }))

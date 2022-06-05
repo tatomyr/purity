@@ -1,4 +1,5 @@
-import {App, init, render} from './purity'
+import type {App} from './purity'
+import {init, render} from './purity'
 import {delay} from './delay'
 
 export type AnyObject = {[key: string]: any}
