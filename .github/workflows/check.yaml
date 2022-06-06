@@ -1,0 +1,33 @@
+name: Check
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          set
+          echo
+          echo Using Node $(node -v), NPM $(npm -v)
+          echo
+          npm ci
+
+      - name: Build
+        run: bash bin/build.sh
+
+      - name: Lint
+        run: bash bin/lint.sh
+
+      - name: Unit tests
+        run: bash bin/jest.sh
+
+      - name: E2E tests
+        run: bash bin/e2e.sh

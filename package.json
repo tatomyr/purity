@@ -1,7 +1,7 @@
 {
   "name": "purity",
-  "version": "1.0.0",
-  "description": "We need package.json since npx jest doesn't work correcty",
+  "version": "0.10.0",
+  "description": "We need package.json since npx jest doesn't work correctly",
   "main": "src/purity.ts",
   "dependencies": {
     "@types/jest": "^26.0.20",
