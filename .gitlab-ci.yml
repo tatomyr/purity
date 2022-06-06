@@ -13,7 +13,7 @@ lint-jest-e2e:
     - set
     - npm i
     - echo "Building the project"
-    - bash bin/build.sh
+    - bash ./bin/build.sh
     - echo "Checking the code quality"
     - bash ./bin/check.sh
   only:
@@ -24,8 +24,9 @@ pages:
   image: node:14
   script:
     - set
+    - npm i
     - echo "Deploying public/ folder to GitLab Pages"
-    - bash bin/build.sh
+    - bash ./bin/build.sh
   artifacts:
     paths:
       - public
