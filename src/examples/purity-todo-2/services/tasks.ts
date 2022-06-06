@@ -13,6 +13,7 @@ export const useTasks = () => {
 }
 
 // FIXME: it is overcomplicated! use useAsync to simplify the async flow!
+// TODO: we have to track status of post/put/delete operations as well (use useAsync)
 
 // Otherwise, to unwrap the hook you should use the 'unwrap' function inside an async function.
 // In that case you no longer have to name it with the 'use' prefix
