@@ -15,7 +15,7 @@ const handleInput = debounce(async (e: Event) => {
       const items = await fakeEndpoint(query)
       setState(() => ({items}))
     } catch (err) {
-      setState(() => ({error: err.message}))
+      setState(() => ({error: (err as Error).message}))
     } finally {
       setState(() => ({isLoading: false}))
     }

@@ -13,7 +13,8 @@ export const downloadUserData = async (): Promise<void> => {
     download(fileName, JSON.stringify(tasks))
     window.alert('Downloading your backup file')
   } catch (err) {
-    window.alert(err.message)
+    console.error(err)
+    window.alert((err as Error).message)
   }
 }
 
@@ -33,6 +34,7 @@ export const uploadUserData = async (file: File): Promise<void> => {
       setState(() => ({settingsModal: ''}))
     }
   } catch (err) {
-    window.alert(err.message)
+    console.error(err)
+    window.alert((err as Error).message)
   }
 }

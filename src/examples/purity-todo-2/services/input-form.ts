@@ -32,6 +32,7 @@ export const createTask = async (e: Event): Promise<void> => {
 
   try {
     const {items: [{link = IMAGES.UNDEFINED_TASK}] = [{}], queries} =
+      // TODO: Use useAsync for fetching?
       await fetchImages(description)
     const image: Image = {
       link,
@@ -42,10 +43,10 @@ export const createTask = async (e: Event): Promise<void> => {
       },
     }
     await patchTask({id: task.id, image})
-  } catch (error) {
-    console.error(error)
+  } catch (err) {
+    console.error(err)
     await patchTask({id: task.id, image: {link: IMAGES.BROKEN, queries: {}}})
-    setState(() => ({error}))
+    setState(() => ({error: err as string}))
     window.alert(state.error)
   }
 }

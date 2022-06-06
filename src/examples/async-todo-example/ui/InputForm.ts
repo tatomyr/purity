@@ -31,7 +31,7 @@ export const InputForm = () => render`
 
         // console.log('POST', item)
       } catch (err) {
-        window.alert(err.message)
+        window.alert((err as Error).message)
       } finally {
         setState(() => ({
           spinner: false,
@@ -51,7 +51,7 @@ export const InputForm = () => render`
     <button type="submit">Add</button>
     <button
       type="reset"
-      ::click=${e => {
+      ::click=${() => {
         setState(() => ({
           input: '',
         }))

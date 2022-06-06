@@ -82,7 +82,7 @@ export const Settings = () => render`
   <div
     id="settings"
     class="${state.settingsModal}"
-    ::click=${e => setState(() => ({settingsModal: ''}))}
+    ::click=${() => setState(() => ({settingsModal: ''}))}
   >
     <div
       class="modal-content"
@@ -92,7 +92,7 @@ export const Settings = () => render`
         <li class="header">
           <p>Settings</p>
           <button
-            ::click=${e => setState(() => ({settingsModal: ''}))}
+            ::click=${() => setState(() => ({settingsModal: ''}))}
           >⨯</button>
         </li>
         <li>

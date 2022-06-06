@@ -4,6 +4,6 @@ import {getState} from '../app.js'
 export const Spinner = () => render`
   <div
     id="spinner"
-    ${getState().spinner && 'class="visible"'}
+    class=${getState().spinner && 'visible'}
   ></div>
 `

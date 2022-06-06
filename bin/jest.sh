@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm run jest
+npm run jest src/

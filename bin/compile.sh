@@ -2,4 +2,4 @@
 
 bash bin/pre-build.sh &&
 
-npx typescript -w
+npx tsc -w

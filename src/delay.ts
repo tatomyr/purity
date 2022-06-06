@@ -1,6 +1,9 @@
-export const delay = (t: number): Promise<void> =>
+export const delay = (t: number): Promise<number> =>
   ({
     then: (resolve: typeof Promise.resolve) => {
-      setTimeout(resolve, t)
+      const timeout: ReturnType<typeof setTimeout> = setTimeout(
+        () => resolve(timeout),
+        t
+      )
     },
-  } as Promise<void>)
+  } as Promise<number>)

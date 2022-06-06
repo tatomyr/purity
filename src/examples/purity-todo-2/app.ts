@@ -1,4 +1,4 @@
-import {init, makeQuery} from '../../index.js'
+import {init, makeAsync} from '../../index.js'
 import {QueryType} from './services/google-api.js'
 
 export type ViewFilter = 'active' | 'completed'
@@ -39,4 +39,4 @@ export const state = {...initialState}
 
 export const {mount, setState, rerender} = init(state)
 
-export const {useQuery} = makeQuery(rerender)
+export const {useAsync} = makeAsync(rerender)

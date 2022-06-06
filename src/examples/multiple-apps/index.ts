@@ -31,7 +31,7 @@ const App2 = () => render`
   <div id="root-2">
     <span id="counter">${store2.getState().counter}</span>
     <button
-      ::click=${e => {
+      ::click=${() => {
         store2.setState(({counter}) => ({counter: counter + 1}))
       }}
     >

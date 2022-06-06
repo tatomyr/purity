@@ -5,7 +5,7 @@ export type Actions = 'inc' | 'dec' | 'reset'
 export type ButtonProps = {
   action: Actions
   caption: string
-  handleClick: EventHandlerNonNull
+  handleClick: EventListener
 }
 
 export const Button = ({action, caption, handleClick}: ButtonProps) => render`
