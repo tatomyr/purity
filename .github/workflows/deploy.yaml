@@ -24,13 +24,15 @@ jobs:
 
       - name: Publish to Github Pages
         run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git checkout --orphan gh-pages
           git status
           echo
           ls public/
           echo
           git --work-tree public add .
-          git --work-tree public commit --author "GitHub Action <action@github.com>" -m "deploy"
+          git --work-tree public commit -m "deploy"
           git push origin HEAD:gh-pages -f
           rm -r public
           git checkout -f main
