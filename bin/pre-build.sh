@@ -1,5 +1,6 @@
 #!/bin/bash
 
-rm -rf public/**
-touch public/.gitkeep
+rm -rf public/
+mkdir public/
+
 cp -r src/examples src/playground public

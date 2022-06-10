@@ -35,7 +35,7 @@ Import **Purity** from a local file or a public URL, e. g.:
 import {init, render} from 'https://tatomyr.gitlab.io/purity/purity.js'
 ```
 
-Next, you init the app with some default state. This will return a bunch of mehtods you can use in your app:
+Next, you init the app with some default state. This will return a bunch of methods you can use in your app:
 
 ```js
 const {mount, getState, setState} = init(defaultState)

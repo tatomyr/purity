@@ -27,11 +27,11 @@ jobs:
           git checkout --orphan gh-pages
           git status
           echo
-          ls build/
+          ls public/
           echo
-          git --work-tree build add .
-          git --work-tree build commit --author "GitHub Action <action@github.com>" -m "deploy"
+          git --work-tree public add .
+          git --work-tree public commit --author "GitHub Action <action@github.com>" -m "deploy"
           git push origin HEAD:gh-pages -f
-          rm -r build
+          rm -r public
           git checkout -f main
           git branch -D gh-pages
