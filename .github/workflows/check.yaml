@@ -3,7 +3,7 @@ name: Check
 on:
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   check:
@@ -14,7 +14,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          set
           echo
           echo Using Node $(node -v), NPM $(npm -v)
           echo

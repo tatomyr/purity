@@ -1,5 +1,8 @@
 # Purity. Declarative State & DOM Manager
 
+![check](https://github.com/tatomyr/purity/actions/workflows/check.yaml/badge.svg)
+![deploy](https://github.com/tatomyr/purity/actions/workflows/deploy.yaml/badge.svg)
+
 <!-- TODO: rename to Prosto? -->
 
 Declarative UI library for using the most of today's Javascript.

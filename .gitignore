@@ -1,6 +1,7 @@
 # Public
-public/*
-!public/.gitkeep
+build/
+src/**/*.js
+src/**/*.d.ts
 
 # E2E testing
 coverage/

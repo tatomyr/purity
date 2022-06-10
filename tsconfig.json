@@ -5,7 +5,7 @@
 
     "skipLibCheck": true,
 
-    "outDir": "public",
+    "outDir": "build",
 
     "declaration": true,
     // "emitDeclarationOnly": true
