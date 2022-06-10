@@ -1,0 +1,41 @@
+name: Check
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          set
+          echo
+          echo Using Node $(node -v), NPM $(npm -v)
+          echo
+          npm ci
+
+      - name: Build
+        run: bash bin/build.sh
+
+      - name: Lint
+        run: bash bin/lint.sh
+
+      - name: Unit Tests
+        run: npm run jest -- --silent --ci --json --testLocationInResults --outputFile=report-incoming.json --bail --coverage
+
+      - name: Coverage Report
+        uses: artiomtr/jest-coverage-report-action@v2.0-rc.4
+        with:
+          skip-step: none
+          coverage-file: report-incoming.json
+          annotations: none
+          test-script: npm run jest -- --silent --ci --json --testLocationInResults --outputFile=report.json --bail --coverage
+
+      - name: E2E tests
+        run: bash bin/e2e.sh
