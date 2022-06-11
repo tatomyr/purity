@@ -10,9 +10,11 @@ type VirtualNodes = {
   shallow: HTMLElement
 }
 type DomNodesMap = Map<string, VirtualNodes>
+
+export type Rerender = () => void
 export type App<State> = {
   mount: (f: () => string) => void
-  rerender: () => void
+  rerender: Rerender
   getState: () => State
   setState(callback: (state: State) => Partial<State>): void
 }
@@ -108,6 +110,7 @@ export const init = <State extends Record<string, unknown>>(
    */
   function rerender() {
     const newNodesMap = rootComponent()
+    console.log('🌀')
     for (const [id, domNode] of domNodesMap) {
       const newNode = newNodesMap.get(id)
       // Since we depend on the shallow comparison, we must only care about updating changed nodes.

@@ -1,7 +1,5 @@
 # Build articacts
 public/
-src/**/*.js
-src/**/*.d.ts
 
 # E2E testing
 coverage/

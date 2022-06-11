@@ -2,7 +2,16 @@ import {render} from '../../../index.js'
 import {Task} from '../app.js'
 import {IMAGES} from '../config/images.js'
 
-export const TaskItem = ({description, id, completed, image}: Task) => render`
+export type Dataset = Pick<Task, 'id' | 'completed'>
+
+export const withToggleButton =
+  ($target: HTMLElement) => (callback: (dataset: Dataset) => void): void => {
+    if ($target.className === 'toggle-button') {
+      callback($target.dataset as unknown as Dataset)
+    }
+  }
+
+export const TaskItem = ({description, id, completed, image}: Task): string => render`
   <li id="${id}" class="task-item ${completed && 'completed'}">
     <img
       src="${image.link}"
