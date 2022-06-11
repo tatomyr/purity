@@ -21,6 +21,14 @@
         padding-left: 0.2em;
       }
     </style>
+    <script>
+      if (
+        !window.location.pathname.endsWith('/') &&
+        !window.location.pathname.endsWith('.html')
+      ) {
+        window.location.assign(window.location.pathname + '/')
+      }
+    </script>
   </head>
   <body>
     <ul id="root"></ul>
@@ -28,8 +36,6 @@
       import {init, render} from '../purity.js'
 
       const {mount} = init()
-
-      const decorateWithSlash = url => (url.endsWith('/') ? url : url + '/')
 
       const list = [
         ['dead-simple-example/', 'Dead Simple Example'],
@@ -43,9 +49,9 @@
         ['purity-todo-2/', 'Purity Todo (2)'],
       ]
 
-      const Item = ([href, title]) => render`
+      const Item = ([path, title]) => render`
         <li>
-          <a href="${decorateWithSlash(window.location.href) + href}">
+          <a href="${window.location.href}${path}">
             ${title}
           </a>
         </li>
