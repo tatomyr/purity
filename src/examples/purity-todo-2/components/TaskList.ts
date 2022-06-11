@@ -1,10 +1,8 @@
 import {render} from '../../../index.js'
 import {state} from '../app.js'
 import {resetInput} from '../services/input-form.js'
-import {getJSON, saveJSON} from '../services/storage.js'
-import {byInput, byStatus, useTasks} from '../services/tasks.js'
+import {byInput, byStatus, patchTask, useTasks} from '../services/tasks.js'
 import {Dataset, TaskItem, withToggleButton} from './TaskItem.js'
-import type {Task} from '../app.js'
 
 const ListStyle = () => render`
   <style id="task-list-style">
@@ -65,16 +63,10 @@ const ListStyle = () => render`
 `
 
 const handleClick = (e: Event): void => {
-  withToggleButton(e.target as HTMLElement)(
-    async ({id, completed}: Dataset) => {
-      const now = Date.now()
-      const tasks = (await getJSON({tasks: [] as Task[]})).map(task =>
-        task.id === id
-          ? {...task, completed: !completed, updatedAt: now, tmpFlag: true}
-          : task
-      )
-      saveJSON({tasks}).then(resetInput).then(useTasks.fire)
-    }
+  withToggleButton(e.target as HTMLElement)(({id, completed}: Dataset) =>
+    patchTask({id, completed: !completed, tmpFlag: true})
+      .then(resetInput)
+      .then(useTasks.fire)
   )
 }
 
