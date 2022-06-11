@@ -25,6 +25,10 @@
   position: relative;
 }
 
+.resizer:hover {
+  background-color: cyan;
+}
+
 .resizer .handler {
   width: 8px;
   height: 24px;
