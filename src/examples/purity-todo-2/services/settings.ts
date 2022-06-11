@@ -5,7 +5,7 @@ import {download, textFileReader} from './text-file-manager.js'
 
 export const downloadUserData = async (): Promise<void> => {
   try {
-    const {unwrap, fire} = useTasks()
+    const {unwrap, fire} = useTasks
     const tasks = await unwrap()
     const fileName = `TODO-backup-${new Date()
       .toDateString()
@@ -19,7 +19,7 @@ export const downloadUserData = async (): Promise<void> => {
 }
 
 export const uploadUserData = async (file: File): Promise<void> => {
-  const {unwrap, fire} = useTasks()
+  const {unwrap, fire} = useTasks
   const existingTasks = await unwrap()
   try {
     const text = await textFileReader(file)

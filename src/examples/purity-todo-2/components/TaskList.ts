@@ -1,8 +1,10 @@
 import {render} from '../../../index.js'
-import {Task} from '../app.js'
+import {state} from '../app.js'
 import {resetInput} from '../services/input-form.js'
-import {usePreparedTasks, toggleTaskState} from '../services/tasks.js'
-import {TaskItem} from './TaskItem.js'
+import {getJSON, saveJSON} from '../services/storage.js'
+import {byInput, byStatus, useTasks} from '../services/tasks.js'
+import {Dataset, TaskItem, withToggleButton} from './TaskItem.js'
+import type {Task} from '../app.js'
 
 const ListStyle = () => render`
   <style id="task-list-style">
@@ -63,18 +65,22 @@ const ListStyle = () => render`
 `
 
 const handleClick = (e: Event): void => {
-  const $target = e.target as HTMLElement
-
-  if ($target.className === 'toggle-button') {
-    toggleTaskState(
-      $target.dataset as unknown as Pick<Task, 'id' | 'completed'>
-    )
-    resetInput()
-  }
+  withToggleButton(e.target as HTMLElement)(
+    async ({id, completed}: Dataset) => {
+      const now = Date.now()
+      const tasks = (await getJSON({tasks: [] as Task[]})).map(task =>
+        task.id === id
+          ? {...task, completed: !completed, updatedAt: now, tmpFlag: true}
+          : task
+      )
+      saveJSON({tasks}).then(resetInput).then(useTasks.fire)
+    }
+  )
 }
 
-export const TaskList = () => {
-  const {tasks, status} = usePreparedTasks()
+export const TaskList = (): string => {
+  const {data = [], status} = useTasks.call()
+  const tasks = data.filter(byInput).filter(byStatus(state))
 
   return render`
     <ul id="task-list" ::click=${handleClick}>

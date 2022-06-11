@@ -1,3 +1,5 @@
+import type {Rerender} from './purity'
+
 export type QueryStatus = 'initial' | 'pending' | 'success' | 'error'
 
 type QueryCache<T> = {
@@ -7,21 +9,23 @@ type QueryCache<T> = {
   expires: number
 }
 
-export type QueryResponse<T> = QueryCache<T> & {
-  fire: () => Promise<void>
+export type QueryResponse<T, P = void> = QueryCache<T> & {
+  fire: Fire<P>
   unwrap: () => T | Promise<T>
 }
 
-type AsyncItems<T> = {
+export type Fire<P = void> = (payload: P) => Promise<void>
+
+export type AsyncItems<T, P = void> = {
   status: QueryStatus
   data?: T | undefined
   error?: Error | undefined
   expires: number
-  fire: () => Promise<void>
-  unwrap: () => T | Promise<T>
+  fire: Fire<P>
+  unwrap: (payload: P) => T | Promise<T> // TODO: deprecate & remove?
 }
 
-export const makeAsync = (rerender: () => void) => {
+export const makeAsync = (rerender: Rerender) => {
   // eslint-disable-next-line prefer-const
   let cache: Record<string, QueryCache<unknown> | undefined> = {}
 
@@ -34,20 +38,22 @@ export const makeAsync = (rerender: () => void) => {
   }
 
   return {
-    useAsync: <T>(
+    useAsync: <T, P = void>(
       key: string,
-      query: () => Promise<T>,
+      query: (payload: P) => Promise<T>,
       {expiration = 3600000} = {}
-    ): AsyncItems<T> & {call: () => AsyncItems<T>} => {
+    ): AsyncItems<T, P> & {call: (payload: P) => AsyncItems<T, P>} => {
       createEmptyCache<T>(key)
 
-      const fire = async (): Promise<void> => {
+      const fire = async (payload: P): Promise<void> => {
+        console.log('🔥')
         if ((cache[key] as QueryCache<T>).status === 'pending') {
+          console.log('❗ Skipped 🔥 due to race condition.')
           return
         }
         try {
           ;(cache[key] as QueryCache<T>).status = 'pending'
-          const data = await query()
+          const data = await query(payload)
           cache[key] = {
             data,
             status: 'success',
@@ -65,18 +71,18 @@ export const makeAsync = (rerender: () => void) => {
         }
       }
 
-      const unwrap = (): T | Promise<T> => {
+      const unwrap = (payload: P): T | Promise<T> => {
         if (
           (cache[key] as QueryCache<T>).status === 'success' &&
           Date.now() < (cache[key] as QueryCache<T>).expires
         ) {
           return (cache[key] as QueryCache<T>).data as T
         } else {
-          return query()
+          return query(payload)
         }
       }
 
-      const call = () => {
+      const call = (payload: P) => {
         if (
           (cache[key] as QueryCache<T>).status === 'error' ||
           Date.now() >= (cache[key] as QueryCache<T>).expires
@@ -84,7 +90,7 @@ export const makeAsync = (rerender: () => void) => {
           console.log(
             `Executing the query for a newly created or expired cache`
           )
-          fire()
+          fire(payload)
         }
         return {
           fire,

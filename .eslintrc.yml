@@ -14,9 +14,7 @@ rules:
   linebreak-style:
     - error
     - unix
-  prefer-const:
-    - warn
-  '@typescript-eslint/no-extra-semi':
-    - off
-  '@typescript-eslint/ban-ts-comment':
-    - warn
+  prefer-const: warn
+  '@typescript-eslint/no-extra-semi': off
+  '@typescript-eslint/ban-ts-comment': warn
+  '@typescript-eslint/no-unused-vars': off
