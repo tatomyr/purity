@@ -1,6 +1,6 @@
 {
   "name": "purity",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "We need package.json since npx jest doesn't work correctly",
   "main": "src/purity.ts",
   "dependencies": {
