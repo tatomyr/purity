@@ -20,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/tatomyr/purity.git"
+    "url": "git+ssh://git@github.com/tatomyr/purity.git"
   },
   "author": "Andrew Tatomyr",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/tatomyr/purity/issues"
+    "url": "https://github.com/tatomyr/purity/issues"
   },
-  "homepage": "https://gitlab.com/tatomyr/purity#readme"
+  "homepage": "https://github.com/tatomyr/purity#readme"
 }

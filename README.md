@@ -32,7 +32,7 @@ To use **Purity** in a project you have to put in your **index.html** a root ele
 Import **Purity** from a local file or a public URL, e. g.:
 
 ```js
-import {init, render} from 'https://tatomyr.gitlab.io/purity/purity.js'
+import {init, render} from 'https://tatomyr.github.io/purity/purity.js'
 ```
 
 Next, you init the app with some default state. This will return a bunch of methods you can use in your app:
@@ -276,7 +276,7 @@ The decision to use bare ES modules appears to be the consequence of listening t
 - [Async search](./src/examples/async-search)
 - [Multiple Applications in the same page](./src/examples/multiple-apps)
 
-Please find the examples [here](https://tatomyr.gitlab.io/purity/examples/)
+Please find the examples [here](https://tatomyr.github.io/purity/examples/)
 
 You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/public/examples/`.
 
