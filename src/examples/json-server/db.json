@@ -1,4 +1,10 @@
 {
+  "counters": [
+    {
+      "value": 0,
+      "id": "my-counter"
+    }
+  ],
   "items": [
     {
       "text": "trh",
@@ -16,7 +22,7 @@
       "id": 7
     },
     {
-      "text": "odhnadcäty",
+      "text": "odhnadcyaty",
       "checked": true,
       "id": 9
     },

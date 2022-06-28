@@ -66,7 +66,7 @@ const handleClick = (e: Event): void => {
   withToggleButton(e.target as HTMLElement)(({id, completed}: Dataset) =>
     patchTask({id, completed: !completed, tmpFlag: true})
       .then(resetInput)
-      .then(useTasks.fire)
+      .then(() => useTasks.fire())
   )
 }
 

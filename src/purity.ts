@@ -40,8 +40,7 @@ const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
 export const init = <State extends Record<string, unknown>>(
   initialState: State
 ): App<State> => {
-  // eslint-disable-next-line prefer-const
-  let state = initialState
+  const state = initialState
 
   /**
    * Parses html string and returns so called 'nodeMap' which represents virtual DOM
@@ -50,16 +49,13 @@ export const init = <State extends Record<string, unknown>>(
     const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
     const nodesMap: DomNodesMap = new Map()
     for (const node of virtualDocument.querySelectorAll('[id]')) {
-      // eslint-disable-next-line prefer-const
-      let shallow = (node as HTMLElement).cloneNode(true) as HTMLElement // FIXME: null?
-      // eslint-disable-next-line prefer-const
-      for (let innerNode of shallow.querySelectorAll('[id]')) {
+      const shallow = (node as HTMLElement).cloneNode(true) as HTMLElement // FIXME: null?
+      for (const innerNode of shallow.querySelectorAll('[id]')) {
         innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`
       }
       // Removing the `data-purity_*` attributes attached in render() function
       // TODO: try to avoid the situation when we have to remove something added in another module.
-      // eslint-disable-next-line prefer-const
-      for (let innerNode of shallow.querySelectorAll(`[${DATA_PURITY_FLAG}]`)) {
+      for (const innerNode of shallow.querySelectorAll(`[${DATA_PURITY_FLAG}]`)) {
         for (const key in (innerNode as HTMLElement).dataset) {
           if (key.startsWith(PURITY_KEYWORD)) {
             innerNode.removeAttribute(`data-${key}`)
@@ -187,8 +183,7 @@ export const render = (
     const dataName = `data-${PURITY_KEYWORD}_${event}_${applyPurityKey()}`
     setTimeout(() => {
       // Asynchronously bind event handlers after rendering everything to DOM
-      // eslint-disable-next-line prefer-const
-      let element: HTMLElement | null = document.querySelector(`[${dataName}]`)
+      const element: HTMLElement | null = document.querySelector(`[${dataName}]`)
       const prop = args[index]
       if (element && typeof prop === 'function') {
         element[`on${event}`] = prop
