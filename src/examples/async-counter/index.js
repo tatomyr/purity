@@ -20,22 +20,6 @@ const useMyCounter = useAsync(
   myCounterOptions
 )
 
-const useIncMyCounter = useAsync(
-  url,
-  async data => {
-    const {value} = await fetch(url).then(res => res.json())
-    await fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({value: value + 1}),
-    })
-    return await fetch(url).then(res => res.json())
-  },
-  myCounterOptions
-)
-
 // UI components
 
 const App = () => {
@@ -50,8 +34,18 @@ const App = () => {
         <button 
           style="all: unset"
           ::click=${() => {
-            useIncMyCounter.fire({
-              value: (useMyCounter.getCached().data.value || 0) + 1,
+            fire({
+              optimisticData: {value: (getCached().data.value || 0) + 1},
+              mutation: async () => {
+                const {value} = await fetch(url).then(res => res.json())
+                await fetch(url, {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({value: value + 1}),
+                })
+              },
             })
           }}}
         >
@@ -68,9 +62,6 @@ const App = () => {
         </span>
         <span id="loader" style="margin: 0 4px;">${
           status === 'pending' && '💿'
-        }</span>
-        <span id="loader-2" style="margin: 0 4px;">${
-          useIncMyCounter.getCached().status === 'pending' && '💽'
         }</span>
       `)}
       ${status === 'error' && FunnyWrapper(error)}

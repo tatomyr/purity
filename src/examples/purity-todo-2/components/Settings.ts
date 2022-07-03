@@ -1,6 +1,7 @@
 import {render} from '../../../index.js'
 import {setState, state} from '../app.js'
 import {downloadUserData, uploadUserData} from '../services/settings.js'
+import {useTasks} from '../services/tasks.js'
 
 const SettingsStyle = () => render`
   <style>
@@ -78,7 +79,7 @@ const SettingsStyle = () => render`
   </style>
 `
 
-export const Settings = () => render`
+export const Settings = (): string => render`
   <div
     id="settings"
     class="${state.settingsModal}"
@@ -98,7 +99,9 @@ export const Settings = () => render`
         <li>
           <p>Backup</p>
           <button
-            ::click=${downloadUserData}
+            ::click=${() => {
+              useTasks.fire({mutation: downloadUserData})
+            }}
           >↧</button>
         </li>
         <li>
@@ -111,7 +114,7 @@ export const Settings = () => render`
               id="backup"
               ::change=${({target}) => {
                 const [file] = (<HTMLInputElement>target).files as FileList
-                uploadUserData(file)
+                useTasks.fire({mutation: () => uploadUserData(file)})
               }}
             />
           </label>
