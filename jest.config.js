@@ -2,20 +2,22 @@
 module.exports = {
   transform: {'^.+\\.ts$': 'ts-jest'},
   verbose: true,
+  testEnvironment: "jsdom",
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.ts',
     '!src/examples/**/*',
     '!src/playground/**/*',
+    '!src/index.ts',
     '!src/lz-string.ts',
     '!src/md5.ts',
   ],
   coverageThreshold: {
     global: {
-      statements: 38,
-      branches: 31,
-      functions: 32,
-      lines: 45,
+      statements: 62,
+      branches: 47,
+      functions: 56,
+      lines: 67,
     },
   },
 }

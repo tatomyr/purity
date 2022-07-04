@@ -10,14 +10,12 @@ const {useAsync} = makeAsync(rerender)
 
 const url = 'http://localhost:3000/counters/my-counter'
 
-const myCounterOptions = {expiration: 100000}
-
 // Hooks
 
 const useMyCounter = useAsync(
   url,
   () => fetch(url).then(res => res.json()),
-  myCounterOptions
+  {expiration: 100000}
 )
 
 // UI components
@@ -55,7 +53,7 @@ const App = () => {
           id="my-counter" 
           style="
             padding: 0 10px; 
-            ${status === 'pending' && render`color: lightgray;`}
+            ${status === 'pending' && render`color: lightgrey;`}
           "
         >
           ${data?.value}

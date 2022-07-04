@@ -54,9 +54,9 @@ export const makeAsync = (rerender: Rerender) => {
         _shouldRefetch,
         mutation,
       } = {}) => {
-        console.log('🔥')
+        console.warn('🔥')
         if (cache.status === 'pending') {
-          console.log('❗ Skipped 🔥 due to race condition.')
+          console.warn('❗ Skipped 🔥 due to race condition.')
           return
         }
         try {
@@ -76,7 +76,7 @@ export const makeAsync = (rerender: Rerender) => {
           cache.error = undefined
           cache.expires = Date.now() + expiration
         } catch (err) {
-          console.log(
+          console.error(
             `
             HERE IS THE ERROR!!:`,
             err
@@ -103,7 +103,7 @@ export const makeAsync = (rerender: Rerender) => {
         const _shouldRefetch =
           cache.status === 'initial' || Date.now() >= cache.expires
         if (_shouldRefetch) {
-          console.log(
+          console.warn(
             `Executing the query for a newly created or expired cache`
           )
           fire({optimisticData, _shouldRefetch})

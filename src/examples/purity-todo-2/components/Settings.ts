@@ -72,7 +72,7 @@ const SettingsStyle = () => render`
       background-color: grey;
     }
 
-    #backup {
+    #restore-backup {
       display: none;
     }
 
@@ -99,19 +99,17 @@ export const Settings = (): string => render`
         <li>
           <p>Backup</p>
           <button
-            ::click=${() => {
-              useTasks.fire({mutation: downloadUserData})
-            }}
+            ::click=${downloadUserData}
           >↧</button>
         </li>
         <li>
           <p>Restore</p>
-          <label for="backup">
+          <label for="restore-backup">
             ↥
             <input
               type="file"
               accept=".json"
-              id="backup"
+              id="restore-backup"
               ::change=${({target}) => {
                 const [file] = (<HTMLInputElement>target).files as FileList
                 useTasks.fire({mutation: () => uploadUserData(file)})

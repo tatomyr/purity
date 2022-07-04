@@ -6,6 +6,10 @@ export type AnyObject = {[key: string]: any}
 
 describe('purity', () => {
   let app: App<AnyObject>, defaultState: AnyObject
+  let warn = console.warn
+  beforeAll(() => {
+    console.warn = jest.fn()
+  })
   beforeEach(() => {
     document.body.innerHTML = '<div id="root"></div>'
   })
@@ -13,6 +17,9 @@ describe('purity', () => {
     document.body.innerHTML = ''
     // @ts-ignore
     app = undefined
+  })
+  afterAll(() => {
+    console.warn = warn
   })
 
   describe('counter app', () => {
