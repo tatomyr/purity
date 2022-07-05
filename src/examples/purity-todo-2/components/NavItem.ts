@@ -21,15 +21,18 @@ export const NavItem = ({value, label}: FilterOptionType): string => render`
       class="nav-option ${
         isChosen(value, useTasks.getCached().data) && 'chosen'
       }"
-      ::click=${async () => {
+      ::click=${() => {
         if (useTasks.getCached().data?.some(({tmpFlag}) => tmpFlag)) {
-          await getJSON({tasks: [] as Task[]})
-            .then(tasks => {
+          useTasks.fire({
+            async mutation() {
+              const tasks = await getJSON({tasks: [] as Task[]})
               saveJSON({tasks: groomTasks(tasks)})
-            })
-            .then(() => useTasks.fire())
+              setState(() => ({view: value}))
+            },
+          })
+        } else {
+          setState(() => ({view: value}))
         }
-        setState(() => ({view: value}))
       }}
     >
       ${label}
