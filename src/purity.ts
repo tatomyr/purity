@@ -43,26 +43,28 @@ export const init = <State extends Record<string, unknown>>(
   const state = initialState
 
   /**
-   * Parses html string and returns so called 'nodeMap' which represents virtual DOM
+   * Parses an html string and returns so called 'nodeMap' which represents the virtual DOM
    */
   const buildNodesMap = (html: string): DomNodesMap => {
     const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
     const nodesMap: DomNodesMap = new Map()
-    for (const node of virtualDocument.querySelectorAll('[id]')) {
-      const shallow = (node as HTMLElement).cloneNode(true) as HTMLElement // FIXME: null?
+    for (const node of virtualDocument.querySelectorAll<HTMLElement>('[id]')) {
+      const shallow = node.cloneNode(true) as HTMLElement // FIXME: null?
       for (const innerNode of shallow.querySelectorAll('[id]')) {
         innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`
       }
       // Removing the `data-purity_*` attributes attached in render() function
       // TODO: try to avoid the situation when we have to remove something added in another module.
-      for (const innerNode of shallow.querySelectorAll(`[${DATA_PURITY_FLAG}]`)) {
-        for (const key in (innerNode as HTMLElement).dataset) {
+      for (const innerNode of shallow.querySelectorAll<HTMLElement>(
+        `[${DATA_PURITY_FLAG}]`
+      )) {
+        for (const key in innerNode.dataset) {
           if (key.startsWith(PURITY_KEYWORD)) {
             innerNode.removeAttribute(`data-${key}`)
           }
         }
       }
-      nodesMap.set(node.id, {node, shallow} as VirtualNodes)
+      nodesMap.set(node.id, {node, shallow})
     }
     return nodesMap
   }
@@ -155,12 +157,12 @@ const joinIfArray = (x: Verified): Allowed =>
  */
 const applyPurityKey = (() => {
   let purityKey = 0
-  let timeout: number
+  let timeout: number | undefined
   return () => {
     if (timeout) {
       clearTimeout(timeout)
     }
-    timeout = window.setTimeout(() => {
+    timeout = setTimeout(() => {
       purityKey = 0
     })
     return purityKey++
@@ -183,7 +185,7 @@ export const render = (
     const dataName = `data-${PURITY_KEYWORD}_${event}_${applyPurityKey()}`
     setTimeout(() => {
       // Asynchronously bind event handlers after rendering everything to DOM
-      const element: HTMLElement | null = document.querySelector(`[${dataName}]`)
+      const element = document.querySelector<HTMLElement>(`[${dataName}]`)
       const prop = args[index]
       if (element && typeof prop === 'function') {
         element[`on${event}`] = prop

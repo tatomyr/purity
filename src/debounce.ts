@@ -10,7 +10,7 @@ export type Callback = (...args: any[]) => void
  */
 
 export const debounce = (callback: Callback, wait = 100): Callback => {
-  let timeout: any
+  let timeout: number | undefined
   return (...args: any[]) => {
     if (timeout) {
       clearTimeout(timeout)

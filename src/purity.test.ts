@@ -6,19 +6,16 @@ export type AnyObject = {[key: string]: any}
 
 describe('purity', () => {
   let app: App<AnyObject>, defaultState: AnyObject
-  let warn = console.warn
-  beforeAll(() => {
-    console.warn = jest.fn()
-  })
+  const warn = console.warn
   beforeEach(() => {
     document.body.innerHTML = '<div id="root"></div>'
+    console.warn = jest.fn()
   })
   afterEach(() => {
     document.body.innerHTML = ''
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     app = undefined
-  })
-  afterAll(() => {
     console.warn = warn
   })
 

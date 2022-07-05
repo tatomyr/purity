@@ -5,20 +5,18 @@ import {Rerender} from './purity'
 describe('makeAsync', () => {
   let rerender: Rerender
   let useAsync: any
-  let warn = console.warn
+  const warn = console.warn
   const standardPayload = {
     fire: expect.any(Function),
     getCached: expect.any(Function),
     unwrap: expect.any(Function),
   }
-  beforeAll(() => {
-    console.warn = jest.fn()
-  })
   beforeEach(() => {
     rerender = jest.fn()
     useAsync = makeAsync(rerender).useAsync
+    console.warn = jest.fn()
   })
-  afterAll(() => {
+  afterEach(() => {
     console.warn = warn
   })
   it('should contain the needed properties', () => {
@@ -41,6 +39,16 @@ describe('makeAsync', () => {
       expires: 0,
       status: 'pending',
       ...standardPayload,
+    })
+  })
+  it('should use existing cache', () => {
+    const query = jest.fn()
+    useAsync('test', query)
+    useAsync('test', query)
+    expect(console.warn).toBeCalledTimes(2)
+    expect(console.warn).toBeCalledWith('Cache for [test] exists:', {
+      expires: 0,
+      status: 'initial',
     })
   })
   it('should return the data on success and rerender', async () => {
