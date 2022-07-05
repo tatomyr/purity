@@ -1,5 +1,5 @@
-import {md5} from '../../../index.js'
-import {AppState, state, Task, useAsync} from '../app.js'
+import {md5, sanitize} from '../../../index.js'
+import {AppState, Task, useAsync} from '../app.js'
 import {IMAGES} from '../config/images.js'
 import {getJSON, saveJSON} from './storage.js'
 
@@ -11,12 +11,12 @@ export const useTasks = useAsync('tasks', async () =>
   getJSON({tasks: [] as Task[]})
 )
 
-export const postTask = async (description: string): Promise<Task> => {
-  const tasks = await getJSON({tasks: [] as Task[]})
-  const id = md5(description.trim().toLowerCase())
-  if (tasks.some(task => task.id === id)) {
-    throw new Error('There is already a task with the same id in the list')
-  }
+const makeId = (description: string): string =>
+  md5(description.trim().toLowerCase())
+
+export const prepareTask = (description: string): Task => {
+  const id = makeId(description)
+
   const now = Date.now()
   const task: Task = {
     description,
@@ -29,8 +29,6 @@ export const postTask = async (description: string): Promise<Task> => {
       queries: {},
     },
   }
-
-  await saveJSON({tasks: [task, ...tasks]})
   return task
 }
 
@@ -60,25 +58,25 @@ export const removeTask = async (id: string): Promise<void> => {
   })
 }
 
-export const byInput = ({description}: Task): boolean =>
-  description.toLowerCase().indexOf(state.input.toLocaleLowerCase()) !== -1
+export const byInput =
+  ({input}: AppState) =>
+  ({description}: Task): boolean =>
+    description
+      .trim()
+      .toLowerCase()
+      .indexOf(sanitize(input).trim().toLocaleLowerCase()) !== -1
 
 export const byStatus =
   ({view, input}: AppState) =>
   ({completed, tmpFlag}: Task): boolean =>
-    !!(input
-      ? true
-      : view === 'active'
-      ? !completed || (tmpFlag && completed)
-      : view === 'completed'
-      ? completed || (tmpFlag && !completed)
-      : true)
+    !!(
+      input ||
+      tmpFlag ||
+      (view === 'active' && !completed) ||
+      (view === 'completed' && completed)
+    )
 
-export const groomTasks = async (): Promise<void> => {
-  const tasks = await getJSON({tasks: [] as Task[]})
-  const groomedTasks: Task[] = tasks
+export const groomTasks = (tasks: Task[]): Task[] =>
+  tasks
     .map(({tmpFlag, ...task}) => task)
     .sort((a, b) => b.updatedAt - a.updatedAt)
-  await saveJSON({tasks: groomedTasks})
-  setTimeout(useTasks.fire)
-}

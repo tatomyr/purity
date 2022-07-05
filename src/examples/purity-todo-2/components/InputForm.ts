@@ -3,8 +3,9 @@ import {setState, state} from '../app.js'
 import {IMAGES} from '../config/images.js'
 import {fetchImages} from '../services/images.js'
 import {normalizeQuery, resetInput} from '../services/input-form.js'
-import {groomTasks, patchTask, postTask, useTasks} from '../services/tasks.js'
+import {groomTasks, prepareTask, useTasks} from '../services/tasks.js'
 import type {Image} from '../app.js'
+import {getJSON, saveJSON} from '../services/storage.js'
 
 const InputFormStyle = () => render`
   <style id="task-form-style">
@@ -29,38 +30,45 @@ const InputFormStyle = () => render`
   </style>
 `
 
-export const createTask = async (e: Event): Promise<void> => {
+const createTask = async (e: Event): Promise<void> => {
   e.preventDefault()
   const $target = e.target as HTMLFormElement
   const description: string = sanitize($target.task.value)
 
-  const {id} = await postTask(description)
+  const tasks = useTasks.getCached().data || []
+  const task = prepareTask(description)
+  if (tasks.some(({id}) => id === task.id)) {
+    window.alert('There is already a task with the same id in the list')
+    return
+  }
 
-  useTasks.fire()
   resetInput()
   setState(() => ({view: 'active'}))
-  await groomTasks()
-
-  try {
-    const {items: [{link = IMAGES.UNDEFINED_TASK}] = [{}], queries} =
-      await fetchImages(description)
-    const image: Image = {
-      link,
-      queries: {
-        ...normalizeQuery(queries, 'request'),
-        ...normalizeQuery(queries, 'nextPage'),
-        ...normalizeQuery(queries, 'previousPage'),
-      },
-    }
-    await patchTask({id, image})
-  } catch (err) {
-    console.error(err)
-    await patchTask({id, image: {link: IMAGES.BROKEN, queries: {}}})
-    setState(() => ({error: err as string}))
-    window.alert(state.error)
-  } finally {
-    useTasks.fire()
-  }
+  useTasks.fire({
+    optimisticData: [{...task, isBeingCreated: true}, ...tasks],
+    mutation: async () => {
+      try {
+        const {items: [{link = IMAGES.UNDEFINED_TASK}] = [{}], queries} =
+          await fetchImages(description)
+        const image: Image = {
+          link,
+          queries: {
+            ...normalizeQuery(queries, 'request'),
+            ...normalizeQuery(queries, 'nextPage'),
+            ...normalizeQuery(queries, 'previousPage'),
+          },
+        }
+        await saveJSON({
+          tasks: groomTasks([{...task, image}, ...(await getJSON({tasks}))]),
+        })
+      } catch (err) {
+        console.warn('THIS SHOULD NOT HAPPEN AT ALL!')
+        console.error(err)
+        setState(() => ({error: err as string}))
+        window.alert(state.error)
+      }
+    },
+  })
 }
 
 export const InputForm = (): string => render`

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATTERN=". --exclude=bin/debts.sh --exclude=*{.snap,__.js} --exclude-dir=coverage --exclude-dir=node_modules --exclude-dir=public"
+PATTERN=". --exclude=bin/debts.sh --exclude-dir=coverage --exclude-dir=node_modules --exclude-dir=public"
 
 # Find all technical debt marks in the project
 fixmes=$(grep -r FIXME: $PATTERN | wc -l)

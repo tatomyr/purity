@@ -25,7 +25,7 @@ const AppStyle = () => render`
   </style>
 `
 
-export const App = () => render`
+export const App = (): string => render`
   <div id="root">
     ${Header()}
     ${TaskList()}

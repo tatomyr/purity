@@ -1,4 +1,4 @@
-type Fn = (x: any) => any
+type Fn = (x: unknown) => unknown
 
 export type Pipe = (...funcs: Fn[]) => Fn
 

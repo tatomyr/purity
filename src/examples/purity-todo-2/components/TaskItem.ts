@@ -4,18 +4,28 @@ import {IMAGES} from '../config/images.js'
 
 export type Dataset = Pick<Task, 'id' | 'completed'>
 
+export const TOGGLE_BUTTON = 'toggle-button'
+
 export const withToggleButton =
-  ($target: HTMLElement) => (callback: (dataset: Dataset) => void): void => {
-    if ($target.className === 'toggle-button') {
+  ($target: HTMLElement) =>
+  (callback: (dataset: Dataset) => void): void => {
+    if ([...$target.classList].includes(TOGGLE_BUTTON)) {
       callback($target.dataset as unknown as Dataset)
     }
   }
 
-export const TaskItem = ({description, id, completed, image}: Task): string => render`
+export const TaskItem = ({
+  description,
+  id,
+  completed,
+  image,
+  isBeingCreated,
+  isBeingUpdated,
+}: Task): string => render`
   <li id="${id}" class="task-item ${completed && 'completed'}">
     <img
       src="${image.link}"
-      srcset="${image.link}, ${IMAGES.BROKEN}"
+      onerror="this.onerror = null; this.src = '${IMAGES.BROKEN}'"
       loading="lazy"
     />
     <div class="description">
@@ -23,7 +33,9 @@ export const TaskItem = ({description, id, completed, image}: Task): string => r
     </div>
     <button
       id="toggle-${id}"
-      class="toggle-button"
+      class="${TOGGLE_BUTTON} ${
+        (isBeingCreated || isBeingUpdated) && 'being-processed'
+      }"
       data-id="${id}"
       data-completed="${completed && 'true'}"
     >

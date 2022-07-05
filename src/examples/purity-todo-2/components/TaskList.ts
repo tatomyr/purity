@@ -2,7 +2,7 @@ import {render} from '../../../index.js'
 import {state} from '../app.js'
 import {resetInput} from '../services/input-form.js'
 import {byInput, byStatus, patchTask, useTasks} from '../services/tasks.js'
-import {Dataset, TaskItem, withToggleButton} from './TaskItem.js'
+import {Dataset, TaskItem, TOGGLE_BUTTON, withToggleButton} from './TaskItem.js'
 
 const ListStyle = () => render`
   <style id="task-list-style">
@@ -34,8 +34,11 @@ const ListStyle = () => render`
       color: lightgrey;
     }
 
-    ul#task-list .task-item .toggle-button {
+    .${TOGGLE_BUTTON} {
       all: unset;
+    }
+
+    ul#task-list .task-item .${TOGGLE_BUTTON} {
       width: 3rem;
       min-width: 3rem;
       height: 3rem;
@@ -44,7 +47,7 @@ const ListStyle = () => render`
       line-height: 1;
     }
 
-    ul#task-list .task-item .toggle-button:active {
+    ul#task-list .task-item .${TOGGLE_BUTTON}:active {
       background-color: grey;
     }
 
@@ -59,24 +62,41 @@ const ListStyle = () => render`
     ul#task-list .task-item.completed > img {
       filter: grayscale(1);
     }
+
+    .being-processed {
+      color: lightgrey;
+    }
   </style>
 `
 
 const handleClick = (e: Event): void => {
-  withToggleButton(e.target as HTMLElement)(({id, completed}: Dataset) =>
-    patchTask({id, completed: !completed, tmpFlag: true})
-      .then(resetInput)
-      .then(useTasks.fire)
-  )
+  withToggleButton(e.target as HTMLElement)(({id, completed}: Dataset) => {
+    const optimisticData = (useTasks.getCached().data || []).map(task =>
+      task.id === id
+        ? {
+            ...task,
+            tmpFlag: true,
+            completed: !completed,
+            updatedAt: Date.now(),
+            isBeingUpdated: true,
+          }
+        : task
+    )
+    useTasks.fire({
+      optimisticData,
+      mutation: () =>
+        patchTask({id, completed: !completed, tmpFlag: true}).then(resetInput),
+    })
+  })
 }
 
 export const TaskList = (): string => {
-  const {data = [], status} = useTasks.call()
-  const tasks = data.filter(byInput).filter(byStatus(state))
+  const {data = []} = useTasks.call()
+  const tasks = data.filter(byInput(state)).filter(byStatus(state))
 
   return render`
     <ul id="task-list" ::click=${handleClick}>
-      ${status === 'pending' ? '…' : tasks.map(TaskItem)}
+      ${tasks.map(TaskItem)}
     </ul>
     ${ListStyle()}
   `

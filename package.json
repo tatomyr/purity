@@ -1,20 +1,23 @@
 {
   "name": "purity",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "We need package.json since npx jest doesn't work correctly",
   "main": "src/purity.ts",
   "dependencies": {
-    "@types/jest": "^26.0.20",
+    "@types/jest": "^28.1.4",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "cypress": "^4.4.1",
     "eslint": "^7.12.1",
-    "jest": "^26.6.1",
+    "jest": "^28.1.2",
+    "jest-environment-jsdom": "^28.1.2",
+    "json-server": "^0.17.0",
     "minify": "^6.0.0",
-    "ts-jest": "^26.4.3",
-    "typescript": "^4.7.3"
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.4"
   },
   "scripts": {
+    "json-server": "json-server --watch public/examples/json-server/db.json",
     "jest": "NODE_OPTIONS=--experimental-vm-modules npx jest src/",
     "lint": "eslint src/"
   },

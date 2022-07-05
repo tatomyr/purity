@@ -1,12 +1,10 @@
-import {setState} from '../app.js'
-import {saveJSON} from './storage.js'
-import {useTasks} from './tasks.js'
+import {setState, Task} from '../app.js'
+import {getJSON, saveJSON} from './storage.js'
 import {download, textFileReader} from './text-file-manager.js'
 
 export const downloadUserData = async (): Promise<void> => {
   try {
-    const {unwrap, fire} = useTasks
-    const tasks = await unwrap()
+    const tasks = await getJSON({tasks: [] as Task[]})
     const fileName = `TODO-backup-${new Date()
       .toDateString()
       .replace(/[ /]/g, '_')}.json`
@@ -19,8 +17,7 @@ export const downloadUserData = async (): Promise<void> => {
 }
 
 export const uploadUserData = async (file: File): Promise<void> => {
-  const {unwrap, fire} = useTasks
-  const existingTasks = await unwrap()
+  const existingTasks = await getJSON({tasks: [] as Task[]})
   try {
     const text = await textFileReader(file)
     const tasks = JSON.parse(text)
@@ -30,7 +27,6 @@ export const uploadUserData = async (file: File): Promise<void> => {
       )
     ) {
       saveJSON({tasks})
-      fire()
       setState(() => ({settingsModal: ''}))
     }
   } catch (err) {

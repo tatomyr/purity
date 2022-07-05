@@ -1,6 +1,7 @@
 import {render} from '../../../index.js'
 import {setState, state} from '../app.js'
 import {downloadUserData, uploadUserData} from '../services/settings.js'
+import {useTasks} from '../services/tasks.js'
 
 const SettingsStyle = () => render`
   <style>
@@ -71,14 +72,14 @@ const SettingsStyle = () => render`
       background-color: grey;
     }
 
-    #backup {
+    #restore-backup {
       display: none;
     }
 
   </style>
 `
 
-export const Settings = () => render`
+export const Settings = (): string => render`
   <div
     id="settings"
     class="${state.settingsModal}"
@@ -103,15 +104,15 @@ export const Settings = () => render`
         </li>
         <li>
           <p>Restore</p>
-          <label for="backup">
+          <label for="restore-backup">
             ↥
             <input
               type="file"
               accept=".json"
-              id="backup"
+              id="restore-backup"
               ::change=${({target}) => {
                 const [file] = (<HTMLInputElement>target).files as FileList
-                uploadUserData(file)
+                useTasks.fire({mutation: () => uploadUserData(file)})
               }}
             />
           </label>

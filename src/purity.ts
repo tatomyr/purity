@@ -40,33 +40,31 @@ const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
 export const init = <State extends Record<string, unknown>>(
   initialState: State
 ): App<State> => {
-  // eslint-disable-next-line prefer-const
-  let state = initialState
+  const state = initialState
 
   /**
-   * Parses html string and returns so called 'nodeMap' which represents virtual DOM
+   * Parses an html string and returns so called 'nodeMap' which represents the virtual DOM
    */
   const buildNodesMap = (html: string): DomNodesMap => {
     const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
     const nodesMap: DomNodesMap = new Map()
-    for (const node of virtualDocument.querySelectorAll('[id]')) {
-      // eslint-disable-next-line prefer-const
-      let shallow = (node as HTMLElement).cloneNode(true) as HTMLElement // FIXME: null?
-      // eslint-disable-next-line prefer-const
-      for (let innerNode of shallow.querySelectorAll('[id]')) {
+    for (const node of virtualDocument.querySelectorAll<HTMLElement>('[id]')) {
+      const shallow = node.cloneNode(true) as HTMLElement // FIXME: null?
+      for (const innerNode of shallow.querySelectorAll('[id]')) {
         innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`
       }
       // Removing the `data-purity_*` attributes attached in render() function
       // TODO: try to avoid the situation when we have to remove something added in another module.
-      // eslint-disable-next-line prefer-const
-      for (let innerNode of shallow.querySelectorAll(`[${DATA_PURITY_FLAG}]`)) {
-        for (const key in (innerNode as HTMLElement).dataset) {
+      for (const innerNode of shallow.querySelectorAll<HTMLElement>(
+        `[${DATA_PURITY_FLAG}]`
+      )) {
+        for (const key in innerNode.dataset) {
           if (key.startsWith(PURITY_KEYWORD)) {
             innerNode.removeAttribute(`data-${key}`)
           }
         }
       }
-      nodesMap.set(node.id, {node, shallow} as VirtualNodes)
+      nodesMap.set(node.id, {node, shallow})
     }
     return nodesMap
   }
@@ -110,7 +108,7 @@ export const init = <State extends Record<string, unknown>>(
    */
   function rerender() {
     const newNodesMap = rootComponent()
-    console.log('🌀')
+    console.warn('🌀')
     for (const [id, domNode] of domNodesMap) {
       const newNode = newNodesMap.get(id)
       // Since we depend on the shallow comparison, we must only care about updating changed nodes.
@@ -120,9 +118,9 @@ export const init = <State extends Record<string, unknown>>(
           updateAttributes(elementById, newNode)
           if (domNode.shallow.innerHTML !== newNode.shallow.innerHTML) {
             elementById.innerHTML = newNode.node.innerHTML
-            console.log(`↻ #${id}`)
+            console.warn(`↻ #${id}`)
           } else {
-            console.log(`± #${id}`)
+            console.warn(`± #${id}`)
           }
         } else {
           throw new Error(`There is no element in DOM with id "${id}".`)
@@ -159,12 +157,12 @@ const joinIfArray = (x: Verified): Allowed =>
  */
 const applyPurityKey = (() => {
   let purityKey = 0
-  let timeout: number
+  let timeout: number | undefined
   return () => {
     if (timeout) {
       clearTimeout(timeout)
     }
-    timeout = window.setTimeout(() => {
+    timeout = setTimeout(() => {
       purityKey = 0
     })
     return purityKey++
@@ -187,8 +185,7 @@ export const render = (
     const dataName = `data-${PURITY_KEYWORD}_${event}_${applyPurityKey()}`
     setTimeout(() => {
       // Asynchronously bind event handlers after rendering everything to DOM
-      // eslint-disable-next-line prefer-const
-      let element: HTMLElement | null = document.querySelector(`[${dataName}]`)
+      const element = document.querySelector<HTMLElement>(`[${dataName}]`)
       const prop = args[index]
       if (element && typeof prop === 'function') {
         element[`on${event}`] = prop

@@ -17,6 +17,8 @@ export type Task = {
   description: string
   completed: boolean
   tmpFlag?: boolean
+  isBeingCreated?: boolean
+  isBeingUpdated?: boolean
   createdAt: number
   updatedAt: number
   image: Image
