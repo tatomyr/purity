@@ -1,4 +1,4 @@
-import {md5} from '../../../index.js'
+import {md5, sanitize} from '../../../index.js'
 import {AppState, Task, useAsync} from '../app.js'
 import {IMAGES} from '../config/images.js'
 import {getJSON, saveJSON} from './storage.js'
@@ -59,12 +59,12 @@ export const removeTask = async (id: string): Promise<void> => {
 }
 
 export const byInput =
-  (state: AppState) =>
+  ({input}: AppState) =>
   ({description}: Task): boolean =>
     description
       .trim()
       .toLowerCase()
-      .indexOf(state.input.trim().toLocaleLowerCase()) !== -1
+      .indexOf(sanitize(input).trim().toLocaleLowerCase()) !== -1
 
 export const byStatus =
   ({view, input}: AppState) =>
