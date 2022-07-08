@@ -51,8 +51,8 @@ export const PlaygroundStyle = (): string => render`
       -webkit-user-select: none;
     }
 
-    #playground-view > #over {
-      display: ${getState().overDisplay};
+    #playground-view > #place-over {
+      display: ${getState().placeOverDisplay};
       opacity: 0.25;
       background: white;
       position: absolute;

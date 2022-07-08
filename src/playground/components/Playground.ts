@@ -10,7 +10,7 @@ const initDrag = makeDrag(e => {
     document.getElementById('playground-root')!
   ).width
   console.log('drag:init', startWidth, '/', fullWidth)
-  setState(() => ({overDisplay: 'initial'}))
+  setState(() => ({placeOverDisplay: 'initial'}))
 
   return ({left}) => {
     const width =
@@ -23,7 +23,7 @@ const initDrag = makeDrag(e => {
     return () => {
       console.log('drag:stop', width)
       localStorage.playgroundEditorWidth = width
-      setState(() => ({overDisplay: 'none'}))
+      setState(() => ({placeOverDisplay: 'none'}))
     }
   }
 }) as EventListener
@@ -36,7 +36,7 @@ export const Playground = (): string => render`
     </div>
     <div id="playground-view">
       <iframe id="playground-iframe" srcdoc="${View()}"></iframe>
-      <div id="over"></div>
+      <div id="place-over"></div>
     </div>
     ${PlaygroundStyle()}
   </div>

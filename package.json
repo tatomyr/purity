@@ -19,7 +19,6 @@
   "scripts": {
     "json-server": "json-server --watch public/examples/json-server/db.json",
     "jest": "NODE_OPTIONS=--experimental-vm-modules npx jest src/",
-    "jest-coverage": "npm run jest || exit 0",
     "lint": "eslint src/"
   },
   "repository": {
