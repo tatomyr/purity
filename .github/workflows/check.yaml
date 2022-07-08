@@ -60,4 +60,4 @@ jobs:
         with:
           skip-step: none
           annotations: none
-          test-script: (npm run jest) || true
+          test-script: npm run jest-coverage
