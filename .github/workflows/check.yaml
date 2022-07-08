@@ -55,9 +55,9 @@ jobs:
           echo
           npm ci
       - name: Coverage Report
-        uses: artiomtr/jest-coverage-report-action@v2.0-rc.4
+        uses: artiomtr/jest-coverage-report-action@v2.0.8
         continue-on-error: true
         with:
           skip-step: none
           annotations: none
-          test-script: (npm run jest) || exit 0
+          test-script: (npm run jest) || true
