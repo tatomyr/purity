@@ -4,10 +4,8 @@ const {mount, getState, setState} = init({count: 0})
 
 const App = () => render\`
   <div id="root">
-    <div id="counter">Counter: \${getState().count}</div>
-    <button 
-      ::click=\${() => setState(({count}) => ({count: count + 1}))}
-    >
+    <pre id="counter">Counter: \${getState().count}</pre>
+    <button ::click=\${() => setState(({count}) => ({count: count + 1}))}>
       Increment
     </button>
   </div>

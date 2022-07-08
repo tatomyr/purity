@@ -1,59 +1,6 @@
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-.playground {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-}
-
-#editor {
-  width: 50%;
-  min-width: 10vw;
-  max-width: 90vw;
-  height: 100%;
-  overflow-y: hidden;
-}
-
-.resizer {
-  width: 8px;
-  background-color: #80008026;
-  border-left: 2px dashed purple;
-  position: relative;
-}
-
-.resizer:hover {
-  background-color: cyan;
-}
-
-.resizer .handler {
-  width: 8px;
-  height: 24px;
-  background-color: purple;
-  position: absolute;
-  top: calc(50% - 24px / 2);
-  cursor: col-resize;
-  border-radius: 0 4px 4px 0;
-  left: -2px;
-}
-
-#root {
-  overflow-y: auto;
-  flex-grow: 1;
-  position: relative;
-}
-
-#error {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  left: 10px;
-  padding: 8px;
-  max-height: calc(100% - 20px);
-  overflow-y: auto;
-  color: red;
-  background: black;
 }

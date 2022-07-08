@@ -1,5 +1,5 @@
 import {delay} from './delay'
-import {makeAsync} from './make-async'
+import {makeAsync} from './async'
 import {Rerender} from './purity'
 
 describe('makeAsync', () => {

@@ -76,11 +76,7 @@ export const makeAsync = (rerender: Rerender) => {
           cache.error = undefined
           cache.expires = Date.now() + expiration
         } catch (err) {
-          console.error(
-            `
-            HERE IS THE ERROR!!:`,
-            err
-          )
+          console.error(`HERE IS THE ERROR:`, err)
           cache.status = 'error'
           cache.error = err as Error
           cache.expires = Date.now() + expiration
