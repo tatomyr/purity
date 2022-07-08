@@ -1,26 +1,16 @@
-import {defaultCode, updateScript} from './user-script-config.js'
-import {configureMonacoEditor} from './monaco-editor-config.js'
-import {useDrag} from './drag.js'
+import {init, makeAsync} from '../index.js'
+import {Playground} from './components/Playground.js'
 
-configureMonacoEditor(defaultCode, updateScript)
-
-const $resizable = document.getElementById('editor')
-
-if (localStorage.playgroundEditorWidth && $resizable) {
-  $resizable.style.width = localStorage.playgroundEditorWidth
+export type PlaygroundState = {
+  code: string
+  overDisplay: 'initial' | 'none'
 }
 
-const initDrag = useDrag($resizable, width => {
-  localStorage.playgroundEditorWidth = width
+export const {mount, getState, setState, rerender} = init<PlaygroundState>({
+  code: '',
+  overDisplay: 'none',
 })
 
-const $resizer = document.querySelector('.resizer') as HTMLElement
+export const {useAsync} = makeAsync(rerender)
 
-$resizer.addEventListener('mousedown', initDrag)
-
-// TODO: ingore resizing (and other outer) errors
-window.onerror = err => {
-  ;(document.getElementById('root') as HTMLElement).innerHTML += `
-    <pre id="error">${err}</pre>
-  `
-}
+mount(Playground)

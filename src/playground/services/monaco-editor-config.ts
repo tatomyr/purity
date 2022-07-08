@@ -1,5 +1,5 @@
 // Source: https://stackoverflow.com/questions/63179813/how-to-run-the-monaco-editor-from-a-cdn-like-cdnjs
-import {UpdateScript} from './user-script-config.js'
+import type {UpdateCode} from './user-code.js'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const require: any
@@ -8,10 +8,17 @@ declare let window: Window & {
   MonacoEnvironment: monaco.Environment
 }
 
-export function configureMonacoEditor(
-  defaultCode: string,
-  updateScript: UpdateScript
-): void {
+type MonacoEditorConfig = {
+  domElement: HTMLElement
+  defaultCode: string
+  onChange: UpdateCode
+}
+
+export function configureMonacoEditor({
+  domElement,
+  defaultCode,
+  onChange,
+}: MonacoEditorConfig): void {
   // Provided by loader.min.js.
   require.config({
     paths: {
@@ -35,23 +42,20 @@ export function configureMonacoEditor(
     )
   )
   require(['vs/editor/editor.main'], function () {
-    const editor = monaco.editor.create(
-      document.getElementById('editor') as HTMLElement,
-      {
-        value: defaultCode,
-        language: 'javascript',
-        theme: 'vs-dark',
-        minimap: {
-          enabled: false,
-        },
-        automaticLayout: true,
-      }
-    )
+    const editor = monaco.editor.create(domElement, {
+      value: defaultCode,
+      language: 'javascript',
+      theme: 'vs-dark',
+      minimap: {
+        enabled: false,
+      },
+      automaticLayout: true,
+    })
 
-    updateScript(editor.getValue())
+    onChange(editor.getValue())
 
     editor.onDidChangeModelContent(() => {
-      updateScript(editor.getValue())
+      onChange(editor.getValue())
     })
   })
 }

@@ -1,4 +1,4 @@
-export type Callback = (...args: any[]) => void
+export type Callback<P extends unknown[]> = (...args: P) => void
 
 /**
  * Debounce
@@ -9,9 +9,13 @@ export type Callback = (...args: any[]) => void
  *         negative for triggering the callback on the leading edge
  */
 
-export const debounce = (callback: Callback, wait = 100): Callback => {
+export const debounce = <P extends unknown[]>(
+  callback: Callback<P>,
+  wait = 100
+): Callback<P> => {
   let timeout: number | undefined
-  return (...args: any[]) => {
+
+  return (...args) => {
     if (timeout) {
       clearTimeout(timeout)
     } else if (wait < 0) {
