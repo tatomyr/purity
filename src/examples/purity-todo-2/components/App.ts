@@ -1,11 +1,9 @@
 import {render} from '../../../index.js'
-import {startup} from '../services/startup.js'
+import {state} from '../app.js'
 import {Header} from './Header.js'
 import {InputForm} from './InputForm.js'
 import {Settings} from './Settings.js'
 import {TaskList} from './TaskList.js'
-
-startup()
 
 const AppStyle = () => render`
   <style id="root-style">
@@ -31,6 +29,8 @@ export const App = (): string => render`
     ${TaskList()}
     ${InputForm()}
     ${AppStyle()}
-    ${Settings()}
+    <div id="settings">
+      ${state.isSettingsModalOpen && Settings()}
+    </div>
   </div>
 `

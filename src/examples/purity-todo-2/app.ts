@@ -28,13 +28,13 @@ export type AppState = {
   view: ViewFilter
   input: string
   error?: string
-  settingsModal: 'open' | ''
+  isSettingsModalOpen: boolean
 }
 
 export const initialState: AppState = {
   view: 'active',
   input: '',
-  settingsModal: '',
+  isSettingsModalOpen: false,
 }
 
 export const state = {...initialState}

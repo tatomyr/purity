@@ -1,5 +1,5 @@
 import {render} from '../../../index.js'
-import {setState} from '../app.js'
+import {openSettings} from '../services/settings.js'
 import {NavItem} from './NavItem.js'
 
 const HeaderStyle = (): string => render`
@@ -52,9 +52,7 @@ export const Header = (): string => render`
       <li>
         <button
           class="nav-option"
-          ::click=${() => {
-            setState(() => ({settingsModal: 'open'}))
-          }}
+          ::click=${openSettings}
         >
           ⋮
         </button>
