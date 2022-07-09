@@ -27,10 +27,16 @@ export const uploadUserData = async (file: File): Promise<void> => {
       )
     ) {
       saveJSON({tasks})
-      setState(() => ({settingsModal: ''}))
+      closeSettings()
     }
   } catch (err) {
     console.error(err)
     window.alert((err as Error).message)
   }
 }
+
+export const closeSettings = (): void =>
+  setState(() => ({isSettingsModalOpen: false}))
+
+export const openSettings = (): void =>
+  setState(() => ({isSettingsModalOpen: true}))

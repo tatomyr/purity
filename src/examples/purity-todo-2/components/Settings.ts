@@ -1,13 +1,15 @@
 import {render} from '../../../index.js'
-import {setState, state} from '../app.js'
-import {downloadUserData, uploadUserData} from '../services/settings.js'
+import {
+  closeSettings,
+  downloadUserData,
+  uploadUserData,
+} from '../services/settings.js'
 import {useTasks} from '../services/tasks.js'
+import {Version} from './Version.js'
 
 const SettingsStyle = () => render`
   <style>
-    #settings {
-      display: none;
-
+    .modal-wrapper {
       position: fixed;
       top: 0;
       right: 0;
@@ -15,15 +17,12 @@ const SettingsStyle = () => render`
       left: 0;
       background-color: #50505030;
       z-index: 1;
-    }
-
-    #settings.open {
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    #settings .modal-content {
+    .modal-wrapper .modal-content {
       max-width: 90vw;
       max-height: 90vh;
       width: 90vh;
@@ -56,15 +55,20 @@ const SettingsStyle = () => render`
     }
 
     .modal-content ul li button,
-    .modal-content ul li label {
+    .modal-content ul li label,
+    .modal-content ul li #version {
       all: unset;
       width: 3rem;
       min-width: 3rem;
       height: 3rem;
       text-align: center;
       font-size: 2rem;
-      line-height: 1;
       cursor: default;
+      box-sizing: border-box;
+    }
+    .modal-content ul li #version {
+      width: auto;
+      padding: 8px;
     }
 
     .modal-content ul li button:active,
@@ -81,9 +85,8 @@ const SettingsStyle = () => render`
 
 export const Settings = (): string => render`
   <div
-    id="settings"
-    class="${state.settingsModal}"
-    ::click=${() => setState(() => ({settingsModal: ''}))}
+    class="modal-wrapper"
+    ::click=${closeSettings}
   >
     <div
       class="modal-content"
@@ -92,15 +95,15 @@ export const Settings = (): string => render`
       <ul>
         <li class="header">
           <p>Settings</p>
-          <button
-            ::click=${() => setState(() => ({settingsModal: ''}))}
-          >⨯</button>
+          <button ::click=${closeSettings}>
+            ⨯
+          </button>
         </li>
         <li>
           <p>Backup</p>
-          <button
-            ::click=${downloadUserData}
-          >↧</button>
+          <button ::click=${downloadUserData}>
+            ↧
+          </button>
         </li>
         <li>
           <p>Restore</p>
@@ -116,6 +119,9 @@ export const Settings = (): string => render`
               }}
             />
           </label>
+        </li>
+        <li>
+          ${Version()}
         </li>
       </ul>
     </div>
