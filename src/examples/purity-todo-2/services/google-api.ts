@@ -1,8 +1,12 @@
-import {GOOGLE} from '../config/google-api.js'
+const dev = window.location.protocol === 'http:'
+
+const {GOOGLE} = await import(
+  dev ? '../config/google-api.local.js' : '../config/google-api.js'
+)
 
 export const makeQueryString = (query: string, start = 1): string =>
   `${GOOGLE.API_PATH}?${new URLSearchParams({
-    q: query,
+    q: `${query} -и`,
     searchType: 'image',
     imgSize: 'medium',
     num: '1',

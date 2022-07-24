@@ -1,7 +1,7 @@
 {
-  "name": "Purity Todo 2.3",
+  "name": "Purity Todo 2.4",
   "short_name": "ToDo",
-  "description": "Todo list written using purity.js",
+  "description": "Todo list written with purity.js",
   "icons": [
     {
       "src": "./assets/images/todo-icon-48.png",
@@ -22,5 +22,6 @@
   "start_url": "./",
   "display": "standalone",
   "theme_color": "#444",
-  "background_color": "#444"
+  "background_color": "#444",
+  "orientation": "portrait"
 }

@@ -12,7 +12,7 @@ export type QueryCache<T> = {
 export type Fire<T> = (options?: {
   optimisticData?: T
   _shouldRefetch?: boolean
-  mutation?: () => Promise<void>
+  mutation?: (cache: QueryCache<T>) => Promise<void>
 }) => Promise<void>
 
 export type Unwrap<T> = () => T | Promise<T>
@@ -69,7 +69,7 @@ export const makeAsync = (rerender: Rerender) => {
             rerender()
           }
           if (mutation) {
-            await mutation()
+            await mutation(cache)
           }
           cache.data = await query(optimisticData)
           cache.status = 'success'

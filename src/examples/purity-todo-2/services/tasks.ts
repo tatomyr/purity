@@ -7,6 +7,7 @@ import {getJSON, saveJSON} from './storage.js'
 // It should be called inside a view component to get access to the fetched data...
 // If you need to use the cached data outside the hook, you should use the 'unwrap' function inside an async function.
 // In that case you no longer have to name it with the 'use' prefix
+// TODO: rewrite using local state?
 export const useTasks = useAsync('tasks', async () =>
   getJSON({tasks: [] as Task[]})
 )

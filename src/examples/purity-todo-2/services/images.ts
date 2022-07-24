@@ -1,3 +1,5 @@
+import {Image, Task} from '../app.js'
+import {IMAGES} from '../config/images.js'
 import {ImageSearchResponse, makeQueryString} from './google-api.js'
 
 export const fetchImages = (
@@ -15,3 +17,28 @@ export const fetchImages = (
         return obj
       }
     })
+
+export const normalizeQuery = (
+  queries: ImageSearchResponse['queries'],
+  name: keyof ImageSearchResponse['queries']
+): Record<string, {startIndex: number}> | undefined => {
+  const query = queries[name]
+  return query && {[name]: {startIndex: query[0].startIndex}}
+}
+
+export const fetchAndNormalizeImages = async (
+  task: Task,
+  startIndex?: number
+): Promise<Image> => {
+  const {items: [{link = IMAGES.UNDEFINED_TASK}] = [{}], queries} =
+    await fetchImages(task.description, startIndex)
+  const image: Image = {
+    link,
+    queries: {
+      ...normalizeQuery(queries, 'request'),
+      ...normalizeQuery(queries, 'nextPage'),
+      ...normalizeQuery(queries, 'previousPage'),
+    },
+  }
+  return image
+}

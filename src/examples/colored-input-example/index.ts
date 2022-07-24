@@ -1,4 +1,4 @@
-import {init, render} from '../../purity.js'
+import {init, render} from '../../index.js'
 
 const {mount, getState, setState} = init({
   color: 'black',

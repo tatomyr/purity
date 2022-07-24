@@ -6,13 +6,15 @@ import {createOnMount} from './onMount.js'
 
 const onMount = createOnMount()
 
-const matches = (input: string) => ({text}: Item) => text.indexOf(input) !== -1
+const matches =
+  (input: string) =>
+  ({text}: Item) =>
+    text.indexOf(input) !== -1
 
-export const List = () => {
+export const List = (): string => {
   const {items, input} = getState()
 
   onMount(async () => {
-    // dispatch({ type: 'GET_ITEMS' })
     const items = await getItems()
     setState(() => ({items}))
   })

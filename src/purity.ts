@@ -49,7 +49,7 @@ export const init = <State extends Record<string, unknown>>(
     const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
     const nodesMap: DomNodesMap = new Map()
     for (const node of virtualDocument.querySelectorAll<HTMLElement>('[id]')) {
-      const shallow = node.cloneNode(true) as HTMLElement // FIXME: null?
+      const shallow = node.cloneNode(true) as HTMLElement
       for (const innerNode of shallow.querySelectorAll('[id]')) {
         innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`
       }
@@ -189,7 +189,7 @@ export const render = (
       const prop = args[index]
       if (element && typeof prop === 'function') {
         element[`on${event}`] = prop
-        // Remove residuals
+        // Remove residuals (needed for consistency)
         element.removeAttribute(dataName)
       }
     })

@@ -5,9 +5,9 @@ import {download, textFileReader} from './text-file-manager.js'
 export const downloadUserData = async (): Promise<void> => {
   try {
     const tasks = await getJSON({tasks: [] as Task[]})
-    const fileName = `TODO-backup-${new Date()
+    const fileName = `todo-${new Date()
       .toDateString()
-      .replace(/[ /]/g, '_')}.json`
+      .replace(/[ /]/g, '-')}.backup.json`
     download(fileName, JSON.stringify(tasks))
     window.alert('Downloading your backup file')
   } catch (err) {

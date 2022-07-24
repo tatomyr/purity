@@ -9,3 +9,6 @@ cypress/screenshots/
 # Misc
 node_modules/
 .DS_Store
+
+# Local config
+google-api.local.ts

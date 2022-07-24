@@ -1,4 +1,4 @@
-const cacheName = 'purity-todo-2.3'
+const cacheName = 'purity-todo-2.4'
 const contentToCache = [
   './',
   './index.html',
