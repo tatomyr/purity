@@ -1,10 +1,9 @@
 import {render, sanitize} from '../../../index.js'
 import {setState, state} from '../app.js'
 import {IMAGES} from '../config/images.js'
-import {fetchImages} from '../services/images.js'
-import {normalizeQuery, resetInput} from '../services/input-form.js'
+import {fetchAndNormalizeImages} from '../services/images.js'
+import {resetInput} from '../services/input-form.js'
 import {groomTasks, prepareTask, useTasks} from '../services/tasks.js'
-import type {Image} from '../app.js'
 import {getJSON, saveJSON} from '../services/storage.js'
 
 const InputFormStyle = () => render`
@@ -48,16 +47,7 @@ const createTask = async (e: Event): Promise<void> => {
     optimisticData: [{...task, isBeingCreated: true}, ...tasks],
     mutation: async () => {
       try {
-        const {items: [{link = IMAGES.UNDEFINED_TASK}] = [{}], queries} =
-          await fetchImages(description)
-        const image: Image = {
-          link,
-          queries: {
-            ...normalizeQuery(queries, 'request'),
-            ...normalizeQuery(queries, 'nextPage'),
-            ...normalizeQuery(queries, 'previousPage'),
-          },
-        }
+        const image = await fetchAndNormalizeImages(task)
         await saveJSON({
           tasks: groomTasks([{...task, image}, ...(await getJSON({tasks}))]),
         })
@@ -65,7 +55,13 @@ const createTask = async (e: Event): Promise<void> => {
         console.warn('THIS SHOULD NOT HAPPEN AT ALL!')
         console.error(err)
         setState(() => ({error: err as string}))
-        window.alert(state.error)
+        window.alert(state.error) // TODO: replace alert with a toast notification
+        await saveJSON({
+          tasks: groomTasks([
+            {...task, image: {link: IMAGES.UNDEFINED_TASK, queries: {}}},
+            ...(await getJSON({tasks})),
+          ]),
+        })
       }
     },
   })

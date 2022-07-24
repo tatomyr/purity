@@ -2,7 +2,13 @@ import {render} from '../../../index.js'
 import {state} from '../app.js'
 import {resetInput} from '../services/input-form.js'
 import {byInput, byStatus, patchTask, useTasks} from '../services/tasks.js'
-import {Dataset, TaskItem, TOGGLE_BUTTON, withToggleButton} from './TaskItem.js'
+import {
+  ITEM_DESCRIPTION,
+  TaskItem,
+  TOGGLE_BUTTON,
+  withItemDescription,
+  withToggleButton,
+} from './TaskItem.js'
 
 const ListStyle = () => render`
   <style id="task-list-style">
@@ -15,13 +21,13 @@ const ListStyle = () => render`
     ul#task-list .task-item {
       display: flex;
       border-bottom: 1px solid lightgrey;
-      height: 3rem;
-      min-height: 3rem;
+      height: 100%;
+      min-height: 100%;
       align-items: center;
       padding: 0;
     }
 
-    ul#task-list .task-item .description {
+    ul#task-list .task-item .${ITEM_DESCRIPTION} {
       flex-grow: 1;
       padding: 2px 8px;
       max-height: 3rem;
@@ -30,7 +36,7 @@ const ListStyle = () => render`
       overflow: hidden;
     }
 
-    ul#task-list .task-item.completed .description {
+    ul#task-list .task-item.completed .${ITEM_DESCRIPTION} {
       color: lightgrey;
     }
 
@@ -41,7 +47,7 @@ const ListStyle = () => render`
     ul#task-list .task-item .${TOGGLE_BUTTON} {
       width: 3rem;
       min-width: 3rem;
-      height: 3rem;
+      height: 100%;
       text-align: center;
       font-size: 2rem;
       line-height: 1;
@@ -70,7 +76,7 @@ const ListStyle = () => render`
 `
 
 const handleClick = (e: Event): void => {
-  withToggleButton(e.target as HTMLElement)(({id, completed}: Dataset) => {
+  withToggleButton(e.target as HTMLElement)(({id, completed}) => {
     const optimisticData = (useTasks.getCached().data || []).map(task =>
       task.id === id
         ? {
@@ -88,6 +94,10 @@ const handleClick = (e: Event): void => {
         patchTask({id, completed: !completed, tmpFlag: true}).then(resetInput),
     })
   })
+  // TODO: do use this later
+  // withItemDescription(e.target as HTMLElement)(({id})=>{
+  //   setState(()=>({taskDetailId: id}))
+  // })
 }
 
 export const TaskList = (): string => {

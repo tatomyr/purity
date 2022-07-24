@@ -29,6 +29,7 @@ export type AppState = {
   input: string
   error?: string
   isSettingsModalOpen: boolean
+  taskDetailId?: string
 }
 
 export const initialState: AppState = {

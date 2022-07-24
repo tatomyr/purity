@@ -5,7 +5,7 @@ import {InputForm} from './InputForm.js'
 import {StatefulCounter} from './StatefulCounter.js'
 import {Spinner} from './Spinner.js'
 
-export const App = () => render`
+export const App = (): string => render`
   <div id="root">
     <nav>
       <a

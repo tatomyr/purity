@@ -8,7 +8,7 @@ It doesn't require any bundlers or using npm at all, it fully leverages the nati
 
 **Purity** exposes two main instruments to manipulate an application:
 
-- `init` which initializes the app with a default state
+- `init` which initializes the app with a default state (application-wide)
 
 - `render` tag that wraps string templates that represent app components
 
@@ -89,7 +89,46 @@ const Clickable = () => render`
 Please notice the double-colon syntax. The pattern is `::event-name=${<event-handler>}`.
 
 **Purity** binds events to DOM asynchronously, so be careful when writing tests.
-You have to use `await delay(0)` before you can simulate an event after DOM got updated.
+You have to use `await delay(0)` before you can simulate an event after DOM gets updated.
+
+There is also another substantial limitation to using event handlers.
+Do consider each handler an isolated function that can receive nothing from the upper scopes.
+For instance, the example below is wrong since we are trying to use `WRONG_COUNT`, which has been calculated in the component's scope, inside the click handler:
+
+```js
+const WrongCounter = () => {
+  const WRONG_COUNT = getState().count
+
+  return render`
+    <div id="root">
+      <pre id="count">Wrong: ${WRONG_COUNT}</pre>
+      <button 
+        ::click=${() => setState(() => ({count: WRONG_COUNT + 1}))}
+      >
+        Increment
+      </button>
+    </div>
+  `
+}
+```
+
+Although the increment on click _will_ work once, it is not guaranteed to do so every time.
+The event binds on the first execution, but the _button_ doesn't get updated further, so both the event handler and its _closure_ remain the same.
+
+The correct example would look like this:
+
+```js
+const CorrectCounter = () => render`
+  <div id="root">
+    <pre id="counter">Counter: ${getState().count}</pre>
+    <button ::click=${() => setState(({count}) => ({count: count + 1}))}>
+      Increment
+    </button>
+  </div>
+`
+```
+
+Please notice that `setState`'s callback receives current state as the argument.
 
 ### Virtual DOM
 
@@ -157,14 +196,33 @@ In the _NoId_ example, after updating the state inside the span all the app gets
 As a consequence, _button_ loses focus.
 On the other hand, in the _WithId_ example the only thing going to be re-rendered is text inside _span#count_.
 
+### Async Flow
+
+In progress...
+
+https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzgDMoIQ4ByAOloHoUCAPWgKwGdqAoHgYwjJO8BCAgBXZBjgBzbDADKMAIYxsmTguVqNWQrgLE4AXjgo0ACgQ84duCJVRZKgF6FOAfUFSYALhoAWmpMW3sfaQCABnQwuxxITgCAbQBdWPsHbAAbbH51PAAlbEgAqQJSFGw8DPtOMBRkQgDSFWytWKIASj4GBjgAKiHhkdGx8YnJqemxvkFheH4cXQB5ZB1YUzhLLtMAPkQ4uHmRY7b2rYQiPkycGAkoZG3gGrgARwlCAE9dkwObTKZYCkbYAQn4504yReqV2AMBCIh2Xa0LwqS2MCgnyOCLsH2+Oxx9mumWu1wEQlOQg28DMS2wq3WqlghJ4fUGM05XO5PIGc0p8BWYBgwCEW2syBUID0eGAnBUACNcnhuvt9PhCAADI4AHggwtFTwAbm1PiYAEQAEgQkulRHNcGttuwphMZnkSlU6h2tC0uXy1WKkDgADIQzQ-XkCtQSNbZfKldVQ+HqPHFcqY3siXYnVLsCT7DqGPqRUIs9qKQtjgALPIAa2K9UpLrMOE4avhdmBYLbtAgdbh2bguXghCgWyaAHc4ABRKAUKCWc0ACQAKquAAoOL0SduCAgBB0Aan0nF9O84PVxcDHtDbkGELdPQ9vjnu7db2DPb93Q5g1YoacxyOAt4gUB4nl7LghEJckTngD0Ng-fRIAAOTzNVSAUfhq0sTVqxgGAwCSPoVAaWhZDQasJAVWhBBABgEggTgGC9SgvigBhrSY9C7U1K97Fof9cEsHD60bB8tAEuwhNrZBLGsRxnDcDxvEkaRVT+LJPV0BTfgORTmRcdwoC8CIYG6LppLgOi1BwvS1S0HTvR2NVDKcYzVPMgJqGCSzrNoSpJWRL4HK0pydBc-TtgQepGmaMg2i0fz+SrJjOAAVSgbItnwwjiL8UjyMo-8aLoygGF3DxWLUdjOPSgB+ThoBgEwJDAPBdDwEMwEITwwBUeQTAARiiKIK3guBFByKNxWizs4GpZkYEsdKsuyTBXK0rCYHstbsuszJZJEsT+AbL9JOwQ7BIhXbcMsMdoraQgVtvaVOHleQrKHY75PSjsh0ySbIwDIoSggLZGtoZIolSBraGdQG6m0L1sDCgyEHSzQGmQJooACTFPk0GbQaDCBLKRsD7keLJ-QKMmh26H7hPkxDmUvI4eiOO4IPVIxtWvHUQfgSm4D8PwcJUZAhutawjIUAIEBNbJPgCYXA3BohNP+UXMgi1H0Zi9WwcgbH4vxuBCfzb7r2vNmnE4SxjbJ66ES1ocDlF617e9Lo73Bzh4ZAMjLCFUtkC6UDASLYWs0ybU4IFOAAEEwDAOaAe58CaZwDUoAF3EdVlI1zDwC0KAgGBzTj22cwQaa6Z2cla7sHUwBwUuLSUzhq91+xvZR3S-bi3HCDgBqaEAbGJqDFmhAAVqQB4P5jR0EB9tHh6MlTTLU3wSCQ0Wi3b7Aa9rg+ALgBgswPhUJEIsU+7scX+GyYAzpMWXov13TrHM7WYu8446l4AnmGpZKO14T4tzsAAYRfmdA+DAb532QJAwWR89iAD4NwAd7srzXj6X+cBYGvzrJwQ+OAr6CwYMXSBCc+DiF8JYVOYAehAA
+
+<!-- TODO: -->
+
 ### Tips
 
-- Use uncontrolled text inputs and put them wisely, so they won't be re-rendered when the input value has been changed. Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
+- Use uncontrolled text inputs and put them wisely, so they won't be re-rendered when the input value has been changed.
+  Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
 - Wrap every component that you want to be rerendered independently with a tag with a unique id.
-- Root component must have the same id as the HTML element you want to mount the component to. (Depends on the algorithm we're using for mounting.)
-- A **component**'s local state management is considered a secondary feature. Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **init** function (see [example](./src/examples/use-state-example/StatefulCounter.js)).
-- The library doesn't sanitize your inputs. Please do it by yourself or use the `sanitize.js` module.
-- Due to its asynchronous nature, Purity requires special testing for applications that use it. Make sure you make delay(0) after the DOM has changed (see examples in [purity.test.ts](./src/purity.test.ts)).
+- Do not relay on any constants declared in a component's scope inside event handlers.
+  Each event handler should be considered completely isolated from the upper scope.
+  The reason is that the Virtual DOM doesn't take into account any changes in event handlers.
+  Albeit you do may use a data-specific `id` on the tag to change this, it is not recommended due to performance reasons.
+  See the [example](https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzgDMoIQ4ByAOloHoUCAPWgKwGdqAoHgYwjJO8BCAgBXZBjgBzbDADKMAIYxsmTguVrsJALxwUaABQIA7hWSyAXHAAMmQVBz8Yd+0QCUfQcPgAgmBgcIYmXqEAfIg8cHB+InAA6gBKAPIAcgDioXLaqurhtJZCsrHxQokAwmkpKQCiVQAqufJKBdhFzq4wfHE4MBJQyFi4BFAABuVxADx4wABuRnj6AEQUEDCrkdNxcDNgOMtrJdbbSVa2cAAkCKmZWUQzDIfYO3t7MwBGEjAwQnBdh8bDZ+AAbYD8ADW+lu4SicC07V0Jnh+miZlOV3u2TgAGo4ABGbxeIhAuDvD57ACSyH4OBAuF6VP2DB+fyElI+MwAFlA4AwuZ9XsdVt1sG5tlVoD07LcanVGk0ni8cELZuz-iNyXEQeDITC4RF0Yj8iizOK3N4ERaZRL3BUXPb8USSWSWeqaXSGUzyc9NZzds95gtKVMyTxxFIYCYgmAfEA) for more context.
+  
+- Root component must have the same id as the HTML element you want to mount the component to.
+  (Depends on the algorithm we're using for mounting.)
+- A **component**'s local state management is considered a secondary feature.
+  Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **init** function (see [example](./src/examples/use-state-example/StatefulCounter.js)).
+- The library doesn't sanitize your inputs.
+  Please do it by yourself or use the `sanitize.js` module.
+- Due to its asynchronous nature, Purity requires special testing for applications that use it.
+  Make sure you make delay(0) after the DOM has changed (see examples in [purity.test.ts](./src/purity.test.ts)).
 
 ## Credits
 

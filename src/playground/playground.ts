@@ -1,6 +1,10 @@
 import {init, makeAsync} from '../index.js'
 import {Playground} from './components/Playground.js'
 
+// Suppressing the main output (iframe output remains):
+console.log = () => null
+console.warn = () => null
+
 export type PlaygroundState = {
   code: string
   placeOverDisplay: 'initial' | 'none'

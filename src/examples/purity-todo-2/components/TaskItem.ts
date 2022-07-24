@@ -1,16 +1,23 @@
 import {render} from '../../../index.js'
-import {Task} from '../app.js'
 import {IMAGES} from '../config/images.js'
-
-export type Dataset = Pick<Task, 'id' | 'completed'>
+import {openTaskDetails} from '../services/task-details.js'
+import type {Task} from '../app.js'
 
 export const TOGGLE_BUTTON = 'toggle-button'
-
 export const withToggleButton =
   ($target: HTMLElement) =>
-  (callback: (dataset: Dataset) => void): void => {
+  (callback: (dataset: Pick<Task, 'id' | 'completed'>) => void): void => {
     if ([...$target.classList].includes(TOGGLE_BUTTON)) {
-      callback($target.dataset as unknown as Dataset)
+      callback($target.dataset as unknown as Pick<Task, 'id' | 'completed'>)
+    }
+  }
+
+export const ITEM_DESCRIPTION = 'item-description'
+export const withItemDescription =
+  ($target: HTMLElement) =>
+  (callback: (dataset: Pick<Task, 'id'>) => void): void => {
+    if ([...$target.classList].includes(ITEM_DESCRIPTION)) {
+      callback($target.dataset as unknown as Pick<Task, 'id'>)
     }
   }
 
@@ -28,14 +35,19 @@ export const TaskItem = ({
       onerror="this.onerror = null; this.src = '${IMAGES.BROKEN}'"
       loading="lazy"
     />
-    <div class="description">
+    <div 
+      class="${ITEM_DESCRIPTION}" 
+      data-id="${id}" 
+      ::click=${openTaskDetails(id)}
+    >
       ${description}
     </div>
     <button
       id="toggle-${id}"
-      class="${TOGGLE_BUTTON} ${
-        (isBeingCreated || isBeingUpdated) && 'being-processed'
-      }"
+      class="
+        ${TOGGLE_BUTTON} 
+        ${(isBeingCreated || isBeingUpdated) && 'being-processed'}
+      "
       data-id="${id}"
       data-completed="${completed && 'true'}"
     >
