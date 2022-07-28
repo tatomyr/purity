@@ -1,4 +1,4 @@
-const dev = window.location.protocol === 'http:'
+import {dev} from '../dev.js'
 
 const {GOOGLE} = await import(
   dev ? '../config/google-api.local.js' : '../config/google-api.js'

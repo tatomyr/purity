@@ -2,7 +2,7 @@ import {delay, render} from '../../index.js'
 import {getState, setState, useAsync} from '../playground.js'
 import {configureMonacoEditor} from '../services/monaco-editor-config.js'
 import {createUpdate, defaultCode} from '../services/user-code.js'
-import { EditorStyle } from './EditorStyle.js'
+import {EditorStyle} from './EditorStyle.js'
 
 export const getEditor = () => document.getElementById('editor')!
 
@@ -12,9 +12,7 @@ export const Editor = (): string => {
     configureMonacoEditor({
       domElement: getEditor(),
       defaultCode,
-      onChange: createUpdate((code: string) => {
-        setState(() => ({code}))
-      }),
+      onChange: createUpdate((code: string) => setState(() => ({code}))),
     })
   }).call()
 
