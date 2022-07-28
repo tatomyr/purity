@@ -1,8 +1,8 @@
-import {render} from '../../../purity.js'
+import {render} from '../../../index.js'
 import {setState} from '../app.js'
-import {Item} from '../types.js'
+import type {Item} from '../types.js'
 
-export const ListItem = ({id, text, checked}: Item) => render`
+export const ListItem = ({id, text, checked}: Item): string => render`
   <li id="${id}" class="${checked ? 'checked' : ''}" title="${id}">
     <input
       type="checkbox"

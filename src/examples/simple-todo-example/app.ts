@@ -1,4 +1,4 @@
-import {init} from '../../purity.js'
+import {init} from '../../index.js'
 
 export type Item = {
   id: string

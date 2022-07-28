@@ -1,4 +1,4 @@
-import {render} from '../../purity.js'
+import {render} from '../../index.js'
 
 export type Actions = 'inc' | 'dec' | 'reset'
 
@@ -8,7 +8,11 @@ export type ButtonProps = {
   handleClick: EventListener
 }
 
-export const Button = ({action, caption, handleClick}: ButtonProps) => render`
+export const Button = ({
+  action,
+  caption,
+  handleClick,
+}: ButtonProps): string => render`
   <button data-counter="${action}" ::click=${handleClick}>
     ${caption}
   </button>

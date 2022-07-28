@@ -1,4 +1,5 @@
-const cacheName = 'purity-todo-2.4'
+const APP_SCOPE = 'purity-todo'
+const cacheName = `${APP_SCOPE}@2.5`
 const contentToCache = [
   './',
   './index.html',
@@ -15,11 +16,11 @@ const contentToCache = [
 ]
 
 self.addEventListener('install', e => {
-  console.log('[Service Worker] Install')
+  console.log(`[purity-todo.sw.js] Install`)
   e.waitUntil(
     (async () => {
       const cache = await caches.open(cacheName)
-      console.log('[Service Worker] Caching app shell')
+      console.log(`[purity-todo.sw.js] Caching app shell`)
       await cache.addAll(contentToCache)
     })()
   )
@@ -29,14 +30,14 @@ self.addEventListener('fetch', e => {
   e.respondWith(
     (async () => {
       const r = await caches.match(e.request)
-      console.log(`[Service Worker] Fetching resource: ${e.request.url}`)
+      console.log(`[purity-todo.sw.js] Fetching resource: ${e.request.url}`)
       if (r) {
         return r
       }
       const response = await fetch(e.request)
       if (e.request.url.endsWith('.js')) {
         const cache = await caches.open(cacheName)
-        console.log(`[Service Worker] Caching new resource: ${e.request.url}`)
+        console.log(`[purity-todo.sw.js] Caching new resource: ${e.request.url}`)
         cache.put(e.request, response.clone())
       }
       return response
@@ -45,15 +46,21 @@ self.addEventListener('fetch', e => {
 })
 
 self.addEventListener('activate', e => {
-  console.log('[ServiceWorker] Activate')
+  console.log(`[purity-todo.sw.js] Activate`)
+  caches.keys().then(console.log)
   e.waitUntil(
     caches.keys().then(keyList => {
       Promise.all(
         keyList.map(key => {
+          console.log(`[purity-todo.sw.js] cache key =`, key)
           if (key === cacheName) {
             return
           }
-          caches.delete(key)
+          if (key.startsWith(APP_SCOPE)) {
+            // Do not delete other caches since this app shares the same origin as others 
+            // (especially 'Lord of Passwords' which depends on the cached data).
+            caches.delete(key)
+          }
         })
       )
     })

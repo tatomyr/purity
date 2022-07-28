@@ -1,8 +1,8 @@
-import {render} from '../../../purity.js'
+import {render} from '../../../index.js'
 import {generateNextId} from '../helpers.js'
 import {setState} from '../app.js'
 
-export const InputForm = () => render`
+export const InputForm = (): string => render`
   <form
     id="input-form"
     ::submit=${e => {
