@@ -1,11 +1,11 @@
-import {render} from '../../purity.js'
+import {render} from '../../index.js'
 import {useState} from './useState.js'
 import {Button, Actions} from './Button.js'
 
 export type StatefulCounterProps = {id: string}
 
-export const StatefulCounter = ({id}: StatefulCounterProps) => {
-  let count = useState(id)(0)
+export const StatefulCounter = ({id}: StatefulCounterProps): string => {
+  const count = useState(id)(0)
   const handleClick: EventListener = e => {
     const {counter} = (e.target as HTMLButtonElement).dataset
     count.set(

@@ -4,7 +4,7 @@ import {configureMonacoEditor} from '../services/monaco-editor-config.js'
 import {createUpdate, defaultCode} from '../services/user-code.js'
 import {EditorStyle} from './EditorStyle.js'
 
-export const getEditor = () => document.getElementById('editor')!
+export const getEditor = (): HTMLElement => document.getElementById('editor')!
 
 export const Editor = (): string => {
   useAsync('configure-editor', async () => {
