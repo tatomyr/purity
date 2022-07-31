@@ -1,15 +1,15 @@
-import {setState, state, Task} from '../app.js'
+import {setState, state} from '../app.js'
 import {handleError} from './error.js'
-import {getJSON, saveJSON} from './storage.js'
+import {saveJSON} from './storage.js'
+import {groomTasks} from './tasks.js'
 import {download, textFileReader} from './text-file-manager.js'
 
 export const downloadUserData = async (): Promise<void> => {
   try {
-    const tasks = await getJSON({tasks: [] as Task[]})
     const fileName = `TODO-${new Date()
       .toDateString()
       .replace(/[ /]/g, '-')}.backup.json`
-    download(fileName, JSON.stringify(tasks))
+    download(fileName, JSON.stringify(groomTasks(state.tasks)))
     window.alert('Downloading your backup file')
     closeSettings()
   } catch (err) {

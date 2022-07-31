@@ -1,7 +1,7 @@
 import {md5, sanitize} from '../../../index.js'
 import {AppState, setState, state, Task} from '../app.js'
 import {IMAGES} from '../config/images.js'
-import {getJSON, saveJSON} from './storage.js'
+import {saveJSON} from './storage.js'
 
 const makeId = (description: string): string =>
   md5(description.trim().toLowerCase())
