@@ -1,3 +1,4 @@
+import type { EventHandler } from '../../../purity.js'
 import {setState, state} from '../app.js'
 import {handleError} from './error.js'
 import {saveJSON} from './storage.js'
@@ -17,7 +18,8 @@ export const downloadUserData = async (): Promise<void> => {
   }
 }
 
-export const uploadUserData = async (file: File): Promise<void> => {
+export const uploadUserData: EventHandler = async ({target: {files}}) => {
+  const [file] = files!
   try {
     const text = await textFileReader(file)
     const tasks = JSON.parse(text)

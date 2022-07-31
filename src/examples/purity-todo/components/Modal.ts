@@ -1,9 +1,10 @@
 import {render} from '../../../index.js'
+import type {EventHandler} from '../../../purity.js'
 
 type ModalProps = {
   title: string
   content: string
-  close: EventListener
+  close: EventHandler
 }
 
 // TODO: implement the possibility to add any control buttons to the top right

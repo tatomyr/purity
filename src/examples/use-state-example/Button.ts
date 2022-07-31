@@ -1,11 +1,12 @@
 import {render} from '../../index.js'
+import type {EventHandler} from '../../purity.js'
 
 export type Actions = 'inc' | 'dec' | 'reset'
 
 export type ButtonProps = {
   action: Actions
   caption: string
-  handleClick: EventListener
+  handleClick: EventHandler
 }
 
 export const Button = ({

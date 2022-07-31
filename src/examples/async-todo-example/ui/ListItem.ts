@@ -16,8 +16,8 @@ export const ListItem = ({
     <input
       type="checkbox"
       ${checked ? 'checked' : ''}
-      ::change=${async (e: Event) => {
-        const {checked} = e.target as HTMLInputElement
+      ::change=${async e => {
+        const {checked} = e.target
         setState(() => ({spinner: true}))
 
         try {

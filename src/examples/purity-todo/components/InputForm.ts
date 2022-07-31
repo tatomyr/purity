@@ -1,4 +1,5 @@
 import {render, sanitize} from '../../../index.js'
+import type {EventHandler} from '../../../purity.js'
 import {setState, state} from '../app.js'
 import {IMAGES} from '../config/images.js'
 import {handleError} from '../services/error.js'
@@ -29,9 +30,9 @@ const InputFormStyle = () => render`
   </style>
 `
 
-const createTask = async (e: Event): Promise<void> => {
+const createTask: EventHandler = async e => {
   e.preventDefault()
-  const description: string = sanitize((e.target as HTMLFormElement).task.value)
+  const description: string = sanitize(e.target.task.value)
   const task = prepareTask(description)
   if (state.tasks.some(({id}) => id === task.id)) {
     window.alert('There is already a task with the same id in the list')
@@ -60,8 +61,8 @@ export const InputForm = (): string => render`
   <form id="task-form" ::submit=${createTask}>
     <input
       name="task"
-      ::input=${(e: Event): void => {
-        setState(() => ({input: (e.target as HTMLInputElement).value}))
+      ::input=${e => {
+        setState(() => ({input: e.target.value}))
       }}
       value=""
       placeholder="Task description"

@@ -30,6 +30,12 @@ type EventName = keyof Omit<
   | 'focusout'
 >
 
+type Target = HTMLElement & HTMLInputElement & HTMLFormElement
+
+type DomEvent = (Event & MouseEvent) & {target: Target}
+
+export type EventHandler = (e: DomEvent) => void | Promise<void>
+
 // Constants
 const PURITY_KEYWORD = 'purity'
 const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
@@ -146,8 +152,11 @@ const ARGS_RE = /__\[(\d+)\]__/gm
 const BOUND_EVENTS_RE = /::(\w+)\s*=\s*__\[(\d+)\]__/gm
 
 // Helpers
+export const notEmpty = <T>(x: T | Rejected): x is T =>
+  x !== undefined && x !== null && x !== false
+
 const clearFalsy = <T extends Verified>(x: T | Rejected): T | '' =>
-  x === undefined || x === null || x === false ? '' : x
+  notEmpty(x) ? x : ''
 
 const joinIfArray = (x: Verified): Allowed =>
   Array.isArray(x) ? x.join('') : x
@@ -174,7 +183,7 @@ const applyPurityKey = (() => {
  */
 export const render = (
   [first, ...strings]: TemplateStringsArray,
-  ...args: Array<Argument | EventListener>
+  ...args: Array<Argument | EventHandler>
 ): string => {
   const precomputedString: string = strings.reduce(
     ($, item, i) => `${$}__[${i}]__${item}`,
@@ -188,7 +197,7 @@ export const render = (
       const element = document.querySelector<HTMLElement>(`[${dataName}]`)
       const prop = args[index]
       if (element && typeof prop === 'function') {
-        element[`on${event}`] = prop
+        element[`on${event}`] = prop as EventListener
         // Remove residuals (needed for consistency)
         element.removeAttribute(dataName)
       }

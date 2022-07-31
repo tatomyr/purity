@@ -48,10 +48,7 @@ export const Settings = (): string => render`
           type="file"
           accept=".json"
           id="restore-backup"
-          ::change=${({target}) => {
-            const [file] = (<HTMLInputElement>target).files as FileList
-            uploadUserData(file)
-          }}
+          ::change=${uploadUserData}
         />
       </label>
     </li>

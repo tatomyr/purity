@@ -1,4 +1,4 @@
-import {render} from '../../../purity.js'
+import {notEmpty, render} from '../../../purity.js'
 import {idEquals} from '../helpers.js'
 import {getState, setState} from '../app.js'
 import {Item} from '../types.js'
@@ -10,7 +10,7 @@ const Item = ({name, id}: Item) => render`
         chosenItems: [
           ...chosenItems,
           !chosenItems.some(idEquals(id)) && items.find(idEquals(id)),
-        ].filter(Boolean) as Item[],
+        ].filter(notEmpty),
       }))
     }}
   >
@@ -18,7 +18,7 @@ const Item = ({name, id}: Item) => render`
   </li>
 `
 
-export const SuggestionsList = () => render`
+export const SuggestionsList = (): string => render`
   <ul id="list">
     ${getState().items.map(Item)}
   </ul>

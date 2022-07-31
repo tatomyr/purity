@@ -1,4 +1,5 @@
 import {render} from '../../../index.js'
+import type {EventHandler} from '../../../purity.js'
 import {state} from '../app.js'
 import {resetInput} from '../services/input-form.js'
 import {byInput, byStatus, patchTask} from '../services/tasks.js'
@@ -75,8 +76,8 @@ const ListStyle = () => render`
   </style>
 `
 
-const handleClick = (e: Event): void => {
-  withToggleButton(e.target as HTMLElement)(({id, completed}) => {
+const handleClick: EventHandler = e => {
+  withToggleButton(e.target)(({id, completed}) => {
     patchTask({id, completed: !completed})
     resetInput()
   })
