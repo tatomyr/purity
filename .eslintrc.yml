@@ -18,3 +18,5 @@ rules:
   '@typescript-eslint/no-extra-semi': off
   '@typescript-eslint/ban-ts-comment': warn
   '@typescript-eslint/no-unused-vars': off
+  '@typescript-eslint/no-inferrable-types': warn
+  no-empty: warn

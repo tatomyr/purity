@@ -1,5 +1,6 @@
-const APP_SCOPE = 'purity-todo'
-const cacheName = `${APP_SCOPE}@2.5`
+const appScope = self.registration.scope
+
+const cacheName = `${appScope}@2.6`
 const contentToCache = [
   './',
   './index.html',
@@ -26,6 +27,25 @@ self.addEventListener('install', e => {
   )
 })
 
+self.addEventListener('activate', e => {
+  console.log(`[purity-todo.sw.js] Activate`)
+  caches.keys().then(console.log)
+  e.waitUntil(
+    caches.keys().then(keyList => {
+      Promise.all(
+        keyList.map(key => {
+          console.log(`[purity-todo.sw.js] cache key =`, key)
+          if (key !== cacheName && key.startsWith(appScope)) {
+            // Do not delete other caches since this app shares the same origin as others 
+            // (especially 'Lord of Passwords' which depends on the cached data).
+            caches.delete(key)
+          }
+        })
+      )
+    })
+  )
+})
+
 self.addEventListener('fetch', e => {
   e.respondWith(
     (async () => {
@@ -42,27 +62,5 @@ self.addEventListener('fetch', e => {
       }
       return response
     })()
-  )
-})
-
-self.addEventListener('activate', e => {
-  console.log(`[purity-todo.sw.js] Activate`)
-  caches.keys().then(console.log)
-  e.waitUntil(
-    caches.keys().then(keyList => {
-      Promise.all(
-        keyList.map(key => {
-          console.log(`[purity-todo.sw.js] cache key =`, key)
-          if (key === cacheName) {
-            return
-          }
-          if (key.startsWith(APP_SCOPE)) {
-            // Do not delete other caches since this app shares the same origin as others 
-            // (especially 'Lord of Passwords' which depends on the cached data).
-            caches.delete(key)
-          }
-        })
-      )
-    })
   )
 })

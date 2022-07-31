@@ -1,11 +1,13 @@
 import {setState, state} from '../app.js'
 import type {Task} from '../app.js'
 
-export const closeTaskDetails = (): void =>
+export const closeTaskDetails: EventListener = () =>
   setState(() => ({taskDetailId: undefined}))
 
-export const openTaskDetails = (taskDetailId: string) => (): void =>
-  setState(() => ({taskDetailId}))
+export const openTaskDetails: EventListener = ({target}) => {
+  const {id} = (target as HTMLElement).dataset as Pick<Task, 'id'>
+  setState(() => ({taskDetailId: id}))
+}
 
-export const selectTask = (data?: Task[]): Task | undefined =>
-  data?.find(({id}) => id === state.taskDetailId)
+export const selectDetailedTask = (): Task =>
+  state.tasks.find(({id}) => id === state.taskDetailId)!

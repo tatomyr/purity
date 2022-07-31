@@ -118,9 +118,9 @@ export const init = <State extends Record<string, unknown>>(
           updateAttributes(elementById, newNode)
           if (domNode.shallow.innerHTML !== newNode.shallow.innerHTML) {
             elementById.innerHTML = newNode.node.innerHTML
-            console.warn(`↻ #${id}`)
+            console.warn(`\t↻ #${id}`)
           } else {
-            console.warn(`± #${id}`)
+            console.warn(`\t± #${id}`)
           }
         } else {
           throw new Error(`There is no element in DOM with id "${id}".`)

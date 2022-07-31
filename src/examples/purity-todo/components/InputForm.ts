@@ -1,10 +1,10 @@
 import {render, sanitize} from '../../../index.js'
 import {setState, state} from '../app.js'
 import {IMAGES} from '../config/images.js'
+import {handleError} from '../services/error.js'
 import {fetchAndNormalizeImages} from '../services/images.js'
 import {resetInput} from '../services/input-form.js'
-import {groomTasks, prepareTask, useTasks} from '../services/tasks.js'
-import {getJSON, saveJSON} from '../services/storage.js'
+import {patchTask, prepareTask} from '../services/tasks.js'
 
 const InputFormStyle = () => render`
   <style id="task-form-style">
@@ -31,40 +31,29 @@ const InputFormStyle = () => render`
 
 const createTask = async (e: Event): Promise<void> => {
   e.preventDefault()
-  const $target = e.target as HTMLFormElement
-  const description: string = sanitize($target.task.value)
-
-  const tasks = useTasks.getCached().data || []
+  const description: string = sanitize((e.target as HTMLFormElement).task.value)
   const task = prepareTask(description)
-  if (tasks.some(({id}) => id === task.id)) {
+  if (state.tasks.some(({id}) => id === task.id)) {
     window.alert('There is already a task with the same id in the list')
     return
   }
 
   resetInput()
-  setState(() => ({view: 'active'}))
-  useTasks.fire({
-    optimisticData: [{...task, isBeingCreated: true}, ...tasks],
-    mutation: async () => {
-      try {
-        const image = await fetchAndNormalizeImages(task)
-        await saveJSON({
-          tasks: groomTasks([{...task, image}, ...(await getJSON({tasks}))]),
-        })
-      } catch (err) {
-        console.warn('THIS SHOULD NOT HAPPEN AT ALL!')
-        console.error(err)
-        setState(() => ({error: err as string}))
-        window.alert(state.error) // TODO: replace alert with a toast notification
-        await saveJSON({
-          tasks: groomTasks([
-            {...task, image: {link: IMAGES.UNDEFINED_TASK, queries: {}}},
-            ...(await getJSON({tasks})),
-          ]),
-        })
-      }
-    },
-  })
+  setState(({tasks}) => ({
+    view: 'active',
+    tasks: [{...task, isImageLoading: true}, ...tasks],
+  }))
+
+  try {
+    const image = await fetchAndNormalizeImages(task)
+    patchTask({...task, image})
+  } catch (err) {
+    handleError(err)
+    patchTask({
+      ...task,
+      image: {link: IMAGES.UNDEFINED_TASK, queries: {}},
+    })
+  }
 }
 
 export const InputForm = (): string => render`

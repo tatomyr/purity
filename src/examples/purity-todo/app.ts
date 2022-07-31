@@ -1,5 +1,6 @@
 import {init, makeAsync} from '../../index.js'
 import {QueryType} from './services/google-api.js'
+import {getJSON} from './services/storage.js'
 
 export type ViewFilter = 'active' | 'completed'
 
@@ -17,8 +18,7 @@ export type Task = {
   description: string
   completed: boolean
   tmpFlag?: boolean
-  isBeingCreated?: boolean
-  isBeingUpdated?: boolean
+  isImageLoading?: boolean
   createdAt: number
   updatedAt: number
   image: Image
@@ -27,15 +27,16 @@ export type Task = {
 export type AppState = {
   view: ViewFilter
   input: string
-  error?: string
   isSettingsModalOpen: boolean
   taskDetailId?: string
+  tasks: Task[]
 }
 
 export const initialState: AppState = {
   view: 'active',
   input: '',
   isSettingsModalOpen: false,
+  tasks: await getJSON({tasks: []}), // ?? await!!
 }
 
 export const state = {...initialState}
