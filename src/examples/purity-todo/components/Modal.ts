@@ -3,7 +3,7 @@ import {render} from '../../../index.js'
 type ModalProps = {
   title: string
   content: string
-  close: () => void
+  close: EventListener
 }
 
 // TODO: implement the possibility to add any control buttons to the top right

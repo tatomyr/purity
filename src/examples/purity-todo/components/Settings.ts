@@ -1,6 +1,5 @@
 import {render} from '../../../index.js'
 import {downloadUserData, uploadUserData} from '../services/settings.js'
-import {useTasks} from '../services/tasks.js'
 import {lineButtonCSS, lineContainerCSS, lineTextCSS} from './ModalStyle.js'
 import {Version} from './Version.js'
 
@@ -51,7 +50,7 @@ export const Settings = (): string => render`
           id="restore-backup"
           ::change=${({target}) => {
             const [file] = (<HTMLInputElement>target).files as FileList
-            useTasks.fire({mutation: () => uploadUserData(file)})
+            uploadUserData(file)
           }}
         />
       </label>

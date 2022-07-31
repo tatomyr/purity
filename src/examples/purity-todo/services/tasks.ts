@@ -1,16 +1,7 @@
 import {md5, sanitize} from '../../../index.js'
-import {AppState, Task, useAsync} from '../app.js'
+import {AppState, setState, state, Task} from '../app.js'
 import {IMAGES} from '../config/images.js'
-import {getJSON, saveJSON} from './storage.js'
-
-// This is a 'hook' (it's better to name it with the 'use' prefix).
-// It should be called inside a view component to get access to the fetched data...
-// If you need to use the cached data outside the hook, you should use the 'unwrap' function inside an async function.
-// In that case you no longer have to name it with the 'use' prefix
-// TODO: rewrite using local state?
-export const useTasks = useAsync('tasks', async () =>
-  getJSON({tasks: [] as Task[]})
-)
+import {saveJSON} from './storage.js'
 
 const makeId = (description: string): string =>
   md5(description.trim().toLowerCase())
@@ -33,30 +24,21 @@ export const prepareTask = (description: string): Task => {
   return task
 }
 
-export const patchTask = async (
-  task: Partial<Task> & Pick<Task, 'id'>
-): Promise<void> => {
-  const tasks = await getJSON({tasks: [] as Task[]})
-  const prevTask = tasks.find(({id}) => id === task.id)
-  if (!prevTask) {
-    throw new Error('There is no task with this id in the list')
-  }
+export const patchTask = (patch: Partial<Task> & Pick<Task, 'id'>): void => {
   const now = Date.now()
-  Object.assign(prevTask, {...task, updatedAt: now})
-
-  await saveJSON({tasks})
+  setState(({tasks}) => ({
+    tasks: tasks.map(({isImageLoading, ...task}) =>
+      task.id === patch.id
+        ? {...task, ...patch, updatedAt: now, tmpFlag: true}
+        : task
+    ),
+  }))
+  saveJSON({tasks: groomTasks(state.tasks)})
 }
 
-export const removeTask = async (id: string): Promise<void> => {
-  const tasks = await getJSON({tasks: [] as Task[]})
-  const currentTask = tasks.find(task => task.id === id)
-  if (!currentTask) {
-    throw new Error('There is no task with this id in the list')
-  }
-
-  await saveJSON({
-    tasks: tasks.filter(task => task.id !== id),
-  })
+export const removeTask = (id: string): void => {
+  setState(({tasks}) => ({tasks: tasks.filter(task => task.id !== id)}))
+  saveJSON({tasks: groomTasks(state.tasks)})
 }
 
 export const byInput =

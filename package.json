@@ -3,6 +3,7 @@
   "version": "0.11.0",
   "description": "We need package.json since npx jest doesn't work correctly",
   "main": "src/purity.ts",
+  "type": "module",
   "dependencies": {
     "@types/jest": "^28.1.4",
     "@typescript-eslint/eslint-plugin": "^4.6.0",

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-undef
-module.exports = {
+export default {
   transform: {'^.+\\.ts$': 'ts-jest'},
   verbose: true,
   testEnvironment: "jsdom",

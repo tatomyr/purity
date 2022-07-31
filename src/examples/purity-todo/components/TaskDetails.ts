@@ -1,9 +1,10 @@
 import {render} from '../../../index.js'
 import type {Image} from '../app.js'
-import {patchTask, useTasks} from '../services/tasks.js'
+import {handleError} from '../services/error.js'
 import {fetchAndNormalizeImages} from '../services/images.js'
 import {cropSquare, getImgSrc, keepRatio} from '../services/image-processing.js'
-import {selectTask} from '../services/task-details.js'
+import {selectDetailedTask} from '../services/task-details.js'
+import {patchTask} from '../services/tasks.js'
 import {IMAGES} from '../config/images.js'
 
 const TaskDetailsStyle = () => render`
@@ -58,57 +59,55 @@ const TaskDetailsStyle = () => render`
   </style>
 `
 
-const createChangeImage = (direction: 'next' | 'previous') => (e: Event) => {
-  const task = selectTask(useTasks.getCached().data)
-  if (!task) return
-
-  useTasks.fire({
-    mutation: async ({data}) => {
+const createChangeImage =
+  (direction: 'next' | 'previous') => async (e: Event) => {
+    const task = selectDetailedTask()
+    patchTask({...task, isImageLoading: true})
+    try {
       const image = await fetchAndNormalizeImages(
         task,
         task.image.queries[`${direction}Page`]?.startIndex
       )
-      await patchTask({id: task.id, image})
-    },
-  })
-}
-
-const handleCaptureImage = ({target}: InputEvent) => {
-  const [file] = (<HTMLInputElement>target).files as FileList
-  const task = selectTask(useTasks.getCached().data)
-  console.log({task})
-  if (!task) {
-    return
+      await patchTask({...task, image})
+    } catch (err) {
+      handleError(err)
+      patchTask(task)
+    }
   }
-  useTasks.fire({
-    mutation: async () => {
-      if (file) {
-        const bigImg = await window.createImageBitmap(file)
-        const smallImg = await window.createImageBitmap(bigImg, {
-          ...keepRatio(bigImg)(300),
-          resizeQuality: 'high',
-        })
-        const croppedImg = await window.createImageBitmap(
-          smallImg,
-          ...cropSquare(smallImg)
-        )
-        const link = getImgSrc(croppedImg)
-        if (!link) throw new Error('Cannot read the image.')
-        const image: Image = {
-          link,
-          queries: {
-            previousPage: task?.image.queries.request,
-          },
-        }
-        await patchTask({id: task.id, image})
-      }
-    },
-  })
+
+const handleCaptureImage = async ({target}: InputEvent) => {
+  try {
+    const [file] = (<HTMLInputElement>target).files as FileList
+    if (!file) {
+      return
+    }
+    const task = selectDetailedTask()
+
+    const bigImg = await window.createImageBitmap(file)
+    const smallImg = await window.createImageBitmap(bigImg, {
+      ...keepRatio(bigImg)(300),
+      resizeQuality: 'high',
+    })
+    const croppedImg = await window.createImageBitmap(
+      smallImg,
+      ...cropSquare(smallImg)
+    )
+    const link = getImgSrc(croppedImg)
+    if (!link) throw new Error('Cannot read the image.')
+    const image: Image = {
+      link,
+      queries: {
+        previousPage: task?.image.queries.request,
+      },
+    }
+    patchTask({...task, image})
+  } catch (err) {
+    handleError(err)
+  }
 }
 
 export const TaskDetails = (): string => {
-  const {data, error, status} = useTasks.call()
-  const task = selectTask(data)
+  const task = selectDetailedTask()
 
   return render`
     <div class="task-details--wrapper">
@@ -117,10 +116,9 @@ export const TaskDetails = (): string => {
           id="fullscreen-image"
           class="fullscreen-image"
           style="background-image: url('${
-            status === 'pending' ? IMAGES.LOADING : task?.image.link
+            task.isImageLoading ? IMAGES.LOADING : task?.image.link
           }');"
         > 
-          ${status === 'error' && `<pre>${error?.message} </pre>`}
           <div class="controls" id="controls">
             ${
               task?.image.queries.previousPage?.startIndex !== undefined &&
@@ -145,7 +143,7 @@ export const TaskDetails = (): string => {
                 accept="image/*"
                 capture="environment"
                 id="capture"
-                ::change=${handleCaptureImage as EventListener}
+                ::change=${handleCaptureImage as unknown as EventListener}
               />
             </label>
           </div>

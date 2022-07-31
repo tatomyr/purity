@@ -26,8 +26,7 @@ export const TaskItem = ({
   id,
   completed,
   image,
-  isBeingCreated,
-  isBeingUpdated,
+  isImageLoading,
 }: Task): string => render`
   <li id="${id}" class="task-item ${completed && 'completed'}">
     <img
@@ -38,7 +37,7 @@ export const TaskItem = ({
     <div 
       class="${ITEM_DESCRIPTION}" 
       data-id="${id}" 
-      ::click=${openTaskDetails(id)}
+      ::click=${openTaskDetails}
     >
       ${description}
     </div>
@@ -46,7 +45,7 @@ export const TaskItem = ({
       id="toggle-${id}"
       class="
         ${TOGGLE_BUTTON} 
-        ${(isBeingCreated || isBeingUpdated) && 'being-processed'}
+        ${isImageLoading && 'being-processed'}
       "
       data-id="${id}"
       data-completed="${completed && 'true'}"
