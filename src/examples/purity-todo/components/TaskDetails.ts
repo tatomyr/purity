@@ -6,6 +6,7 @@ import {cropSquare, getImgSrc, keepRatio} from '../services/image-processing.js'
 import {selectDetailedTask} from '../services/task-details.js'
 import {patchTask} from '../services/tasks.js'
 import {IMAGES} from '../config/images.js'
+import type {EventHandler} from '../../../purity.js'
 
 const TaskDetailsStyle = () => render`
   <style id="task-details-style">
@@ -59,8 +60,9 @@ const TaskDetailsStyle = () => render`
   </style>
 `
 
-const createChangeImage =
-  (direction: 'next' | 'previous') => async (e: Event) => {
+const makeChangeImage =
+  (direction: 'next' | 'previous'): EventHandler =>
+  async () => {
     const task = selectDetailedTask()
     patchTask({...task, isImageLoading: true})
     try {
@@ -75,9 +77,9 @@ const createChangeImage =
     }
   }
 
-const handleCaptureImage = async ({target}: InputEvent) => {
+const handleCaptureImage: EventHandler = async ({target}) => {
   try {
-    const [file] = (<HTMLInputElement>target).files as FileList
+    const [file] = target.files!
     if (!file) {
       return
     }
@@ -123,7 +125,7 @@ export const TaskDetails = (): string => {
             ${
               task?.image.queries.previousPage?.startIndex !== undefined &&
               render`
-                <button ::click=${createChangeImage('previous')}>
+                <button ::click=${makeChangeImage('previous')}>
                   Prev
                 </button>
               `
@@ -131,7 +133,7 @@ export const TaskDetails = (): string => {
             ${
               task?.image.queries.nextPage?.startIndex !== undefined &&
               render`
-                <button ::click=${createChangeImage('next')}>
+                <button ::click=${makeChangeImage('next')}>
                   Next
                 </button>
               `
@@ -143,7 +145,7 @@ export const TaskDetails = (): string => {
                 accept="image/*"
                 capture="environment"
                 id="capture"
-                ::change=${handleCaptureImage as unknown as EventListener}
+                ::change=${handleCaptureImage}
               />
             </label>
           </div>
@@ -156,7 +158,7 @@ export const TaskDetails = (): string => {
         <textarea 
           id="task-description-edit"
           ::change=${e => {
-            console.log((e.target as HTMLInputElement).value)
+            console.log(e.target.value)
             // TODO: implement
           }}
         >

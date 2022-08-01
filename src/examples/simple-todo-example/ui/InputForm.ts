@@ -11,7 +11,7 @@ export const InputForm = (): string => render`
         items: [
           ...items,
           {
-            text: (e.target as HTMLFormElement).text.value,
+            text: e.target.text.value,
             checked: false,
             id: generateNextId(items),
           },
@@ -24,7 +24,7 @@ export const InputForm = (): string => render`
       placeholder="Enter text"
       ::input=${e => {
         setState(() => ({
-          input: (e.target as HTMLInputElement).value,
+          input: e.target.value,
         }))
       }}
     />

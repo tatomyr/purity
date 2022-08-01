@@ -26,7 +26,7 @@ const initDrag = makeDrag(e => {
       setState(() => ({placeOverDisplay: 'none'}))
     }
   }
-}) as EventListener
+}) 
 
 export const Playground = (): string => render`
   <div id="playground-root" class="playground">

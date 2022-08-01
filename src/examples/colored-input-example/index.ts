@@ -1,11 +1,12 @@
 import {init, render} from '../../index.js'
+import type {EventHandler} from '../../purity.js'
 
 const {mount, getState, setState} = init({
   color: 'black',
 })
 
-const handleInput = (e: Event) => {
-  setState(() => ({color: (e.target as HTMLInputElement).value}))
+const handleInput: EventHandler = e => {
+  setState(() => ({color: e.target.value}))
 }
 
 const Root = () => render`

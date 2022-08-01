@@ -10,9 +10,9 @@ const App1 = () => render`
     ::submit=${e => {
       e.preventDefault()
       store1.setState(() => ({
-        text: (e.target as HTMLFormElement).text.value,
+        text: e.target.text.value,
       }))
-      ;(e.target as HTMLFormElement).reset()
+      e.target.reset()
     }}
   >
     <input name="text" />
