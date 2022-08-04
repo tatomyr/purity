@@ -21,6 +21,11 @@ export const withItemDescription =
     }
   }
 
+const formatDescription = (description: string): string => {
+  const [first, ...rest] = description.split('\n')
+  return `${first}${rest.map(item => render`<span> ⊡ ${item}</span>`).join('')}`
+}
+
 export const TaskItem = ({
   description,
   id,
@@ -39,7 +44,7 @@ export const TaskItem = ({
       data-id="${id}" 
       ::click=${openTaskDetails}
     >
-      ${description}
+      ${formatDescription(description)}
     </div>
     <button
       id="toggle-${id}"

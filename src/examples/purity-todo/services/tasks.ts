@@ -1,5 +1,5 @@
 import {md5, sanitize} from '../../../index.js'
-import {AppState, setState, state, Task} from '../app.js'
+import {AppState, BaseTask, setState, state, Task} from '../app.js'
 import {IMAGES} from '../config/images.js'
 import {saveJSON} from './storage.js'
 
@@ -33,12 +33,12 @@ export const patchTask = (patch: Partial<Task> & Pick<Task, 'id'>): void => {
         : task
     ),
   }))
-  saveJSON({tasks: groomTasks(state.tasks)})
+  saveJSON<{tasks: BaseTask[]}>({tasks: groomTasks(state.tasks)})
 }
 
 export const removeTask = (id: string): void => {
   setState(({tasks}) => ({tasks: tasks.filter(task => task.id !== id)}))
-  saveJSON({tasks: groomTasks(state.tasks)})
+  saveJSON<{tasks: BaseTask[]}>({tasks: groomTasks(state.tasks)})
 }
 
 export const byInput =
@@ -59,7 +59,7 @@ export const byStatus =
       (view === 'completed' && completed)
     )
 
-export const groomTasks = (tasks: Task[]): Task[] =>
-  tasks
-    .map(({tmpFlag, ...task}) => task)
-    .sort((a, b) => b.updatedAt - a.updatedAt)
+const toBaseTask = ({tmpFlag, ...task}: Task): BaseTask => task
+
+export const groomTasks = (tasks: Task[]): BaseTask[] =>
+  tasks.map(toBaseTask).sort((a, b) => b.updatedAt - a.updatedAt)

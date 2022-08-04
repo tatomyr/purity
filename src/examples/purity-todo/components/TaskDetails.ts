@@ -1,4 +1,4 @@
-import {render} from '../../../index.js'
+import {render, sanitize} from '../../../index.js'
 import type {Image} from '../app.js'
 import {handleError} from '../services/error.js'
 import {fetchAndNormalizeImages} from '../services/images.js'
@@ -139,7 +139,7 @@ export const TaskDetails = (): string => {
               `
             }
             <label for="capture">
-              Capture photo
+              Capture
               <input
                 type="file"
                 accept="image/*"
@@ -159,7 +159,7 @@ export const TaskDetails = (): string => {
           id="task-description-edit"
           ::change=${e => {
             console.log(e.target.value)
-            // TODO: implement
+            patchTask({id: task.id, description: sanitize(e.target.value)})
           }}
         >
           ${task?.description}

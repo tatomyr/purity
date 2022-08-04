@@ -41,6 +41,10 @@ const ListStyle = () => render`
       color: lightgrey;
     }
 
+    .${ITEM_DESCRIPTION} span {
+      color: lightgrey;
+    }
+
     .${TOGGLE_BUTTON} {
       all: unset;
     }

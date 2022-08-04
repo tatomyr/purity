@@ -32,7 +32,10 @@ type EventName = keyof Omit<
 
 type Target = HTMLElement & HTMLInputElement & HTMLFormElement
 
-type DomEvent = (Event & MouseEvent) & {target: Target}
+type DomEvent = (Event & MouseEvent) & {
+  target: Target
+  currentTarget: Target
+}
 
 export type EventHandler = (e: DomEvent) => void | Promise<void>
 
@@ -129,7 +132,7 @@ export const init = <State extends Record<string, unknown>>(
             console.warn(`\t± #${id}`)
           }
         } else {
-          throw new Error(`There is no element in DOM with id "${id}".`)
+          throw new Error(`There is no element in the DOM with id "${id}".`)
         }
       }
     }
