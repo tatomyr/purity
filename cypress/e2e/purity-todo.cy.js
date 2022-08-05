@@ -27,6 +27,7 @@ describe('Purity todo example', () => {
     cy.get('#header li#completed button').should('not.have.class', 'chosen')
 
     // Marks the first item as completed
+    cy.wait(1000) // Delay because of async nature of Purity (?)
     cy.get('ol#task-list li:nth-child(2) button.toggle-button').click()
     cy.get('ol#task-list li:nth-child(2) button.toggle-button').contains('⊠')
 

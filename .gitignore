@@ -11,4 +11,4 @@ node_modules/
 .DS_Store
 
 # Local config
-google-api.local.ts
+google-api.dev.ts

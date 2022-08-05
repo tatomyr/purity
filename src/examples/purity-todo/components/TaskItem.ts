@@ -32,7 +32,7 @@ export const withItemDescription =
   }
 
 const formatDescription = (description: string): string => {
-  const [first, ...rest] = description.split('\n')
+  const [first, ...rest] = description.trim().split('\n')
   return `${first}${rest.map(item => render`<span> ⊡ ${item}</span>`).join('')}`
 }
 
