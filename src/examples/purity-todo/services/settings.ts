@@ -1,5 +1,6 @@
-import type { EventHandler } from '../../../purity.js'
+import type {EventHandler} from '../../../purity.js'
 import {setState, state} from '../app.js'
+import type {BaseTask} from '../app.js'
 import {handleError} from './error.js'
 import {saveJSON} from './storage.js'
 import {groomTasks} from './tasks.js'
@@ -22,7 +23,7 @@ export const uploadUserData: EventHandler = async ({target: {files}}) => {
   const [file] = files!
   try {
     const text = await textFileReader(file)
-    const tasks = JSON.parse(text)
+    const tasks: BaseTask[] = JSON.parse(text)
     if (
       window.confirm(
         `Are you sure you want to replace current todo list in your storage (${state.tasks.length} items) with new one (${tasks.length} items)?`

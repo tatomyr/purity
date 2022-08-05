@@ -1,6 +1,7 @@
 import {render} from '../../../index.js'
 import {openSettings} from '../services/settings.js'
 import {NavItem} from './NavItem.js'
+import {ACTION_BUTTON} from './AppStyle.js'
 
 const HeaderStyle = (): string => render`
   <style id="header-style">
@@ -23,24 +24,6 @@ const HeaderStyle = (): string => render`
       align-items: center;
     }
 
-    #header .nav-option {
-      all: unset;
-      font-size: 2rem;
-      line-height: 1;
-      width: 3rem;
-      min-width: 3rem;
-      height: 3rem;
-      text-align: center;
-    }
-
-    #header .nav-option:active {
-      background-color: grey;
-    }
-
-    #header .nav-option.chosen {
-      color: white;
-    }
-
   </style>
 `
 
@@ -51,7 +34,7 @@ export const Header = (): string => render`
       ${NavItem({value: 'completed', label: '⊠'})}
       <li>
         <button
-          class="nav-option"
+          class="${ACTION_BUTTON}"
           ::click=${openSettings}
         >
           ⋮

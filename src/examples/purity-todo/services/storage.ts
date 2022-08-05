@@ -13,8 +13,8 @@ export const retrieveJSON = async <D extends JSONValue>(obj: {
   return JSON.parse(window.localStorage.getItem(key) as string) || defaultValue
 }
 
-export const saveJSON = async (
-  obj: Record<string, JSONValue>
+export const saveJSON = async <T extends Record<string, JSONValue>>(
+  obj: T
 ): Promise<void> => {
   Object.entries(obj).forEach(([key, value]) => {
     window.localStorage.setItem(key, JSON.stringify(value))

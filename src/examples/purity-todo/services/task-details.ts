@@ -5,8 +5,8 @@ import type {EventHandler} from '../../../purity.js'
 export const closeTaskDetails: EventHandler = () =>
   setState(() => ({taskDetailId: undefined}))
 
-export const openTaskDetails: EventHandler = ({target}) => {
-  const {id} = target.dataset
+export const openTaskDetails: EventHandler = e => {
+  const {id} = e.currentTarget.dataset
   setState(() => ({taskDetailId: id}))
 }
 

@@ -1,10 +1,10 @@
 import {mount} from './app.js'
 import {App} from './components/App.js'
-import {dev} from './dev.js'
+import {env} from './env.js'
 
 mount(App)
 
-if ('serviceWorker' in navigator && !dev) {
+if ('serviceWorker' in navigator && env === 'prod') {
   navigator.serviceWorker
     .register('./purity-todo.sw.js')
     .then(registration => {

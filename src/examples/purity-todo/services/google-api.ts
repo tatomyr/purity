@@ -1,8 +1,6 @@
-import {dev} from '../dev.js'
+import {env} from '../env.js'
 
-const {GOOGLE} = await import(
-  dev ? '../config/google-api.local.js' : '../config/google-api.js'
-)
+const {GOOGLE} = await import(`../config/google-api.${env}.js`)
 
 export const makeQueryString = (query: string, start = 1): string =>
   `${GOOGLE.API_PATH}?${new URLSearchParams({

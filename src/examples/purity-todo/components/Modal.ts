@@ -1,5 +1,6 @@
 import {render} from '../../../index.js'
 import type {EventHandler} from '../../../purity.js'
+import {ACTION_BUTTON} from './AppStyle.js'
 
 type ModalProps = {
   title: string
@@ -7,7 +8,6 @@ type ModalProps = {
   close: EventHandler
 }
 
-// TODO: implement the possibility to add any control buttons to the top right
 export const Modal = ({title, content, close}: ModalProps): string => render`
   <div
     class="modal-wrapper"
@@ -19,7 +19,7 @@ export const Modal = ({title, content, close}: ModalProps): string => render`
     >
       <div class="modal-header">
         <p>${title}</p>
-        <button ::click=${close}>⨯</button>
+        <button ::click=${close} class="${ACTION_BUTTON}">⨯</button>
       </div>
       <div class="modal-content">${content}</div>
     </div>

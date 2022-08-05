@@ -13,16 +13,17 @@ export type Image = {
   }
 }
 
-export type Task = {
+export type BaseTask = {
   id: string
   description: string
   completed: boolean
-  tmpFlag?: boolean
   isImageLoading?: boolean
   createdAt: number
   updatedAt: number
   image: Image
 }
+
+export type Task = BaseTask & { tmpFlag?: boolean }
 
 export type AppState = {
   view: ViewFilter
