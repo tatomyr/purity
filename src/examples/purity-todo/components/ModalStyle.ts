@@ -38,14 +38,6 @@ export const ModalStyle = (): string => render`
       ${lineTextCSS}
     }
 
-    .modal .modal-header button {
-      ${lineButtonCSS}
-    }
-    
-    .modal .modal-header button:active {
-      background-color: grey;
-    }
-
   </style>
 `
 
@@ -62,15 +54,4 @@ export const lineTextCSS = `
   padding: 2px 8px;
   overflow-x: hidden;
   text-overflow: ellipsis;
-`
-
-export const lineButtonCSS = `
-  all: unset;
-  width: 3rem;
-  min-width: 3rem;
-  height: 3rem;
-  text-align: center;
-  font-size: 2rem;
-  cursor: default;
-  box-sizing: border-box;
 `

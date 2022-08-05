@@ -2,6 +2,7 @@ import {render} from '../../../index.js'
 import {IMAGES} from '../config/images.js'
 import {openTaskDetails} from '../services/task-details.js'
 import type {Task} from '../app.js'
+import {ACTION_BUTTON} from './AppStyle.js'
 
 export const TOGGLE_BUTTON = 'toggle-button'
 export const withToggleButton =
@@ -9,6 +10,15 @@ export const withToggleButton =
   (callback: (dataset: Pick<Task, 'id' | 'completed'>) => void): void => {
     if ([...$target.classList].includes(TOGGLE_BUTTON)) {
       callback($target.dataset as unknown as Pick<Task, 'id' | 'completed'>)
+    }
+  }
+
+export const DELETE_BUTTON = 'delete-button'
+export const withDeleteButton =
+  ($target: HTMLElement) =>
+  (callback: (dataset: Pick<Task, 'id'>) => void): void => {
+    if ([...$target.classList].includes(DELETE_BUTTON)) {
+      callback($target.dataset as unknown as Pick<Task, 'id'>)
     }
   }
 
@@ -31,7 +41,6 @@ export const TaskItem = ({
   id,
   completed,
   image,
-  isImageLoading,
 }: Task): string => render`
   <li id="${id}" class="task-item ${completed && 'completed'}">
     <img
@@ -46,14 +55,20 @@ export const TaskItem = ({
     >
       ${formatDescription(description)}
     </div>
+    <button 
+      id="delete-${id}"
+      class="${ACTION_BUTTON} ${DELETE_BUTTON} ${!completed && 'hidden'}"
+      data-id="${id}"
+      title="Delete"
+    >
+      ⊟
+    </button>
     <button
       id="toggle-${id}"
-      class="
-        ${TOGGLE_BUTTON} 
-        ${isImageLoading && 'being-processed'}
-      "
+      class="${ACTION_BUTTON} ${TOGGLE_BUTTON}"
       data-id="${id}"
       data-completed="${completed && 'true'}"
+      title="Toggle"
     >
       ${completed ? '⊠' : '⊡'}
     </button>

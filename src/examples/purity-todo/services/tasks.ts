@@ -36,7 +36,7 @@ export const patchTask = (patch: Partial<Task> & Pick<Task, 'id'>): void => {
   saveJSON<{tasks: BaseTask[]}>({tasks: groomTasks(state.tasks)})
 }
 
-export const removeTask = (id: string): void => {
+export const deleteTask = (id: string): void => {
   setState(({tasks}) => ({tasks: tasks.filter(task => task.id !== id)}))
   saveJSON<{tasks: BaseTask[]}>({tasks: groomTasks(state.tasks)})
 }

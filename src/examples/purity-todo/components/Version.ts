@@ -1,6 +1,7 @@
 import {render} from '../../../index.js'
 import {useAsync} from '../app.js'
 import type {JSONValue} from '../services/storage.js'
+import {ACTION_BUTTON} from './AppStyle.js'
 
 const extractVersion = (name?: string): string => {
   const [version] = name?.match(/\d+.\d+/) || ['No version specified']
@@ -14,6 +15,8 @@ export const Version = (): string => {
 
   return render`
     <p>Version</p>
-    <div id="version">${extractVersion(data?.name)}</div>
+    <div id="version" class="${ACTION_BUTTON}">
+      ${extractVersion(data?.name)}
+    </div>
   `
 }

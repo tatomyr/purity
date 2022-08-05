@@ -1,6 +1,7 @@
 import {render} from '../../../index.js'
 import {downloadUserData, uploadUserData} from '../services/settings.js'
-import {lineButtonCSS, lineContainerCSS, lineTextCSS} from './ModalStyle.js'
+import {lineContainerCSS, lineTextCSS} from './ModalStyle.js'
+import {ACTION_BUTTON} from './AppStyle.js'
 import {Version} from './Version.js'
 
 const SettingsStyle = () => render`
@@ -14,19 +15,10 @@ const SettingsStyle = () => render`
       ${lineTextCSS}
     }
 
-    ul.settings  li button,
-    ul.settings  li label,
-    ul.settings  li #version {
-      ${lineButtonCSS}
-    }
     ul.settings  li #version {
       width: auto;
-      padding: 8px;
-    }
-
-    ul.settings  li button:active,
-    ul.settings  li label:active {
-      background-color: grey;
+      font-size: 1.5rem;
+      line-height: 2;
     }
 
   </style>
@@ -36,13 +28,13 @@ export const Settings = (): string => render`
   <ul class="settings">
     <li>
       <p>Backup</p>
-      <button ::click=${downloadUserData}>
+      <button ::click=${downloadUserData} class="${ACTION_BUTTON}">
         ↧
       </button>
     </li>
     <li>
       <p>Restore</p>
-      <label for="restore-backup">
+      <label for="restore-backup" class="${ACTION_BUTTON}">
         ↥
         <input
           type="file"
