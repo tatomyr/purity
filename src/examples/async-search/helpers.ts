@@ -1,25 +1,27 @@
-import { Item } from './types.js'
+import {Item} from './types.js'
 
 const items: Item[] = [
-  { id: 1, name: 'Andrew' },
-  { id: 3, name: 'Bartolomew' },
-  { id: 4, name: 'Catalyna' },
-  { id: 6, name: 'Donald' },
-  { id: 7, name: 'Fernando' },
-  { id: 5, name: 'Gregory' },
-  { id: 8, name: 'Houston' },
-  { id: 2, name: 'John' },
-  { id: 9, name: 'Katherine' },
-  { id: 11, name: 'Mark' },
-  { id: 12, name: 'Orest' },
-  { id: 14, name: 'Philipp' },
-  { id: 15, name: 'Quentin' },
-  { id: 13, name: 'Victor' },
-  { id: 10, name: 'Xenia' },
+  {id: 1, name: 'Andrew'},
+  {id: 3, name: 'Bartolomew'},
+  {id: 4, name: 'Catalyna'},
+  {id: 6, name: 'Donald'},
+  {id: 7, name: 'Fernando'},
+  {id: 5, name: 'Gregory'},
+  {id: 8, name: 'Houston'},
+  {id: 2, name: 'John'},
+  {id: 9, name: 'Katherine'},
+  {id: 11, name: 'Mark'},
+  {id: 12, name: 'Orest'},
+  {id: 14, name: 'Philipp'},
+  {id: 15, name: 'Quentin'},
+  {id: 13, name: 'Victor'},
+  {id: 10, name: 'Xenia'},
 ]
 
-const byName = (request: string) => ({ name }: Item) =>
-  name.toLowerCase().search(request.toLowerCase()) !== -1
+const byName =
+  (request: string) =>
+  ({name}: Item) =>
+    name.toLowerCase().search(request.toLowerCase()) !== -1
 
 export const fakeEndpoint = (request: string): Promise<Item[]> =>
   new Promise((resolve, reject) => {
@@ -29,8 +31,12 @@ export const fakeEndpoint = (request: string): Promise<Item[]> =>
     }, Math.ceil((Math.random() + Math.random() + Math.random()) * 1000))
   })
 
-export const idEquals = (externalId: number) => ({ id }: Item) =>
-  id === externalId
+export const idEquals =
+  (externalId: number) =>
+  ({id}: Item): boolean =>
+    id === externalId
 
-export const idIsNotEqual = (externalId: number) => ({ id }: Item) =>
-  id !== externalId
+export const idIsNotEqual =
+  (externalId: number) =>
+  ({id}: Item): boolean =>
+    id !== externalId

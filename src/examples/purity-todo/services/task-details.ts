@@ -1,9 +1,16 @@
 import {setState, state} from '../app.js'
 import type {Task} from '../app.js'
 import type {EventHandler} from '../../../purity.js'
+import {patchTask} from './tasks.js'
 
-export const closeTaskDetails: EventHandler = () =>
+export const closeTaskDetails: EventHandler = () => {
+  const task = selectDetailedTask()
+  patchTask({
+    ...task,
+    subtasks: task.subtasks?.filter(({description}) => description),
+  })
   setState(() => ({taskDetailId: undefined}))
+}
 
 export const openTaskDetails: EventHandler = e => {
   const {id} = e.currentTarget.dataset

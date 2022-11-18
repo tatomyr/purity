@@ -8,13 +8,15 @@ export type UseState<T> = {
   set: (newState: T) => void
 }
 
-export const useState = (id: string) => <T>(initial: T): UseState<T> => {
-  state[id] = state[id] || initial
-  return {
-    get: () => state[id] as T,
-    set: (newState: T) => {
-      state[id] = newState
-      rerender()
-    },
+export const useState =
+  (id: string) =>
+  <T>(initial: T): UseState<T> => {
+    state[id] = state[id] || initial
+    return {
+      get: () => state[id] as T,
+      set: (newState: T) => {
+        state[id] = newState
+        rerender()
+      },
+    }
   }
-}
