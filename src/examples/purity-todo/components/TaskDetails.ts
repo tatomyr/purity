@@ -78,9 +78,6 @@ export const TaskDetails = (): string => {
 
   return render`
     <div class="task-details--wrapper">
-
-      
-      
       <section class="task-details--image">
         <div
           id="fullscreen-image"
