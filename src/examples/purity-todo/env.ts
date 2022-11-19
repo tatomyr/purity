@@ -6,3 +6,5 @@ export const env: Env =
     : window.location.protocol === 'http:'
     ? 'dev'
     : 'prod'
+
+console.log('Environment:', env)

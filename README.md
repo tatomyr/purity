@@ -16,7 +16,7 @@ It doesn't require any bundlers or using npm at all, it fully leverages the nati
 
 ### Basic Syntax
 
-To use **Purity** in a project you have to put in your **index.html** a root element where your app will be mounted into, and script tag of `[type=module]` which points to the main js file:
+To use **Purity** in a project you have to put in your **index.html** a root element where your app will be mounted into, and a script tag of `[type=module]` which points to the main js file:
 
 ```html
 <html>
@@ -47,7 +47,8 @@ const App = () => render`
 `
 ```
 
-Make sure, your root element has the same `id` attribute as the root defined in **index.html**.
+Make sure that your root element has the same `id` attribute as the root defined in **index.html**. 
+The first will override the latest.
 
 Finally, you have to mount the App to DOM:
 
@@ -128,11 +129,11 @@ const CorrectCounter = () => render`
 `
 ```
 
-Please notice that `setState`'s callback receives current state as the argument.
+Please notice that `setState`'s callback receives current state as an argument.
 
 ### Virtual DOM
 
-Bear in mind that each changeable node should have a unique id attribute defined on it.
+Bear in mind that each changeable node should have a unique `id` attribute defined on it.
 This allows the DOM re-renderer to decouple changed nodes and update only them.
 It has nothing to do with **components** which are just functions to calculate the HTML.
 
@@ -198,7 +199,9 @@ On the other hand, in the _WithId_ example the only thing going to be re-rendere
 
 ### Async Flow
 
-[In progress...](https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzgDMoIQ4ByAOloHoUCAPWgKwGdqAoHgYwjJO8BCAgBXZBjgBzbDADKMAIYxsmTguVqNWQrgLE4AXjgo0ACgQ84duCJVRZKgF6FOAfUFSYALhoAWmpMW3sfaQCABnQwuxxITgCAbQBdWPsHbAAbbH51PAAlbEgAqQJSFGw8DPtOMBRkQgDSFWytWKIASj4GBjgAKiHhkdGx8YnJqemxvkFheBAVAGtsAHlkfmxTOEsu0wA+RDi4eZFTtvadhCI+TJwYCShkXeAauABHCUIAT32TI42TKZYCkXYAQn4l04yTeqX2QOBSKh2XasLwqR2MCg3xOSLsX1+ezx9lumVutwEQnOQi2OyWqw2W2JPD6gxmHM5XO5Azm1PgazAMGAQh21mQKhAejwwE4KgARrk8N1Dvp8IQAAYnAA8ECFIpeADc2t8TAAiAAkCAlUqIZrgVpt2xMLrk2lU6j2tC0uXy1WKkDgADIgzQfXkCtQSFaZXLFdVg6HqLGFUqowcSXZHZLsGT7NqGHrhUIM1qqQtTgALPLLYr1anO-ScVWIuygiE4Ti0CDLBGZuC5eCEKA7JoAdzgAFEoBQoJYzQAJAAqS4ACg4PRJm4ICAF7QBqJvezecHr4uDD2idyDCRud-uXxyPZtmTvHtRb-swSsUCfDk55vEChPC8b5cEIxKUmc8DyEoqhQC++iQAAcjmqqkAo-CVpYGqVjAMBgEkfQqA0tCyGglYSPKtCCCADAJBAnAMB6lA-FADBWgxqG2hqZ72LQ364JYWE1nWN5aHxdgCdWyCWNYjjOG4HjeJI0gqgCWRwbocn-Ec8nwS47gISpvjdF0klwDRahYTpqpaFpnp7Kq+lOIZykRP4QRRuZFm0JUEqoj8tkafZOiObpuwIPUjTNGQbRaGZPTlucDGcAAqlA2Q7Lh+GEX4xGkeR35UTRlAMFuHjMWorHsalAD8nDQDAJgSGAeC6HgQZgIQnhgCo8gmAAjFEURltBcCKDkEZihFrZwLS2CWKlGXZJgTkaRhMA2ctmUWZk0lCSJ-C1tg9a3nt-FQlt2GWMOEVtIQMC3TOtBSpwcryOZ-YHbJqUtv2mTjeGfpFCUEA7PVtDJFEqR1bQToA3U7raetekIKlmgNMgTRQAE2LfJoU0gwGEBmYjQGPM8WS+gUJP9t032CbJsE6AhFlJfcwFUzg6pQFq57asD8Dk3Afh+FhKjIANVrWAZCgBAgxrZN8ARC-6YNEOpgIi5koUeotqORWroOQJjMW43A+O5l957niz8GcJYxskxdSKa-2Rwi1a9vaV0V5g5wcNLGAliCsWyBdIBwIFkLGaZFqUH8nAACCYBgDN-0nA8IFqkY-P4tqMqGuYeDmhQEAwGace21mCCTTTeyUjXdjamAOAl+aCmcFXOv2N7yOen70XY4QcB1TQgDYxNQos0IACtSAPB-UYOggPuD++ilGV4HkkKznAiwWbfYNXNf7z+cAMBm+-yhI+Gir3dhi-w2TAMdJgyxFesowg28RdYHkBB5OAh5BpmSjueY+zc7AAGFn7HX3gwa+t9kAQIFofA4gA+DcAHe7y9V6LT9tvOAMCX7LE4AfHAl8BYMCLhAhOfBxC+EsKnMAPQgA)
+[In progress...](https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzgDMoIQ4ByAOloHoUCAPWgKwGdqAoHgYwjJO8BCAgBXZBjgBzbDADKMAIYxsmTguVqNWQrgLE4AXjgo0ACgQ84duCJVRZKgF6FOAfUFSYALhoAWmpMW3sfaQCABnQwuxxITgCAbQBdWPsHbAAbbH51PAAlbEgAqQJSFGw8DPtOMBRkQgDSFWytWKIASj4GBjgAKiHhkdGx8YnJqemxvkFheBAVAGtsAHlkfmxTOEsu0wA+RDi4eZFTtvadhCI+TJwYCShkXeAauABHCUIAT32TI42TKZYCkXYAQn4l04yTeqX2QOBSKh2XasLwqR2MCg3xOSLsfU+3ygPz2cDx+K0MAAKqBsJIYJYvr8evi4LdMrdbgIhOchFsdktVhstntev0ZpKpdKZUM5rz4GswDBgEIdtZkCoQHo8MBOCoAEa5PDdQ76fCEAAGJwAPBBlaqXgA3NrfEwAIgAJAhNdqiO64N7fdsTKG5NpVOo9rQtLl8tVipA4AAyZM0WN5ArUEje3X6o3VFNp6h5w3G7MHCl2INa7Ac+w2hj2lVCSvWnkLU4ACzyy2K9V5If0nDNiLsoIhOE4tAgywRVbguXghCgOyaAHc4ABRKAUKCWd0ACWp1IACg5IxIR4ICAEAwBqYcxy+cVn4le0KeQYRDqcLj+OI8I5mFOz5qFeC4wF2FCbiuJz1vEChPC8oFcEIYrcmc8DyEoqhQMB+iQAAcrWZqkAo-BdpYlpdjAMBgEkfQqA0tCyGgXYSAatCCCADAJBAnAMJGlA-FADDevxJF+pab52LQUG4JYlG9v235aLJcDyT2yCWNYjjOG4HjeJI0imgCWS4boun-Ecel4S47j4cZvjdF0GncWolHWWaVI6FGZLmXZTgOUZET+EE2Zue5lSaqipIBUcvmRtg3mBQg9SNM0ZBtFork9B25z8ZwACqUDZDsNF0QxfhMSxbFQZx3GUAwV4eEJagiWJRUAPycNAMAmBIYB4LoeDJmAhCeGAKjyCYACMURRO2WFwIoOSZuqNnHJk-IpUVpXZJgCVkBRVH7WVGmZFpinKfwfbYAOP6XfYHkwF5lgrltbSEIyH7apw+ryG5C7XTpRWjgumQrRm8ZFCUEA7D1tDJFEqTdbQwaQ3UEZWcd1hFZoDTIE0UABNi3yaOtsOJhArlY4hjzPFkcYFDTC7dCDCk6ThOj4Rp+X3EhTM4BaUDWmyNow-A9NwH4fiUSoyCzd61j2QoAQIC62TfAEUsJvDRBmYCMuZEluNbXpVOs-DhOZaTcDk3WwNsmyPN4Zwlh63DkDPUihsLkcMvem7VldJ+8OcOjSxgJYSotsgXQIcCjZS5WmTWphCpwAAgmAYCbRDJwPMh5pGOL+I2rqTrmHgHoUBAMDumnLvVgga0s3s3It3YNpgDgNcevpnBNyb9jBzjUZhxlxOEHA3U0IA2MTULLNCAArUgDwf9mgYICHk9gQZjleGFJC85wMuNn32DNy35-QXADCVufBoSHRaqj3Ycv8NkwB3SYKtbWbfyCBj4W2ASZcKYU4CPjmq5JObJr7dzsAAYW-ndc+DBn6v2QAgiWl8DiAD4NwAd7vb13ilMOx84AoJ-ssTgF8cCPwlgwKuCCM58HEL4SwucwA9CAA)
+
+[In progress...](https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzgDMoIQ4ByAOloHoUCAPWgKwGdqAoHgYwjJO8BCAgBXZBjgBzbDADKMAIYxsmTguVqNWQrgLE4AXjgo0ACgQ84duCJVRZKgF6FOAfUFSYALhoAWmpMW3tOMBRkQgDSFQAbLXQeIgBKPgYGOAAqXLz8gsKi4pLSssK+QWF4EBUAa2wAeWR+bFM4S1TTAD5EMLsqkTh+BMT2hCI+e30YCShkDuA8TABHCUIATy6TXoQ4fvtgUg6AQhH4xIBtJYBdLptpx+HRzmu8G-aYKHWDp60YAAqoGwkhgljWm3ST0m00mkwEQiGQla7VqDWarU6GSy5VxePxBNyfAR1WGAAtsPw6gAlbARRFtMw4Tg9PrTI6nZm0CB1e6-ezxBRwQhQdrRADucAAolAKFBLAAiAASAIBAAUHKpZizBAQAgq4ABqfScWiObVQp7C2W0ZmQYSMk38uwis1aiQspl0t1qD3OuAwMkUSUig4w+yDCCC2jxCCySwAViTyYTXQOOFm8xNHE4Qix8NIUn4MGAQjgYHiKg2ikk+Esc3ifIGiPgKgkeFLYuwkoAgu3S-WoI2ANxhNsdiC0CtVzqjkiVFtwBvtAAGZJgMDAnD8mRUkVosjQZIkACNaIIQAwcJBOAxaXgIPx4hsr9gH0+NoEn8AVzxMsNF2XMw1w3LcdwYPdgAPI9T3PShXxvBgtUoDYoAYMBxV-Ekhh7MAwHaTpWRsSNo1jeMAEZKKo9IwmRbBB3iTAVE4DYWg6bZdgOEjsBjONLAAZkEoTBLTA5-3+IEQBBCQwUInY4H-AFGgAEUaAJxTJDYAIkeI8GQah4DQOATzaFiWgAfn5f4dHUSw5N6awIiiGIA2+bA0ktOx-y6ewpgjREox4sjLAAFjC8KQs81ytIeR5BlERxnDcDxvFrGASDMFRxRUIzSAUfgyQY1JaEDXBLAKykaTpe0tCi5tSQ7UhjjMRKXHcKAvB8aQ4ECDpDVjc5lGgFR5FtN9H2fTxWuSjrUt8OAAB8FrgAAGOrzGOSxGuOXoVsW5aBoSIaoBGnicHfSbpvazq0tMEwzCkAhSBQN8mytadq1rPBLGoddN23TIH3FZBYxUPAzRUcBBXiYAzwvBhwH4hhOEhitsECfjTUR6h1vDaZDviY7TrGi6Nim1Qkuuubupaim2pSrqYCs7QtXo+yOgQK6GbSzBto8-Yw2eGACssEU3r+FndDsjiOa52bGYCagWGoDzBee5BRhi-luN4+MADYDcNvXUlHJ5xIUSTpNkmX-Ws1npdZRzImQaIoFiBItH5-lvP2J4deCgB2IPg4DqLwzSPz-b4gAmWO49jy0MzmBYcHwQhf2mAAeDsADdzDwEwFQoCAYAVbp+UzsAcHzwvEs4Mv-QAEj2eQlHt4qnJdwg4HMmhAGxiag4EVwAFakAeD+VbgZvW5s+iO7pmabt8EgdA6jop8l2ziu2uBdrgAAyPeaENFX17bqWt6OUgI6eTP0Jwcus4YXOH7gX94XEXxLFwsB0iAA)
 
 <!-- TODO: -->
 
@@ -206,14 +209,14 @@ On the other hand, in the _WithId_ example the only thing going to be re-rendere
 
 - Use uncontrolled text inputs and put them wisely, so they won't be re-rendered when the input value has been changed.
   Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
-- Wrap every component that you want to be rerendered independently with a tag with a unique id.
+- Wrap every component that you want to be rerendered independently with a tag with a unique `id`.
 - Do not relay on any constants declared in a component's scope inside event handlers.
   Each event handler should be considered completely isolated from the upper scope.
   The reason is that the Virtual DOM doesn't take into account any changes in event handlers.
   Albeit you do may use a data-specific `id` on the tag to change this, it is not recommended due to performance reasons.
   See the [example](https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzgDMoIQ4ByAOloHoUCAPWgKwGdqAoHgYwjJO8BCAgBXZBjgBzbDADKMAIYxsmTguVrsJALxwUaABQIA7hWSyAXHAAMmQVBz8Yd+0QCUfQcPgAgmBgcIYmXqEAfIg8cHB+InAA6gBKAPIAcgDioXLaqurhtJZCsrHxQokAwmkpKQCiVQAqufJKBdhFzq4wfHE4MBJQyFi4BFAABuVxADx4wABuRnj6AEQUEDCrkdNxcDNgOMtrJdbbSVa2cAAkCKmZWUQzDIfYO3t7MwBGEjAwQnBdh8bDZ+AAbYD8ADW+lu4SicC07V0Jnh+miZlOV3u2TgAGo4ABGbxeIhAuDvD57ACSyH4OBAuF6VP2DB+fyElI+MwAFlA4AwuZ9XsdVt1sG5tlVoD07LcanVGk0ni8cELZuz-iNyXEQeDITC4RF0Yj8iizOK3N4ERaZRL3BUXPb8USSWSWeqaXSGUzyc9NZzds95gtKVMyTxxFIYCYgmAfEA) for more context.
   
-- Root component must have the same id as the HTML element you want to mount the component to.
+- Root component must have the same `id` as the HTML element you want to mount the component to.
   (Depends on the algorithm we're using for mounting.)
 - A **component**'s local state management is considered a secondary feature.
   Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **init** function (see [example](./src/examples/use-state-example/StatefulCounter.js)).

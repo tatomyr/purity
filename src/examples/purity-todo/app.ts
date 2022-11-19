@@ -13,9 +13,15 @@ export type Image = {
   }
 }
 
+export type Subtask = {
+  checked: boolean
+  description: string
+}
+
 export type BaseTask = {
   id: string
   description: string
+  subtasks?: Subtask[]
   completed: boolean
   isImageLoading?: boolean
   createdAt: number
@@ -23,7 +29,7 @@ export type BaseTask = {
   image: Image
 }
 
-export type Task = BaseTask & { tmpFlag?: boolean }
+export type Task = BaseTask & {tmpFlag?: boolean}
 
 export type AppState = {
   view: ViewFilter

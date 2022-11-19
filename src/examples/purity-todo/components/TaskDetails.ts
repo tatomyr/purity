@@ -7,68 +7,19 @@ import {selectDetailedTask} from '../services/task-details.js'
 import {patchTask} from '../services/tasks.js'
 import {IMAGES} from '../config/images.js'
 import type {EventHandler} from '../../../purity.js'
-
-const TaskDetailsStyle = () => render`
-  <style id="task-details-style">
-    #task-details .modal-content {
-      height: calc(90vh - 3rem);
-    }
-
-    .task-details--wrapper {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .task-details--image .fullscreen-image {
-      height: 90vw;
-      max-height: 90vw;
-      
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-
-    .task-details--image .controls {
-      position: absolute;
-      bottom: 0;
-      padding: 8px;
-      display: flex;
-      justify-content: space-evenly;
-      width: 100%;
-    }
-
-    .task-details--image .controls button,
-    .task-details--image .controls label {
-      padding: 4px 16px;
-      background: #555;
-      color: white;
-      opacity: 0.75;
-      border-radius: 8px;
-    }
-
-    .task-details--description {
-      flex-grow: 1;
-    }
-
-    .task-details--description textarea {
-      width: 100%;
-      height: 100%;
-      padding: 4px 8px;
-    }
-
-  </style>
-`
+import {SMALL_BUTTON, SubtaskItem} from './SubtaskItem.js'
+import {ACTION_BUTTON} from './AppStyle.js'
+import {TaskDetailsStyle} from './TaskDetailsStyle.js'
 
 const makeChangeImage =
-  (direction: 'next' | 'previous'): EventHandler =>
+  (direction: 'nextPage' | 'previousPage' | 'current'): EventHandler =>
   async () => {
     const task = selectDetailedTask()
     patchTask({...task, isImageLoading: true})
     try {
       const image = await fetchAndNormalizeImages(
         task,
-        task.image.queries[`${direction}Page`]?.startIndex
+        direction === 'current' ? 1 : task.image.queries[direction]?.startIndex
       )
       await patchTask({...task, image})
     } catch (err) {
@@ -108,6 +59,20 @@ const handleCaptureImage: EventHandler = async ({target}) => {
   }
 }
 
+const handleEditTaskDescription: EventHandler = e => {
+  const task = selectDetailedTask()
+  console.log(e.target.value)
+  patchTask({id: task.id, description: sanitize(e.target.value)})
+}
+
+const handleAddSubtask: EventHandler = () => {
+  const task = selectDetailedTask()
+  patchTask({
+    id: task.id,
+    subtasks: [...(task.subtasks || []), {checked: false, description: ''}],
+  })
+}
+
 export const TaskDetails = (): string => {
   const task = selectDetailedTask()
 
@@ -122,22 +87,28 @@ export const TaskDetails = (): string => {
           }');"
         > 
           <div class="controls" id="controls">
+            <button ::click=${makeChangeImage('current')}>
+              ↻
+            </button>
+        
             ${
               task?.image.queries.previousPage?.startIndex !== undefined &&
               render`
-                <button ::click=${makeChangeImage('previous')}>
-                  Prev
+                <button ::click=${makeChangeImage('previousPage')}>
+                  ←
                 </button>
               `
             }
+            
             ${
               task?.image.queries.nextPage?.startIndex !== undefined &&
               render`
-                <button ::click=${makeChangeImage('next')}>
-                  Next
+                <button ::click=${makeChangeImage('nextPage')}>
+                  →
                 </button>
               `
             }
+
             <label for="capture">
               Capture
               <input
@@ -154,20 +125,24 @@ export const TaskDetails = (): string => {
       </section>
 
       <section class="task-details--description">
-        <!-- TODO: use debounce -->
+        <!-- TODO: use debounce  TODO: bound event handlers properly  -->
         <textarea 
           id="task-description-edit"
-          ::change=${e => {
-            console.log(e.target.value)
-            patchTask({id: task.id, description: sanitize(e.target.value)})
-          }}
+          ::change=${handleEditTaskDescription}
         >
           ${task?.description}
         </textarea>
-      </section>
-
-      <section class="task-details--controls">
-        <!-- TODO: implement -->
+        <div id="subtasks-list">
+          ${task.subtasks?.map(SubtaskItem)}
+        </div>
+        <div style="padding: 4px 8px; ">
+          <button 
+            class="${ACTION_BUTTON} ${SMALL_BUTTON}"
+            ::click=${handleAddSubtask}
+          >
+            ⊞
+          </button>
+        </div>
       </section>
     </div>
     ${TaskDetailsStyle()}
