@@ -1,8 +1,8 @@
 import {mount} from './app.js'
-import {App} from './components/App.js'
+import {root} from './components/root.js'
 import {env} from './env.js'
 
-mount(App)
+mount(root)
 
 if ('serviceWorker' in navigator && env === 'prod') {
   navigator.serviceWorker

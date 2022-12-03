@@ -2,7 +2,7 @@ export const codeSample = `import {init, render} from 'https://tatomyr.github.io
 
 const {mount, getState, setState} = init({count: 0})
 
-const App = () => render\`
+const root = () => render\`
   <div id="root">
     <pre id="counter">Counter: \${getState().count}</pre>
     <button ::click=\${() => setState(({count}) => ({count: count + 1}))}>
@@ -11,5 +11,5 @@ const App = () => render\`
   </div>
 \`
 
-mount(App)
+mount(root)
 `

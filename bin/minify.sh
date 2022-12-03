@@ -8,3 +8,9 @@ npx minify public/sanitize.js > public/sanitize.min.js
 npx minify public/visibility-sensor.js > public/visibility-sensor.min.js
 npx minify public/selection-insert.js > public/selection-insert.min.js
 npx minify public/lz-string.js > public/lz-string.min.js
+npx minify public/pipe.js > public/pipe.min.js
+npx minify public/router.js > public/router.min.js
+npx minify public/async.js > public/async.min.js
+npx minify public/drag.js > public/drag.min.js
+npx minify public/datetime.js > public/datetime.min.js
+npx minify public/once.js > public/once.min.js

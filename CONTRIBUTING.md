@@ -8,7 +8,7 @@ To serve the library locally on port 8081 run `bash bin/serve.sh`.
 
 Make sure your code is compiled (run `bash bin/compile.sh` to start compilation in watch mode; if you've changed a file that isn't a typescript file, you have to re-run this command).
 
-> **Tip:** You may use `bash bin/start.sh` to combine these two commands.
+> **Tip:** You may use `bash bin/start.sh` to combine those two commands.
 
 ## Code minification
 

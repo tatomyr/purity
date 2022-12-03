@@ -1,34 +1,28 @@
 import {init, render, makeAsync} from '../../index.js'
 
 // Initialization
-
 const {mount, rerender} = init({greeting: 'Hello World!'})
 
 const {useAsync} = makeAsync(rerender)
 
 // Constants
-
 const url = 'http://localhost:3000/counters/my-counter'
 
 // Hooks
-
-const useMyCounter = useAsync(
-  url,
-  () => fetch(url).then(res => res.json()),
-  {expiration: 100000}
-)
+const useMyCounter = useAsync(url, () => fetch(url).then(res => res.json()), {
+  expiration: 100000,
+})
 
 // UI components
-
-const App = () => {
+const root = () => {
   const {data, status, error, fire, unwrap, getCached} = useMyCounter.call({
     value: 0,
   })
 
   return render`
     <div id="root">
-      ${FunnyWrapper('Hello Async Counter')}
-      ${FunnyWrapper(render`
+      ${funnyWrapper('Hello Async Counter')}
+      ${funnyWrapper(render`
         <button 
           style="all: unset"
           ::click=${() => {
@@ -47,7 +41,7 @@ const App = () => {
             })
           }}}
         >
-          ${FunnyWrapper('+')}
+          ${funnyWrapper('+')}
         </button>
         <span 
           id="my-counter" 
@@ -58,16 +52,16 @@ const App = () => {
         >
           ${data?.value}
         </span>
-        <span id="loader" style="margin: 0 4px;">${
-          status === 'pending' && '💿'
-        }</span>
+        <span id="loader" style="margin: 0 4px;">
+          ${status === 'pending' && '💿'}
+        </span>
       `)}
-      ${status === 'error' && FunnyWrapper(error)}
+      ${status === 'error' && funnyWrapper(error)}
     </div>
   `
 }
 
-const FunnyWrapper = child => render`
+const funnyWrapper = child => render`
   <div 
     style="
       border: 1px solid lime; 
@@ -83,4 +77,4 @@ const FunnyWrapper = child => render`
   </div>
 `
 
-mount(App)
+mount(root)

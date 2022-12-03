@@ -1,4 +1,4 @@
-import {notEmpty, render} from '../../../purity.js'
+import {isTruthy, render} from '../../../purity.js'
 import {idEquals} from '../helpers.js'
 import {getState, setState} from '../app.js'
 import {Item} from '../types.js'
@@ -10,7 +10,7 @@ const Item = ({name, id}: Item) => render`
         chosenItems: [
           ...chosenItems,
           !chosenItems.some(idEquals(id)) && items.find(idEquals(id)),
-        ].filter(notEmpty),
+        ].filter(isTruthy),
       }))
     }}
   >
