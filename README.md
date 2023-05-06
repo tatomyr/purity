@@ -3,8 +3,8 @@
 ![check](https://github.com/tatomyr/purity/actions/workflows/check.yaml/badge.svg)
 ![deploy](https://github.com/tatomyr/purity/actions/workflows/deploy.yaml/badge.svg)
 
-Declarative UI library for using the most of today's Javascript.
-It doesn't require any bundlers or using npm at all, it fully leverages the native ECMAScript modules system.
+Declarative UI library for using most of today's Javascript.
+It doesn't require any bundlers or use npm at all, and it fully leverages the native ECMAScript modules system.
 
 **Purity** exposes two main instruments to manipulate an application:
 
@@ -16,7 +16,7 @@ It doesn't require any bundlers or using npm at all, it fully leverages the nati
 
 ### Basic Syntax
 
-To use **Purity** in a project you have to put in your **index.html** a root element where your app will be mounted into, and a script tag of `[type=module]` which points to the main js file:
+To use **Purity** in a project, you have to put in your **index.html** a root element where your app will be mounted into, and a script tag of `[type=module]` which points to the main js file:
 
 ```html
 <html>
@@ -27,7 +27,7 @@ To use **Purity** in a project you have to put in your **index.html** a root ele
 </html>
 ```
 
-Import **Purity** from a local file or a public URL, e. g.:
+Import **Purity** from a local file or a public URL, e.g.:
 
 ```js
 import {init, render} from 'https://tatomyr.github.io/purity/purity.js'
@@ -56,7 +56,7 @@ Finally, you have to mount the `root` to DOM:
 mount(root)
 ```
 
-That's it, the simplest possible Purity application is ready to be deployed!
+That's it! The simplest possible Purity application is ready to be deployed!
 
 ### Nested Components
 
@@ -94,17 +94,17 @@ You have to use `await delay(0)` before you can simulate an event after DOM gets
 
 There is also another substantial limitation to using event handlers.
 Do consider each handler an isolated function that can receive nothing from the upper scopes.
-For instance, the example below is wrong since we are trying to use `WRONG_COUNT`, which has been calculated in the component's scope, inside the click handler:
+For instance, the example below is wrong since we are trying to use `COUNT` (which has been calculated in the component's scope) inside the click handler:
 
 ```js
 const wrongCounter = () => {
-  const WRONG_COUNT = getState().count
+  const COUNT = getState().count
 
   return render`
     <div id="root">
-      <pre id="count">Wrong: ${WRONG_COUNT}</pre>
+      <pre id="count">Counter: ${COUNT}</pre>
       <button 
-        ::click=${() => setState(() => ({count: WRONG_COUNT + 1}))}
+        ::click=${() => setState(() => ({count: COUNT /* Incorrect value! */ + 1}))}
       >
         Increment
       </button>
@@ -119,34 +119,40 @@ The event binds on the first execution, but the _button_ doesn't get updated fur
 The correct example would look like this:
 
 ```js
-const correctCounter = () => render`
-  <div id="root">
-    <pre id="counter">Counter: ${getState().count}</pre>
-    <button ::click=${() => setState(({count}) => ({count: count + 1}))}>
-      Increment
-    </button>
-  </div>
-`
+const correctCounter = () => {
+  const COUNT = getState().count
+
+  return render`
+    <div id="root">
+      <pre id="counter">Counter: ${COUNT}</pre>
+      <button 
+        ::click=${() => setState(({count}) => ({count: count /* Correct value! */ + 1}))}
+      >
+        Increment
+      </button>
+    </div>
+  `
+}
 ```
 
-Please notice that `setState`'s callback receives current state as an argument.
+Please notice that `setState`'s callback receives the current state as an argument.
 
 ### Virtual DOM
 
 Bear in mind that each changeable node should have a unique `id` attribute defined on it.
 This allows the DOM re-renderer to decouple changed nodes and update only them.
-It has nothing to do with **components** which are just functions to calculate the HTML.
+It has nothing to do with **components**, which are just functions to calculate the HTML.
 
 You can think of your application as a tree where each tag with the `id` attribute is represented by a **virtual node**.
 The most important part of the virtual DOM is the **rerenderer**.
 It calculates new virtual DOM and traverses through each existing **virtual node**.
 If a new corresponding **virtual node** exists, and it shallowly differs from the previous one, the **rerenderer** replaces `innerHTML` of the **node** and attributes of a wrapper tag.
 
-This way **rerenderer** could preserve text inputs cursor position, scrolling progress, &c.
+This way, the **rerenderer** could preserve text inputs cursor position, scrolling progress, &c.
 At the same time, it allows a programmer to fully control the updating process.
 
 DOM nodes get re-rendered depending on how `id`s are placed across them.
-Basically, Purity will rerender everything inside the closest common ancestor with an `id` defined on it.
+Basically, **Purity** will re-render everything inside the closest common ancestor with an `id` defined on it.
 
 To get a better understanding, let's compare two applications that differ only by one `id` attribute.
 
@@ -254,7 +260,7 @@ const root = () => {
 mount(root)
 ```
 
-You may also check out [the imperative example](https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzgDMoIQ4ByAOloHoUCAPWgKwGdqAoHgYwjJO8BCAgBXZBjgBzbDADKMAIYxsmTguVrsJALxwUaABQIecOCJVRZKgF6FOAfUFSYALhoBaaugtWYCjIhF6kKgA2Wv6WhBRQXlIEpCjYeP5EAJR8DAxwAFSFRcUlpWXlFZVVpXyCwvAgKgDW2ADyyPzYcIYmmd0AfIgBdSJw-JFR3XAhAO5wigq9ATgwElDIcCbA6XAAjhKEAJ59+oPmlpbApJsAhOMRUbQAFiqcW3iZfecXlvePKng8O9MgBuAI-LQwAAqoGwkhgJn2R2yPyIATRJDgOTy1VxePxBMKFgEQlGQk6U0aLXanSWJPqYye2H4TQASthOJBhF1DDhOAMhpdriYbnzaBAml9wXAIgo4HEprM4ABRKDxEwAIgAElCoQAFKyqVb8wQELwauAAaiwHNo1mNKIucVofK5WimfOlzvtEn5vNtPs40pgTwoczi6OWCjWGzFXCESzR9NGawiUwABk8YDAwJwPLkVEFaLI0E8JAAjWiCEAMHCQTgMI2UQ5QBhgNZoQ7p2qk+DyJSqWwOJxTV6HDqbE5nAKQnTqEy9AVmTnBUJwGBQA6YOLQRL4bApEI7PBXUheAAMWUdG8OgouI1E1iHjigLjc0gMcBUMxUaDICn4J4TFTTJaBDXATEA5k2Q5N1sEdX5ezgE9SGuQwnzsF830kaQ4G8TYIgge5lGgFR5DtQdMKcVwcPgAB+Oi4HPBCZSIyISKgMjsAomwqNfGj3CmDDh3498YGlWcjWwBcp02BBhKwgTpE0IJkBCBIyEiaJkNPK90TGNRAJMOIpQhbQpJkpd5MokTsPcLxqDovxAlXDTwiiDR5TVXcvKgOjaBADlOC4uAGN8vTLAxHsGQoCB4B6WTvnJaTU0wfsdGfJxsmGJDrN42ylJkFc1MIbdvKgTAUNIT90osx0RggWUwJUctZWXGzFLElTXLK+Isj4SwVhjG19ygbsfgAHhPAA3Iw8H0DVYpgDV+mlSwJrAHA5oWp9OBWtaLgAEgQHcoFCmhAF4NwBqveoOAvGK9TzuoQBsYluhzAAVqQB4P+oEhjoU6ixKIY6qvO9M4Am8t+hMS1gd0zIJoYSGwYcn6DoRzbsFWn51s4RoHn6CbgH6Y7TqIBGiYm3GJix7GIYkbMhCxbGLg8Dx+AiYAWX0Y7avyrC0WZmnmfZUgAKeNHEfpmAhCF8GGBmmnuyTcR3BMJbsiAA)
+You may also check out [the imperative example](https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKTAM2hAEMYAVUbAXzmKghDgHIA6DgehQIA8OAKwDObAFDiAxhGQj4CEBACuyDHADm2GAGUYlbJhHa9BzDhz5CDALxwUaABQJxcOPPJQN5AF6ERAPoyqjAAXHAA1I4ANhBS5NF60ORaHB5evv5BKmpwAPx5cAAMAJTornDR5PIAwgAW2FIA1gAiBuFRsfGJMMmpVbUNzW0w2PmFpeVuMLQAkmqEAG4J4UVT7mAoyIThxAnG64TMUOGqBMQo2HjldCWS3NxwAFQvr2-vH59f3z+-H5IyOTwChNbAAeWQUjGdkcJTgNgAfIgKoD5HButERPC4NsAO5wHTaWEVHAwZRQZBwRzAa5wACOykIAE84YjkW43MBiFSAIQYkQcOrVal4Epwlwcjn8jjkPB4EUlADcFUlxmotBUMEcDOZd0ldAqBoYcABsjRaoAStgmNgRHVsdS1KykWr5qMoMtoo4LLgCER7E77o8-iHQ2Hwy9TUC4LIodiQeDIdhidIzfApEMmlaRJA5NCsLb4UiJfZuY4eTgBRAmuKVZVtHAjti8XAAKJQY6OABEAAkqFQAArufRkrEyAjhLuRAsCjyjvUco4cSu54zYyt1pdz5RYuyVtIjnd1mB1Zj4o6GknacmU-eiWTEg2p6Pk6LYgAGdRgMDAIlCD3ITYOA0NA6mUAAjDgZBAbgcEgERuBHFgmSgbgwHJNAmXfKM0S0XR9AyPwoF3OBqiZSEqWddl3BMEdk1hIsqQQHMth2OAYCgRlMCOaBTisC5tlpPAuWIVZbgXDimWotxUQUdJvCIwJgjUWxSNxcg0EYbQM0cV8Sg4E9cEcDNGizW1V2wBcZLTOBhOIbk7HkzJiOyEI4AAWk0WiDFhA9PAUrJlJgOtZPRclLBgepTJGfMYo4ZAIFxYlJVCmYQGwN0lgSbE8NMUZfIGSLMxiuAADJSqpKRwtwIrooMDyvPwnz9MKqLhgMKyaKa-KGLZZwnMU1y1EwVrivaMKOxqtrWjMDZWJORh9kMWyRMwNKMoWD0EnEyRJS6BIkigFJsD8wjApyeBHIIgKXKCut9p6PoTtGurRmxKrJrUaaYsNdFKB0o5a1Vbyeqo-rNmQbYFr2TFlp4hajjyDh0pEERjvGRsOx2twjRw+BmAgS7KMYktY2TV9MFy67nJEBcyccNgcBtO02EwXrizrS1rUrOpHAAZiKQWF1uFEbOY6nBqCowIah7iO2gTA7OINa5k2z0RuqWr2tGVSqea0Xo3W1sql-K5sTihKkrhTyXu17BdoLMkKQLKwoGwyUAB5hMWew8BsLsCZgLsETrNwPbAHBff99IRGD0OOQAEgQeH8nYQBeDcAar22DgcIWMhwhU7YQBsYmz8I2EABWpAHg-tgGCTgbzpCOgk55Hl1syra33KqkldT984A98CEUcCIk6VhgUDgJPSCgCh1XSxw27VhISluD3uEHvuy6pdaA3dT0t4iRgyEoGh58Xvfl+nLsSmvuADUlMO0JwEOH-7kQKGiaIEQ94AEST+G6Br1-mvd+CQv4DygHAbgL8H4D2UN+WQOdQhSGiMAZoNgk56zOsROgMDX5WmINpOo8c17gXgb0ZAeCOTh0jjSf2613LYBNsYPAcdX5uCTkbZhZseQ2DsGca0lw8BlQqu+AAMprdEmYrjhCnsfOeyYuGARYSvd899YFP2wFQte3sYHYSfEoEI3oICEzuEAA)
 (or alternatively [the declarative one](https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzgDMoIQ4ByAOloHoUCAPWgKwGdqAoHgYwjJO8BCAgBXZBiyFcBYnAC8cFGgAUASh5weDBnABUxk6bPmLlq9Zvm+g4fBABDANbYAgpwCeyfsrh1HBx8Qk1lAD5EHTgHEVjnABtEzgCEIhicGAkoZEDgPEwARwlCb3ClKIQYuFiheP4kxID1PGcYZwqqmtqE5M4AbQKAXTT6Wkb+obxhzBF2iU4ALhoweRQAc2pMQgooFakCUhRsPAze3pKyrR6L2hgAC1x1VvbOyL6U6dGVBHns5Y0TgSfj8bCcbiYNodIjaC53RowfgPF67aBdT6DEZpf6LFbUUjOYCJHLYbZwNHEOHw2q0Y7IJreIJyUJQam1c69YCkQIAQkmXxG4WqNIFNwuGR6WRyeRF8PGAqxM0wt1kpGwSIeK1eHQxctFTR1nQA3LoabVgvJCFpTarORyYhlJfojLY3e6PZ7DDoBPV4ItPD4-AEXO4vL5+MyQgptL7HLEnvxXAAlcGQYTYAI4VKVaK1bl87O0CCuYU9RIailQKABZDYADucAAotXoOoAEQACQAKt2AApwXGpQQEFbtuAAalknFoQ-ZVagtGz6c4mZU2Z6u1nHQBWfB24WnB6jwojd2jsyGpl044nCEN0lcX9UGaKgABg8YDAwMt9M4wMAtAbGgDwSAARhMlAMDgkCcAwO6UN4UAMGAORoN4b72H6qhxGkZqDiCYIQvigAK1IA8H-bDEhLEqS+KALwbgDVe5RtRrPgmz4oA2MSUY+2EUBA8AqFoHxyk+iBDlCbw7K2UCYDg6qaiQKgBuGfjqDkiSYEJubyciakvpo9xPMg6jItgSappwK7YJomj6LQ2AsGZEgwNg4p1PGeDcjyKjQs4AD8B5QBszgAF6EJwAD6ghSPAAC0gSJBAkwAMowNAzgbNggXBWFUCRdF0hwH5flwAADNSBatF54SJSlaVQBlWXzEFoXhVFkiFT5bwBc1OVtQVMB8BaV65LIrKYRcAA8nkAG6qHgSjtnxMDthEqqTWAODzYtzWcKtqq1AAJEgcQDEOwwkMdvk9R0LW5flHXwMVNB+dQRBXV5RVwG+cCTWBETqBOH2kKQsKTQw-0-fib3rShOBrTS03AHNBSLZSq2TcAUQHXAx1DsoSgqASRIkjg1BwAAZBTgSUgFIDgpwjVFSVlKaPavTg1jSMzQj8J-c5aV5DjSxLPwiTAEmSjHXJGrIuztS8zSqY6Q8sNgQLQiK79DCzbzmGSuIMVBBA-HaEAA))
 and [the complex useAsync example](./src/examples/async-counter/index.js) for advanced cases.
 
@@ -267,8 +273,8 @@ https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzg
 
 - Use uncontrolled text inputs and put them wisely, so they won't be re-rendered when the input value gets changed.
   Form elements like checkboxes and selects could be used either in a controlled or uncontrolled way.
-- Wrap every component that you want to be rerendered independently with a tag with a unique `id`.
-- Do not relay on any constants declared in a component's scope inside event handlers.
+- Wrap every component you want to be re-rendered independently with a tag with a unique `id`.
+- Do not rely on any constants declared in a component's scope inside event handlers.
   Each event handler should be considered completely isolated from the upper scope.
   The reason is that the Virtual DOM doesn't take into account any changes in event handlers.
   Albeit you do may use a data-specific `id` on the tag to change this, it is not recommended due to performance reasons.
@@ -277,10 +283,10 @@ https://tatomyr.github.io/purity/playground/#JYWwDg9gTgLgBAb2AO2DANHKBTZATbKAXzg
 - Root component must have the same `id` as the HTML element you want to mount the component to.
   (Depends on the algorithm we're using for mounting.)
 - A **component**'s local state management is considered a secondary feature.
-  Therefore it's not a part of the library. However, it could possibly be implemented using **rerender** method which is returned from the **init** function (see [example](./src/examples/use-state-example/StatefulCounter.js)).
+  Therefore it's not a part of the library. However, it could possibly be implemented using the **rerender** method which is returned from the **init** function (see [example](./src/examples/use-state-example/StatefulCounter.js)).
 - The library doesn't sanitize your inputs.
   Please do it by yourself or use the `sanitize.js` module.
-- Due to its asynchronous nature, Purity requires special testing for applications that use it.
+- Due to its asynchronous nature, **Purity** requires special testing for applications that use it.
   Make sure you make delay(0) after the DOM has changed (see examples in [purity.test.ts](./src/purity.test.ts)).
 
 ## Credits
@@ -299,7 +305,7 @@ The decision to use bare ES modules appears to be the consequence of listening t
 - [Stateful counters](./src/examples/use-state-example)
 - [ToDo application](https://github.com/tatomyr/reactive-todo)
 - [Async search](./src/examples/async-search)
-- [Multiple Applications in the same page](./src/examples/multiple-apps)
+- [Multiple Applications on the same page](./src/examples/multiple-apps)
 
 Please find the examples [here](https://tatomyr.github.io/purity/examples/)
 
