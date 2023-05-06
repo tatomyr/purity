@@ -11,7 +11,7 @@ import {Settings} from './Settings.js'
 import {TaskDetails} from './TaskDetails.js'
 import {TaskList} from './TaskList.js'
 
-export const App = (): string => render`
+export const root = (): string => render`
   <div id="root">
     ${Header()}
     ${TaskList()}

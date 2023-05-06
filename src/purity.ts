@@ -155,11 +155,11 @@ const ARGS_RE = /__\[(\d+)\]__/gm
 const BOUND_EVENTS_RE = /::(\w+)\s*=\s*__\[(\d+)\]__/gm
 
 // Helpers
-export const notEmpty = <T>(x: T | Rejected): x is T =>
+export const isTruthy = <T>(x: T | Rejected): x is T =>
   x !== undefined && x !== null && x !== false
 
 const clearFalsy = <T extends Verified>(x: T | Rejected): T | '' =>
-  notEmpty(x) ? x : ''
+  isTruthy(x) ? x : ''
 
 const joinIfArray = (x: Verified): Allowed =>
   Array.isArray(x) ? x.join('') : x
