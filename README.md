@@ -4,13 +4,9 @@
 ![deploy](https://github.com/tatomyr/purity/actions/workflows/deploy.yaml/badge.svg)
 
 Declarative UI library for using most of today's Javascript.
-It doesn't require any bundlers or use npm at all, and it fully leverages the native ECMAScript modules system.
+It doesn't require any bundlers or using **npm** at all, and it fully leverages the native ECMAScript modules system.
 
-**Purity** exposes two main instruments to manipulate an application:
-
-- `init` which initializes the app with a default state (application-wide)
-
-- `render` tag that wraps string templates that represent app components
+Check out our [Playground](https://tatomyr.github.io/purity/playground/) to see **Purity** in action.
 
 ## Usage
 
@@ -32,6 +28,12 @@ Import **Purity** from a local file or a public URL, e.g.:
 ```js
 import {init, render} from 'https://tatomyr.github.io/purity/purity.js'
 ```
+
+**Purity** exposes two main instruments to manipulate an application:
+
+- `init` which initializes the app with a default state (application-wide)
+
+- `render` tag that wraps string templates that represent app components
 
 Next, you init the app with some default state. This will return a bunch of methods you can use in your app:
 
@@ -298,7 +300,7 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 ## Examples of usage
 
-- [Dead simple example](./src/examples/dead-simple-example)
+- [Counter](./src/examples/counter)
 - [Simple todo](./src/examples/simple-todo-example)
 - [Asynchronous todo](./src/examples/async-todo-example)
 - [Colored input](./src/examples/colored-input-example)

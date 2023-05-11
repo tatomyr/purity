@@ -9,7 +9,7 @@ const handleInput: EventHandler = e => {
   setState(() => ({color: e.target.value}))
 }
 
-const Root = () => render`
+export const root = () => render`
   <div id="root">
     <input
       id="color"
@@ -19,4 +19,4 @@ const Root = () => render`
   </div>
 `
 
-mount(Root)
+mount(root)
