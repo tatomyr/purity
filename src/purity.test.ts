@@ -8,7 +8,6 @@ export type AnyObject = {[key: string]: any}
 
 describe('purity', () => {
   let app: App<AnyObject>, defaultState: AnyObject
-  const warn = console.warn
   beforeEach(() => {
     document.body.innerHTML = '<div id="root"></div>'
     console.warn = vi.fn()
@@ -18,7 +17,6 @@ describe('purity', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     app = undefined
-    console.warn = warn
     vi.restoreAllMocks()
   })
 

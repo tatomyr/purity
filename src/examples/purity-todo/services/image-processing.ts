@@ -46,7 +46,7 @@ export const getImgSrc = (img: ImageBitmap): string | undefined => {
  * Updated by Andrew Tatomyr
  */
 if (!('createImageBitmap' in window)) {
-  window.createImageBitmap = async function (data) {
+  ;(window as Window).createImageBitmap = async function (data) {
     return new Promise((resolve, reject) => {
       let dataURL
       if (data instanceof Blob) {

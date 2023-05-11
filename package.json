@@ -1,14 +1,13 @@
 {
   "name": "purity",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "We need package.json since npx jest doesn't work correctly",
   "main": "src/purity.ts",
   "type": "module",
   "scripts": {
     "json-server": "json-server --watch public/examples/json-server/db.json",
-    "jest": "NODE_OPTIONS=--experimental-vm-modules npx jest src/",
     "test": "vitest src/",
-    "coverage": "vitest src/ --coverage",
+    "coverage": "vitest run src/ --coverage",
     "prettier:check": "npx prettier --check \"**/*.{ts,html,yaml}\"",
     "prettier": "npx prettier --write \"./**/*.{ts,html,yaml}\"",
     "lint": "eslint src/"
@@ -24,20 +23,16 @@
   },
   "homepage": "https://github.com/tatomyr/purity#readme",
   "devDependencies": {
-    "@types/jest": "^28.1.4",
-    "@typescript-eslint/eslint-plugin": "^4.6.0",
-    "@typescript-eslint/parser": "^4.6.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@typescript-eslint/parser": "^5.59.5",
     "@vitest/coverage-c8": "^0.31.0",
     "cypress": "^10.9.0",
-    "eslint": "^7.12.1",
+    "eslint": "^8.40.0",
     "happy-dom": "^9.10.9",
-    "jest": "^28.1.2",
-    "jest-environment-jsdom": "^28.1.2",
     "json-server": "^0.17.1",
     "minify": "^6.0.0",
     "prettier": "^2.8.8",
-    "ts-jest": "^28.0.5",
-    "typescript": "^4.7.4",
+    "typescript": "^5.0.4",
     "vitest": "^0.31.0"
   }
 }

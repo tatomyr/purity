@@ -3,16 +3,16 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 import {push, registerRouter, Switch} from './router.js'
 import {render, init} from './purity.js'
 import {delay} from './delay.js'
+import {simulate} from '../test-utils.js'
 
 describe('router', () => {
-  const warn = console.warn
   beforeEach(() => {
     document.body.innerHTML = '<div id="root"></div>'
     console.warn = vi.fn()
   })
   afterEach(() => {
     document.body.innerHTML = ''
-    console.warn = warn
+    vi.restoreAllMocks()
   })
   it('switches between different views depending on the url state', async () => {
     const App = (): string => render`
@@ -32,17 +32,17 @@ describe('router', () => {
 
     push('#/a')
     // FIXME:
-    window.onhashchange()
+    simulate().navigation()
 
     expect(document.location.hash).toEqual('#/a')
     expect(document.getElementById('root')!.innerHTML).toEqual(
       '<a href="#/b">A</a>'
     )
 
-    document.querySelector('a')?.click()
+    simulate('a').click()
     // FIXME:
     await delay()
-    window.onhashchange()
+    simulate().navigation()
 
     expect(document.location.hash).toEqual('#/b')
     expect(document.getElementById('root')!.innerHTML).toEqual(

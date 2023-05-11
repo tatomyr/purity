@@ -1,19 +1,11 @@
-import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+import {describe, expect, it, vi} from 'vitest'
 
 import {mount, root} from './main.js'
 import {delay} from '../../index.js'
+import {setBeforeAndAfter, simulate} from '../../../test-utils.js'
 
 describe('router', () => {
-  beforeEach(async () => {
-    console.warn = vi.fn()
-    document.body.innerHTML = '<div id="root"></div>'
-    mount(root)
-    await delay()
-  })
-  afterEach(() => {
-    document.body.innerHTML = ''
-    vi.restoreAllMocks()
-  })
+  setBeforeAndAfter({root, mount})
 
   it('should match snapshot', () => {
     expect(document.querySelector('#root')?.outerHTML).toEqual(
@@ -21,10 +13,10 @@ describe('router', () => {
     )
   })
   it('should switch to alternative view and go back to default', async () => {
-    ;(document.querySelector('a') as HTMLAnchorElement).click()
-    // TODO: either abstract it away or or make it work without delay/onhashchange
+    simulate('a').click()
+    // TODO: try to make it work without delay/onhashchange
     await delay()
-    window.onhashchange()
+    simulate().navigation()
     await delay()
 
     expect(document.location.hash).toEqual('#/alternative')
@@ -32,8 +24,8 @@ describe('router', () => {
       '<div id="root"><div>Alternative view</div><button data-purity_flag="">← Back to default</button></div>'
     )
 
-    document.querySelector('button')?.dispatchEvent(new Event('click'))
-    window.onhashchange()
+    simulate('button').click()
+    simulate().navigation()
 
     expect(document.location.hash).toEqual('#/')
     expect(document.querySelector('#root')?.outerHTML).toEqual(
