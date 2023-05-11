@@ -1,4 +1,5 @@
-import {md5, sanitize} from '../../../index.js'
+import {sanitize} from '../../../index.js'
+import {md5} from '../../../md5.js'
 import {AppState, BaseTask, setState, state, Task} from '../app.js'
 import {IMAGES} from '../config/images.js'
 import {saveJSON} from './storage.js'

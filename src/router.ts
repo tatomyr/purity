@@ -8,9 +8,9 @@ let match: Match
 
 export const getParams = (): Match => match
 
-export const Switch = (routes: {
-  [path: string]: (match: Match) => string
-}): string | undefined => {
+export const Switch = (
+  routes: Record<string, (match: Match) => string>
+): string | undefined => {
   for (const path in routes) {
     const params = (path.match(/:(\w+)/g) || []).map(param => param.slice(1))
     const matchRe = new RegExp(path.replace(/:\w+/g, '(\\w+[\\w\\-\\.]*)'))

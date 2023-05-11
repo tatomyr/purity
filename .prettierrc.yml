@@ -4,4 +4,3 @@ semi: false
 singleQuote: true
 arrowParens: avoid
 bracketSpacing: false
-editor.formatOnSave: true

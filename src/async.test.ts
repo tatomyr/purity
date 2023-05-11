@@ -1,6 +1,8 @@
-import {delay} from './delay'
-import {makeAsync} from './async'
-import {Rerender} from './purity'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+
+import {delay} from './delay.js'
+import {makeAsync} from './async.js'
+import {Rerender} from './purity.js'
 
 describe('makeAsync', () => {
   let rerender: Rerender
@@ -12,15 +14,15 @@ describe('makeAsync', () => {
     unwrap: expect.any(Function),
   }
   beforeEach(() => {
-    rerender = jest.fn()
+    rerender = vi.fn()
     useAsync = makeAsync(rerender).useAsync
-    console.warn = jest.fn()
+    console.warn = vi.fn()
   })
   afterEach(() => {
     console.warn = warn
   })
   it('should contain the needed properties', () => {
-    const query = jest.fn()
+    const query = vi.fn()
     const useTest = useAsync('test', query)
     expect(query).toBeCalledTimes(0)
     expect(rerender).toBeCalledTimes(0)
@@ -30,7 +32,7 @@ describe('makeAsync', () => {
     })
   })
   it('should call the query', () => {
-    const query = jest.fn()
+    const query = vi.fn()
     const useTest = useAsync('test', query)
     const result = useTest.call()
     expect(query).toBeCalledTimes(1)
@@ -42,7 +44,7 @@ describe('makeAsync', () => {
     })
   })
   it('should use existing cache', () => {
-    const query = jest.fn()
+    const query = vi.fn()
     useAsync('test', query)
     useAsync('test', query)
     expect(console.warn).toBeCalledTimes(2)
@@ -82,7 +84,7 @@ describe('makeAsync', () => {
   })
   it('should return an error on failure and rerender', async () => {
     const error = console.error // UTILITY
-    console.error = jest.fn() // UTILITY
+    console.error = vi.fn() // UTILITY
 
     const query = () => Promise.reject('err')
     const useTest = useAsync('test', query)
@@ -105,7 +107,7 @@ describe('makeAsync', () => {
     console.error = error // UTILITY
   })
   it('should prevent race condition', async () => {
-    const query = jest.fn()
+    const query = vi.fn()
     const useTest = useAsync('test', query)
     useTest.call()
     const result2 = useTest.call()
@@ -122,9 +124,9 @@ describe('makeAsync', () => {
     })
   })
   it('should call mutation function', async () => {
-    const query = jest.fn()
+    const query = vi.fn()
     const useTest = useAsync('test', query)
-    const mutation = jest.fn()
+    const mutation = vi.fn()
     useTest.fire({
       mutation,
     })
@@ -134,7 +136,7 @@ describe('makeAsync', () => {
     expect(rerender).toBeCalledTimes(2)
   })
   it('should pre-populate with optimisticData on call', () => {
-    const query = jest.fn()
+    const query = vi.fn()
     const useTest = useAsync('test', query)
     const result = useTest.call('optimistic')
     expect(query).toBeCalledTimes(1)

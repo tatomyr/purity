@@ -1,17 +1,19 @@
-import {delay} from './delay'
-import {makeOnce} from './once'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+
+import {delay} from './delay.js'
+import {makeOnce} from './once.js'
 
 describe('once', () => {
   let once: ReturnType<typeof makeOnce>
-  let mockQuery: jest.Mock<Promise<void>, []>
+  let mockQuery
 
   beforeEach(() => {
     once = makeOnce()
-    mockQuery = jest.fn()
+    mockQuery = vi.fn()
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
+    vi.restoreAllMocks()
   })
 
   it('should call the query function once', async () => {

@@ -23,17 +23,17 @@ To use **Purity** in a project, you have to put in your **index.html** a root el
 </html>
 ```
 
-Import **Purity** from a local file or a public URL, e.g.:
-
-```js
-import {init, render} from 'https://tatomyr.github.io/purity/purity.js'
-```
-
-**Purity** exposes two main instruments to manipulate an application:
+**Purity** exposes two main methods to manipulate an application:
 
 - `init` which initializes the app with a default state (application-wide)
 
 - `render` tag that wraps string templates that represent app components
+
+Import them from the local file or a public URL, e.g.:
+
+```js
+import {init, render} from 'https://tatomyr.github.io/purity/purity.js'
+```
 
 Next, you init the app with some default state. This will return a bunch of methods you can use in your app:
 

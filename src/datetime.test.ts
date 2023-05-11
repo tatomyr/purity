@@ -1,4 +1,6 @@
-import {formatTime} from './datetime'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+
+import {formatTime} from './datetime.js'
 
 describe('formatTime', () => {
   it('should throw an error if input is not a number', () => {
