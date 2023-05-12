@@ -1,7 +1,7 @@
 import {render} from '../../index.js'
-import {getState} from '../playground.js'
+import {getState} from '../index.js'
 
-export const PlaygroundStyle = (): string => render`
+export const playgroundStyle = (): string => render`
   <style id="playground-style"> 
     .playground {
       display: flex;

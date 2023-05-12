@@ -7,17 +7,14 @@ import {fetchAndNormalizeImages} from '../services/images.js'
 import {resetInput} from '../services/input-form.js'
 import {patchTask, prepareTask} from '../services/tasks.js'
 
-const InputFormStyle = () => render`
+const inputFormStyle = () => render`
   <style id="task-form-style">
     form#task-form {
       width: 100%;
       max-width: 100%;
       height: 3rem;
       min-height: 3rem;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      box-shadow: 0px -4px 10px -2px;
     }
 
     form#task-form input {
@@ -57,7 +54,7 @@ const createTask: EventHandler = async e => {
   }
 }
 
-export const InputForm = (): string => render`
+export const inputForm = (): string => render`
   <form id="task-form" ::submit=${createTask}>
     <input
       name="task"
@@ -69,5 +66,5 @@ export const InputForm = (): string => render`
       autocomplete="off"
     />
   </form>
-  ${InputFormStyle()}
+  ${inputFormStyle()}
 `

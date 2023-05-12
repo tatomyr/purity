@@ -8,7 +8,7 @@ import {patchTask} from '../services/tasks.js'
 import {IMAGES} from '../config/images.js'
 import type {EventHandler} from '../../../purity.js'
 import {SMALL_BUTTON, SubtaskItem} from './SubtaskItem.js'
-import {ACTION_BUTTON} from './AppStyle.js'
+import {ACTION_BUTTON} from './app-style.js'
 import {TaskDetailsStyle} from './TaskDetailsStyle.js'
 
 const makeChangeImage =

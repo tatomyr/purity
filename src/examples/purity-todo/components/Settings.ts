@@ -1,8 +1,8 @@
 import {render} from '../../../index.js'
 import {downloadUserData, uploadUserData} from '../services/settings.js'
 import {lineContainerCSS, lineTextCSS} from './ModalStyle.js'
-import {ACTION_BUTTON} from './AppStyle.js'
-import {Version} from './Version.js'
+import {ACTION_BUTTON} from './app-style.js'
+import {version} from './version.js'
 
 const SettingsStyle = () => render`
   <style>
@@ -45,7 +45,7 @@ export const Settings = (): string => render`
       </label>
     </li>
     <li>
-      ${Version()}
+      ${version()}
     </li>
   </ul>
   ${SettingsStyle()}

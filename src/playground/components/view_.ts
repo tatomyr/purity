@@ -1,7 +1,7 @@
 import {render} from '../../index.js'
-import {getState} from '../playground.js'
+import {getState} from '../index.js'
 
-export const View = (): string => render`
+export const view = (): string => render`
   <html>
     <head>
       <title>Playground View</title>

@@ -1,4 +1,4 @@
-import type {Rerender} from './purity'
+import type {Rerender} from './purity.js'
 
 export type QueryStatus = 'initial' | 'pending' | 'success' | 'error'
 

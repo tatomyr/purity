@@ -43,7 +43,7 @@ export const initialState: AppState = {
   view: 'active',
   input: '',
   isSettingsModalOpen: false,
-  tasks: await retrieveJSON({tasks: []}),
+  tasks: retrieveJSON({tasks: []}),
 }
 
 export const state = {...initialState}
@@ -51,3 +51,13 @@ export const state = {...initialState}
 export const {mount, setState, rerender} = init(state)
 
 export const {useAsync} = makeAsync(rerender)
+
+window.visualViewport?.addEventListener('resize', () => {
+  const height = window.visualViewport?.height // window.innerHeight // Get the viewport height
+  document.body.style.height = height + 'px'
+  document.body.style.maxHeight = height + 'px'
+  document.body.scrollIntoView()
+
+});
+
+

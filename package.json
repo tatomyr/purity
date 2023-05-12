@@ -8,8 +8,8 @@
     "json-server": "json-server --watch public/examples/json-server/db.json",
     "test": "vitest src/",
     "coverage": "vitest run src/ --coverage",
-    "prettier:check": "npx prettier --check \"**/*.{ts,html,yaml}\"",
-    "prettier": "npx prettier --write \"./**/*.{ts,html,yaml}\"",
+    "prettier:check": "npx prettier --check \"**/*.{ts,html,yaml,css}\"",
+    "prettier": "npx prettier --write \"./**/*.{ts,html,yaml,css}\"",
     "lint": "eslint src/"
   },
   "repository": {

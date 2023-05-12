@@ -2,9 +2,9 @@ import {render} from '../../../index.js'
 import {state} from '../app.js'
 import {closeSettings} from '../services/settings.js'
 import {closeTaskDetails} from '../services/task-details.js'
-import {AppStyle} from './AppStyle.js'
-import {Header} from './Header.js'
-import {InputForm} from './InputForm.js'
+import {appStyle} from './app-style.js'
+import {header} from './header.js'
+import {inputForm} from './input-form.js'
 import {Modal} from './Modal.js'
 import {ModalStyle} from './ModalStyle.js'
 import {Settings} from './Settings.js'
@@ -13,10 +13,10 @@ import {TaskList} from './TaskList.js'
 
 export const root = (): string => render`
   <div id="root">
-    ${Header()}
+    ${header()}
     ${TaskList()}
-    ${InputForm()}
-    ${AppStyle()}
+    ${inputForm()}
+    ${appStyle()}
     <div id="settings">
       ${
         state.isSettingsModalOpen &&

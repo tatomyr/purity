@@ -14,3 +14,5 @@ npx minify public/async.js > public/async.min.js
 npx minify public/drag.js > public/drag.min.js
 npx minify public/datetime.js > public/datetime.min.js
 npx minify public/once.js > public/once.min.js
+
+npx minify public/reset.css > public/reset.min.css

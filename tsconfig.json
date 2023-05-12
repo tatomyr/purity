@@ -3,7 +3,7 @@
     "target": "ES2022",
     "module": "es2022",
     "isolatedModules": true,
-
+    "moduleResolution": "nodenext",
     "skipLibCheck": true,
 
     "outDir": "public",
