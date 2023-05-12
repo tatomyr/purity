@@ -38,4 +38,6 @@ jobs:
         if: always() # Also generate the report if tests are failing
         uses: davelosert/vitest-coverage-report-action@v1
       - name: E2E Tests
-        run: bash bin/e2e.sh
+        run: |
+          npx cypress install # FIXME: something is wrong with caching
+          bash bin/e2e.sh
