@@ -1,6 +1,6 @@
-import {render, init} from '../../purity.js'
+import {render, init} from '../../index.js'
 
-const {mount, getState, setState} = init({
+export const {mount, getState, setState} = init({
   count: 0,
 })
 
@@ -10,7 +10,7 @@ const decrement = () => setState(({count}) => ({count: count - 1}))
 
 const reset = () => setState(() => ({count: 0}))
 
-const Root = () => render`
+export const root = () => render`
   <div id="root">
     <h1>Counter</h1>
     <div id="count">${getState().count}</div>
@@ -21,5 +21,3 @@ const Root = () => render`
     </button>
   </div>
 `
-
-mount(Root)

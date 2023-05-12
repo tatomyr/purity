@@ -1,5 +1,4 @@
 /* eslint-disable */
-// @ts-nocheck
 
 // Source: https://github.com/pieroxy/lz-string/blob/master/libs/lz-string.js
 export const LZString = (function () {

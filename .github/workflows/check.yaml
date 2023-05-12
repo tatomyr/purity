@@ -10,9 +10,9 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Cache dependencies
+      - name: Cache Dependencies
         uses: actions/cache@v3
         with:
           path: ~/.npm
@@ -20,7 +20,7 @@ jobs:
           restore-keys: |
             npm-${{ hashFiles('package-lock.json') }}
             npm-
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           echo
           echo Using Node $(node -v), NPM $(npm -v)
@@ -30,34 +30,14 @@ jobs:
         run: bash bin/build.sh
       - name: Lint
         run: bash bin/lint.sh
+      - name: Prettier Check
+        run: npm run prettier:check
       - name: Unit Tests
-        run: npm run jest -- --silent --ci --testLocationInResults --bail --coverage
-      - name: E2E tests
-        run: bash bin/e2e.sh
-
-  coverage-report:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ hashFiles('package-lock.json') }}
-            npm-
-      - name: Install dependencies
-        run: |
-          echo
-          echo Using Node $(node -v), NPM $(npm -v)
-          echo
-          npm ci
+        run: npm run coverage
       - name: Coverage Report
-        uses: artiomtr/jest-coverage-report-action@v2.0.8
-        continue-on-error: true
-        with:
-          skip-step: none
-          annotations: none
-          test-script: npm run jest -- --silent --ci --json --testLocationInResults --outputFile=report.json --bail --coverage
+        if: always() # Also generate the report if tests are failing
+        uses: davelosert/vitest-coverage-report-action@v1
+      - name: E2E Tests
+        run: |
+          npx cypress install # FIXME: something is wrong with caching
+          bash bin/e2e.sh

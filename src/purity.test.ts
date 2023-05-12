@@ -1,22 +1,23 @@
-import type {App} from './purity'
-import {init, render} from './purity'
-import {delay} from './delay'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+
+import type {App} from './purity.js'
+import {init, render} from './purity.js'
+import {delay} from './delay.js'
 
 export type AnyObject = {[key: string]: any}
 
 describe('purity', () => {
   let app: App<AnyObject>, defaultState: AnyObject
-  const warn = console.warn
   beforeEach(() => {
     document.body.innerHTML = '<div id="root"></div>'
-    console.warn = jest.fn()
+    console.warn = vi.fn()
   })
   afterEach(() => {
     document.body.innerHTML = ''
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     app = undefined
-    console.warn = warn
+    vi.restoreAllMocks()
   })
 
   describe('counter app', () => {
@@ -46,7 +47,7 @@ describe('purity', () => {
   })
 
   it('should bind an event', async () => {
-    let eventHandler = jest.fn()
+    const eventHandler = vi.fn()
     const ClickableComponent = () => render`
       <button id="root" ::click=${eventHandler}>Click Me</button>
     `
@@ -61,8 +62,8 @@ describe('purity', () => {
     expect(eventHandler).toHaveBeenCalledTimes(1)
   })
   it('should bind multiple events', async () => {
-    const clickHandler = jest.fn()
-    const blurHandler = jest.fn()
+    const clickHandler = vi.fn()
+    const blurHandler = vi.fn()
     const ClickableComponent = () => render`
       <input type="text" id="root" ::click=${clickHandler} ::blur=${blurHandler} />
     `
@@ -84,7 +85,7 @@ describe('purity', () => {
     (does not have an id defined on it)
     and ignore other data-* attributes defined on that element
   `, async () => {
-    const clickHandler = jest.fn()
+    const clickHandler = vi.fn()
     const RootWithClickableElement = () => render`
       <div id="root">
         <button ::click=${clickHandler} data-other="something">

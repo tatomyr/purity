@@ -1,4 +1,6 @@
-import {sanitize} from './sanitize'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+
+import {sanitize} from './sanitize.js'
 
 describe('sanitize', () => {
   it('should remove potentially unsafe symbols', () => {

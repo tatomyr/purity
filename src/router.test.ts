@@ -1,23 +1,25 @@
-import {push, registerRouter, Switch} from './router'
-import {render, init} from './purity'
-import {delay} from './delay'
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+
+import {push, registerRouter, Switch} from './router.js'
+import {render, init} from './purity.js'
+import {delay} from './delay.js'
+import {simulate} from '../test-utils.js'
 
 describe('router', () => {
-  const warn = console.warn
   beforeEach(() => {
     document.body.innerHTML = '<div id="root"></div>'
-    console.warn = jest.fn()
+    console.warn = vi.fn()
   })
   afterEach(() => {
     document.body.innerHTML = ''
-    console.warn = warn
+    vi.restoreAllMocks()
   })
   it('switches between different views depending on the url state', async () => {
     const App = (): string => render`
       <div id="root">
         ${Switch({
-          '#/a': () => render`<a id="a" href="#/b">A</a>`,
-          '#/b': () => render`<a id="b" href="#/a">B</a>`,
+          '#/a': () => render`<a href="#/b">A</a>`,
+          '#/b': () => render`<a href="#/a">B</a>`,
         })}
       </div>
     `
@@ -29,17 +31,22 @@ describe('router', () => {
     expect(document.getElementById('root')!.innerHTML).toEqual('')
 
     push('#/a')
-    await delay()
+    // FIXME:
+    simulate().navigation()
+
     expect(document.location.hash).toEqual('#/a')
     expect(document.getElementById('root')!.innerHTML).toEqual(
-      '<a id="a" href="#/b">A</a>'
+      '<a href="#/b">A</a>'
     )
 
-    push('#/b')
-    expect(document.location.hash).toEqual('#/b')
+    simulate('a').click()
+    // FIXME:
     await delay()
+    simulate().navigation()
+
+    expect(document.location.hash).toEqual('#/b')
     expect(document.getElementById('root')!.innerHTML).toEqual(
-      '<a id="b" href="#/a">B</a>'
+      '<a href="#/a">B</a>'
     )
   })
 })

@@ -20,7 +20,7 @@
     "checkJs": false,
     "disableSizeLimit": false,
     // "generateCpuProfile": "profile.cpuprofile",
-    "types": ["jest"],
+    "types": [],
     "lib": ["ESNext", "DOM", "dom.iterable"],
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": true,
