@@ -1,15 +1,16 @@
 import {render, sanitize} from '../../../index.js'
-import type {Image} from '../app.js'
 import {handleError} from '../services/error.js'
 import {fetchAndNormalizeImages} from '../services/images.js'
 import {cropSquare, getImgSrc, keepRatio} from '../services/image-processing.js'
 import {selectDetailedTask} from '../services/task-details.js'
 import {patchTask} from '../services/tasks.js'
 import {IMAGES} from '../config/images.js'
+import {SMALL_BUTTON, subtaskItem} from './subtask-item.js'
+import {ACTION_BUTTON} from './app-style.js'
+import {taskDetailsStyle} from './task-details-style.js'
+
 import type {EventHandler} from '../../../purity.js'
-import {SMALL_BUTTON, SubtaskItem} from './SubtaskItem.js'
-import {ACTION_BUTTON} from './AppStyle.js'
-import {TaskDetailsStyle} from './TaskDetailsStyle.js'
+import type {Image} from '../app.js'
 
 const makeChangeImage =
   (direction: 'nextPage' | 'previousPage' | 'current'): EventHandler =>
@@ -73,7 +74,7 @@ const handleAddSubtask: EventHandler = () => {
   })
 }
 
-export const TaskDetails = (): string => {
+export const taskDetails = (): string => {
   const task = selectDetailedTask()
 
   return render`
@@ -133,7 +134,7 @@ export const TaskDetails = (): string => {
           ${task?.description}
         </textarea>
         <div id="subtasks-list">
-          ${task.subtasks?.map(SubtaskItem)}
+          ${task.subtasks?.map(subtaskItem)}
         </div>
         <div style="padding: 4px 8px; ">
           <button 
@@ -145,6 +146,6 @@ export const TaskDetails = (): string => {
         </div>
       </section>
     </div>
-    ${TaskDetailsStyle()}
+    ${taskDetailsStyle()}
   `
 }

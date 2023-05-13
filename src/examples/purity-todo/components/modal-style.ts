@@ -1,6 +1,6 @@
 import {render} from '../../../index.js'
 
-export const ModalStyle = (): string => render`
+export const modalStyle = (): string => render`
   <style>
     .modal-wrapper {
       position: fixed;

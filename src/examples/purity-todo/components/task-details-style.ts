@@ -1,7 +1,7 @@
 import {render} from '../../../index.js'
-import {SMALL_BUTTON} from './SubtaskItem.js'
+import {SMALL_BUTTON} from './subtask-item.js'
 
-export const TaskDetailsStyle = (): string => render`
+export const taskDetailsStyle = (): string => render`
   <style id="task-details-style">
     #task-details .modal-content {
       height: calc(90vh - 3rem);

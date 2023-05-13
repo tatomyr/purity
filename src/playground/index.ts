@@ -1,5 +1,5 @@
-import {init, makeAsync} from '../index.js'
-import {Playground} from './components/Playground.js'
+import {init, makeOnce} from '../index.js'
+import {playground} from './components/playground.js'
 
 // Suppressing the main output (iframe output remains):
 console.log = () => null
@@ -15,6 +15,6 @@ export const {mount, getState, setState, rerender} = init<PlaygroundState>({
   placeOverDisplay: 'none',
 })
 
-export const {useAsync} = makeAsync(rerender)
+export const once = makeOnce()
 
-mount(Playground)
+mount(playground)

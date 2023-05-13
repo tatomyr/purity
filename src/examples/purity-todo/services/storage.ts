@@ -6,11 +6,17 @@ export type JSONValue =
   | JSONValue[]
   | {[key: string]: JSONValue}
 
-export const retrieveJSON = async <D extends JSONValue>(obj: {
+export const retrieveJSON = <D extends JSONValue>(obj: {
   [key: string]: D
-}): Promise<D> => {
+}): D => {
   const [[key, defaultValue]] = Object.entries(obj)
-  return JSON.parse(window.localStorage.getItem(key) as string) || defaultValue
+  try {
+    return (
+      JSON.parse(window.localStorage.getItem(key) as string) || defaultValue
+    )
+  } catch (err) {
+    return defaultValue
+  }
 }
 
 export const saveJSON = async <T extends Record<string, JSONValue>>(

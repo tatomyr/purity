@@ -1,15 +1,16 @@
 import {render} from '../../../index.js'
-import type {EventHandler} from '../../../purity.js'
 import {state} from '../app.js'
 import {resetInput} from '../services/input-form.js'
 import {byInput, byStatus, deleteTask, patchTask} from '../services/tasks.js'
 import {
-  TaskItem,
+  taskItem,
   withDeleteButton,
   withItemDescription,
   withToggleButton,
-} from './TaskItem.js'
-import {TaskListStyle} from './TaskListStyle.js'
+} from './task-item.js'
+import {taskListStyle} from './task-list-style.js'
+
+import type {EventHandler} from '../../../purity.js'
 
 const handleClick: EventHandler = e => {
   withToggleButton(e.target)(({id, completed}) => {
@@ -25,13 +26,13 @@ const handleClick: EventHandler = e => {
   // })
 }
 
-export const TaskList = (): string => {
+export const taskList = (): string => {
   const tasks = state.tasks.filter(byInput(state)).filter(byStatus(state))
 
   return render`
     <ol id="task-list" ::click=${handleClick}>
-      ${tasks.map(TaskItem)}
+      ${tasks.map(taskItem)}
     </ol>
-    ${TaskListStyle()}
+    ${taskListStyle()}
   `
 }

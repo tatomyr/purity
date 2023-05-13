@@ -1,7 +1,9 @@
 import {render} from '../../../index.js'
-import {setState, state, Task, ViewFilter} from '../app.js'
+import {setState, state} from '../app.js'
 import {byInput, byStatus, groomTasks} from '../services/tasks.js'
-import {ACTION_BUTTON} from './AppStyle.js'
+import {ACTION_BUTTON} from './app-style.js'
+
+import type {Task, ViewFilter} from '../app.js'
 
 export type FilterOptionType = {value: ViewFilter; label: string}
 
@@ -15,7 +17,7 @@ const isChosen = (value: ViewFilter, tasks?: Task[]): boolean =>
         (value === 'completed' && completed)
     )
 
-export const NavItem = ({value, label}: FilterOptionType): string => render`
+export const navItem = ({value, label}: FilterOptionType): string => render`
   <li id="${value}">
     <button
       class="${ACTION_BUTTON} ${isChosen(value, state.tasks) && 'chosen'}"

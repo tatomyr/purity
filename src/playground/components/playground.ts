@@ -1,8 +1,8 @@
 import {makeDrag, render} from '../../index.js'
-import {setState} from '../playground.js'
-import {Editor, getEditor} from './Editor.js'
-import {PlaygroundStyle} from './PlaygroundStyle.js'
-import {View} from './View.js'
+import {setState} from '../index.js'
+import {editor, getEditor} from './editor.js'
+import {playgroundStyle} from './playground-style.js'
+import {view} from './view.js'
 
 const initDrag = makeDrag(e => {
   const startWidth = window.getComputedStyle(getEditor()).width
@@ -28,16 +28,16 @@ const initDrag = makeDrag(e => {
   }
 })
 
-export const Playground = (): string => render`
+export const playground = (): string => render`
   <div id="playground-root" class="playground">
-    ${Editor()}
+    ${editor()}
     <div class="resizer" >
       <div class="handler" ::mousedown=${initDrag}></div>
     </div>
     <div id="playground-view">
-      <iframe id="playground-iframe" srcdoc="${View()}"></iframe>
+      <iframe id="playground-iframe" srcdoc="${view()}"></iframe>
       <div id="place-over"></div>
     </div>
-    ${PlaygroundStyle()}
+    ${playgroundStyle()}
   </div>
 `

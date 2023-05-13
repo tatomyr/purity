@@ -1,6 +1,7 @@
 import {render} from '../../../index.js'
+import {ACTION_BUTTON} from './app-style.js'
+
 import type {EventHandler} from '../../../purity.js'
-import {ACTION_BUTTON} from './AppStyle.js'
 
 type ModalProps = {
   title: string
@@ -8,7 +9,7 @@ type ModalProps = {
   close: EventHandler
 }
 
-export const Modal = ({title, content, close}: ModalProps): string => render`
+export const modal = ({title, content, close}: ModalProps): string => render`
   <div
     class="modal-wrapper"
     ::click=${close}

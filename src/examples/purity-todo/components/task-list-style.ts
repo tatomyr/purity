@@ -1,19 +1,17 @@
 import {render} from '../../../index.js'
-import {ITEM_DESCRIPTION, TOGGLE_BUTTON} from './TaskItem.js'
+import {ITEM_DESCRIPTION, TOGGLE_BUTTON} from './task-item.js'
 
-export const TaskListStyle = (): string => render`
+export const taskListStyle = (): string => render`
   <style id="task-list-style">
     ol#task-list {
-      padding: 3rem 0;
-      width: 100%;
-      max-width: 100%;
+      overflow-y: auto;
+      flex-grow: 1;
+      min-height: 3rem;
     }
 
     ol#task-list .task-item {
       display: flex;
       border-bottom: 1px solid lightgrey;
-      height: 100%;
-      min-height: 100%;
       align-items: center;
       padding: 0;
     }

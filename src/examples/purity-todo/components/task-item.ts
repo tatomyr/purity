@@ -1,8 +1,9 @@
 import {render} from '../../../index.js'
 import {IMAGES} from '../config/images.js'
 import {openTaskDetails} from '../services/task-details.js'
+import {ACTION_BUTTON} from './app-style.js'
+
 import type {Task} from '../app.js'
-import {ACTION_BUTTON} from './AppStyle.js'
 
 export const TOGGLE_BUTTON = 'toggle-button'
 export const withToggleButton =
@@ -36,7 +37,7 @@ const formatDescription = (description: string): string => {
   return `${first}${rest.map(item => render`<span> ⊡ ${item}</span>`).join('')}`
 }
 
-export const TaskItem = ({
+export const taskItem = ({
   description,
   id,
   completed,

@@ -62,7 +62,8 @@ That's it! The simplest possible Purity application is ready to be deployed!
 
 ### Nested Components
 
-Since our components are merely bare functions that return a string, we can embed other functions called with some arguments, that return a string:
+As your DOM tree grows, you may want to extract some components.
+Since they are merely bare functions that return a string, we can embed other functions called with some arguments, that return a string:
 
 ```js
 const child = ({name}) => render`
@@ -70,12 +71,13 @@ const child = ({name}) => render`
 `
 
 const parent = () => render`
-  <div>
-    <h1>Welcome page</h1>
-    ${child({name: 'Guest'})}
-  </div>
+  <h1>Welcome page</h1>
+  ${child({name: 'Guest'})}
 `
 ```
+
+Yes, you may return several nodes from a component. 
+They don't necessarily have to be wrapped into one (except for the root one).
 
 ### Event Binding
 
@@ -138,6 +140,11 @@ const correctCounter = () => {
 ```
 
 Please notice that `setState`'s callback receives the current state as an argument.
+
+One more important thing to notice is that the `pre` tag has an `id` attribute defined. 
+This allows to only update its content without re-rendering other nodes that doesn't have visual changes. 
+This helps the `button` not to loose focus on each click.
+See more in the [Virtual DOM](#virtual-dom) section.
 
 ### Async Flow
 
