@@ -1,7 +1,7 @@
 import {render} from '../../../index.js'
-import {ITEM_DESCRIPTION, TOGGLE_BUTTON} from './TaskItem.js'
+import {ITEM_DESCRIPTION, TOGGLE_BUTTON} from './task-item.js'
 
-export const TaskListStyle = (): string => render`
+export const taskListStyle = (): string => render`
   <style id="task-list-style">
     ol#task-list {
       overflow-y: auto;

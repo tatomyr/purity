@@ -1,10 +1,10 @@
 import {render} from '../../../index.js'
 import {downloadUserData, uploadUserData} from '../services/settings.js'
-import {lineContainerCSS, lineTextCSS} from './ModalStyle.js'
+import {lineContainerCSS, lineTextCSS} from './modal-style.js'
 import {ACTION_BUTTON} from './app-style.js'
 import {version} from './version.js'
 
-const SettingsStyle = () => render`
+const settingsStyle = () => render`
   <style>
     ul.settings  li {
       border-bottom: 1px solid lightgrey;
@@ -24,7 +24,7 @@ const SettingsStyle = () => render`
   </style>
 `
 
-export const Settings = (): string => render`
+export const settings = (): string => render`
   <ul class="settings">
     <li>
       <p>Backup</p>
@@ -48,5 +48,5 @@ export const Settings = (): string => render`
       ${version()}
     </li>
   </ul>
-  ${SettingsStyle()}
+  ${settingsStyle()}
 `
