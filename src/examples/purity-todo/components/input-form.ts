@@ -22,6 +22,7 @@ const inputFormStyle = () => render`
       height: 100%;
       background-color: #303030;
       color: #eee;
+      border-radius: 0;
     }
 
   </style>
