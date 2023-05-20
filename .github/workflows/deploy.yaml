@@ -11,17 +11,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: |
-          echo
-          echo Using Node $(node -v), NPM $(npm -v)
-          echo
-          npm ci
-
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Instal Dependencies
+        run: npm ci
       - name: Build
         run: bash bin/build.sh
-
       - name: Publish to Github Pages
         run: |
           git config --local user.email "action@github.com"

@@ -1,8 +1,8 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
-import type {App} from './purity.js'
 import {init, render} from './purity.js'
 import {delay} from './delay.js'
+import type {App} from './purity.js'
 
 export type AnyObject = {[key: string]: any}
 

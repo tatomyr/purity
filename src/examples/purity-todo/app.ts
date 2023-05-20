@@ -1,6 +1,6 @@
 import {init, makeAsync} from '../../index.js'
-import {QueryType} from './services/google-api.js'
-import {retrieveJSON} from './services/storage.js'
+import {get} from './services/storage.js'
+import type {QueryType} from './services/google-api.js'
 
 export type ViewFilter = 'active' | 'completed'
 
@@ -43,7 +43,7 @@ export const initialState: AppState = {
   view: 'active',
   input: '',
   isSettingsModalOpen: false,
-  tasks: retrieveJSON({tasks: []}),
+  tasks: get({tasks: []}).tasks,
 }
 
 export const state = {...initialState}

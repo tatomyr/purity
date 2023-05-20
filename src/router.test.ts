@@ -1,9 +1,9 @@
 import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
+import {simulate} from '../test-utils.js'
 import {push, registerRouter, Switch} from './router.js'
 import {render, init} from './purity.js'
 import {delay} from './delay.js'
-import {simulate} from '../test-utils.js'
 
 describe('router', () => {
   beforeEach(() => {

@@ -1,7 +1,8 @@
 import {md5, sanitize} from '../../../index.js'
-import {AppState, BaseTask, setState, state, Task} from '../app.js'
+import {setState, state} from '../app.js'
 import {IMAGES} from '../config/images.js'
-import {saveJSON} from './storage.js'
+import {put} from './storage.js'
+import type {AppState, BaseTask, Task} from '../app.js'
 
 const makeId = (description: string): string =>
   md5(description.trim().toLowerCase())
@@ -33,12 +34,12 @@ export const patchTask = (patch: Partial<Task> & Pick<Task, 'id'>): void => {
         : task
     ),
   }))
-  saveJSON<{tasks: BaseTask[]}>({tasks: groomTasks(state.tasks)})
+  put({tasks: groomTasks(state.tasks)})
 }
 
 export const deleteTask = (id: string): void => {
   setState(({tasks}) => ({tasks: tasks.filter(task => task.id !== id)}))
-  saveJSON<{tasks: BaseTask[]}>({tasks: groomTasks(state.tasks)})
+  put({tasks: groomTasks(state.tasks)})
 }
 
 export const byInput =

@@ -2,36 +2,22 @@ name: Check
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
     branches:
       - main
 
 jobs:
-  check:
+  code-quality:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-      - name: Cache Dependencies
-        uses: actions/cache@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ hashFiles('package-lock.json') }}
-            npm-
-      - name: Install Dependencies
-        run: |
-          echo
-          echo Using Node $(node -v), NPM $(npm -v)
-          echo
-          npm ci
+          node-version: 18
+          cache: 'npm'
+      - name: Instal Dependencies
+        run: npm ci
       - name: Build
         run: bash bin/build.sh
-      - name: Lint
-        run: bash bin/lint.sh
-      - name: Prettier Check
-        run: npm run prettier:check
       - name: Unit Tests
         run: npm run coverage
       - name: Coverage Report
@@ -41,3 +27,19 @@ jobs:
         run: |
           npx cypress install # FIXME: something is wrong with caching
           bash bin/e2e.sh
+
+  code-style:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Instal Dependencies
+        run: npm ci
+      - name: Lint
+        run: bash bin/lint.sh
+      - name: Prettier Check
+        run: npm run prettier:check

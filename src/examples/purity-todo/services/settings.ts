@@ -1,10 +1,10 @@
-import type {EventHandler} from '../../../purity.js'
 import {setState, state} from '../app.js'
-import type {BaseTask} from '../app.js'
 import {handleError} from './error.js'
-import {saveJSON} from './storage.js'
+import {put} from './storage.js'
 import {groomTasks} from './tasks.js'
 import {download, textFileReader} from './text-file-manager.js'
+import type {BaseTask} from '../app.js'
+import type {EventHandler} from '../../../purity.js'
 
 export const downloadUserData = async (): Promise<void> => {
   try {
@@ -30,7 +30,7 @@ export const uploadUserData: EventHandler = async ({target: {files}}) => {
       )
     ) {
       setState(() => ({tasks}))
-      saveJSON({tasks})
+      put({tasks})
       closeSettings()
     }
   } catch (err) {

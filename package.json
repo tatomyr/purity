@@ -28,6 +28,7 @@
     "@vitest/coverage-c8": "^0.31.0",
     "cypress": "^10.9.0",
     "eslint": "^8.40.0",
+    "eslint-plugin-import": "^2.27.5",
     "happy-dom": "^9.10.9",
     "json-server": "^0.17.1",
     "minify": "^6.0.0",

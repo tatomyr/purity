@@ -2,7 +2,7 @@ import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
 
 import {delay} from './delay.js'
 import {makeAsync} from './async.js'
-import {Rerender} from './purity.js'
+import type {Rerender} from './purity.js'
 
 describe('makeAsync', () => {
   let rerender: Rerender

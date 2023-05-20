@@ -1,5 +1,6 @@
 import {makeDrag, render} from '../../index.js'
 import {setState} from '../index.js'
+import {put} from '../services/storage.js'
 import {editor, getEditor} from './editor.js'
 import {playgroundStyle} from './playground-style.js'
 import {view} from './view.js'
@@ -22,7 +23,7 @@ const initDrag = makeDrag(e => {
 
     return () => {
       console.log('drag:stop', width)
-      localStorage.playgroundEditorWidth = width
+      put({editorWidth: width})
       setState(() => ({placeOverDisplay: 'none'}))
     }
   }

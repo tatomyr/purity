@@ -1,6 +1,7 @@
 import {render} from '../../../purity.js'
-import {Item, setState} from '../app.js'
+import {setState} from '../app.js'
 import {deleteItem, getItems, toggleItem} from '../api.js'
+import type {Item} from '../app.js'
 
 export const ListItem = ({
   id,

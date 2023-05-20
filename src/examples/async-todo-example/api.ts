@@ -1,4 +1,4 @@
-import {Item} from './app.js'
+import type {Item} from './app.js'
 
 const BASE_URL = 'http://localhost:3000/items'
 
