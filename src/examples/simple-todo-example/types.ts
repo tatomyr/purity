@@ -1,5 +1,5 @@
 export type Item = {
-  id: string
-  text: string
-  checked: boolean
+	id: string
+	text: string
+	checked: boolean
 }

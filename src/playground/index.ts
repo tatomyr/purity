@@ -6,13 +6,13 @@ console.log = () => null
 console.warn = () => null
 
 export type PlaygroundState = {
-  code: string
-  placeOverDisplay: 'initial' | 'none'
+	code: string
+	placeOverDisplay: 'initial' | 'none'
 }
 
 export const {mount, getState, setState, rerender} = init<PlaygroundState>({
-  code: '',
-  placeOverDisplay: 'none',
+	code: '',
+	placeOverDisplay: 'none',
 })
 
 export const once = makeOnce()

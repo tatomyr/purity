@@ -4,10 +4,10 @@ import {deleteItem, getItems, toggleItem} from '../api.js'
 import type {Item} from '../app.js'
 
 export const ListItem = ({
-  id,
-  text,
-  checked,
-  justAdded,
+	id,
+	text,
+	checked,
+	justAdded,
 }: Item): string => render`
   <li
     id="${id}"
@@ -18,42 +18,42 @@ export const ListItem = ({
       type="checkbox"
       ${checked ? 'checked' : ''}
       ::change=${async e => {
-        const {checked} = e.target
-        setState(() => ({spinner: true}))
+				const {checked} = e.target
+				setState(() => ({spinner: true}))
 
-        try {
-          const toggledItem = await toggleItem(id, checked)
+				try {
+					const toggledItem = await toggleItem(id, checked)
 
-          setState(({items}) => ({
-            items: items.map(item => (item.id === id ? toggledItem : item)),
-          }))
-        } catch (err) {
-          window.alert((err as Error).message)
-        } finally {
-          setState(() => ({
-            spinner: false,
-          }))
-        }
-      }}
+					setState(({items}) => ({
+						items: items.map(item => (item.id === id ? toggledItem : item)),
+					}))
+				} catch (err) {
+					window.alert((err as Error).message)
+				} finally {
+					setState(() => ({
+						spinner: false,
+					}))
+				}
+			}}
     />
     <span>${text}</span>
     <button
       type="button"
       ::click=${async () => {
-        setState(() => ({spinner: true}))
+				setState(() => ({spinner: true}))
 
-        try {
-          await deleteItem(id)
-          const items = await getItems()
-          setState(() => ({items}))
-        } catch (err) {
-          window.alert((err as Error).message)
-        } finally {
-          setState(() => ({
-            spinner: false,
-          }))
-        }
-      }}
+				try {
+					await deleteItem(id)
+					const items = await getItems()
+					setState(() => ({items}))
+				} catch (err) {
+					window.alert((err as Error).message)
+				} finally {
+					setState(() => ({
+						spinner: false,
+					}))
+				}
+			}}
     >
       x
     </button>

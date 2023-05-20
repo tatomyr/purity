@@ -19,23 +19,23 @@ export const root = (): string => render`
     ${appStyle()}
     <div id="settings">
       ${
-        state.isSettingsModalOpen &&
-        modal({
-          title: 'Settings',
-          content: settings(),
-          close: closeSettings,
-        })
-      }
+				state.isSettingsModalOpen &&
+				modal({
+					title: 'Settings',
+					content: settings(),
+					close: closeSettings,
+				})
+			}
     </div>
     <div id="task-details">
       ${
-        state.taskDetailId &&
-        modal({
-          title: 'Details',
-          content: taskDetails(),
-          close: closeTaskDetails,
-        })
-      }
+				state.taskDetailId &&
+				modal({
+					title: 'Details',
+					content: taskDetails(),
+					close: closeTaskDetails,
+				})
+			}
     </div>
     ${modalStyle()}
   </div>

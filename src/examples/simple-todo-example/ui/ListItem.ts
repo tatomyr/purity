@@ -8,21 +8,21 @@ export const ListItem = ({id, text, checked}: Item): string => render`
       type="checkbox"
       ${checked ? 'checked' : ''}
       ::change=${() => {
-        setState(({items}) => ({
-          items: items.map(item =>
-            item.id === id ? {...item, checked: !item.checked} : item
-          ),
-        }))
-      }}
+				setState(({items}) => ({
+					items: items.map(item =>
+						item.id === id ? {...item, checked: !item.checked} : item
+					),
+				}))
+			}}
     />
     <span>${text}</span>
     <button
       type="button"
       ::click=${() => {
-        setState(({items}) => ({
-          items: items.filter(item => item.id !== id),
-        }))
-      }}
+				setState(({items}) => ({
+					items: items.filter(item => item.id !== id),
+				}))
+			}}
     >
       x
     </button>

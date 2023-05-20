@@ -8,18 +8,18 @@ import {ChosenItems} from './ChosenItems.js'
 import type {EventHandler} from '../../../purity.js'
 
 const handleInput: EventHandler = debounce(async e => {
-  const query = e.target.value
-  if (query) {
-    setState(() => ({isLoading: true}))
-    try {
-      const items = await fakeEndpoint(query)
-      setState(() => ({items}))
-    } catch (err) {
-      setState(() => ({error: (err as Error).message}))
-    } finally {
-      setState(() => ({isLoading: false}))
-    }
-  }
+	const query = e.target.value
+	if (query) {
+		setState(() => ({isLoading: true}))
+		try {
+			const items = await fakeEndpoint(query)
+			setState(() => ({items}))
+		} catch (err) {
+			setState(() => ({error: (err as Error).message}))
+		} finally {
+			setState(() => ({isLoading: false}))
+		}
+	}
 }, 500)
 
 export const Root = (): string => render`

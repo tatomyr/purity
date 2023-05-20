@@ -1,7 +1,7 @@
 import {render, init} from '../../index.js'
 
 export const {mount, getState, setState} = init({
-  count: 0,
+	count: 0,
 })
 
 const increment = () => setState(({count}) => ({count: count + 1}))

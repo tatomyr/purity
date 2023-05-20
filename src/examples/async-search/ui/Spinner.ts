@@ -6,17 +6,17 @@ import {getState} from '../app.js'
 export const Spinner = () => render`
   <span id="status">
     ${
-      getState().isLoading &&
-      render`
+			getState().isLoading &&
+			render`
         <img
           src="./spinner.svg"
           alt="spinner"
           class="spinner"
         />
       `
-      // render`
-      //   <div class="spinner"></div>
-      // `
-    }
+			// render`
+			//   <div class="spinner"></div>
+			// `
+		}
   </span>
 `
