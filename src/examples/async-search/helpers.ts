@@ -1,4 +1,4 @@
-import {Item} from './types.js'
+import type {Item} from './types.js'
 
 const items: Item[] = [
   {id: 1, name: 'Andrew'},

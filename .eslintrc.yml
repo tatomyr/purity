@@ -4,12 +4,16 @@ env:
 extends:
   - 'eslint:recommended'
   - 'plugin:@typescript-eslint/recommended'
+  - 'plugin:import/errors'
+  - 'plugin:import/warnings'
+  - 'plugin:import/typescript'
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 12
   sourceType: module
 plugins:
   - '@typescript-eslint'
+  - import
 rules:
   linebreak-style:
     - error
@@ -20,3 +24,14 @@ rules:
   '@typescript-eslint/no-unused-vars': off
   '@typescript-eslint/no-inferrable-types': warn
   no-empty: warn
+  '@typescript-eslint/consistent-type-imports': 
+    - error
+    - prefer: type-imports
+  import/order: 
+    - error
+    - groups:
+        - "external"
+        - "parent"
+        - "sibling"
+        - "type"
+  import/no-unresolved: off

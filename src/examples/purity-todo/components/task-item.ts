@@ -2,8 +2,8 @@ import {render} from '../../../index.js'
 import {IMAGES} from '../config/images.js'
 import {openTaskDetails} from '../services/task-details.js'
 import {ACTION_BUTTON} from './app-style.js'
-
 import type {Task} from '../app.js'
+
 
 export const TOGGLE_BUTTON = 'toggle-button'
 export const withToggleButton =

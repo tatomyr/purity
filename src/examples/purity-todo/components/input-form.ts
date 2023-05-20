@@ -1,11 +1,11 @@
 import {render, sanitize} from '../../../index.js'
-import type {EventHandler} from '../../../purity.js'
 import {setState, state} from '../app.js'
 import {IMAGES} from '../config/images.js'
 import {handleError} from '../services/error.js'
 import {fetchAndNormalizeImages} from '../services/images.js'
 import {resetInput} from '../services/input-form.js'
 import {patchTask, prepareTask} from '../services/tasks.js'
+import type {EventHandler} from '../../../purity.js'
 
 const inputFormStyle = () => render`
   <style id="task-form-style">

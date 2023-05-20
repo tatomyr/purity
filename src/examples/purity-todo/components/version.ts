@@ -1,8 +1,8 @@
 import {render} from '../../../index.js'
 import {useAsync} from '../app.js'
 import {ACTION_BUTTON} from './app-style.js'
-
 import type {JSONValue} from '../services/storage.js'
+
 
 const extractVersion = (name?: string): string => {
   const [version] = name?.match(/\d+.\d+/) || ['No version specified']

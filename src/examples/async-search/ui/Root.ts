@@ -1,12 +1,11 @@
-import {render} from '../../../purity.js'
-import type {EventHandler} from '../../../purity.js'
-import {debounce} from '../../../debounce.js'
+import {render, debounce} from '../../../index.js'
 import {setState} from '../app.js'
+import {fakeEndpoint} from '../helpers.js'
 import {SuggestionsList} from './SuggestionsList.js'
 import {ErrorBanner} from './ErrorBanner.js'
 import {Spinner} from './Spinner.js'
 import {ChosenItems} from './ChosenItems.js'
-import {fakeEndpoint} from '../helpers.js'
+import type {EventHandler} from '../../../purity.js'
 
 const handleInput: EventHandler = debounce(async e => {
   const query = e.target.value

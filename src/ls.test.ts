@@ -20,7 +20,7 @@ describe('ls', () => {
     it('writes, reads and removes data in localStorage', () => {
 
       const data = {name: 'John', age: 25}
-      storage.set(data)
+      storage.put(data)
       expect(storage.get()).toEqual(data)
       ;storage.drop()
     expect(storage.get()).toEqual({})
@@ -32,8 +32,8 @@ describe('ls', () => {
       expect(result).toEqual({})
     })
 
-    it('should get default values for fields not set in localStorage', () => {
-      storage.set({name: 'John'})
+    it('should get default values for fields not put in localStorage', () => {
+      storage.put({name: 'John'})
       const result = storage.get({age: 42})
       expect(result).toEqual({name: 'John', age: 42})
     })
@@ -47,7 +47,7 @@ describe('ls', () => {
 
 it('creates new storage wrapper', () => {
   const storage = ls('myKey')
-  expect(Object.keys(storage)).toEqual(['get', 'set', 'drop'])
+  expect(Object.keys(storage)).toEqual(['get', 'put', 'drop'])
 })
 
 })

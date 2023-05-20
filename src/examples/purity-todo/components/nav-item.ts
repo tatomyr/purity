@@ -2,8 +2,8 @@ import {render} from '../../../index.js'
 import {setState, state} from '../app.js'
 import {byInput, byStatus, groomTasks} from '../services/tasks.js'
 import {ACTION_BUTTON} from './app-style.js'
-
 import type {Task, ViewFilter} from '../app.js'
+
 
 export type FilterOptionType = {value: ViewFilter; label: string}
 

@@ -1,3 +1,3 @@
 import {ls} from '../../index.js'
 
-export const storage = ls<{ editorWidth: string }>('purity-playground')
+export const {get, put, drop} = ls<{ editorWidth: string }>('purity-playground')

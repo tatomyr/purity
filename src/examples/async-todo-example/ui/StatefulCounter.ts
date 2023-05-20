@@ -1,14 +1,14 @@
 import {render} from '../../../purity.js'
+import {setState} from '../app.js'
 import {useState} from './useState.js'
 import {createOnMount} from './onMount.js'
-import {setState} from '../app.js'
 
 const onMount = createOnMount()
 
-let state = {count: 0}
+const state = {count: 0}
 
 export const StatefulCounter = ({id}: {id: string}) => {
-  let setCount = useState(state)
+  const setCount = useState(state)
 
   onMount(async () => {
     setState(() => ({spinner: true}))

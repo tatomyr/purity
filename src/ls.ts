@@ -12,7 +12,7 @@ export const ls = <D extends Record<string, unknown>>(key: string) => {
     }
   }
 
-  const set = async <P extends Partial<D>>(data: P): Promise<void> => {
+  const put = async <P extends Partial<D>>(data: P): Promise<void> => {
     localStorage.setItem(key, JSON.stringify({...get(), ...data}))
   }
 
@@ -22,7 +22,7 @@ export const ls = <D extends Record<string, unknown>>(key: string) => {
 
   return {
     get,
-    set,
+    put,
     drop,
   }
 }

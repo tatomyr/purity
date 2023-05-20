@@ -233,8 +233,10 @@ To get a better understanding, let's compare two applications that differ only b
 
 ```js
 const noId = () => render`
-  <div id="root">
-    <span>${getState().count}</span>
+  <div id="root"> <!-- The entire root will be re-rendered as it's the closest `id` to the changes -->
+    <span>
+      ${getState().count} <!-- The actual changes -->
+    </span>
     <button 
       ::click=${({count}) => setState({count: count + 1})}
     >
@@ -245,7 +247,9 @@ const noId = () => render`
 
 const withId = () => render`
   <div id="root">
-    <span id="count">${getState().count}</span>
+    <span id="count"> <!-- Only this element will be re-rendered -->
+      ${getState().count}
+    </span>
     <button 
       ::click=${({count}) => setState({count: count + 1})}
     >

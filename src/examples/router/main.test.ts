@@ -1,8 +1,8 @@
 import {describe, expect, it, vi} from 'vitest'
 
-import {mount, root} from './main.js'
 import {delay} from '../../index.js'
 import {setBeforeAndAfter, simulate} from '../../../test-utils.js'
+import {mount, root} from './main.js'
 
 describe('router', () => {
   setBeforeAndAfter({root, mount})

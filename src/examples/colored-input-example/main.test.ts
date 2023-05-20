@@ -1,7 +1,7 @@
 import {describe, expect, it, vi} from 'vitest'
 
-import {mount, root} from './main.js'
 import {setBeforeAndAfter, simulate} from '../../../test-utils.js'
+import {mount, root} from './main.js'
 
 describe('colored input example', () => {
   setBeforeAndAfter({root, mount})

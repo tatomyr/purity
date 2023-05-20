@@ -1,7 +1,7 @@
 import {describe, expect, it, vi} from 'vitest'
 
-import {mount, getState, root} from './main.js'
 import {setBeforeAndAfter, simulate} from '../../../test-utils.js'
+import {mount, getState, root} from './main.js'
 
 describe('counter', () => {
   setBeforeAndAfter({root, mount})

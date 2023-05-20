@@ -9,8 +9,8 @@ import {
   withToggleButton,
 } from './task-item.js'
 import {taskListStyle} from './task-list-style.js'
-
 import type {EventHandler} from '../../../purity.js'
+
 
 const handleClick: EventHandler = e => {
   withToggleButton(e.target)(({id, completed}) => {
