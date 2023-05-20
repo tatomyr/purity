@@ -43,7 +43,7 @@ export const initialState: AppState = {
   view: 'active',
   input: '',
   isSettingsModalOpen: false,
-  tasks: get({tasks: []}).tasks 
+  tasks: get({tasks: []}).tasks,
 }
 
 export const state = {...initialState}

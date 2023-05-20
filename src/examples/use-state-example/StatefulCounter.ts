@@ -1,7 +1,7 @@
 import {render} from '../../index.js'
 import {useState} from './useState.js'
 import {Button} from './Button.js'
-import type { Actions} from './Button.js';
+import type {Actions} from './Button.js'
 import type {EventHandler} from '../../purity.js'
 
 export type StatefulCounterProps = {id: string}

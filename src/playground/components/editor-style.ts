@@ -1,5 +1,5 @@
 import {render} from '../../index.js'
-import { get } from '../services/storage.js'
+import {get} from '../services/storage.js'
 
 export const editorStyle = (): string => render`
   <style id="playground-editor-style"> 

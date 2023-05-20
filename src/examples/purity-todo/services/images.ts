@@ -1,7 +1,7 @@
 import {IMAGES} from '../config/images.js'
-import { makeQueryString} from './google-api.js'
+import {makeQueryString} from './google-api.js'
 import type {Image, Task} from '../app.js'
-import type {ImageSearchResponse} from './google-api.js';
+import type {ImageSearchResponse} from './google-api.js'
 
 export const fetchImages = (
   description: string,

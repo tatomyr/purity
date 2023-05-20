@@ -2,7 +2,6 @@ import {render} from '../../../index.js'
 import {ACTION_BUTTON} from './app-style.js'
 import type {EventHandler} from '../../../purity.js'
 
-
 type ModalProps = {
   title: string
   content: string

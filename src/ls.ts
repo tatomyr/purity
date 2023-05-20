@@ -1,14 +1,11 @@
-
 export const ls = <D extends Record<string, unknown>>(key: string) => {
-  const get = <P extends Partial<D>>(
-    defaultData: P = {} as P
-  ): D | P => {
+  const get = <P extends Partial<D>>(defaultData: P = {} as P): D | P => {
     try {
       const dataFromStorage: D =
         JSON.parse(localStorage.getItem(key) as string) || {}
       return {...defaultData, ...dataFromStorage}
     } catch (err) {
-      return defaultData 
+      return defaultData
     }
   }
 

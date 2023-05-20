@@ -11,7 +11,6 @@ import {taskDetailsStyle} from './task-details-style.js'
 import type {Image} from '../app.js'
 import type {EventHandler} from '../../../purity.js'
 
-
 const makeChangeImage =
   (direction: 'nextPage' | 'previousPage' | 'current'): EventHandler =>
   async () => {
