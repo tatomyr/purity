@@ -1,16 +1,16 @@
 const mounted: Record<symbol, unknown> = {}
 
 export const onMount =
-  (id: symbol) =>
-  (callback: () => void): void => {
-    console.log('Mounted:', !!mounted[id])
-    if (!mounted[id]) {
-      setTimeout(() => {
-        callback()
-      })
-      mounted[id] = true
-    }
-  }
+	(id: symbol) =>
+	(callback: () => void): void => {
+		console.log('Mounted:', !!mounted[id])
+		if (!mounted[id]) {
+			setTimeout(() => {
+				callback()
+			})
+			mounted[id] = true
+		}
+	}
 
 export const createOnMount = () => onMount(Symbol())
 

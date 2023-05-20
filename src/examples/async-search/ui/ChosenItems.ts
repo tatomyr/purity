@@ -6,10 +6,10 @@ import {Item} from '../types.js'
 const Item = ({name, id}: Item) => render`
   <li
     ::click=${() => {
-      setState(({chosenItems}) => ({
-        chosenItems: chosenItems.filter(idIsNotEqual(id)),
-      }))
-    }}
+			setState(({chosenItems}) => ({
+				chosenItems: chosenItems.filter(idIsNotEqual(id)),
+			}))
+		}}
   >
     ${name}
   </li>

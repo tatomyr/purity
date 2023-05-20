@@ -11,26 +11,26 @@ export const App = (): string => render`
       <a
         href="#"
         ::click=${() => {
-          setTimeout(rerender)
-        }}
+					setTimeout(rerender)
+				}}
       >
         Items List
       </a>
       <a
         href="#counter"
         ::click=${() => {
-          setTimeout(rerender)
-        }}
+					setTimeout(rerender)
+				}}
       >
         Stateful Counter
       </a>
     </nav>
     ${window.location.hash === '' ? List() + InputForm() : ''}
     ${
-      window.location.hash === '#counter'
-        ? StatefulCounter({id: 'counter'})
-        : ''
-    }
+			window.location.hash === '#counter'
+				? StatefulCounter({id: 'counter'})
+				: ''
+		}
     ${Spinner()}
   </div>
 `

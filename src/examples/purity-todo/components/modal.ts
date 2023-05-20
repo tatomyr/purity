@@ -3,9 +3,9 @@ import {ACTION_BUTTON} from './app-style.js'
 import type {EventHandler} from '../../../purity.js'
 
 type ModalProps = {
-  title: string
-  content: string
-  close: EventHandler
+	title: string
+	content: string
+	close: EventHandler
 }
 
 export const modal = ({title, content, close}: ModalProps): string => render`

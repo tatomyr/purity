@@ -9,31 +9,31 @@ let match: Match
 export const getParams = (): Match => match
 
 export const Switch = (
-  routes: Record<string, (match: Match) => string>
+	routes: Record<string, (match: Match) => string>
 ): string | undefined => {
-  for (const path in routes) {
-    const params = (path.match(/:(\w+)/g) || []).map(param => param.slice(1))
-    const matchRe = new RegExp(path.replace(/:\w+/g, '(\\w+[\\w\\-\\.]*)'))
-    const matches = window.location.hash.match(matchRe)
-    if (!matches) {
-      continue
-    }
-    const [_, ...args] = matches
-    match = params.reduce(($, param, i) => ({...$, [param]: args[i]}), {})
-    return routes[path](match)
-  }
-  return undefined
+	for (const path in routes) {
+		const params = (path.match(/:(\w+)/g) || []).map(param => param.slice(1))
+		const matchRe = new RegExp(path.replace(/:\w+/g, '(\\w+[\\w\\-\\.]*)'))
+		const matches = window.location.hash.match(matchRe)
+		if (!matches) {
+			continue
+		}
+		const [_, ...args] = matches
+		match = params.reduce(($, param, i) => ({...$, [param]: args[i]}), {})
+		return routes[path](match)
+	}
+	return undefined
 }
 
 export const registerRouter = (rerender: () => void): void => {
-  if (window.location.href.indexOf('#/') === -1) {
-    window.location.hash = '#/'
-  }
-  window.onhashchange = rerender
+	if (window.location.href.indexOf('#/') === -1) {
+		window.location.hash = '#/'
+	}
+	window.onhashchange = rerender
 }
 
 export const push = (hash: string): void => {
-  window.location.hash = hash
+	window.location.hash = hash
 }
 
 // TODO: replace search with hash?

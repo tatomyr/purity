@@ -7,15 +7,15 @@ import {editorStyle} from './editor-style.js'
 export const getEditor = (): HTMLElement => document.getElementById('editor')!
 
 export const editor = (): string => {
-  once('configure-editor', () => {
-    configureMonacoEditor({
-      domElement: getEditor(),
-      defaultCode,
-      onChange: createUpdate((code: string) => setState(() => ({code}))),
-    })
-  })
+	once('configure-editor', () => {
+		configureMonacoEditor({
+			domElement: getEditor(),
+			defaultCode,
+			onChange: createUpdate((code: string) => setState(() => ({code}))),
+		})
+	})
 
-  return render`
+	return render`
     <div id="editor"></div>
     ${editorStyle()}
   `

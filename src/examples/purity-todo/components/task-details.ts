@@ -12,79 +12,79 @@ import type {Image} from '../app.js'
 import type {EventHandler} from '../../../purity.js'
 
 const makeChangeImage =
-  (direction: 'nextPage' | 'previousPage' | 'current'): EventHandler =>
-  async () => {
-    const task = selectDetailedTask()
-    patchTask({...task, isImageLoading: true})
-    try {
-      const image = await fetchAndNormalizeImages(
-        task,
-        direction === 'current' ? 1 : task.image.queries[direction]?.startIndex
-      )
-      await patchTask({...task, image})
-    } catch (err) {
-      handleError(err)
-      patchTask(task)
-    }
-  }
+	(direction: 'nextPage' | 'previousPage' | 'current'): EventHandler =>
+	async () => {
+		const task = selectDetailedTask()
+		patchTask({...task, isImageLoading: true})
+		try {
+			const image = await fetchAndNormalizeImages(
+				task,
+				direction === 'current' ? 1 : task.image.queries[direction]?.startIndex
+			)
+			await patchTask({...task, image})
+		} catch (err) {
+			handleError(err)
+			patchTask(task)
+		}
+	}
 
 const handleCaptureImage: EventHandler = async ({target}) => {
-  try {
-    const [file] = target.files!
-    if (!file) {
-      return
-    }
-    const task = selectDetailedTask()
+	try {
+		const [file] = target.files!
+		if (!file) {
+			return
+		}
+		const task = selectDetailedTask()
 
-    const bigImg = await window.createImageBitmap(file)
-    const smallImg = await window.createImageBitmap(bigImg, {
-      ...keepRatio(bigImg)(300),
-      resizeQuality: 'high',
-    })
-    const croppedImg = await window.createImageBitmap(
-      smallImg,
-      ...cropSquare(smallImg)
-    )
-    const link = getImgSrc(croppedImg)
-    if (!link) throw new Error('Cannot read the image.')
-    const image: Image = {
-      link,
-      queries: {
-        previousPage: task?.image.queries.request,
-      },
-    }
-    patchTask({...task, image})
-  } catch (err) {
-    handleError(err)
-  }
+		const bigImg = await window.createImageBitmap(file)
+		const smallImg = await window.createImageBitmap(bigImg, {
+			...keepRatio(bigImg)(300),
+			resizeQuality: 'high',
+		})
+		const croppedImg = await window.createImageBitmap(
+			smallImg,
+			...cropSquare(smallImg)
+		)
+		const link = getImgSrc(croppedImg)
+		if (!link) throw new Error('Cannot read the image.')
+		const image: Image = {
+			link,
+			queries: {
+				previousPage: task?.image.queries.request,
+			},
+		}
+		patchTask({...task, image})
+	} catch (err) {
+		handleError(err)
+	}
 }
 
 const handleEditTaskDescription: EventHandler = e => {
-  const task = selectDetailedTask()
-  console.log(e.target.value)
-  patchTask({id: task.id, description: sanitize(e.target.value)})
+	const task = selectDetailedTask()
+	console.log(e.target.value)
+	patchTask({id: task.id, description: sanitize(e.target.value)})
 }
 
 const handleAddSubtask: EventHandler = () => {
-  const task = selectDetailedTask()
-  patchTask({
-    id: task.id,
-    subtasks: [...(task.subtasks || []), {checked: false, description: ''}],
-  })
+	const task = selectDetailedTask()
+	patchTask({
+		id: task.id,
+		subtasks: [...(task.subtasks || []), {checked: false, description: ''}],
+	})
 }
 
 export const taskDetails = (): string => {
-  const task = selectDetailedTask()
+	const task = selectDetailedTask()
 
-  return render`
+	return render`
     <div class="task-details--wrapper">
       <section class="task-details--image">
         <div
           id="fullscreen-image"
           class="fullscreen-image"
           style="background-image: url('${
-            task.isImageLoading ? IMAGES.LOADING : task?.image.link
-          }');"
+						task.isImageLoading ? IMAGES.LOADING : task?.image.link
+					}');"
         > 
           <div class="controls" id="controls">
             <button ::click=${makeChangeImage('current')}>
@@ -92,22 +92,22 @@ export const taskDetails = (): string => {
             </button>
         
             ${
-              task?.image.queries.previousPage?.startIndex !== undefined &&
-              render`
+							task?.image.queries.previousPage?.startIndex !== undefined &&
+							render`
                 <button ::click=${makeChangeImage('previousPage')}>
                   ←
                 </button>
               `
-            }
+						}
             
             ${
-              task?.image.queries.nextPage?.startIndex !== undefined &&
-              render`
+							task?.image.queries.nextPage?.startIndex !== undefined &&
+							render`
                 <button ::click=${makeChangeImage('nextPage')}>
                   →
                 </button>
               `
-            }
+						}
 
             <label for="capture">
               Capture

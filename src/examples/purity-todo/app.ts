@@ -5,45 +5,45 @@ import type {QueryType} from './services/google-api.js'
 export type ViewFilter = 'active' | 'completed'
 
 export type Image = {
-  link: string
-  queries: {
-    request?: Pick<QueryType, 'startIndex'>
-    nextPage?: Pick<QueryType, 'startIndex'>
-    previousPage?: Pick<QueryType, 'startIndex'>
-  }
+	link: string
+	queries: {
+		request?: Pick<QueryType, 'startIndex'>
+		nextPage?: Pick<QueryType, 'startIndex'>
+		previousPage?: Pick<QueryType, 'startIndex'>
+	}
 }
 
 export type Subtask = {
-  checked: boolean
-  description: string
+	checked: boolean
+	description: string
 }
 
 export type BaseTask = {
-  id: string
-  description: string
-  subtasks?: Subtask[]
-  completed: boolean
-  isImageLoading?: boolean
-  createdAt: number
-  updatedAt: number
-  image: Image
+	id: string
+	description: string
+	subtasks?: Subtask[]
+	completed: boolean
+	isImageLoading?: boolean
+	createdAt: number
+	updatedAt: number
+	image: Image
 }
 
 export type Task = BaseTask & {tmpFlag?: boolean}
 
 export type AppState = {
-  view: ViewFilter
-  input: string
-  isSettingsModalOpen: boolean
-  taskDetailId?: string
-  tasks: Task[]
+	view: ViewFilter
+	input: string
+	isSettingsModalOpen: boolean
+	taskDetailId?: string
+	tasks: Task[]
 }
 
 export const initialState: AppState = {
-  view: 'active',
-  input: '',
-  isSettingsModalOpen: false,
-  tasks: get({tasks: []}).tasks,
+	view: 'active',
+	input: '',
+	isSettingsModalOpen: false,
+	tasks: get({tasks: []}).tasks,
 }
 
 export const state = {...initialState}
@@ -54,8 +54,8 @@ export const {useAsync} = makeAsync(rerender)
 
 // Fixes the issue with the keyboard on mobile devices
 window.visualViewport?.addEventListener('resize', () => {
-  const height = window.visualViewport?.height
-  document.body.style.height = height + 'px'
-  document.body.style.maxHeight = height + 'px'
-  document.body.scrollIntoView()
+	const height = window.visualViewport?.height
+	document.body.style.height = height + 'px'
+	document.body.style.maxHeight = height + 'px'
+	document.body.scrollIntoView()
 })

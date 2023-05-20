@@ -8,12 +8,12 @@ const App1 = () => render`
   <form
     id="root-1"
     ::submit=${e => {
-      e.preventDefault()
-      store1.setState(() => ({
-        text: e.target.text.value,
-      }))
-      e.target.reset()
-    }}
+			e.preventDefault()
+			store1.setState(() => ({
+				text: e.target.text.value,
+			}))
+			e.target.reset()
+		}}
   >
     <input name="text" />
     <button>Click Me 1</button>
@@ -32,8 +32,8 @@ const App2 = () => render`
     <span id="counter">${store2.getState().counter}</span>
     <button
       ::click=${() => {
-        store2.setState(({counter}) => ({counter: counter + 1}))
-      }}
+				store2.setState(({counter}) => ({counter: counter + 1}))
+			}}
     >
       Click Me 2
     </button>

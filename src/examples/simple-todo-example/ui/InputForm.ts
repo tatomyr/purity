@@ -6,36 +6,36 @@ export const InputForm = (): string => render`
   <form
     id="input-form"
     ::submit=${e => {
-      e.preventDefault()
-      setState(({items}) => ({
-        items: [
-          ...items,
-          {
-            text: e.target.text.value,
-            checked: false,
-            id: generateNextId(items),
-          },
-        ],
-      }))
-    }}
+			e.preventDefault()
+			setState(({items}) => ({
+				items: [
+					...items,
+					{
+						text: e.target.text.value,
+						checked: false,
+						id: generateNextId(items),
+					},
+				],
+			}))
+		}}
   >
     <input
       name="text"
       placeholder="Enter text"
       ::input=${e => {
-        setState(() => ({
-          input: e.target.value,
-        }))
-      }}
+				setState(() => ({
+					input: e.target.value,
+				}))
+			}}
     />
     <button type="submit">Add</button>
     <button
       type="reset"
       ::click=${() => {
-        setState(() => ({
-          input: '',
-        }))
-      }}
+				setState(() => ({
+					input: '',
+				}))
+			}}
     >
       Clear
     </button>

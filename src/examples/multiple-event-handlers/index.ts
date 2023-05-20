@@ -7,11 +7,11 @@ const App = () => render`
     <input
       type="text"
       ::keyup=${e => {
-        setState(() => ({text: e.target.value}))
-      }}
+				setState(() => ({text: e.target.value}))
+			}}
       ::click=${() => {
-        setState(() => ({text: ''}))
-      }}
+				setState(() => ({text: ''}))
+			}}
     />
     <div id="text">${getState().text}</div>
   </div>

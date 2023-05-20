@@ -29,30 +29,30 @@ const inputFormStyle = () => render`
 `
 
 const createTask: EventHandler = async e => {
-  e.preventDefault()
-  const description: string = sanitize(e.target.task.value)
-  const task = prepareTask(description)
-  if (state.tasks.some(({id}) => id === task.id)) {
-    window.alert('There is already a task with the same id in the list')
-    return
-  }
+	e.preventDefault()
+	const description: string = sanitize(e.target.task.value)
+	const task = prepareTask(description)
+	if (state.tasks.some(({id}) => id === task.id)) {
+		window.alert('There is already a task with the same id in the list')
+		return
+	}
 
-  resetInput()
-  setState(({tasks}) => ({
-    view: 'active',
-    tasks: [{...task, isImageLoading: true}, ...tasks],
-  }))
+	resetInput()
+	setState(({tasks}) => ({
+		view: 'active',
+		tasks: [{...task, isImageLoading: true}, ...tasks],
+	}))
 
-  try {
-    const image = await fetchAndNormalizeImages(task)
-    patchTask({...task, image})
-  } catch (err) {
-    handleError(err)
-    patchTask({
-      ...task,
-      image: {link: IMAGES.UNDEFINED_TASK, queries: {}},
-    })
-  }
+	try {
+		const image = await fetchAndNormalizeImages(task)
+		patchTask({...task, image})
+	} catch (err) {
+		handleError(err)
+		patchTask({
+			...task,
+			image: {link: IMAGES.UNDEFINED_TASK, queries: {}},
+		})
+	}
 }
 
 export const inputForm = (): string => render`
@@ -60,8 +60,8 @@ export const inputForm = (): string => render`
     <input
       name="task"
       ::input=${e => {
-        setState(() => ({input: e.target.value}))
-      }}
+				setState(() => ({input: e.target.value}))
+			}}
       value=""
       placeholder="Task description"
       autocomplete="off"

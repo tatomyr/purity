@@ -7,18 +7,18 @@ registerRouter(rerender)
 export const root = () => render`
   <div id="root">
     ${Switch({
-      '#/alternative': () => render`
+			'#/alternative': () => render`
         <div>Alternative view</div>
         <button ::click=${() => push('#/')}>
           ← Back to default
         </button>
       `,
-      '#/': () => render`
+			'#/': () => render`
         <div>Default view</div>
         <a href="#/alternative">
           Go to alvernative →
         </a>
       `,
-    })}
+		})}
   </div>
 `
