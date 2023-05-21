@@ -1,5 +1,5 @@
 import {render} from '../../../index.js'
-import {state} from '../app.js'
+import {state, theIntrospector} from '../app.js'
 import {closeSettings} from '../services/settings.js'
 import {closeTaskDetails} from '../services/task-details.js'
 import {appStyle} from './app-style.js'
@@ -38,5 +38,6 @@ export const root = (): string => render`
 			}
     </div>
     ${modalStyle()}
+		${theIntrospector({state, localStorage: window.localStorage})}
   </div>
 `

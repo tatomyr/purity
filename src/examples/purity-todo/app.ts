@@ -1,4 +1,5 @@
 import {init, makeAsync} from '../../index.js'
+import {makeIntrospector} from '../../introspector.js'
 import {get} from './services/storage.js'
 import type {QueryType} from './services/google-api.js'
 
@@ -59,3 +60,8 @@ window.visualViewport?.addEventListener('resize', () => {
 	document.body.style.maxHeight = height + 'px'
 	document.body.scrollIntoView()
 })
+
+export const theIntrospector = makeIntrospector(
+	rerender,
+	new URLSearchParams(location.search).has('introspect')
+)
