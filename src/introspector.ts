@@ -2,7 +2,7 @@ import {makeOnce} from './once.js'
 import {render} from './purity.js'
 import type {Rerender} from './purity.js'
 
-const makeState = <T extends unknown>(rerender: Rerender) => {
+const makeState = <T>(rerender: Rerender) => {
 	let state: T
 
 	const get = () => state
