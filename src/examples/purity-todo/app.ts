@@ -1,16 +1,16 @@
-import {init, makeAsync} from '../../index.js'
-import {makeIntrospector} from '../../introspector.js'
-import {get} from './services/storage.js'
-import type {QueryType} from './services/google-api.js'
+import {init, makeAsync} from "../../index.js"
+import {makeIntrospector} from "../../introspector.js"
+import {get} from "./services/storage.js"
+import type {QueryType} from "./services/google-api.js"
 
-export type ViewFilter = 'active' | 'completed'
+export type ViewFilter = "active" | "completed"
 
 export type Image = {
 	link: string
 	queries: {
-		request?: Pick<QueryType, 'startIndex'>
-		nextPage?: Pick<QueryType, 'startIndex'>
-		previousPage?: Pick<QueryType, 'startIndex'>
+		request?: Pick<QueryType, "startIndex">
+		nextPage?: Pick<QueryType, "startIndex">
+		previousPage?: Pick<QueryType, "startIndex">
 	}
 }
 
@@ -41,8 +41,8 @@ export type AppState = {
 }
 
 export const initialState: AppState = {
-	view: 'active',
-	input: '',
+	view: "active",
+	input: "",
 	isSettingsModalOpen: false,
 	tasks: get({tasks: []}).tasks,
 }
@@ -54,14 +54,14 @@ export const {mount, setState, rerender} = init(state)
 export const {useAsync} = makeAsync(rerender)
 
 // Fixes the issue with the keyboard on mobile devices
-window.visualViewport?.addEventListener('resize', () => {
+window.visualViewport?.addEventListener("resize", () => {
 	const height = window.visualViewport?.height
-	document.body.style.height = height + 'px'
-	document.body.style.maxHeight = height + 'px'
+	document.body.style.height = height + "px"
+	document.body.style.maxHeight = height + "px"
 	document.body.scrollIntoView()
 })
 
 export const theIntrospector = makeIntrospector(
 	rerender,
-	new URLSearchParams(location.search).has('introspect')
+	new URLSearchParams(location.search).has("introspect")
 )

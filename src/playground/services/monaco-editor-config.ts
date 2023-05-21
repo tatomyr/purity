@@ -1,5 +1,5 @@
 // Source: https://stackoverflow.com/questions/63179813/how-to-run-the-monaco-editor-from-a-cdn-like-cdnjs
-import type {UpdateCode} from './user-code.js'
+import type {UpdateCode} from "./user-code.js"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const require: any
@@ -22,7 +22,7 @@ export function configureMonacoEditor({
 	// Provided by loader.min.js.
 	require.config({
 		paths: {
-			vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min/vs',
+			vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min/vs",
 		},
 	})
 	window.MonacoEnvironment = {
@@ -32,20 +32,20 @@ export function configureMonacoEditor({
 		new Blob(
 			[
 				`
-            self.MonacoEnvironment = {
-                baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min'
-            };
-            importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min/vs/base/worker/workerMain.min.js');
-        `,
+						self.MonacoEnvironment = {
+								baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min'
+						};
+						importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min/vs/base/worker/workerMain.min.js');
+				`,
 			],
-			{type: 'text/javascript'}
+			{type: "text/javascript"}
 		)
 	)
-	require(['vs/editor/editor.main'], function () {
+	require(["vs/editor/editor.main"], function () {
 		const editor = monaco.editor.create(domElement, {
 			value: defaultCode,
-			language: 'javascript',
-			theme: 'vs-dark',
+			language: "javascript",
+			theme: "vs-dark",
 			minimap: {
 				enabled: false,
 			},

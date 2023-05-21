@@ -1,7 +1,7 @@
-import {render} from '../../../purity.js'
-import {setState} from '../app.js'
-import {deleteItem, getItems, toggleItem} from '../api.js'
-import type {Item} from '../app.js'
+import {render} from "../../../purity.js"
+import {setState} from "../app.js"
+import {deleteItem, getItems, toggleItem} from "../api.js"
+import type {Item} from "../app.js"
 
 export const ListItem = ({
 	id,
@@ -9,15 +9,15 @@ export const ListItem = ({
 	checked,
 	justAdded,
 }: Item): string => render`
-  <li
-    id="${id}"
-    class="${checked ? 'checked' : ''} ${justAdded ? 'highlighted' : ''}"
-    title="${id}"
-  >
-    <input
-      type="checkbox"
-      ${checked ? 'checked' : ''}
-      ::change=${async e => {
+	<li
+		id="${id}"
+		class="${checked ? "checked" : ""} ${justAdded ? "highlighted" : ""}"
+		title="${id}"
+	>
+		<input
+			type="checkbox"
+			${checked ? "checked" : ""}
+			::change=${async e => {
 				const {checked} = e.target
 				setState(() => ({spinner: true}))
 
@@ -35,11 +35,11 @@ export const ListItem = ({
 					}))
 				}
 			}}
-    />
-    <span>${text}</span>
-    <button
-      type="button"
-      ::click=${async () => {
+		/>
+		<span>${text}</span>
+		<button
+			type="button"
+			::click=${async () => {
 				setState(() => ({spinner: true}))
 
 				try {
@@ -54,8 +54,8 @@ export const ListItem = ({
 					}))
 				}
 			}}
-    >
-      x
-    </button>
-  </li>
+		>
+			x
+		</button>
+	</li>
 `

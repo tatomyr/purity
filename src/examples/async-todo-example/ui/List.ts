@@ -1,9 +1,9 @@
-import {render} from '../../../purity.js'
-import {getState, setState} from '../app.js'
-import {getItems} from '../api.js'
-import {ListItem} from './ListItem.js'
-import {createOnMount} from './onMount.js'
-import type {Item} from '../app.js'
+import {render} from "../../../purity.js"
+import {getState, setState} from "../app.js"
+import {getItems} from "../api.js"
+import {ListItem} from "./ListItem.js"
+import {createOnMount} from "./onMount.js"
+import type {Item} from "../app.js"
 
 const onMount = createOnMount()
 
@@ -21,9 +21,9 @@ export const List = (): string => {
 	})
 
 	return render`
-    <h1 id="title">The List (${items.length})</h1>
-    <ol id="list">
-      ${items.filter(matches(input)).map(ListItem)}
-    </ol>
-  `
+		<h1 id="title">The List (${items.length})</h1>
+		<ol id="list">
+			${items.filter(matches(input)).map(ListItem)}
+		</ol>
+	`
 }

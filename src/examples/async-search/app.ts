@@ -1,10 +1,10 @@
-import {init} from '../../purity.js'
-import type {AppState} from './types.js'
+import {init} from "../../purity.js"
+import type {AppState} from "./types.js"
 
 export const {mount, getState, setState} = init<AppState>({
-	input: '',
+	input: "",
 	items: [],
 	isLoading: false,
-	error: '',
+	error: "",
 	chosenItems: [],
 })

@@ -1,13 +1,13 @@
-import {env} from '../env.js'
+import {env} from "../env.js"
 
 const {GOOGLE} = await import(`../config/google-api.${env}.js`)
 
 export const makeQueryString = (query: string, start = 1): string =>
 	`${GOOGLE.API_PATH}?${new URLSearchParams({
 		q: `${query} -и`,
-		searchType: 'image',
-		imgSize: 'medium',
-		num: '1',
+		searchType: "image",
+		imgSize: "medium",
+		num: "1",
 		start: `${start}`,
 		key: GOOGLE.API_KEY,
 		cx: GOOGLE.CUSTOM_SEARCH_ID,
@@ -44,15 +44,15 @@ export type QueryType = {
 	outputEncoding: string
 	safe: string
 	cx: string
-	searchType?: 'image'
+	searchType?: "image"
 	imgSize?:
-		| 'huge'
-		| 'icon'
-		| 'large'
-		| 'medium'
-		| 'small'
-		| 'xlarge'
-		| 'xxlarge'
+		| "huge"
+		| "icon"
+		| "large"
+		| "medium"
+		| "small"
+		| "xlarge"
+		| "xxlarge"
 }
 
 export type ImageSearchResponse = {

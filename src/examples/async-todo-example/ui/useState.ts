@@ -1,4 +1,4 @@
-import {rerender} from '../app.js'
+import {rerender} from "../app.js"
 
 export function useState(state: {[key: string]: unknown}) {
 	return (changes: {[key: string]: unknown}): void => {

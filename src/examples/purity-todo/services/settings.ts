@@ -1,18 +1,18 @@
-import {setState, state} from '../app.js'
-import {handleError} from './error.js'
-import {put} from './storage.js'
-import {groomTasks} from './tasks.js'
-import {download, textFileReader} from './text-file-manager.js'
-import type {BaseTask} from '../app.js'
-import type {EventHandler} from '../../../purity.js'
+import {setState, state} from "../app.js"
+import {handleError} from "./error.js"
+import {put} from "./storage.js"
+import {groomTasks} from "./tasks.js"
+import {download, textFileReader} from "./text-file-manager.js"
+import type {BaseTask} from "../app.js"
+import type {EventHandler} from "../../../purity.js"
 
 export const downloadUserData = async (): Promise<void> => {
 	try {
 		const fileName = `TODO-${new Date()
 			.toDateString()
-			.replace(/[ /]/g, '-')}.backup.json`
+			.replace(/[ /]/g, "-")}.backup.json`
 		download(fileName, JSON.stringify(groomTasks(state.tasks)))
-		window.alert('Downloading your backup file')
+		window.alert("Downloading your backup file")
 		closeSettings()
 	} catch (err) {
 		handleError(err)

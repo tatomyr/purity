@@ -1,7 +1,6 @@
-import {rerender} from './index.js'
+import {rerender} from "./index.js"
 
-// eslint-disable-next-line prefer-const
-let state: {[key: string]: unknown} = {}
+const state: {[key: string]: unknown} = {}
 
 export type UseState<T> = {
 	get: () => T

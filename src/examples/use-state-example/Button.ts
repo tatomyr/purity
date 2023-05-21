@@ -1,7 +1,7 @@
-import {render} from '../../index.js'
-import type {EventHandler} from '../../purity.js'
+import {render} from "../../index.js"
+import type {EventHandler} from "../../purity.js"
 
-export type Actions = 'inc' | 'dec' | 'reset'
+export type Actions = "inc" | "dec" | "reset"
 
 export type ButtonProps = {
 	action: Actions
@@ -14,7 +14,7 @@ export const Button = ({
 	caption,
 	handleClick,
 }: ButtonProps): string => render`
-  <button data-counter="${action}" ::click=${handleClick}>
-    ${caption}
-  </button>
+	<button data-counter="${action}" ::click=${handleClick}>
+		${caption}
+	</button>
 `

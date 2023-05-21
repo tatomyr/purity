@@ -1,8 +1,8 @@
-import {md5, sanitize} from '../../../index.js'
-import {setState, state} from '../app.js'
-import {IMAGES} from '../config/images.js'
-import {put} from './storage.js'
-import type {AppState, BaseTask, Task} from '../app.js'
+import {md5, sanitize} from "../../../index.js"
+import {setState, state} from "../app.js"
+import {IMAGES} from "../config/images.js"
+import {put} from "./storage.js"
+import type {AppState, BaseTask, Task} from "../app.js"
 
 const makeId = (description: string): string =>
 	md5(description.trim().toLowerCase())
@@ -25,7 +25,7 @@ export const prepareTask = (description: string): Task => {
 	return task
 }
 
-export const patchTask = (patch: Partial<Task> & Pick<Task, 'id'>): void => {
+export const patchTask = (patch: Partial<Task> & Pick<Task, "id">): void => {
 	const now = Date.now()
 	setState(({tasks}) => ({
 		tasks: tasks.map(({isImageLoading, ...task}) =>
@@ -56,8 +56,8 @@ export const byStatus =
 		!!(
 			input ||
 			tmpFlag ||
-			(view === 'active' && !completed) ||
-			(view === 'completed' && completed)
+			(view === "active" && !completed) ||
+			(view === "completed" && completed)
 		)
 
 const toBaseTask = ({tmpFlag, ...task}: Task): BaseTask => task

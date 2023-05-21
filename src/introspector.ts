@@ -1,6 +1,6 @@
-import {makeOnce} from './once.js'
-import {render} from './purity.js'
-import type {Rerender} from './purity.js'
+import {makeOnce} from "./once.js"
+import {render} from "./purity.js"
+import type {Rerender} from "./purity.js"
 
 const makeState = <T>(rerender: Rerender) => {
 	let state: T
@@ -18,13 +18,13 @@ const makeState = <T>(rerender: Rerender) => {
 const once = makeOnce()
 
 export const makeIntrospector = (rerender: Rerender, isVisible = false) => {
-	if (!isVisible) return () => ''
+	if (!isVisible) return () => ""
 	const theState = makeState<boolean>(rerender)
 	return (data: Record<string, unknown>) => {
-		once('init-introspector', () => {
+		once("init-introspector", () => {
 			theState.set(() => true)
 		})
-		const size = theState.get() ? 'calc(100% - 20px)' : '30px'
+		const size = theState.get() ? "calc(100% - 20px)" : "30px"
 		return render`
 			<pre id="the-introspector" ::click=${() => {
 				theState.set(s => !s)
