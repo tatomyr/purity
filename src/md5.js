@@ -152,10 +152,10 @@ function md5blk(s) {
 	return md5blks
 }
 
-const hex_chr = '0123456789abcdef'.split('')
+const hex_chr = "0123456789abcdef".split("")
 
 function rhex(n) {
-	let s = ''
+	let s = ""
 	let j = 0
 	for (; j < 4; j++)
 		s += hex_chr[(n >> (j * 8 + 4)) & 0x0f] + hex_chr[(n >> (j * 8)) & 0x0f]
@@ -164,7 +164,7 @@ function rhex(n) {
 
 function hex(x) {
 	for (let i = 0; i < x.length; i++) x[i] = rhex(x[i])
-	return x.join('')
+	return x.join("")
 }
 
 export function md5(s) {
@@ -181,7 +181,7 @@ function add32(a, b) {
 	return (a + b) & 0xffffffff
 }
 
-if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
+if (md5("hello") != "5d41402abc4b2a76b9719d911017c592") {
 	// FIXME: lint issue (it won't work in strict mode)
 	/* eslint-disable-next-line */
 	function add32(x, y) {

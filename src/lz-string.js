@@ -5,9 +5,9 @@ export const LZString = (function () {
 	// private property
 	let f = String.fromCharCode
 	let keyStrBase64 =
-		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 	let keyStrUriSafe =
-		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$'
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$"
 	let baseReverseDic = {}
 
 	function getBaseValue(alphabet, character) {
@@ -22,7 +22,7 @@ export const LZString = (function () {
 
 	let LZString = {
 		compressToBase64: function (input) {
-			if (input == null) return ''
+			if (input == null) return ""
 			let res = LZString._compress(input, 6, function (a) {
 				return keyStrBase64.charAt(a)
 			})
@@ -33,34 +33,34 @@ export const LZString = (function () {
 				case 0:
 					return res
 				case 1:
-					return res + '==='
+					return res + "==="
 				case 2:
-					return res + '=='
+					return res + "=="
 				case 3:
-					return res + '='
+					return res + "="
 			}
 		},
 
 		decompressFromBase64: function (input) {
-			if (input == null) return ''
-			if (input == '') return null
+			if (input == null) return ""
+			if (input == "") return null
 			return LZString._decompress(input.length, 32, function (index) {
 				return getBaseValue(keyStrBase64, input.charAt(index))
 			})
 		},
 
 		compressToUTF16: function (input) {
-			if (input == null) return ''
+			if (input == null) return ""
 			return (
 				LZString._compress(input, 15, function (a) {
 					return f(a + 32)
-				}) + ' '
+				}) + " "
 			)
 		},
 
 		decompressFromUTF16: function (compressed) {
-			if (compressed == null) return ''
-			if (compressed == '') return null
+			if (compressed == null) return ""
+			if (compressed == "") return null
 			return LZString._decompress(compressed.length, 16384, function (index) {
 				return compressed.charCodeAt(index) - 32
 			})
@@ -93,13 +93,13 @@ export const LZString = (function () {
 				buf.forEach(function (c) {
 					result.push(f(c))
 				})
-				return LZString.decompress(result.join(''))
+				return LZString.decompress(result.join(""))
 			}
 		},
 
 		//compress into a string that is already URI encoded
 		compressToEncodedURIComponent: function (input) {
-			if (input == null) return ''
+			if (input == null) return ""
 			return LZString._compress(input, 6, function (a) {
 				return keyStrUriSafe.charAt(a)
 			})
@@ -107,9 +107,9 @@ export const LZString = (function () {
 
 		//decompress from an output of compressToEncodedURIComponent
 		decompressFromEncodedURIComponent: function (input) {
-			if (input == null) return ''
-			if (input == '') return null
-			input = input.replace(/ /g, '+')
+			if (input == null) return ""
+			if (input == "") return null
+			input = input.replace(/ /g, "+")
 			return LZString._decompress(input.length, 32, function (index) {
 				return getBaseValue(keyStrUriSafe, input.charAt(index))
 			})
@@ -121,14 +121,14 @@ export const LZString = (function () {
 			})
 		},
 		_compress: function (uncompressed, bitsPerChar, getCharFromInt) {
-			if (uncompressed == null) return ''
+			if (uncompressed == null) return ""
 			let i,
 				value,
 				context_dictionary = {},
 				context_dictionaryToCreate = {},
-				context_c = '',
-				context_wc = '',
-				context_w = '',
+				context_c = "",
+				context_wc = "",
+				context_w = "",
 				context_enlargeIn = 2, // Compensate for the first entry which should not count
 				context_dictSize = 3,
 				context_numBits = 2,
@@ -239,7 +239,7 @@ export const LZString = (function () {
 			}
 
 			// Output the code for w.
-			if (context_w !== '') {
+			if (context_w !== "") {
 				if (
 					Object.prototype.hasOwnProperty.call(
 						context_dictionaryToCreate,
@@ -345,12 +345,12 @@ export const LZString = (function () {
 					break
 				} else context_data_position++
 			}
-			return context_data.join('')
+			return context_data.join("")
 		},
 
 		decompress: function (compressed) {
-			if (compressed == null) return ''
-			if (compressed == '') return null
+			if (compressed == null) return ""
+			if (compressed == "") return null
 			return LZString._decompress(compressed.length, 32768, function (index) {
 				return compressed.charCodeAt(index)
 			})
@@ -362,7 +362,7 @@ export const LZString = (function () {
 				enlargeIn = 4,
 				dictSize = 4,
 				numBits = 3,
-				entry = '',
+				entry = "",
 				result = [],
 				i,
 				w,
@@ -425,7 +425,7 @@ export const LZString = (function () {
 					c = f(bits)
 					break
 				case 2:
-					return ''
+					return ""
 			}
 			dictionary[3] = c
 			w = c
@@ -433,7 +433,7 @@ export const LZString = (function () {
 			// eslint-disable-next-line no-constant-condition
 			while (true) {
 				if (data.index > length) {
-					return ''
+					return ""
 				}
 
 				bits = 0
@@ -489,7 +489,7 @@ export const LZString = (function () {
 						enlargeIn--
 						break
 					case 2:
-						return result.join('')
+						return result.join("")
 				}
 
 				if (enlargeIn == 0) {

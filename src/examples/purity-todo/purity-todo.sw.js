@@ -2,19 +2,19 @@ const appScope = self.registration.scope
 
 const cacheName = `${appScope}@2.12`
 const contentToCache = [
-	'./',
-	'./index.html',
-	'./index.js',
+	"./",
+	"./index.html",
+	"./index.js",
 
-	'./assets/images/todo-icon-48.png',
-	'./assets/images/todo-icon-192.png',
-	'./assets/images/todo-icon-512.png',
-	'./assets/images/preloader.gif',
-	'./assets/images/icon-pack/idea.svg',
-	'./assets/images/icon-pack/forbidden.svg',
+	"./assets/images/todo-icon-48.png",
+	"./assets/images/todo-icon-192.png",
+	"./assets/images/todo-icon-512.png",
+	"./assets/images/preloader.gif",
+	"./assets/images/icon-pack/idea.svg",
+	"./assets/images/icon-pack/forbidden.svg",
 ]
 
-self.addEventListener('install', e => {
+self.addEventListener("install", e => {
 	console.log(`[purity-todo.sw.js] Install`)
 	e.waitUntil(
 		(async () => {
@@ -25,7 +25,7 @@ self.addEventListener('install', e => {
 	)
 })
 
-self.addEventListener('activate', e => {
+self.addEventListener("activate", e => {
 	console.log(`[purity-todo.sw.js] Activate`)
 	caches.keys().then(console.log)
 	e.waitUntil(
@@ -44,7 +44,7 @@ self.addEventListener('activate', e => {
 	)
 })
 
-self.addEventListener('fetch', e => {
+self.addEventListener("fetch", e => {
 	e.respondWith(
 		(async () => {
 			const r = await caches.match(e.request)
@@ -53,7 +53,7 @@ self.addEventListener('fetch', e => {
 				return r
 			}
 			const response = await fetch(e.request)
-			if (e.request.url.endsWith('.js')) {
+			if (e.request.url.endsWith(".js")) {
 				const cache = await caches.open(cacheName)
 				console.log(
 					`[purity-todo.sw.js] Caching new resource: ${e.request.url}`
