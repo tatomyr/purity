@@ -1,4 +1,4 @@
-import {render} from '../../../purity.js'
+import {render} from '../../../index.js'
 import {getState} from '../app.js'
 
 // FIXME: spinner. Maybe use background?

@@ -1,4 +1,4 @@
-import {render} from '../../../purity.js'
+import {render} from '../../../index.js'
 import {getState, setState} from '../app.js'
 
 export const errorBanner = () => {
