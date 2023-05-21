@@ -1,7 +1,7 @@
 import {init, makeAsync} from '../../index.js'
+import {makeIntrospector} from '../../introspector.js'
 import {get} from './services/storage.js'
 import type {QueryType} from './services/google-api.js'
-import {makeIntrospector} from '../../introspector.js'
 
 export type ViewFilter = 'active' | 'completed'
 

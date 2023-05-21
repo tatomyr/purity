@@ -1,5 +1,6 @@
 import {makeOnce} from './once.js'
-import {Rerender, render} from './purity.js'
+import {render} from './purity.js'
+import type {Rerender} from './purity.js'
 
 const makeState = <T extends unknown>(rerender: Rerender) => {
 	let state: T
