@@ -1,5 +1,5 @@
-import {render} from '../../../index.js'
-import {SMALL_BUTTON} from './subtask-item.js'
+import {render} from "../../../index.js"
+import {SMALL_BUTTON} from "./subtask-item.js"
 
 export const taskDetailsStyle = (): string => render`
 	<style id="task-details-style">

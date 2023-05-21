@@ -13,7 +13,7 @@ export const Switch = (
 ): string | undefined => {
 	for (const path in routes) {
 		const params = (path.match(/:(\w+)/g) || []).map(param => param.slice(1))
-		const matchRe = new RegExp(path.replace(/:\w+/g, '(\\w+[\\w\\-\\.]*)'))
+		const matchRe = new RegExp(path.replace(/:\w+/g, "(\\w+[\\w\\-\\.]*)"))
 		const matches = window.location.hash.match(matchRe)
 		if (!matches) {
 			continue
@@ -26,8 +26,8 @@ export const Switch = (
 }
 
 export const registerRouter = (rerender: () => void): void => {
-	if (window.location.href.indexOf('#/') === -1) {
-		window.location.hash = '#/'
+	if (window.location.href.indexOf("#/") === -1) {
+		window.location.hash = "#/"
 	}
 	window.onhashchange = rerender
 }

@@ -1,6 +1,6 @@
-import {init, render} from '../../purity.js'
+import {init, render} from "../../purity.js"
 
-export const {mount, getState, setState} = init({text: ''})
+export const {mount, getState, setState} = init({text: ""})
 
 export const root = () => render`
 	<div id="root">
@@ -10,7 +10,7 @@ export const root = () => render`
 				setState(() => ({text: e.target.value}))
 			}}
 			::click=${() => {
-				setState(() => ({text: ''}))
+				setState(() => ({text: ""}))
 			}}
 		/>
 		<div id="text">${getState().text}</div>

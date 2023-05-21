@@ -1,5 +1,5 @@
-import {render} from '../../index.js'
-import {getState} from '../index.js'
+import {render} from "../../index.js"
+import {getState} from "../index.js"
 
 export const playgroundStyle = (): string => render`
 	<style id="playground-style"> 

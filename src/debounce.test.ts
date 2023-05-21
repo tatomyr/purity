@@ -1,10 +1,10 @@
-import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+import {afterEach, beforeEach, describe, expect, it, vi} from "vitest"
 
-import {debounce} from './debounce.js'
-import {delay} from './delay.js'
+import {debounce} from "./debounce.js"
+import {delay} from "./delay.js"
 
-describe('debounce', () => {
-	it('should call the callback only once (trailing)', async () => {
+describe("debounce", () => {
+	it("should call the callback only once (trailing)", async () => {
 		const callback = vi.fn()
 		const debounced = debounce(callback, 100)
 		debounced()
@@ -16,7 +16,7 @@ describe('debounce', () => {
 		await delay(101)
 		expect(callback).toHaveBeenCalledTimes(1)
 	})
-	it('should call the callback only once (leading)', async () => {
+	it("should call the callback only once (leading)", async () => {
 		const callback = vi.fn()
 		const debounced = debounce(callback, -100)
 		debounced()

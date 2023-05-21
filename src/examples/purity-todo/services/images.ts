@@ -1,7 +1,7 @@
-import {IMAGES} from '../config/images.js'
-import {makeQueryString} from './google-api.js'
-import type {Image, Task} from '../app.js'
-import type {ImageSearchResponse} from './google-api.js'
+import {IMAGES} from "../config/images.js"
+import {makeQueryString} from "./google-api.js"
+import type {Image, Task} from "../app.js"
+import type {ImageSearchResponse} from "./google-api.js"
 
 export const fetchImages = (
 	description: string,
@@ -20,8 +20,8 @@ export const fetchImages = (
 		})
 
 export const normalizeQuery = (
-	queries: ImageSearchResponse['queries'],
-	name: keyof ImageSearchResponse['queries']
+	queries: ImageSearchResponse["queries"],
+	name: keyof ImageSearchResponse["queries"]
 ): Record<string, {startIndex: number}> | undefined => {
 	const query = queries[name]
 	return query && {[name]: {startIndex: query[0].startIndex}}
@@ -36,9 +36,9 @@ export const fetchAndNormalizeImages = async (
 	const image: Image = {
 		link,
 		queries: {
-			...normalizeQuery(queries, 'request'),
-			...normalizeQuery(queries, 'nextPage'),
-			...normalizeQuery(queries, 'previousPage'),
+			...normalizeQuery(queries, "request"),
+			...normalizeQuery(queries, "nextPage"),
+			...normalizeQuery(queries, "previousPage"),
 		},
 	}
 	return image

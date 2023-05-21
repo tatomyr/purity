@@ -1,6 +1,6 @@
-import {render} from '../../../index.js'
-import {generateNextId} from '../helpers.js'
-import {setState} from '../app.js'
+import {render} from "../../../index.js"
+import {generateNextId} from "../helpers.js"
+import {setState} from "../app.js"
 
 export const InputForm = (): string => render`
 	<form
@@ -33,7 +33,7 @@ export const InputForm = (): string => render`
 			type="reset"
 			::click=${() => {
 				setState(() => ({
-					input: '',
+					input: "",
 				}))
 			}}
 		>

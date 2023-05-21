@@ -27,12 +27,12 @@ export const cropSquare = ({
 }
 
 export const getImgSrc = (img: ImageBitmap): string | undefined => {
-	const canvas = document.createElement('canvas')
+	const canvas = document.createElement("canvas")
 	canvas.width = img.width
 	canvas.height = img.height
-	const ctx = canvas.getContext('2d')
+	const ctx = canvas.getContext("2d")
 	ctx?.drawImage(img, 0, 0, img.width, img.height)
-	return ctx?.canvas.toDataURL('image/png', 1)
+	return ctx?.canvas.toDataURL("image/png", 1)
 }
 
 /*
@@ -45,7 +45,7 @@ export const getImgSrc = (img: ImageBitmap): string | undefined => {
  * Updated by Yoan Tournade <yoan@ytotech.com>
  * Updated by Andrew Tatomyr
  */
-if (!('createImageBitmap' in window)) {
+if (!("createImageBitmap" in window)) {
 	;(window as Window).createImageBitmap = async function (data) {
 		return new Promise((resolve, reject) => {
 			let dataURL
@@ -53,8 +53,8 @@ if (!('createImageBitmap' in window)) {
 				dataURL = URL.createObjectURL(data)
 			} else if (data instanceof ImageData || data instanceof Image) {
 				console.log(data, data instanceof ImageData, data instanceof Image)
-				const canvas = document.createElement('canvas')
-				const ctx = canvas.getContext('2d')
+				const canvas = document.createElement("canvas")
+				const ctx = canvas.getContext("2d")
 				canvas.width = data.width
 				canvas.height = data.height
 				if (data instanceof ImageData) {
@@ -65,11 +65,11 @@ if (!('createImageBitmap' in window)) {
 				dataURL = canvas.toDataURL()
 			} else {
 				throw new Error(
-					'createImageBitmap does not handle the provided image source type'
+					"createImageBitmap does not handle the provided image source type"
 				)
 			}
-			const img = document.createElement('img')
-			img.addEventListener('load', function () {
+			const img = document.createElement("img")
+			img.addEventListener("load", function () {
 				resolve(this as unknown as ImageBitmap)
 			})
 			img.src = dataURL

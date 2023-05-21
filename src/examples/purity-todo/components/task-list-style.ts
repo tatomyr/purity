@@ -1,5 +1,5 @@
-import {render} from '../../../index.js'
-import {ITEM_DESCRIPTION, TOGGLE_BUTTON} from './task-item.js'
+import {render} from "../../../index.js"
+import {ITEM_DESCRIPTION, TOGGLE_BUTTON} from "./task-item.js"
 
 export const taskListStyle = (): string => render`
 	<style id="task-list-style">

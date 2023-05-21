@@ -1,6 +1,6 @@
-import {render} from '../../../purity.js'
-import {setState} from '../app.js'
-import {addItem, getItems} from '../api.js'
+import {render} from "../../../purity.js"
+import {setState} from "../app.js"
+import {addItem, getItems} from "../api.js"
 
 export const InputForm = (): string => render`
 	<form
@@ -41,7 +41,7 @@ export const InputForm = (): string => render`
 			type="reset"
 			::click=${() => {
 				setState(() => ({
-					input: '',
+					input: "",
 				}))
 			}}
 		>

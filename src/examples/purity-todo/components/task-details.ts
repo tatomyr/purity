@@ -1,25 +1,25 @@
-import {render, sanitize} from '../../../index.js'
-import {handleError} from '../services/error.js'
-import {fetchAndNormalizeImages} from '../services/images.js'
-import {cropSquare, getImgSrc, keepRatio} from '../services/image-processing.js'
-import {selectDetailedTask} from '../services/task-details.js'
-import {patchTask} from '../services/tasks.js'
-import {IMAGES} from '../config/images.js'
-import {SMALL_BUTTON, subtaskItem} from './subtask-item.js'
-import {ACTION_BUTTON} from './app-style.js'
-import {taskDetailsStyle} from './task-details-style.js'
-import type {Image} from '../app.js'
-import type {EventHandler} from '../../../purity.js'
+import {render, sanitize} from "../../../index.js"
+import {handleError} from "../services/error.js"
+import {fetchAndNormalizeImages} from "../services/images.js"
+import {cropSquare, getImgSrc, keepRatio} from "../services/image-processing.js"
+import {selectDetailedTask} from "../services/task-details.js"
+import {patchTask} from "../services/tasks.js"
+import {IMAGES} from "../config/images.js"
+import {SMALL_BUTTON, subtaskItem} from "./subtask-item.js"
+import {ACTION_BUTTON} from "./app-style.js"
+import {taskDetailsStyle} from "./task-details-style.js"
+import type {Image} from "../app.js"
+import type {EventHandler} from "../../../purity.js"
 
 const makeChangeImage =
-	(direction: 'nextPage' | 'previousPage' | 'current'): EventHandler =>
+	(direction: "nextPage" | "previousPage" | "current"): EventHandler =>
 	async () => {
 		const task = selectDetailedTask()
 		patchTask({...task, isImageLoading: true})
 		try {
 			const image = await fetchAndNormalizeImages(
 				task,
-				direction === 'current' ? 1 : task.image.queries[direction]?.startIndex
+				direction === "current" ? 1 : task.image.queries[direction]?.startIndex
 			)
 			await patchTask({...task, image})
 		} catch (err) {
@@ -39,14 +39,14 @@ const handleCaptureImage: EventHandler = async ({target}) => {
 		const bigImg = await window.createImageBitmap(file)
 		const smallImg = await window.createImageBitmap(bigImg, {
 			...keepRatio(bigImg)(300),
-			resizeQuality: 'high',
+			resizeQuality: "high",
 		})
 		const croppedImg = await window.createImageBitmap(
 			smallImg,
 			...cropSquare(smallImg)
 		)
 		const link = getImgSrc(croppedImg)
-		if (!link) throw new Error('Cannot read the image.')
+		if (!link) throw new Error("Cannot read the image.")
 		const image: Image = {
 			link,
 			queries: {
@@ -69,7 +69,7 @@ const handleAddSubtask: EventHandler = () => {
 	const task = selectDetailedTask()
 	patchTask({
 		id: task.id,
-		subtasks: [...(task.subtasks || []), {checked: false, description: ''}],
+		subtasks: [...(task.subtasks || []), {checked: false, description: ""}],
 	})
 }
 
@@ -87,14 +87,14 @@ export const taskDetails = (): string => {
 					}');"
 				> 
 					<div class="controls" id="controls">
-						<button ::click=${makeChangeImage('current')}>
+						<button ::click=${makeChangeImage("current")}>
 							↻
 						</button>
 				
 						${
 							task?.image.queries.previousPage?.startIndex !== undefined &&
 							render`
-								<button ::click=${makeChangeImage('previousPage')}>
+								<button ::click=${makeChangeImage("previousPage")}>
 									←
 								</button>
 							`
@@ -103,7 +103,7 @@ export const taskDetails = (): string => {
 						${
 							task?.image.queries.nextPage?.startIndex !== undefined &&
 							render`
-								<button ::click=${makeChangeImage('nextPage')}>
+								<button ::click=${makeChangeImage("nextPage")}>
 									→
 								</button>
 							`

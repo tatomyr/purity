@@ -1,8 +1,8 @@
-import {render} from '../../index.js'
-import {useState} from './useState.js'
-import {Button} from './Button.js'
-import type {Actions} from './Button.js'
-import type {EventHandler} from '../../purity.js'
+import {render} from "../../index.js"
+import {useState} from "./useState.js"
+import {Button} from "./Button.js"
+import type {Actions} from "./Button.js"
+import type {EventHandler} from "../../purity.js"
 
 export type StatefulCounterProps = {id: string}
 
@@ -16,9 +16,9 @@ export const StatefulCounter = ({id}: StatefulCounterProps): string => {
 	return render`
 		<div id="${id}">
 			<pre id="${id}-count">${count.get()}</pre>
-			${Button({action: 'inc', caption: 'Increment', handleClick})}
-			${Button({action: 'dec', caption: 'Decrement', handleClick})}
-			${Button({action: 'reset', caption: 'Reset', handleClick})}
+			${Button({action: "inc", caption: "Increment", handleClick})}
+			${Button({action: "dec", caption: "Decrement", handleClick})}
+			${Button({action: "reset", caption: "Reset", handleClick})}
 		</div>
 	`
 }

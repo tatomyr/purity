@@ -3,7 +3,7 @@ const mounted: Record<symbol, unknown> = {}
 export const onMount =
 	(id: symbol) =>
 	(callback: () => void): void => {
-		console.log('Mounted:', !!mounted[id])
+		console.log("Mounted:", !!mounted[id])
 		if (!mounted[id]) {
 			setTimeout(() => {
 				callback()

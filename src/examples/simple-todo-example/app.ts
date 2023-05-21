@@ -1,4 +1,4 @@
-import {init} from '../../index.js'
+import {init} from "../../index.js"
 
 export type Item = {
 	id: string
@@ -13,5 +13,5 @@ export type AppState = {
 
 export const {mount, rerender, getState, setState} = init<AppState>({
 	items: [],
-	input: '',
+	input: "",
 })

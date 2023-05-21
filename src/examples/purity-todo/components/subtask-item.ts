@@ -1,11 +1,11 @@
-import {render, sanitize} from '../../../index.js'
-import {patchTask} from '../services/tasks.js'
-import {selectDetailedTask} from '../services/task-details.js'
-import {ACTION_BUTTON} from './app-style.js'
-import type {Image, Subtask, Task} from '../app.js'
-import type {EventHandler} from '../../../purity.js'
+import {render, sanitize} from "../../../index.js"
+import {patchTask} from "../services/tasks.js"
+import {selectDetailedTask} from "../services/task-details.js"
+import {ACTION_BUTTON} from "./app-style.js"
+import type {Image, Subtask, Task} from "../app.js"
+import type {EventHandler} from "../../../purity.js"
 
-export const SMALL_BUTTON = 'small-button'
+export const SMALL_BUTTON = "small-button"
 
 const toggleSubtask =
 	(subtaskIndex: number): EventHandler =>
@@ -50,7 +50,7 @@ export const subtaskItem = (
 				title="Toggle"
 				::click=${toggleSubtask(subtaskIndex)}
 			>
-				${checked ? '⊠' : '⊡'}
+				${checked ? "⊠" : "⊡"}
 			</button>
 			${
 				checked

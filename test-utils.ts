@@ -7,19 +7,19 @@ import {
 	expect,
 	it,
 	vi,
-} from 'vitest'
+} from "vitest"
 
-import {delay} from './public/delay.js'
+import {delay} from "./public/delay.js"
 
 export const simulate = (target?: string | HTMLElement) => {
 	const element = (
-		typeof target === 'string' ? document.querySelector(target) : target
+		typeof target === "string" ? document.querySelector(target) : target
 	) as HTMLElement | undefined
 	return {
 		click: () => element!.click(),
 		input: (value: string) => {
 			;(element as HTMLInputElement).value = value
-			element!.dispatchEvent(new Event('input', {bubbles: true}))
+			element!.dispatchEvent(new Event("input", {bubbles: true}))
 		},
 		navigation: () => {
 			// FIXME: this should work out of the box
@@ -47,6 +47,6 @@ export const setBeforeAndAfter = ({
 		vi.restoreAllMocks()
 	})
 	afterAll(() => {
-		document.body.innerHTML = ''
+		document.body.innerHTML = ""
 	})
 }

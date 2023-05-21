@@ -1,5 +1,5 @@
 export const formatTime = (t: unknown): string => {
-	if (typeof t !== 'number' || isNaN(t)) return 'Unknown time'
+	if (typeof t !== "number" || isNaN(t)) return "Unknown time"
 	const s = t / 1000
 	if (s < 60) return `${Math.round(s)} s`
 	const m = s / 60

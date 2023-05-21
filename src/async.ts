@@ -1,6 +1,6 @@
-import type {Rerender} from './purity.js'
+import type {Rerender} from "./purity.js"
 
-export type QueryStatus = 'initial' | 'pending' | 'success' | 'error'
+export type QueryStatus = "initial" | "pending" | "success" | "error"
 
 export type QueryCache<T> = {
 	status: QueryStatus
@@ -34,7 +34,7 @@ export const makeAsync = (rerender: Rerender) => {
 	const _getOrCreateCache = <T>(key: string): QueryCache<T> => {
 		if (!(key in caches)) {
 			console.warn(`Creating cache for [${key}] for the first time`)
-			caches[key] = {status: 'initial', expires: 0}
+			caches[key] = {status: "initial", expires: 0}
 		} else {
 			console.warn(`Cache for [${key}] exists:`, caches[key])
 		}
@@ -54,16 +54,16 @@ export const makeAsync = (rerender: Rerender) => {
 				_shouldRefetch,
 				mutation,
 			} = {}) => {
-				console.warn('🔥')
-				if (cache.status === 'pending') {
-					console.warn('❗ Skipped 🔥 due to race condition.')
+				console.warn("🔥")
+				if (cache.status === "pending") {
+					console.warn("❗ Skipped 🔥 due to race condition.")
 					return
 				}
 				try {
 					if (optimisticData !== undefined) {
 						cache.data = optimisticData
 					}
-					cache.status = 'pending'
+					cache.status = "pending"
 					if (!_shouldRefetch) {
 						// TODO: investigate why does it fail without the IF?
 						rerender()
@@ -72,12 +72,12 @@ export const makeAsync = (rerender: Rerender) => {
 						await mutation(cache)
 					}
 					cache.data = await query(optimisticData)
-					cache.status = 'success'
+					cache.status = "success"
 					cache.error = undefined
 					cache.expires = Date.now() + expiration
 				} catch (err) {
 					console.error(`HERE IS THE ERROR:`, err)
-					cache.status = 'error'
+					cache.status = "error"
 					cache.error = err as Error
 					cache.expires = Date.now() + expiration
 				} finally {
@@ -86,7 +86,7 @@ export const makeAsync = (rerender: Rerender) => {
 			}
 
 			const unwrap: Unwrap<T> = () => {
-				if (cache.status === 'success' && Date.now() < cache.expires) {
+				if (cache.status === "success" && Date.now() < cache.expires) {
 					return cache.data as T
 				} else {
 					return query()
@@ -97,7 +97,7 @@ export const makeAsync = (rerender: Rerender) => {
 
 			const call: Call<T> = optimisticData => {
 				const _shouldRefetch =
-					cache.status === 'initial' || Date.now() >= cache.expires
+					cache.status === "initial" || Date.now() >= cache.expires
 				if (_shouldRefetch) {
 					console.warn(
 						`Executing the query for a newly created or expired cache`

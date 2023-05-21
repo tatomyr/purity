@@ -3,6 +3,6 @@ export const insertText =
 	(text: string): void => {
 		const {selectionStart, selectionEnd} = element
 		if (selectionStart && selectionEnd) {
-			element.setRangeText(text, selectionStart, selectionEnd, 'end')
+			element.setRangeText(text, selectionStart, selectionEnd, "end")
 		}
 	}

@@ -1,5 +1,5 @@
-import {render} from '../../../index.js'
-import {getState} from '../app.js'
+import {render} from "../../../index.js"
+import {getState} from "../app.js"
 
 // FIXME: spinner. Maybe use background?
 

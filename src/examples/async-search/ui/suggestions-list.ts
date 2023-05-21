@@ -1,7 +1,7 @@
-import {isTruthy, render} from '../../../purity.js'
-import {idEquals} from '../helpers.js'
-import {getState, setState} from '../app.js'
-import type {Item} from '../types.js'
+import {isTruthy, render} from "../../../purity.js"
+import {idEquals} from "../helpers.js"
+import {getState, setState} from "../app.js"
+import type {Item} from "../types.js"
 
 const item = ({name, id}: Item) => render`
 	<li

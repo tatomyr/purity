@@ -1,6 +1,6 @@
-import {render} from '../../../index.js'
+import {render} from "../../../index.js"
 
-export const ACTION_BUTTON = 'action-button'
+export const ACTION_BUTTON = "action-button"
 
 export const appStyle = (): string => render`
 	<style id="app-style">

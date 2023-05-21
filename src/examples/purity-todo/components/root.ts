@@ -1,15 +1,15 @@
-import {render} from '../../../index.js'
-import {state, theIntrospector} from '../app.js'
-import {closeSettings} from '../services/settings.js'
-import {closeTaskDetails} from '../services/task-details.js'
-import {appStyle} from './app-style.js'
-import {header} from './header.js'
-import {inputForm} from './input-form.js'
-import {modal} from './modal.js'
-import {modalStyle} from './modal-style.js'
-import {settings} from './settings.js'
-import {taskDetails} from './task-details.js'
-import {taskList} from './task-list.js'
+import {render} from "../../../index.js"
+import {state, theIntrospector} from "../app.js"
+import {closeSettings} from "../services/settings.js"
+import {closeTaskDetails} from "../services/task-details.js"
+import {appStyle} from "./app-style.js"
+import {header} from "./header.js"
+import {inputForm} from "./input-form.js"
+import {modal} from "./modal.js"
+import {modalStyle} from "./modal-style.js"
+import {settings} from "./settings.js"
+import {taskDetails} from "./task-details.js"
+import {taskList} from "./task-list.js"
 
 export const root = (): string => render`
 	<div id="root">
@@ -21,7 +21,7 @@ export const root = (): string => render`
 			${
 				state.isSettingsModalOpen &&
 				modal({
-					title: 'Settings',
+					title: "Settings",
 					content: settings(),
 					close: closeSettings,
 				})
@@ -31,7 +31,7 @@ export const root = (): string => render`
 			${
 				state.taskDetailId &&
 				modal({
-					title: 'Details',
+					title: "Details",
 					content: taskDetails(),
 					close: closeTaskDetails,
 				})

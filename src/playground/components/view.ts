@@ -1,5 +1,5 @@
-import {render} from '../../index.js'
-import {getState} from '../index.js'
+import {render} from "../../index.js"
+import {getState} from "../index.js"
 
 export const view = (): string => render`
 	<html>
@@ -37,7 +37,7 @@ export const view = (): string => render`
 		<body>
 			<div id='root'></div>
 			<div id='error'></div>
-			<script type='module'>${getState().code.replace(/"/g, '&quot;')}</script>
+			<script type='module'>${getState().code.replace(/"/g, "&quot;")}</script>
 		</body>
 	</html>
 `

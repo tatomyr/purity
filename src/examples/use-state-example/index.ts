@@ -1,5 +1,5 @@
-import {init} from '../../index.js'
-import {Root} from './Root.js'
+import {init} from "../../index.js"
+import {Root} from "./Root.js"
 
 export const {mount, rerender} = init({})
 

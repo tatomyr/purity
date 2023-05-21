@@ -1,3 +1,3 @@
-import {mount, root} from './main.js'
+import {mount, root} from "./main.js"
 
 mount(root)

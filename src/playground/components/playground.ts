@@ -1,30 +1,30 @@
-import {makeDrag, render} from '../../index.js'
-import {setState} from '../index.js'
-import {put} from '../services/storage.js'
-import {editor, getEditor} from './editor.js'
-import {playgroundStyle} from './playground-style.js'
-import {view} from './view.js'
+import {makeDrag, render} from "../../index.js"
+import {setState} from "../index.js"
+import {put} from "../services/storage.js"
+import {editor, getEditor} from "./editor.js"
+import {playgroundStyle} from "./playground-style.js"
+import {view} from "./view.js"
 
 const initDrag = makeDrag(e => {
 	const startWidth = window.getComputedStyle(getEditor()).width
 	const fullWidth = window.getComputedStyle(
-		document.getElementById('playground-root')!
+		document.getElementById("playground-root")!
 	).width
-	console.log('drag:init', startWidth, '/', fullWidth)
-	setState(() => ({placeOverDisplay: 'initial'}))
+	console.log("drag:init", startWidth, "/", fullWidth)
+	setState(() => ({placeOverDisplay: "initial"}))
 
 	return ({left}) => {
 		const width =
 			(100 * (parseInt(startWidth, 10) + parseInt(left, 10))) /
 				parseInt(fullWidth, 10) +
-			'%'
+			"%"
 		getEditor().style.width = width
-		console.log('drag:move', {left})
+		console.log("drag:move", {left})
 
 		return () => {
-			console.log('drag:stop', width)
+			console.log("drag:stop", width)
 			put({editorWidth: width})
-			setState(() => ({placeOverDisplay: 'none'}))
+			setState(() => ({placeOverDisplay: "none"}))
 		}
 	}
 })

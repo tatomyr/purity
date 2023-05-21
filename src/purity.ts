@@ -21,13 +21,13 @@ export type App<State> = {
 
 type EventName = keyof Omit<
 	GlobalEventHandlersEventMap,
-	| 'beforeinput'
-	| 'compositionend'
-	| 'compositionstart'
-	| 'compositionupdate'
-	| 'error'
-	| 'focusin'
-	| 'focusout'
+	| "beforeinput"
+	| "compositionend"
+	| "compositionstart"
+	| "compositionupdate"
+	| "error"
+	| "focusin"
+	| "focusout"
 >
 
 type Target = HTMLElement & HTMLInputElement & HTMLFormElement
@@ -40,7 +40,7 @@ type DomEvent = (Event & MouseEvent) & {
 export type EventHandler = (e: DomEvent) => void | Promise<void>
 
 // Constants
-const PURITY_KEYWORD = 'purity'
+const PURITY_KEYWORD = "purity"
 const DATA_PURITY_FLAG = `data-${PURITY_KEYWORD}_flag`
 
 /**
@@ -55,11 +55,11 @@ export const init = <State extends Record<string, unknown>>(
 	 * Parses an html string and returns so called 'nodeMap' which represents the virtual DOM
 	 */
 	const buildNodesMap = (html: string): DomNodesMap => {
-		const virtualDocument = new DOMParser().parseFromString(html, 'text/html')
+		const virtualDocument = new DOMParser().parseFromString(html, "text/html")
 		const nodesMap: DomNodesMap = new Map()
-		for (const node of virtualDocument.querySelectorAll<HTMLElement>('[id]')) {
+		for (const node of virtualDocument.querySelectorAll<HTMLElement>("[id]")) {
 			const shallow = node.cloneNode(true) as HTMLElement
-			for (const innerNode of shallow.querySelectorAll('[id]')) {
+			for (const innerNode of shallow.querySelectorAll("[id]")) {
 				innerNode.outerHTML = `<!-- ${innerNode.tagName}#${innerNode.id} -->`
 			}
 			// Removing the `data-purity_*` attributes attached in render() function
@@ -117,7 +117,7 @@ export const init = <State extends Record<string, unknown>>(
 	 */
 	function rerender() {
 		const newNodesMap = rootComponent()
-		console.warn('🌀')
+		console.warn("🌀")
 		for (const [id, domNode] of domNodesMap) {
 			const newNode = newNodesMap.get(id)
 			// Since we depend on the shallow comparison, we must only care about updating changed nodes.
@@ -158,11 +158,11 @@ const BOUND_EVENTS_RE = /::(\w+)\s*=\s*__\[(\d+)\]__/gm
 export const isTruthy = <T>(x: T | Rejected): x is T =>
 	x !== undefined && x !== null && x !== false
 
-const clearFalsy = <T extends Verified>(x: T | Rejected): T | '' =>
-	isTruthy(x) ? x : ''
+const clearFalsy = <T extends Verified>(x: T | Rejected): T | "" =>
+	isTruthy(x) ? x : ""
 
 const joinIfArray = (x: Verified): Allowed =>
-	Array.isArray(x) ? x.join('') : x
+	Array.isArray(x) ? x.join("") : x
 
 /**
  * Increments the Purity Key and resets it after all sync operations completed
@@ -199,7 +199,7 @@ export const render = (
 			// Asynchronously bind event handlers after rendering everything to DOM
 			const element = document.querySelector<HTMLElement>(`[${dataName}]`)
 			const prop = args[index]
-			if (element && typeof prop === 'function') {
+			if (element && typeof prop === "function") {
 				element[`on${event}`] = prop as EventListener
 				// Remove residuals (needed for consistency)
 				element.removeAttribute(dataName)
@@ -215,8 +215,8 @@ export const render = (
 		.replace(BOUND_EVENTS_RE, bindEventHandlers)
 		.replace(ARGS_RE, processArgs)
 		.trim()
-		.replace(/\n\s*</g, '<')
-		.replace(/>\n\s*/g, '>')
+		.replace(/\n\s*</g, "<")
+		.replace(/>\n\s*/g, ">")
 
 	return stringToRender
 }

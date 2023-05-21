@@ -1,11 +1,11 @@
-import {render, sanitize} from '../../../index.js'
-import {setState, state} from '../app.js'
-import {IMAGES} from '../config/images.js'
-import {handleError} from '../services/error.js'
-import {fetchAndNormalizeImages} from '../services/images.js'
-import {resetInput} from '../services/input-form.js'
-import {patchTask, prepareTask} from '../services/tasks.js'
-import type {EventHandler} from '../../../purity.js'
+import {render, sanitize} from "../../../index.js"
+import {setState, state} from "../app.js"
+import {IMAGES} from "../config/images.js"
+import {handleError} from "../services/error.js"
+import {fetchAndNormalizeImages} from "../services/images.js"
+import {resetInput} from "../services/input-form.js"
+import {patchTask, prepareTask} from "../services/tasks.js"
+import type {EventHandler} from "../../../purity.js"
 
 const inputFormStyle = () => render`
 	<style id="task-form-style">
@@ -33,13 +33,13 @@ const createTask: EventHandler = async e => {
 	const description: string = sanitize(e.target.task.value)
 	const task = prepareTask(description)
 	if (state.tasks.some(({id}) => id === task.id)) {
-		window.alert('There is already a task with the same id in the list')
+		window.alert("There is already a task with the same id in the list")
 		return
 	}
 
 	resetInput()
 	setState(({tasks}) => ({
-		view: 'active',
+		view: "active",
 		tasks: [{...task, isImageLoading: true}, ...tasks],
 	}))
 

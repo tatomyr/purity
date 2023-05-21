@@ -1,5 +1,5 @@
-import {debounce, LZString, push} from '../../index.js'
-import {codeSample} from './code-sample.js'
+import {debounce, LZString, push} from "../../index.js"
+import {codeSample} from "./code-sample.js"
 
 console.log(document.location.hash)
 

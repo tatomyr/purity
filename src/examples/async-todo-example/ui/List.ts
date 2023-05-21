@@ -1,9 +1,9 @@
-import {render} from '../../../purity.js'
-import {getState, setState} from '../app.js'
-import {getItems} from '../api.js'
-import {ListItem} from './ListItem.js'
-import {createOnMount} from './onMount.js'
-import type {Item} from '../app.js'
+import {render} from "../../../purity.js"
+import {getState, setState} from "../app.js"
+import {getItems} from "../api.js"
+import {ListItem} from "./ListItem.js"
+import {createOnMount} from "./onMount.js"
+import type {Item} from "../app.js"
 
 const onMount = createOnMount()
 

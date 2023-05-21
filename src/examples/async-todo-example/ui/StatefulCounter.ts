@@ -1,7 +1,7 @@
-import {render} from '../../../purity.js'
-import {setState} from '../app.js'
-import {useState} from './useState.js'
-import {createOnMount} from './onMount.js'
+import {render} from "../../../purity.js"
+import {setState} from "../app.js"
+import {useState} from "./useState.js"
+import {createOnMount} from "./onMount.js"
 
 const onMount = createOnMount()
 
@@ -13,7 +13,7 @@ export const StatefulCounter = ({id}: {id: string}) => {
 	onMount(async () => {
 		setState(() => ({spinner: true}))
 		try {
-			const res = await fetch('http://localhost:3000/counter')
+			const res = await fetch("http://localhost:3000/counter")
 			if (!res.ok) throw res
 			const {count} = await res.json()
 			setCount({count})
@@ -26,10 +26,10 @@ export const StatefulCounter = ({id}: {id: string}) => {
 
 	const saveCount = async () => {
 		setState(() => ({spinner: true}))
-		await fetch('http://localhost:3000/counter', {
-			method: 'PUT',
+		await fetch("http://localhost:3000/counter", {
+			method: "PUT",
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({count: state.count}),
 		}).catch(err => alert(err.message))

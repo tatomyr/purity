@@ -1,8 +1,8 @@
-import {init, render} from '../../index.js'
-import type {EventHandler} from '../../purity.js'
+import {init, render} from "../../index.js"
+import type {EventHandler} from "../../purity.js"
 
 export const {mount, getState, setState} = init({
-	color: 'black',
+	color: "black",
 })
 
 const handleInput: EventHandler = e => {

@@ -1,8 +1,8 @@
-import {render} from '../../../index.js'
-import {downloadUserData, uploadUserData} from '../services/settings.js'
-import {lineContainerCSS, lineTextCSS} from './modal-style.js'
-import {ACTION_BUTTON} from './app-style.js'
-import {version} from './version.js'
+import {render} from "../../../index.js"
+import {downloadUserData, uploadUserData} from "../services/settings.js"
+import {lineContainerCSS, lineTextCSS} from "./modal-style.js"
+import {ACTION_BUTTON} from "./app-style.js"
+import {version} from "./version.js"
 
 const settingsStyle = () => render`
 	<style>

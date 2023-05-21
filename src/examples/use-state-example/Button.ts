@@ -1,7 +1,7 @@
-import {render} from '../../index.js'
-import type {EventHandler} from '../../purity.js'
+import {render} from "../../index.js"
+import type {EventHandler} from "../../purity.js"
 
-export type Actions = 'inc' | 'dec' | 'reset'
+export type Actions = "inc" | "dec" | "reset"
 
 export type ButtonProps = {
 	action: Actions

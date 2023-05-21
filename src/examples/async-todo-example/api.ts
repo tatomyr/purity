@@ -1,26 +1,26 @@
-import type {Item} from './app.js'
+import type {Item} from "./app.js"
 
-const BASE_URL = 'http://localhost:3000/items'
+const BASE_URL = "http://localhost:3000/items"
 
 export const getItems = (): Promise<Item[]> =>
 	fetch(BASE_URL).then(res => res.json())
 
 export const addItem = (text: string): Promise<Item> =>
 	fetch(BASE_URL, {
-		method: 'POST',
-		headers: {'Content-Type': 'application/json'},
+		method: "POST",
+		headers: {"Content-Type": "application/json"},
 		body: JSON.stringify({text, checked: false}),
 	}).then(res => res.json())
 
 export const toggleItem = (id: string, checked: boolean): Promise<Item> =>
 	fetch(`${BASE_URL}/${id}`, {
-		method: 'PATCH',
-		headers: {'Content-Type': 'application/json'},
+		method: "PATCH",
+		headers: {"Content-Type": "application/json"},
 		body: JSON.stringify({checked}),
 	}).then(res => res.json())
 
 export const deleteItem = (id: string): Promise<void> =>
 	fetch(`${BASE_URL}/${id}`, {
-		method: 'DELETE',
-		headers: {'Content-Type': 'application/json'},
+		method: "DELETE",
+		headers: {"Content-Type": "application/json"},
 	}).then(res => res.json())

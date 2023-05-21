@@ -1,29 +1,29 @@
-import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest'
+import {afterEach, beforeEach, describe, expect, it, vi} from "vitest"
 
-import {init, render} from './purity.js'
-import {delay} from './delay.js'
-import type {App} from './purity.js'
+import {init, render} from "./purity.js"
+import {delay} from "./delay.js"
+import type {App} from "./purity.js"
 
 export type AnyObject = {[key: string]: any}
 
-describe('purity', () => {
+describe("purity", () => {
 	let app: App<AnyObject>, defaultState: AnyObject
 	beforeEach(() => {
 		document.body.innerHTML = '<div id="root"></div>'
 		console.warn = vi.fn()
 	})
 	afterEach(() => {
-		document.body.innerHTML = ''
+		document.body.innerHTML = ""
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		app = undefined
 		vi.restoreAllMocks()
 	})
 
-	describe('counter app', () => {
+	describe("counter app", () => {
 		let CounterApp: () => string
 		beforeEach(() => {
-			defaultState = {title: 'COUNTER', counter: 0}
+			defaultState = {title: "COUNTER", counter: 0}
 			app = init(defaultState)
 			CounterApp = () => render`
 				<div id="root">
@@ -32,21 +32,21 @@ describe('purity', () => {
 				</div>
 			`
 		})
-		it('should match default state after created', () => {
+		it("should match default state after created", () => {
 			expect(app.getState()).toEqual(defaultState)
 		})
-		it('should mount a component depending on the default state', () => {
+		it("should mount a component depending on the default state", () => {
 			app.mount(CounterApp)
 			expect(document.body.innerHTML).toEqual(CounterApp())
 		})
-		it('should change state after updates depending on previous state', () => {
+		it("should change state after updates depending on previous state", () => {
 			app.mount(CounterApp)
 			app.setState(state => ({counter: state.counter + 1}))
-			expect(app.getState()).toEqual({title: 'COUNTER', counter: 1})
+			expect(app.getState()).toEqual({title: "COUNTER", counter: 1})
 		})
 	})
 
-	it('should bind an event', async () => {
+	it("should bind an event", async () => {
 		const eventHandler = vi.fn()
 		const ClickableComponent = () => render`
 			<button id="root" ::click=${eventHandler}>Click Me</button>
@@ -58,10 +58,10 @@ describe('purity', () => {
 		expect(document.body.innerHTML).toEqual(
 			`<button id="root" data-purity_flag="">Click Me</button>`
 		)
-		;(document.querySelector('button#root') as HTMLElement).click()
+		;(document.querySelector("button#root") as HTMLElement).click()
 		expect(eventHandler).toHaveBeenCalledTimes(1)
 	})
-	it('should bind multiple events', async () => {
+	it("should bind multiple events", async () => {
 		const clickHandler = vi.fn()
 		const blurHandler = vi.fn()
 		const ClickableComponent = () => render`
@@ -74,10 +74,10 @@ describe('purity', () => {
 		expect(document.body.innerHTML).toEqual(
 			'<input type="text" id="root" data-purity_flag="">'
 		)
-		;(document.querySelector('input#root') as HTMLElement).click()
+		;(document.querySelector("input#root") as HTMLElement).click()
 		expect(clickHandler).toHaveBeenCalledTimes(1)
-		;(document.querySelector('input#root') as HTMLElement).focus()
-		;(document.querySelector('input#root') as HTMLElement).blur()
+		;(document.querySelector("input#root") as HTMLElement).focus()
+		;(document.querySelector("input#root") as HTMLElement).blur()
 		expect(blurHandler).toHaveBeenCalledTimes(1)
 	})
 	it(`
@@ -100,7 +100,7 @@ describe('purity', () => {
 			`<div id="root"><button data-purity_flag="" data-other="something">Click Me Not a Node</button></div>`
 		)
 	})
-	it('should add and remove components in DOM', async () => {
+	it("should add and remove components in DOM", async () => {
 		const Child1 = () => render`
 			<h1 id="first">First</h1>
 		`
@@ -113,7 +113,7 @@ describe('purity', () => {
 				<div id="root">
 					${
 						{first: Child1(), second: Child2()}[
-							selected as 'first' | 'second'
+							selected as "first" | "second"
 						] as string | undefined
 					}
 				</div>
@@ -123,10 +123,10 @@ describe('purity', () => {
 		app.mount(Parent)
 		await delay(0)
 		expect(document.body.innerHTML).toEqual(`<div id="root"></div>`)
-		app.setState(() => ({selected: 'first'}))
+		app.setState(() => ({selected: "first"}))
 		await delay(0)
 		expect(document.body.innerHTML).toEqual(`<div id="root">${Child1()}</div>`)
-		app.setState(() => ({selected: 'second'}))
+		app.setState(() => ({selected: "second"}))
 		await delay(0)
 		expect(document.body.innerHTML).toEqual(`<div id="root">${Child2()}</div>`)
 	})
@@ -164,7 +164,7 @@ describe('purity', () => {
 						::click=${() => {
 							app.setState(() => ({
 								something: (
-									document.querySelector('#color') as HTMLInputElement
+									document.querySelector("#color") as HTMLInputElement
 								).value,
 							}))
 						}}
@@ -175,19 +175,19 @@ describe('purity', () => {
 			`
 		app.mount(StaticComponent)
 		await delay(0)
-		;(document.querySelector('#color') as HTMLInputElement).value = 'red'
-		;(document.querySelector('button') as HTMLElement).click()
+		;(document.querySelector("#color") as HTMLInputElement).value = "red"
+		;(document.querySelector("button") as HTMLElement).click()
 		expect(
-			(document.querySelector('#color') as HTMLInputElement).value
-		).toEqual('red')
+			(document.querySelector("#color") as HTMLInputElement).value
+		).toEqual("red")
 		expect(
-			(document.querySelector('#color') as HTMLInputElement).style.color
-		).toEqual('red')
+			(document.querySelector("#color") as HTMLInputElement).style.color
+		).toEqual("red")
 		expect(document.body.innerHTML).toEqual(
 			'<div id="root"><input style="color: red;" id="color"><button data-purity_flag="">Apply color</button></div>'
 		)
 	})
-	it('should handle conditional rendering & process arrays', () => {
+	it("should handle conditional rendering & process arrays", () => {
 		const ConditionalComponent = ({maybeArr}: {maybeArr?: any[]}) => render`
 			<div id="root">
 				<ul>
@@ -198,7 +198,7 @@ describe('purity', () => {
 		app = init({})
 		app.mount(() => ConditionalComponent({}))
 		expect(document.body.innerHTML).toEqual(`<div id="root"><ul></ul></div>`)
-		app.mount(() => ConditionalComponent({maybeArr: ['🍎', '🍌', '🍰']}))
+		app.mount(() => ConditionalComponent({maybeArr: ["🍎", "🍌", "🍰"]}))
 		expect(document.body.innerHTML).toEqual(
 			`<div id="root"><ul><li>🍎</li><li>🍌</li><li>🍰</li></ul></div>`
 		)

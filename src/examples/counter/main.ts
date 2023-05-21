@@ -1,4 +1,4 @@
-import {render, init} from '../../index.js'
+import {render, init} from "../../index.js"
 
 export const {mount, getState, setState} = init({
 	count: 0,

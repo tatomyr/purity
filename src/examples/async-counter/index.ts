@@ -1,12 +1,12 @@
-import {init, render, makeAsync} from '../../index.js'
+import {init, render, makeAsync} from "../../index.js"
 
 // Initialization
-const {mount, rerender} = init({greeting: 'Hello World!'})
+const {mount, rerender} = init({greeting: "Hello World!"})
 
 const {useAsync} = makeAsync(rerender)
 
 // Constants
-const url = 'http://localhost:3000/counters/my-counter'
+const url = "http://localhost:3000/counters/my-counter"
 
 // Hooks
 const useMyCounter = useAsync(url, () => fetch(url).then(res => res.json()), {
@@ -21,7 +21,7 @@ const root = () => {
 
 	return render`
 		<div id="root">
-			${funnyWrapper('Hello Async Counter')}
+			${funnyWrapper("Hello Async Counter")}
 			${funnyWrapper(render`
 				<button 
 					style="all: unset"
@@ -31,9 +31,9 @@ const root = () => {
 							mutation: async () => {
 								const {value} = await fetch(url).then(res => res.json())
 								await fetch(url, {
-									method: 'PUT',
+									method: "PUT",
 									headers: {
-										'Content-Type': 'application/json',
+										"Content-Type": "application/json",
 									},
 									body: JSON.stringify({value: value + 1}),
 								})
@@ -41,22 +41,22 @@ const root = () => {
 						})
 					}}}
 				>
-					${funnyWrapper('+')}
+					${funnyWrapper("+")}
 				</button>
 				<span 
 					id="my-counter" 
 					style="
 						padding: 0 10px; 
-						${status === 'pending' && render`color: lightgrey;`}
+						${status === "pending" && render`color: lightgrey;`}
 					"
 				>
 					${data?.value}
 				</span>
 				<span id="loader" style="margin: 0 4px;">
-					${status === 'pending' && '💿'}
+					${status === "pending" && "💿"}
 				</span>
 			`)}
-			${status === 'error' && funnyWrapper(error?.message)}
+			${status === "error" && funnyWrapper(error?.message)}
 		</div>
 	`
 }

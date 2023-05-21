@@ -1,8 +1,8 @@
-import {init, render} from '../../purity.js'
+import {init, render} from "../../purity.js"
 
 // App #1
 
-const store1 = init({text: 'Initial Text'})
+const store1 = init({text: "Initial Text"})
 
 const App1 = () => render`
 	<form

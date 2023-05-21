@@ -26,20 +26,20 @@ export const makeDrag = (onInit: InitCallback): MouseEventHandler => {
 			e.target as Element
 		).top
 
-		document.documentElement.addEventListener('mousemove', doDrag, false)
-		document.documentElement.addEventListener('mouseup', stopDrag, false)
+		document.documentElement.addEventListener("mousemove", doDrag, false)
+		document.documentElement.addEventListener("mouseup", stopDrag, false)
 		onMove = onInit(e)
 	}
 
 	const doDrag: MouseEventHandler = e => {
-		const left = e.clientX - startX + 'px'
-		const top = e.clientY - startY + 'px'
+		const left = e.clientX - startX + "px"
+		const top = e.clientY - startY + "px"
 		onStop = onMove({left, top, startLeft, startTop})
 	}
 
 	const stopDrag: MouseEventHandler = e => {
-		document.documentElement.removeEventListener('mousemove', doDrag, false)
-		document.documentElement.removeEventListener('mouseup', stopDrag, false)
+		document.documentElement.removeEventListener("mousemove", doDrag, false)
+		document.documentElement.removeEventListener("mouseup", stopDrag, false)
 		onStop?.()
 	}
 

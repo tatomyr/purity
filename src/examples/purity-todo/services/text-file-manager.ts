@@ -1,12 +1,12 @@
 export function download(filename: string, text: string): void {
-	const a = document.createElement('a')
+	const a = document.createElement("a")
 	a.setAttribute(
-		'href',
+		"href",
 		`data:text/plain;charset=utf-8,${encodeURIComponent(text)}`
 	)
-	a.setAttribute('download', filename)
+	a.setAttribute("download", filename)
 
-	a.style.display = 'none'
+	a.style.display = "none"
 	document.body.appendChild(a)
 
 	a.click()

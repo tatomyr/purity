@@ -1,9 +1,9 @@
-import {render} from '../../../purity.js'
-import {rerender} from '../app.js'
-import {List} from './List.js'
-import {InputForm} from './InputForm.js'
-import {StatefulCounter} from './StatefulCounter.js'
-import {Spinner} from './Spinner.js'
+import {render} from "../../../purity.js"
+import {rerender} from "../app.js"
+import {List} from "./List.js"
+import {InputForm} from "./InputForm.js"
+import {StatefulCounter} from "./StatefulCounter.js"
+import {Spinner} from "./Spinner.js"
 
 export const App = (): string => render`
 	<div id="root">
@@ -25,8 +25,8 @@ export const App = (): string => render`
 				Stateful Counter
 			</a>
 		</nav>
-		${window.location.hash === '' ? List() + InputForm() : ''}
-		${window.location.hash === '#counter' ? StatefulCounter({id: 'counter'}) : ''}
+		${window.location.hash === "" ? List() + InputForm() : ""}
+		${window.location.hash === "#counter" ? StatefulCounter({id: "counter"}) : ""}
 		${Spinner()}
 	</div>
 `

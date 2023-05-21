@@ -1,4 +1,4 @@
-import {rerender} from './index.js'
+import {rerender} from "./index.js"
 
 const state: {[key: string]: unknown} = {}
 

@@ -1,7 +1,7 @@
-import {render} from '../../../index.js'
-import {openSettings} from '../services/settings.js'
-import {navItem} from './nav-item.js'
-import {ACTION_BUTTON} from './app-style.js'
+import {render} from "../../../index.js"
+import {openSettings} from "../services/settings.js"
+import {navItem} from "./nav-item.js"
+import {ACTION_BUTTON} from "./app-style.js"
 
 const headerStyle = (): string => render`
 	<style id="header-style">
@@ -25,8 +25,8 @@ const headerStyle = (): string => render`
 export const header = (): string => render`
 	<nav id="header">
 		<ul>
-			${navItem({value: 'active', label: '⊡'})}
-			${navItem({value: 'completed', label: '⊠'})}
+			${navItem({value: "active", label: "⊡"})}
+			${navItem({value: "completed", label: "⊠"})}
 			<li>
 				<button
 					class="${ACTION_BUTTON}"

@@ -1,7 +1,7 @@
-import {setState, state} from '../app.js'
-import {patchTask} from './tasks.js'
-import type {Task} from '../app.js'
-import type {EventHandler} from '../../../purity.js'
+import {setState, state} from "../app.js"
+import {patchTask} from "./tasks.js"
+import type {Task} from "../app.js"
+import type {EventHandler} from "../../../purity.js"
 
 export const closeTaskDetails: EventHandler = () => {
 	const task = selectDetailedTask()

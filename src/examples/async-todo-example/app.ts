@@ -1,4 +1,4 @@
-import {init} from '../../purity.js'
+import {init} from "../../purity.js"
 
 export type Item = {
 	id: string
@@ -15,6 +15,6 @@ export type AppState = {
 
 export const {mount, rerender, getState, setState} = init<AppState>({
 	items: [],
-	input: '',
+	input: "",
 	spinner: false,
 })
