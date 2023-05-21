@@ -12,13 +12,13 @@ import {taskDetails} from './task-details.js'
 import {taskList} from './task-list.js'
 
 export const root = (): string => render`
-  <div id="root">
-    ${header()}
-    ${taskList()}
-    ${inputForm()}
-    ${appStyle()}
-    <div id="settings">
-      ${
+	<div id="root">
+		${header()}
+		${taskList()}
+		${inputForm()}
+		${appStyle()}
+		<div id="settings">
+			${
 				state.isSettingsModalOpen &&
 				modal({
 					title: 'Settings',
@@ -26,9 +26,9 @@ export const root = (): string => render`
 					close: closeSettings,
 				})
 			}
-    </div>
-    <div id="task-details">
-      ${
+		</div>
+		<div id="task-details">
+			${
 				state.taskDetailId &&
 				modal({
 					title: 'Details',
@@ -36,8 +36,8 @@ export const root = (): string => render`
 					close: closeTaskDetails,
 				})
 			}
-    </div>
-    ${modalStyle()}
+		</div>
+		${modalStyle()}
 		${theIntrospector({state, localStorage: window.localStorage})}
-  </div>
+	</div>
 `

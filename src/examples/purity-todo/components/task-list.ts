@@ -21,7 +21,7 @@ const handleClick: EventHandler = e => {
 	})
 	// TODO: do use this later
 	// withItemDescription(e.target as HTMLElement)(({id})=>{
-	//   setState(()=>({taskDetailId: id}))
+	//	 setState(()=>({taskDetailId: id}))
 	// })
 }
 
@@ -29,9 +29,9 @@ export const taskList = (): string => {
 	const tasks = state.tasks.filter(byInput(state)).filter(byStatus(state))
 
 	return render`
-    <ol id="task-list" ::click=${handleClick}>
-      ${tasks.map(taskItem)}
-    </ol>
-    ${taskListStyle()}
-  `
+		<ol id="task-list" ::click=${handleClick}>
+			${tasks.map(taskItem)}
+		</ol>
+		${taskListStyle()}
+	`
 }

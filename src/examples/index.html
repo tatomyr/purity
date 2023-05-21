@@ -64,12 +64,12 @@
 			]
 
 			const Item = ([path, title]) => render`
-        <li>
-          <a href="${window.location.href}${path}">
-            ${title}
-          </a>
-        </li>
-      `
+				<li>
+					<a href="${window.location.href}${path}">
+						${title}
+					</a>
+				</li>
+			`
 
 			mount(() => render`<ul id="root">${list.map(Item)}</ul>`)
 		</script>

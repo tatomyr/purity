@@ -42,35 +42,35 @@ export const taskItem = ({
 	completed,
 	image,
 }: Task): string => render`
-  <li id="${id}" class="task-item ${completed && 'completed'}">
-    <img
-      src="${image.link}"
-      onerror="this.onerror = null; this.src = '${IMAGES.BROKEN}'"
-      loading="lazy"
-    />
-    <div 
-      class="${ITEM_DESCRIPTION}" 
-      data-id="${id}" 
-      ::click=${openTaskDetails}
-    >
-      ${formatDescription(description)}
-    </div>
-    <button 
-      id="delete-${id}"
-      class="${ACTION_BUTTON} ${DELETE_BUTTON} ${!completed && 'hidden'}"
-      data-id="${id}"
-      title="Delete"
-    >
-      ⊟
-    </button>
-    <button
-      id="toggle-${id}"
-      class="${ACTION_BUTTON} ${TOGGLE_BUTTON}"
-      data-id="${id}"
-      data-completed="${completed && 'true'}"
-      title="Toggle"
-    >
-      ${completed ? '⊠' : '⊡'}
-    </button>
-  </li>
+	<li id="${id}" class="task-item ${completed && 'completed'}">
+		<img
+			src="${image.link}"
+			onerror="this.onerror = null; this.src = '${IMAGES.BROKEN}'"
+			loading="lazy"
+		/>
+		<div 
+			class="${ITEM_DESCRIPTION}" 
+			data-id="${id}" 
+			::click=${openTaskDetails}
+		>
+			${formatDescription(description)}
+		</div>
+		<button 
+			id="delete-${id}"
+			class="${ACTION_BUTTON} ${DELETE_BUTTON} ${!completed && 'hidden'}"
+			data-id="${id}"
+			title="Delete"
+		>
+			⊟
+		</button>
+		<button
+			id="toggle-${id}"
+			class="${ACTION_BUTTON} ${TOGGLE_BUTTON}"
+			data-id="${id}"
+			data-completed="${completed && 'true'}"
+			title="Toggle"
+		>
+			${completed ? '⊠' : '⊡'}
+		</button>
+	</li>
 `

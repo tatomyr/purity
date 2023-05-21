@@ -32,11 +32,11 @@ export function configureMonacoEditor({
 		new Blob(
 			[
 				`
-            self.MonacoEnvironment = {
-                baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min'
-            };
-            importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min/vs/base/worker/workerMain.min.js');
-        `,
+						self.MonacoEnvironment = {
+								baseUrl: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min'
+						};
+						importScripts('https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min/vs/base/worker/workerMain.min.js');
+				`,
 			],
 			{type: 'text/javascript'}
 		)

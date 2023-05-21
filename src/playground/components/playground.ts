@@ -30,15 +30,15 @@ const initDrag = makeDrag(e => {
 })
 
 export const playground = (): string => render`
-  <div id="playground-root" class="playground">
-    ${editor()}
-    <div class="resizer" >
-      <div class="handler" ::mousedown=${initDrag}></div>
-    </div>
-    <div id="playground-view">
-      <iframe id="playground-iframe" srcdoc="${view()}"></iframe>
-      <div id="place-over"></div>
-    </div>
-    ${playgroundStyle()}
-  </div>
+	<div id="playground-root" class="playground">
+		${editor()}
+		<div class="resizer" >
+			<div class="handler" ::mousedown=${initDrag}></div>
+		</div>
+		<div id="playground-view">
+			<iframe id="playground-iframe" srcdoc="${view()}"></iframe>
+			<div id="place-over"></div>
+		</div>
+		${playgroundStyle()}
+	</div>
 `

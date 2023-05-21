@@ -14,9 +14,9 @@ export const version = (): string => {
 	).call()
 
 	return render`
-    <p>Version</p>
-    <div id="version" class="${ACTION_BUTTON}">
-      ${extractVersion(data?.name)}
-    </div>
-  `
+		<p>Version</p>
+		<div id="version" class="${ACTION_BUTTON}">
+			${extractVersion(data?.name)}
+		</div>
+	`
 }

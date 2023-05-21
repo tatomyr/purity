@@ -14,7 +14,7 @@ export const Button = ({
 	caption,
 	handleClick,
 }: ButtonProps): string => render`
-  <button data-counter="${action}" ::click=${handleClick}>
-    ${caption}
-  </button>
+	<button data-counter="${action}" ::click=${handleClick}>
+		${caption}
+	</button>
 `

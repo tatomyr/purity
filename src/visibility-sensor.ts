@@ -27,10 +27,10 @@ export const trackVisibility = (
 }
 
 /*
-  Visibility sensor
-  returns boolean | null (if there's no such element)
+	Visibility sensor
+	returns boolean | null (if there's no such element)
 
-  Source: https://vanillajstoolkit.com/helpers/isinviewport/
+	Source: https://vanillajstoolkit.com/helpers/isinviewport/
 */
 export const isInViewport = function (elem: HTMLElement): boolean | null {
 	const bounding = elem.getBoundingClientRect()

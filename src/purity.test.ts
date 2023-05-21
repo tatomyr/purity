@@ -26,11 +26,11 @@ describe('purity', () => {
 			defaultState = {title: 'COUNTER', counter: 0}
 			app = init(defaultState)
 			CounterApp = () => render`
-        <div id="root">
-          <h1>${app.getState().title}</h1>
-          <span id="count">${app.getState().count}</span>
-        </div>
-      `
+				<div id="root">
+					<h1>${app.getState().title}</h1>
+					<span id="count">${app.getState().count}</span>
+				</div>
+			`
 		})
 		it('should match default state after created', () => {
 			expect(app.getState()).toEqual(defaultState)
@@ -49,8 +49,8 @@ describe('purity', () => {
 	it('should bind an event', async () => {
 		const eventHandler = vi.fn()
 		const ClickableComponent = () => render`
-      <button id="root" ::click=${eventHandler}>Click Me</button>
-    `
+			<button id="root" ::click=${eventHandler}>Click Me</button>
+		`
 		app = init({})
 		app.mount(ClickableComponent)
 		// Awaiting for the eventHandler to be set in setTimeout
@@ -65,8 +65,8 @@ describe('purity', () => {
 		const clickHandler = vi.fn()
 		const blurHandler = vi.fn()
 		const ClickableComponent = () => render`
-      <input type="text" id="root" ::click=${clickHandler} ::blur=${blurHandler} />
-    `
+			<input type="text" id="root" ::click=${clickHandler} ::blur=${blurHandler} />
+		`
 		app = init({})
 		app.mount(ClickableComponent)
 		// Awaiting for the eventHandler to be set in setTimeout
@@ -81,18 +81,18 @@ describe('purity', () => {
 		expect(blurHandler).toHaveBeenCalledTimes(1)
 	})
 	it(`
-    should handle binding an event to element which is not a purity node
-    (does not have an id defined on it)
-    and ignore other data-* attributes defined on that element
-  `, async () => {
+		should handle binding an event to element which is not a purity node
+		(does not have an id defined on it)
+		and ignore other data-* attributes defined on that element
+	`, async () => {
 		const clickHandler = vi.fn()
 		const RootWithClickableElement = () => render`
-      <div id="root">
-        <button ::click=${clickHandler} data-other="something">
-          Click Me Not a Node
-        </button>
-      </div>
-    `
+			<div id="root">
+				<button ::click=${clickHandler} data-other="something">
+					Click Me Not a Node
+				</button>
+			</div>
+		`
 		app = init({})
 		app.mount(RootWithClickableElement)
 		await delay(0)
@@ -102,22 +102,22 @@ describe('purity', () => {
 	})
 	it('should add and remove components in DOM', async () => {
 		const Child1 = () => render`
-      <h1 id="first">First</h1>
-    `
+			<h1 id="first">First</h1>
+		`
 		const Child2 = () => render`
-      <h2 id="second">Second</h2>
-    `
+			<h2 id="second">Second</h2>
+		`
 		const Parent = () => {
 			const {selected} = app.getState()
 			return render`
-        <div id="root">
-          ${
+				<div id="root">
+					${
 						{first: Child1(), second: Child2()}[
 							selected as 'first' | 'second'
 						] as string | undefined
 					}
-        </div>
-      `
+				</div>
+			`
 		}
 		app = init({})
 		app.mount(Parent)
@@ -131,15 +131,15 @@ describe('purity', () => {
 		expect(document.body.innerHTML).toEqual(`<div id="root">${Child2()}</div>`)
 	})
 	it(`
-    should handle the case when the App root id differs from a defined one in html
-    or is not specified
-  `, () => {
+		should handle the case when the App root id differs from a defined one in html
+		or is not specified
+	`, () => {
 		const WrongRoot = () => render`
-      <div id="wrong-root"></div>
-    `
+			<div id="wrong-root"></div>
+		`
 		const NoRoot = () => render`
-      <div></div>
-    `
+			<div></div>
+		`
 		app = init({})
 		expect(() => {
 			app.mount(WrongRoot)
@@ -153,26 +153,26 @@ describe('purity', () => {
 		)
 	})
 	it(`
-    should not change innerHTML when only attributes have changed in the wrapper tag
-    (input's value should remain the same)
-  `, async () => {
+		should not change innerHTML when only attributes have changed in the wrapper tag
+		(input's value should remain the same)
+	`, async () => {
 		app = init({})
 		const StaticComponent = () => render`
-        <div id="root">
-          <input id="color" style="color: ${app.getState().something};" />
-          <button
-            ::click=${() => {
+				<div id="root">
+					<input id="color" style="color: ${app.getState().something};" />
+					<button
+						::click=${() => {
 							app.setState(() => ({
 								something: (
 									document.querySelector('#color') as HTMLInputElement
 								).value,
 							}))
 						}}
-          >
-            Apply color
-          </button>
-        </div>
-      `
+					>
+						Apply color
+					</button>
+				</div>
+			`
 		app.mount(StaticComponent)
 		await delay(0)
 		;(document.querySelector('#color') as HTMLInputElement).value = 'red'
@@ -189,12 +189,12 @@ describe('purity', () => {
 	})
 	it('should handle conditional rendering & process arrays', () => {
 		const ConditionalComponent = ({maybeArr}: {maybeArr?: any[]}) => render`
-      <div id="root">
-        <ul>
-          ${maybeArr?.map(item => render`<li>${item}</li>`)}
-        </ul>
-      </div>
-    `
+			<div id="root">
+				<ul>
+					${maybeArr?.map(item => render`<li>${item}</li>`)}
+				</ul>
+			</div>
+		`
 		app = init({})
 		app.mount(() => ConditionalComponent({}))
 		expect(document.body.innerHTML).toEqual(`<div id="root"><ul></ul></div>`)

@@ -43,37 +43,37 @@ export const subtaskItem = (
 	subtaskIndex: number
 ): string => {
 	return render`
-    <div class="subtask" id="subtask-${subtaskIndex}">
-      <button 
-        id="toggle-subtask-${subtaskIndex}"
-        class="${ACTION_BUTTON} ${SMALL_BUTTON}"
-        title="Toggle"
-        ::click=${toggleSubtask(subtaskIndex)}
-      >
-        ${checked ? '⊠' : '⊡'}
-      </button>
-      ${
+		<div class="subtask" id="subtask-${subtaskIndex}">
+			<button 
+				id="toggle-subtask-${subtaskIndex}"
+				class="${ACTION_BUTTON} ${SMALL_BUTTON}"
+				title="Toggle"
+				::click=${toggleSubtask(subtaskIndex)}
+			>
+				${checked ? '⊠' : '⊡'}
+			</button>
+			${
 				checked
 					? render`
-            <div style="text-decoration: line-through; width: 100%; padding: 4px 8px; ">${description}</div>
-          `
+						<div style="text-decoration: line-through; width: 100%; padding: 4px 8px; ">${description}</div>
+					`
 					: render`
-            <input 
-              class="subtask-input"
-              value="${description}"
-              ::change=${handleSubtaskChange(subtaskIndex)}
-            />
-          `
+						<input 
+							class="subtask-input"
+							value="${description}"
+							::change=${handleSubtaskChange(subtaskIndex)}
+						/>
+					`
 			}
 
-      <button
-        class="${ACTION_BUTTON} ${SMALL_BUTTON}"
-        title="Delete"
-        ::click=${deleteSubtask(subtaskIndex)}
-      >
-        ⊟
-      </button>
-    </div>
+			<button
+				class="${ACTION_BUTTON} ${SMALL_BUTTON}"
+				title="Delete"
+				::click=${deleteSubtask(subtaskIndex)}
+			>
+				⊟
+			</button>
+		</div>
 
-  `
+	`
 }

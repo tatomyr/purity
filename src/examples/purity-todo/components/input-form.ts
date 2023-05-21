@@ -8,24 +8,24 @@ import {patchTask, prepareTask} from '../services/tasks.js'
 import type {EventHandler} from '../../../purity.js'
 
 const inputFormStyle = () => render`
-  <style id="task-form-style">
-    form#task-form {
-      width: 100%;
-      max-width: 100%;
-      height: 3rem;
-      min-height: 3rem;
-      box-shadow: 0px -4px 10px -2px;
-    }
+	<style id="task-form-style">
+		form#task-form {
+			width: 100%;
+			max-width: 100%;
+			height: 3rem;
+			min-height: 3rem;
+			box-shadow: 0px -4px 10px -2px;
+		}
 
-    form#task-form input {
-      width: 100%;
-      height: 100%;
-      background-color: #303030;
-      color: #eee;
-      border-radius: 0;
-    }
+		form#task-form input {
+			width: 100%;
+			height: 100%;
+			background-color: #303030;
+			color: #eee;
+			border-radius: 0;
+		}
 
-  </style>
+	</style>
 `
 
 const createTask: EventHandler = async e => {
@@ -56,16 +56,16 @@ const createTask: EventHandler = async e => {
 }
 
 export const inputForm = (): string => render`
-  <form id="task-form" ::submit=${createTask}>
-    <input
-      name="task"
-      ::input=${e => {
+	<form id="task-form" ::submit=${createTask}>
+		<input
+			name="task"
+			::input=${e => {
 				setState(() => ({input: e.target.value}))
 			}}
-      value=""
-      placeholder="Task description"
-      autocomplete="off"
-    />
-  </form>
-  ${inputFormStyle()}
+			value=""
+			placeholder="Task description"
+			autocomplete="off"
+		/>
+	</form>
+	${inputFormStyle()}
 `

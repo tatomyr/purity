@@ -16,13 +16,13 @@ describe('router', () => {
 	})
 	it('switches between different views depending on the url state', async () => {
 		const App = (): string => render`
-      <div id="root">
-        ${Switch({
+			<div id="root">
+				${Switch({
 					'#/a': () => render`<a href="#/b">A</a>`,
 					'#/b': () => render`<a href="#/a">B</a>`,
 				})}
-      </div>
-    `
+			</div>
+		`
 		const app = init({})
 		registerRouter(app.rerender)
 		app.mount(App)

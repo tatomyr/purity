@@ -77,74 +77,74 @@ export const taskDetails = (): string => {
 	const task = selectDetailedTask()
 
 	return render`
-    <div class="task-details--wrapper">
-      <section class="task-details--image">
-        <div
-          id="fullscreen-image"
-          class="fullscreen-image"
-          style="background-image: url('${
+		<div class="task-details--wrapper">
+			<section class="task-details--image">
+				<div
+					id="fullscreen-image"
+					class="fullscreen-image"
+					style="background-image: url('${
 						task.isImageLoading ? IMAGES.LOADING : task?.image.link
 					}');"
-        > 
-          <div class="controls" id="controls">
-            <button ::click=${makeChangeImage('current')}>
-              ↻
-            </button>
-        
-            ${
+				> 
+					<div class="controls" id="controls">
+						<button ::click=${makeChangeImage('current')}>
+							↻
+						</button>
+				
+						${
 							task?.image.queries.previousPage?.startIndex !== undefined &&
 							render`
-                <button ::click=${makeChangeImage('previousPage')}>
-                  ←
-                </button>
-              `
+								<button ::click=${makeChangeImage('previousPage')}>
+									←
+								</button>
+							`
 						}
-            
-            ${
+						
+						${
 							task?.image.queries.nextPage?.startIndex !== undefined &&
 							render`
-                <button ::click=${makeChangeImage('nextPage')}>
-                  →
-                </button>
-              `
+								<button ::click=${makeChangeImage('nextPage')}>
+									→
+								</button>
+							`
 						}
 
-            <label for="capture">
-              Capture
-              <input
-                type="file"
-                accept="image/*"
-                capture="environment"
-                id="capture"
-                ::change=${handleCaptureImage}
-              />
-            </label>
-          </div>
-        </div>
-        
-      </section>
+						<label for="capture">
+							Capture
+							<input
+								type="file"
+								accept="image/*"
+								capture="environment"
+								id="capture"
+								::change=${handleCaptureImage}
+							/>
+						</label>
+					</div>
+				</div>
+				
+			</section>
 
-      <section class="task-details--description">
-        <!-- TODO: use debounce  TODO: bound event handlers properly  -->
-        <textarea 
-          id="task-description-edit"
-          ::change=${handleEditTaskDescription}
-        >
-          ${task?.description}
-        </textarea>
-        <div id="subtasks-list">
-          ${task.subtasks?.map(subtaskItem)}
-        </div>
-        <div style="padding: 4px 8px; ">
-          <button 
-            class="${ACTION_BUTTON} ${SMALL_BUTTON}"
-            ::click=${handleAddSubtask}
-          >
-            ⊞
-          </button>
-        </div>
-      </section>
-    </div>
-    ${taskDetailsStyle()}
-  `
+			<section class="task-details--description">
+				<!-- TODO: use debounce	TODO: bound event handlers properly	-->
+				<textarea 
+					id="task-description-edit"
+					::change=${handleEditTaskDescription}
+				>
+					${task?.description}
+				</textarea>
+				<div id="subtasks-list">
+					${task.subtasks?.map(subtaskItem)}
+				</div>
+				<div style="padding: 4px 8px; ">
+					<button 
+						class="${ACTION_BUTTON} ${SMALL_BUTTON}"
+						::click=${handleAddSubtask}
+					>
+						⊞
+					</button>
+				</div>
+			</section>
+		</div>
+		${taskDetailsStyle()}
+	`
 }

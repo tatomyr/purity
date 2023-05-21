@@ -21,9 +21,9 @@ export const List = (): string => {
 	})
 
 	return render`
-    <h1 id="title">The List (${items.length})</h1>
-    <ol id="list">
-      ${items.filter(matches(input)).map(ListItem)}
-    </ol>
-  `
+		<h1 id="title">The List (${items.length})</h1>
+		<ol id="list">
+			${items.filter(matches(input)).map(ListItem)}
+		</ol>
+	`
 }

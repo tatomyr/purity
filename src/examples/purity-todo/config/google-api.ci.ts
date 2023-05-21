@@ -1,6 +1,6 @@
 /*
-  Custom Search Engine: SampleImageSearch
-  Custom Search JSON API: PurityTodo2
+	Custom Search Engine: SampleImageSearch
+	Custom Search JSON API: PurityTodo2
 */
 
 export const GOOGLE = {

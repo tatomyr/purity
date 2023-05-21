@@ -1,10 +1,10 @@
 import {render, debounce} from '../../../index.js'
 import {setState} from '../app.js'
 import {fakeEndpoint} from '../helpers.js'
-import {SuggestionsList} from './SuggestionsList.js'
-import {ErrorBanner} from './ErrorBanner.js'
-import {Spinner} from './Spinner.js'
-import {ChosenItems} from './ChosenItems.js'
+import {suggestionsList} from './suggestions-list.js'
+import {errorBanner} from './error-banner.js'
+import {spinner} from './spinner_.js'
+import {chosenItems} from './chosen-items.js'
 import type {EventHandler} from '../../../purity.js'
 
 const handleInput: EventHandler = debounce(async e => {
@@ -22,15 +22,15 @@ const handleInput: EventHandler = debounce(async e => {
 	}
 }, 500)
 
-export const Root = (): string => render`
-  <div id="root">
-    ${ChosenItems()}
-    <input
-      placeholder="Search query"
-      ::input=${handleInput}
-    />
-    ${Spinner()}
-    ${SuggestionsList()}
-    ${ErrorBanner()}
-  </div>
+export const root = (): string => render`
+	<div id="root">
+		${chosenItems()}
+		<input
+			placeholder="Search query"
+			::input=${handleInput}
+		/>
+		${spinner()}
+		${suggestionsList()}
+		${errorBanner()}
+	</div>
 `

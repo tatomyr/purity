@@ -16,7 +16,7 @@ export const editor = (): string => {
 	})
 
 	return render`
-    <div id="editor"></div>
-    ${editorStyle()}
-  `
+		<div id="editor"></div>
+		${editorStyle()}
+	`
 }

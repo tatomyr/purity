@@ -38,36 +38,36 @@ export const StatefulCounter = ({id}: {id: string}) => {
 	}
 
 	return render`
-    <h1 id="title">Counter</h1>
-    <pre id="${id}-count">${state.count}</pre>
+		<h1 id="title">Counter</h1>
+		<pre id="${id}-count">${state.count}</pre>
 
-    <button
-      id="${id}-inc-button"
-      data-counter="inc"
-      ::click=${() => {
+		<button
+			id="${id}-inc-button"
+			data-counter="inc"
+			::click=${() => {
 				setCount({count: state.count + 1})
 			}}
-    >
-      Increment
-    </button>
-    <button
-      id="${id}-dec-button"
-      data-counter="dec"
-      ::click=${() => {
+		>
+			Increment
+		</button>
+		<button
+			id="${id}-dec-button"
+			data-counter="dec"
+			::click=${() => {
 				setCount({count: state.count - 1})
 			}}
-    >
-      Decrement
-    </button>
-    <button
-      id="${id}-reset-button"
-      data-counter="reset"
-      ::click=${() => {
+		>
+			Decrement
+		</button>
+		<button
+			id="${id}-reset-button"
+			data-counter="reset"
+			::click=${() => {
 				setCount({count: 0})
 			}}
-    >
-      Reset
-    </button>
-    <button ::click=${saveCount}>Save</button>
-  `
+		>
+			Reset
+		</button>
+		<button ::click=${saveCount}>Save</button>
+	`
 }

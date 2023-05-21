@@ -10,11 +10,11 @@ const handleInput: EventHandler = e => {
 }
 
 export const root = () => render`
-  <div id="root">
-    <input
-      id="color"
-      style="color: ${getState().color};"
-      ::input=${handleInput}
-    />
-  </div>
+	<div id="root">
+		<input
+			id="color"
+			style="color: ${getState().color};"
+			::input=${handleInput}
+		/>
+	</div>
 `

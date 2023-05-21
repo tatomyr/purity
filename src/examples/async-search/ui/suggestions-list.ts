@@ -1,11 +1,11 @@
 import {isTruthy, render} from '../../../purity.js'
 import {idEquals} from '../helpers.js'
 import {getState, setState} from '../app.js'
-import {Item} from '../types.js'
+import type {Item} from '../types.js'
 
-const Item = ({name, id}: Item) => render`
-  <li
-    ::click=${() => {
+const item = ({name, id}: Item) => render`
+	<li
+		::click=${() => {
 			setState(({items, chosenItems}) => ({
 				chosenItems: [
 					...chosenItems,
@@ -13,13 +13,13 @@ const Item = ({name, id}: Item) => render`
 				].filter(isTruthy),
 			}))
 		}}
-  >
-    ${name}
-  </li>
+	>
+		${name}
+	</li>
 `
 
-export const SuggestionsList = (): string => render`
-  <ul id="list">
-    ${getState().items.map(Item)}
-  </ul>
+export const suggestionsList = (): string => render`
+	<ul id="list">
+		${getState().items.map(item)}
+	</ul>
 `

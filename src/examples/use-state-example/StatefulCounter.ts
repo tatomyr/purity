@@ -14,11 +14,11 @@ export const StatefulCounter = ({id}: StatefulCounterProps): string => {
 	}
 
 	return render`
-    <div id="${id}">
-      <pre id="${id}-count">${count.get()}</pre>
-      ${Button({action: 'inc', caption: 'Increment', handleClick})}
-      ${Button({action: 'dec', caption: 'Decrement', handleClick})}
-      ${Button({action: 'reset', caption: 'Reset', handleClick})}
-    </div>
-  `
+		<div id="${id}">
+			<pre id="${id}-count">${count.get()}</pre>
+			${Button({action: 'inc', caption: 'Increment', handleClick})}
+			${Button({action: 'dec', caption: 'Decrement', handleClick})}
+			${Button({action: 'reset', caption: 'Reset', handleClick})}
+		</div>
+	`
 }

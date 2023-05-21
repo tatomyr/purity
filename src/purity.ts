@@ -165,7 +165,7 @@ const joinIfArray = (x: Verified): Allowed =>
 	Array.isArray(x) ? x.join('') : x
 
 /**
- * Increases the Purity Key and resets it after all sync operations completed
+ * Increments the Purity Key and resets it after all sync operations completed
  */
 const applyPurityKey = (() => {
 	let purityKey = 0
