@@ -20,7 +20,7 @@ export const downloadUserData = async (): Promise<void> => {
 }
 
 export const uploadUserData: EventHandler = async ({target: {files}}) => {
-	const [file] = files!
+	const [file] = files as FileList
 	try {
 		const text = await textFileReader(file)
 		const tasks: BaseTask[] = JSON.parse(text)

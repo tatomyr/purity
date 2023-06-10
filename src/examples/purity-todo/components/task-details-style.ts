@@ -46,15 +46,10 @@ export const taskDetailsStyle = (): string => render`
 			background: pink;
 		}
 
-		.task-details--description textarea {
-			width: 100%;
-			height: 3rem;
-			padding: 4px 8px;
-		}
-
 		.description-edit, .subtask-input {
 			width: 100%;
 			padding: 4px 8px;
+			border: none;
 		}
 
 		.subtask {

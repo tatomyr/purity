@@ -29,7 +29,14 @@ export const taskListStyle = (): string => render`
 			color: lightgrey;
 		}
 
-		.${ITEM_DESCRIPTION} span {
+		.${ITEM_DESCRIPTION} .subtask-inline {
+			color: lightgrey;
+		}
+
+		.${ITEM_DESCRIPTION} .subtask-inline::before {
+			content: "⊡";
+			margin-right: 0.5rem;
+			margin-left: 0.5rem;
 			color: lightgrey;
 		}
 
