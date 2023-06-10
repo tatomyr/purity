@@ -38,6 +38,9 @@ export const root = (): string => render`
 			}
 		</div>
 		${modalStyle()}
-		${theIntrospector({state, localStorage: window.localStorage})}
+		${theIntrospector({
+			task_1: state?.tasks?.[0],
+			localStorage: window.localStorage,
+		})}
 	</div>
 `

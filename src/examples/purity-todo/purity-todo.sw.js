@@ -1,10 +1,9 @@
 const appScope = self.registration.scope
 
-const cacheName = `${appScope}@2.12`
+const cacheName = `${appScope}@2.13`
 const contentToCache = [
 	"./",
 	"./index.html",
-	"./index.js",
 
 	"./assets/images/todo-icon-48.png",
 	"./assets/images/todo-icon-192.png",

@@ -8,7 +8,7 @@ import {view} from "./view.js"
 const initDrag = makeDrag(e => {
 	const startWidth = window.getComputedStyle(getEditor()).width
 	const fullWidth = window.getComputedStyle(
-		document.getElementById("playground-root")!
+		document.getElementById("playground-root") as HTMLElement
 	).width
 	console.log("drag:init", startWidth, "/", fullWidth)
 	setState(() => ({placeOverDisplay: "initial"}))

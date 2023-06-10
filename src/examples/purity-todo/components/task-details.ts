@@ -30,7 +30,7 @@ const makeChangeImage =
 
 const handleCaptureImage: EventHandler = async ({target}) => {
 	try {
-		const [file] = target.files!
+		const [file] = target.files as FileList
 		if (!file) {
 			return
 		}
@@ -71,6 +71,9 @@ const handleAddSubtask: EventHandler = () => {
 		id: task.id,
 		subtasks: [...(task.subtasks || []), {checked: false, description: ""}],
 	})
+	document
+		.querySelector<HTMLInputElement>(".subtask:last-child input.subtask-input")
+		?.focus()
 }
 
 export const taskDetails = (): string => {
@@ -126,12 +129,14 @@ export const taskDetails = (): string => {
 
 			<section class="task-details--description">
 				<!-- TODO: use debounce	TODO: bound event handlers properly	-->
-				<textarea 
+				<input
 					id="task-description-edit"
-					::change=${handleEditTaskDescription}
-				>
-					${task?.description}
-				</textarea>
+					class="description-edit"
+					value="${task?.description ?? ""}"
+					placeholder="Task description"
+					autocomplete="off"
+					::input=${handleEditTaskDescription}
+				/>
 				<div id="subtasks-list">
 					${task.subtasks?.map(subtaskItem)}
 				</div>

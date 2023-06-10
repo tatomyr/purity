@@ -14,11 +14,12 @@ export const taskDetailsStyle = (): string => render`
 		}
 
 		.task-details--image .fullscreen-image {
-			height: 90vw;
-			max-height: 90vw;
+			height: min(90vw, 33vh);
+			max-height: min(90vw, 33vh);
 			transition: height .2s ease-in;
 			
 			background-size: cover;
+			background-repeat: no-repeat;
 			background-position: center;
 			position: relative;
 		}
@@ -43,18 +44,14 @@ export const taskDetailsStyle = (): string => render`
 
 		.task-details--description {
 			flex-grow: 1;
-			background: pink;
-		}
-
-		.task-details--description textarea {
-			width: 100%;
-			height: 3rem;
-			padding: 4px 8px;
+			background: #f0f0f0;
 		}
 
 		.description-edit, .subtask-input {
 			width: 100%;
 			padding: 4px 8px;
+			border: none;
+			height: 2rem;
 		}
 
 		.subtask {

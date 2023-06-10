@@ -18,4 +18,4 @@ export const openTaskDetails: EventHandler = e => {
 }
 
 export const selectDetailedTask = (): Task =>
-	state.tasks.find(({id}) => id === state.taskDetailId)!
+	state.tasks.find(({id}) => id === state.taskDetailId) as Task

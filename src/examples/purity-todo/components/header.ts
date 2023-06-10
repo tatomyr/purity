@@ -16,7 +16,8 @@ const headerStyle = (): string => render`
 		#header ul {
 			display: flex;
 			justify-content: space-around;
-			box-shadow: 0px 4px 10px -2px
+			user-select: none;
+			box-shadow: 0px 4px 10px -2px;
 		}
 
 	</style>

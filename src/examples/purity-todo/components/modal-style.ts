@@ -26,11 +26,14 @@ export const modalStyle = (): string => render`
 
 		.modal {
 			border: 1px solid wheat;
+			box-shadow: 0px 4px 16px 0px;
 		}
 
 		.modal .modal-header {
 			background-color: lightgrey;
 			font-weight: bold;
+			position: relative;
+	    box-shadow: 0px 8px 10px -10px;
 			${lineContainerCSS}
 		}
 

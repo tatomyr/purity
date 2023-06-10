@@ -2,7 +2,7 @@ import {render} from "../../../index.js"
 import {IMAGES} from "../config/images.js"
 import {openTaskDetails} from "../services/task-details.js"
 import {ACTION_BUTTON} from "./app-style.js"
-import type {Task} from "../app.js"
+import type {Subtask, Task} from "../app.js"
 
 export const TOGGLE_BUTTON = "toggle-button"
 export const withToggleButton =
@@ -31,17 +31,19 @@ export const withItemDescription =
 		}
 	}
 
-const formatDescription = (description: string): string => {
-	const [first, ...rest] = description.trim().split("\n")
-	return `${first}${rest.map(item => render`<span> ⊡ ${item}</span>`).join("")}`
-}
+export const subtaskItem = (item: Subtask) => render`
+	<span class="subtask-inline">
+		${item.description}
+	</span>
+`
 
 export const taskItem = ({
 	description,
 	id,
 	completed,
 	image,
-}: Task): string => render`
+	subtasks = [],
+}: Task) => render`
 	<li id="${id}" class="task-item ${completed && "completed"}">
 		<img
 			src="${image.link}"
@@ -53,7 +55,8 @@ export const taskItem = ({
 			data-id="${id}" 
 			::click=${openTaskDetails}
 		>
-			${formatDescription(description)}
+			${description.trim()}
+			${subtasks.filter(({checked}) => !checked).map(subtaskItem)}
 		</div>
 		<button 
 			id="delete-${id}"
