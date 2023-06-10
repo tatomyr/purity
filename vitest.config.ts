@@ -10,5 +10,8 @@ export default defineConfig({
 			include: ["src/**/*.ts"],
 			exclude: ["src/**/index.ts", "src/**/*.test.ts", "src/**/*.d.ts"],
 		},
+		snapshotFormat: {
+			escapeString: false,
+		},
 	},
 })
