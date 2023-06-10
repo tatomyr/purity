@@ -18,7 +18,7 @@ jobs:
       - name: Instal Dependencies
         run: npm ci
       - name: Build
-        run: bash bin/build.sh
+        run: npm run build
       - name: Publish to Github Pages
         run: |
           git config --local user.email "action@github.com"
