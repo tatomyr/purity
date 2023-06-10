@@ -71,6 +71,9 @@ const handleAddSubtask: EventHandler = () => {
 		id: task.id,
 		subtasks: [...(task.subtasks || []), {checked: false, description: ""}],
 	})
+	document
+		.querySelector<HTMLInputElement>(".subtask:last-child input.subtask-input")
+		?.focus()
 }
 
 export const taskDetails = (): string => {
