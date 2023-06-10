@@ -142,8 +142,8 @@ const correctCounter = () => {
 Please notice that `setState`'s callback receives the current state as an argument.
 
 One more important thing to notice is that the `pre` tag has an `id` attribute defined. 
-This allows to only update its content without re-rendering other nodes that doesn't have visual changes. 
-This helps the `button` not to loose focus on each click.
+This allows to only update its content without re-rendering other nodes that don't have visual changes. 
+This helps the `button` not to lose focus on each click.
 See more in the [Virtual DOM](#virtual-dom) section.
 
 ### Async Flow
@@ -278,9 +278,9 @@ graph TD
   end
 ```
 
-In the _noId_ example, after updating the state inside the span all the app gets re-rendered since the closest node with `id` is _root_.
+In the _noId_ example, after updating the state inside the span, all the app gets re-rendered since the closest node with `id` is _root_.
 As a consequence, _button_ loses focus.
-On the other hand, in the _withId_ example the only thing going to be re-rendered is text inside _span#count_.
+On the other hand, in the _withId_ example, the only thing going to be re-rendered is text inside _span#count_.
 
 ### Tips
 
@@ -322,7 +322,7 @@ The decision to use bare ES modules appears to be the consequence of listening t
 
 Please find the examples [here](https://tatomyr.github.io/purity/examples/)
 
-You can access them locally using `bash bin/serve.sh` and opening `http://localhost:8081/public/examples/`.
+If you want to run them locally, see the [contributing guide](./CONTRIBUTING.md).
 
 ## Playground
 
