@@ -2,7 +2,7 @@
 
 Use **node 18+**.
 
-Install prerequisites once: `bash bin/install.sh`. 
+Install prerequisites once: `bash bin/install.sh`.
 
 To serve the library locally on port 8081 run `bash bin/serve.sh`.
 

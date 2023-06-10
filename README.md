@@ -16,10 +16,10 @@ To use **Purity** in a project, you have to put in your **index.html** a root el
 
 ```html
 <html>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="./main.js">
-  </body>
+	<body>
+		<div id="root"></div>
+		<script type="module" src="./main.js">
+	</body>
 </html>
 ```
 
@@ -32,7 +32,7 @@ To use **Purity** in a project, you have to put in your **index.html** a root el
 Import them from the local file or a public URL, e.g.:
 
 ```js
-import {init, render} from 'https://tatomyr.github.io/purity/purity.js'
+import {init, render} from "https://tatomyr.github.io/purity/purity.js"
 ```
 
 Next, you init the app with some default state. This will return a bunch of methods you can use in your app:
@@ -45,7 +45,7 @@ Then you declare a component using the `render` tag:
 
 ```js
 const root = () => render`
-  <div id="root">Hello Purity!</div>
+	<div id="root">Hello Purity!</div>
 `
 ```
 
@@ -67,16 +67,16 @@ Since they are merely bare functions that return a string, we can embed other fu
 
 ```js
 const child = ({name}) => render`
-  <div>Hello ${name}!</div>
+	<div>Hello ${name}!</div>
 `
 
 const parent = () => render`
-  <h1>Welcome page</h1>
-  ${child({name: 'Guest'})}
+	<h1>Welcome page</h1>
+	${child({name: "Guest"})}
 `
 ```
 
-Yes, you may return several nodes from a component. 
+Yes, you may return several nodes from a component.
 They don't necessarily have to be wrapped into one (except for the root one).
 
 ### Event Binding
@@ -85,9 +85,9 @@ We can add some interactivity by binding events:
 
 ```js
 const clickable = () => render`
-  <button ::click=${() => alert('Hello!')}>
-    Click Me
-  </button>
+	<button ::click=${() => alert("Hello!")}>
+		Click Me
+	</button>
 `
 ```
 
@@ -102,18 +102,18 @@ For instance, the example below is wrong since we are trying to use `COUNT` (whi
 
 ```js
 const wrongCounter = () => {
-  const COUNT = getState().count
+	const COUNT = getState().count
 
-  return render`
-    <div id="root">
-      <pre id="count">Counter: ${COUNT}</pre>
-      <button 
-        ::click=${() => setState(() => ({count: COUNT /* Incorrect value! */ + 1}))}
-      >
-        Increment
-      </button>
-    </div>
-  `
+	return render`
+		<div id="root">
+			<pre id="count">Counter: ${COUNT}</pre>
+			<button 
+				::click=${() => setState(() => ({count: COUNT /* Incorrect value! */ + 1}))}
+			>
+				Increment
+			</button>
+		</div>
+	`
 }
 ```
 
@@ -124,25 +124,26 @@ The correct example would look like this:
 
 ```js
 const correctCounter = () => {
-  const COUNT = getState().count
+	const COUNT = getState().count
 
-  return render`
-    <div id="root">
-      <pre id="counter">Counter: ${COUNT}</pre>
-      <button 
-        ::click=${() => setState(({count}) => ({count: count /* Correct value! */ + 1}))}
-      >
-        Increment
-      </button>
-    </div>
-  `
+	return render`
+		<div id="root">
+			<pre id="counter">Counter: ${COUNT}</pre>
+			<button 
+				::click=${() =>
+					setState(({count}) => ({count: count /* Correct value! */ + 1}))}
+			>
+				Increment
+			</button>
+		</div>
+	`
 }
 ```
 
 Please notice that `setState`'s callback receives the current state as an argument.
 
-One more important thing to notice is that the `pre` tag has an `id` attribute defined. 
-This allows to only update its content without re-rendering other nodes that don't have visual changes. 
+One more important thing to notice is that the `pre` tag has an `id` attribute defined.
+This allows to only update its content without re-rendering other nodes that don't have visual changes.
 This helps the `button` not to lose focus on each click.
 See more in the [Virtual DOM](#virtual-dom) section.
 
@@ -152,13 +153,13 @@ You can implement the simplest async flow using a tiny helper (you may also impo
 
 ```js
 const makeOnce = () => {
-  const calls = new Set()
-  return (id, query) => {
-    if (!calls.has(id)) {
-      calls.add(id)
-      setTimeout(query)
-    }
-  }
+	const calls = new Set()
+	return (id, query) => {
+		if (!calls.has(id)) {
+			calls.add(id)
+			setTimeout(query)
+		}
+	}
 }
 ```
 
@@ -167,37 +168,37 @@ It can be used like this:
 
 ```js
 const {mount, getState, setState} = init({
-  spinner: false,
-  stargazers_count: '-',
+	spinner: false,
+	stargazers_count: "-",
 })
 
 const url = `https://api.github.com/repos/tatomyr/purity`
 
 const getStargazers = async () => {
-  try {
-    setState(() => ({spinner: true}))
-    const {stargazers_count} = await fetch(url).then(checkResponse)
-    setState(() => ({stargazers_count, spinner: false}))
-  } catch (err) {
-    setState(() => ({stargazers_count: '🚫', spinner: false}))
-  }
+	try {
+		setState(() => ({spinner: true}))
+		const {stargazers_count} = await fetch(url).then(checkResponse)
+		setState(() => ({stargazers_count, spinner: false}))
+	} catch (err) {
+		setState(() => ({stargazers_count: "🚫", spinner: false}))
+	}
 }
 
 const once = makeOnce()
 
 const root = () => {
-  once(url, getStargazers)
+	once(url, getStargazers)
 
-  return render`
-    <div id="root">
-      <pre id="stars">
-        ${getState().spinner ? '⌛' : `⭐️: ${getState().stargazers_count}`}
-      </pre>
-      <button ::click=${getStargazers}>
-        Refetch
-      </button>
-    </div>
-  `
+	return render`
+		<div id="root">
+			<pre id="stars">
+				${getState().spinner ? "⌛" : `⭐️: ${getState().stargazers_count}`}
+			</pre>
+			<button ::click=${getStargazers}>
+				Refetch
+			</button>
+		</div>
+	`
 }
 
 mount(root)
@@ -233,29 +234,29 @@ To get a better understanding, let's compare two applications that differ only b
 
 ```js
 const noId = () => render`
-  <div id="root"> <!-- The entire root will be re-rendered as it's the closest `id` to the changes -->
-    <span>
-      ${getState().count} <!-- The actual changes -->
-    </span>
-    <button 
-      ::click=${({count}) => setState({count: count + 1})}
-    >
-      Update
-    </button>
-  </div>
+	<div id="root"> <!-- The entire root will be re-rendered as it's the closest `id` to the changes -->
+		<span>
+			${getState().count} <!-- The actual changes -->
+		</span>
+		<button
+			::click=${({count}) => setState({count: count + 1})}
+		>
+			Update
+		</button>
+	</div>
 `
 
 const withId = () => render`
-  <div id="root">
-    <span id="count"> <!-- Only this element will be re-rendered -->
-      ${getState().count}
-    </span>
-    <button 
-      ::click=${({count}) => setState({count: count + 1})}
-    >
-      Update
-    </button>
-  </div>
+	<div id="root">
+		<span id="count"> <!-- Only this element will be re-rendered -->
+			${getState().count}
+		</span>
+		<button
+			::click=${({count}) => setState({count: count + 1})}
+		>
+			Update
+		</button>
+	</div>
 `
 ```
 
@@ -263,19 +264,19 @@ You can see the difference in the graph below:
 
 ```mermaid
 graph TD
-  subgraph State
-    state[$count: 0 -> 1 *]
-  end
+	subgraph State
+		state[$count: 0 -> 1 *]
+	end
 
-  subgraph withId
-    root2[#root] --> span2[span#count] --> count2[$count *] == rerender the nearest # ==> span2
-    root2 --> button2[button::click] == increment ==> state
-  end
+	subgraph withId
+		root2[#root] --> span2[span#count] --> count2[$count *] == rerender the nearest # ==> span2
+		root2 --> button2[button::click] == increment ==> state
+	end
 
-  subgraph noId
-    root[#root] --> span[span] --> count[$count *] == rerender the nearest # ==> root
-    root --> button[button::click] == increment ==> state
-  end
+	subgraph noId
+		root[#root] --> span[span] --> count[$count *] == rerender the nearest # ==> root
+		root --> button[button::click] == increment ==> state
+	end
 ```
 
 In the _noId_ example, after updating the state inside the span, all the app gets re-rendered since the closest node with `id` is _root_.
