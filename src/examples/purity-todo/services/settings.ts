@@ -9,8 +9,8 @@ import type {EventHandler} from "../../../purity.js"
 export const downloadUserData = async (): Promise<void> => {
 	try {
 		const fileName = `TODO-${new Date()
-			.toDateString()
-			.replace(/[ /]/g, "-")}.backup.json`
+			.toISOString()
+			.replaceAll(/[:.]/g, "_")}.backup.json`
 		download(fileName, JSON.stringify(groomTasks(state.tasks)))
 		window.alert("Downloading your backup file")
 		closeSettings()

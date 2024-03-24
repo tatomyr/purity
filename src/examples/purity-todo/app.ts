@@ -53,11 +53,10 @@ export const {mount, setState, rerender} = init(state)
 
 export const {useAsync} = makeAsync(rerender)
 
-// Fixes the issue with the keyboard on mobile devices
+// Fixes the issue with the keyboard on mobile devices.
 window.visualViewport?.addEventListener("resize", () => {
 	const height = window.visualViewport?.height
-	document.body.style.height = height + "px"
-	document.body.style.maxHeight = height + "px"
+	document.body.style.height = document.body.style.maxHeight = height + "px"
 	document.body.scrollIntoView()
 })
 
