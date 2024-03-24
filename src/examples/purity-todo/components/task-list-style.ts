@@ -65,6 +65,7 @@ export const taskListStyle = (): string => render`
 			width: 3rem;
 			min-width: 3rem;
 			object-fit: cover;
+      z-index: -1;
 		}
 
 		ol#task-list .task-item.completed > img {
