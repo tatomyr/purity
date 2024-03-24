@@ -13,6 +13,7 @@ export const {put, get} = ls<{tasks: BaseTask[]}>("purity-todo")
 
 const migrate = () => {
 	// Migrate 2.9 -> 2.10
+	// TODO: This migration filed miserably. Some records were lost, some were duplicated. I suppose this is due to partial caching. Try understanding why.
 	if (!localStorage["purity-todo"] && localStorage.tasks) {
 		console.warn("Migrating to v2.10")
 
