@@ -14,7 +14,6 @@ const inputFormStyle = () => render`
 			max-width: 100%;
 			height: 3rem;
 			min-height: 3rem;
-			box-shadow: 0px -4px 10px -2px;
 		}
 
 		form#task-form input {

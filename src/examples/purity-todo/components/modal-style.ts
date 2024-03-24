@@ -33,7 +33,6 @@ export const modalStyle = (): string => render`
 			background-color: lightgrey;
 			font-weight: bold;
 			position: relative;
-	    box-shadow: 0px 8px 10px -10px;
 			${lineContainerCSS}
 		}
 

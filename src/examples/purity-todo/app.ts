@@ -38,6 +38,7 @@ export type AppState = {
 	isSettingsModalOpen: boolean
 	taskDetailId?: string
 	tasks: Task[]
+	taskListElement: HTMLElement | null
 }
 
 export const initialState: AppState = {
@@ -45,6 +46,7 @@ export const initialState: AppState = {
 	input: "",
 	isSettingsModalOpen: false,
 	tasks: get({tasks: []}).tasks,
+	taskListElement: null,
 }
 
 export const state = {...initialState}
