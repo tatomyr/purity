@@ -1,5 +1,16 @@
 import {render} from "../../../index.js"
+import {isTruthy} from "../../../purity.js"
+import {state} from "../app.js"
 import {ITEM_DESCRIPTION, TOGGLE_BUTTON} from "./task-item.js"
+import type {AppState} from "../app.js"
+
+const isTopScrolled = ({taskListElement}: AppState) =>
+	taskListElement && taskListElement.scrollTop > 0
+
+const isBottomScrolled = ({taskListElement}: AppState) =>
+	taskListElement &&
+	taskListElement.scrollTop <
+		taskListElement.scrollHeight - taskListElement.clientHeight
 
 export const taskListStyle = (): string => render`
 	<style id="task-list-style">
@@ -7,6 +18,14 @@ export const taskListStyle = (): string => render`
 			overflow-y: auto;
 			flex-grow: 1;
 			min-height: 3rem;
+      box-shadow: ${
+				[
+					isTopScrolled(state) && "inset 0px 16px 8px -16px",
+					isBottomScrolled(state) && "inset 0px -16px 8px -16px",
+				]
+					.filter(isTruthy)
+					.join(",") || "none"
+			};
 		}
 
 		ol#task-list .task-item {
