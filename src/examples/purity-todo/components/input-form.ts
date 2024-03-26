@@ -8,63 +8,63 @@ import {patchTask, prepareTask} from "../services/tasks.js"
 import type {EventHandler} from "../../../purity.js"
 
 const inputFormStyle = () => render`
-	<style id="task-form-style">
-		form#task-form {
-			width: 100%;
-			max-width: 100%;
-			height: 3rem;
-			min-height: 3rem;
-		}
+  <style id="task-form-style">
+    form#task-form {
+      width: 100%;
+      max-width: 100%;
+      height: 3rem;
+      min-height: 3rem;
+    }
 
-		form#task-form input {
-			width: 100%;
-			height: 100%;
-			background-color: #303030;
-			color: #eee;
-			border-radius: 0;
-		}
+    form#task-form input {
+      width: 100%;
+      height: 100%;
+      background-color: #303030;
+      color: #eee;
+      border-radius: 0;
+    }
 
-	</style>
+  </style>
 `
 
 const createTask: EventHandler = async e => {
-	e.preventDefault()
-	const description: string = sanitize(e.target.task.value)
-	const task = prepareTask(description)
-	if (state.tasks.some(({id}) => id === task.id)) {
-		window.alert("There is already a task with the same id in the list")
-		return
-	}
+  e.preventDefault()
+  const description: string = sanitize(e.target.task.value)
+  const task = prepareTask(description)
+  if (state.tasks.some(({id}) => id === task.id)) {
+    window.alert("There is already a task with the same id in the list")
+    return
+  }
 
-	resetInput()
-	setState(({tasks}) => ({
-		view: "active",
-		tasks: [{...task, isImageLoading: true}, ...tasks],
-	}))
+  resetInput()
+  setState(({tasks}) => ({
+    view: "active",
+    tasks: [{...task, isImageLoading: true}, ...tasks],
+  }))
 
-	try {
-		const image = await fetchAndNormalizeImages(task)
-		patchTask({...task, image})
-	} catch (err) {
-		handleError(err)
-		patchTask({
-			...task,
-			image: {link: IMAGES.UNDEFINED_TASK, queries: {}},
-		})
-	}
+  try {
+    const image = await fetchAndNormalizeImages(task)
+    patchTask({...task, image})
+  } catch (err) {
+    handleError(err)
+    patchTask({
+      ...task,
+      image: {link: IMAGES.UNDEFINED_TASK, queries: {}},
+    })
+  }
 }
 
 export const inputForm = (): string => render`
-	<form id="task-form" ::submit=${createTask}>
-		<input
-			name="task"
-			::input=${e => {
-				setState(() => ({input: e.target.value}))
-			}}
-			value=""
-			placeholder="Task description"
-			autocomplete="off"
-		/>
-	</form>
-	${inputFormStyle()}
+  <form id="task-form" ::submit=${createTask}>
+    <input
+      name="task"
+      ::input=${e => {
+        setState(() => ({input: e.target.value}))
+      }}
+      value=""
+      placeholder="Task description"
+      autocomplete="off"
+    />
+  </form>
+  ${inputFormStyle()}
 `

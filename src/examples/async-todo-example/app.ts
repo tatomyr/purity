@@ -1,20 +1,20 @@
 import {init} from "../../purity.js"
 
 export type Item = {
-	id: string
-	text: string
-	checked: false
-	justAdded?: boolean
+  id: string
+  text: string
+  checked: false
+  justAdded?: boolean
 }
 
 export type AppState = {
-	items: Item[]
-	input: string
-	spinner: boolean
+  items: Item[]
+  input: string
+  spinner: boolean
 }
 
 export const {mount, rerender, getState, setState} = init<AppState>({
-	items: [],
-	input: "",
-	spinner: false,
+  items: [],
+  input: "",
+  spinner: false,
 })

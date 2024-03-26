@@ -12,35 +12,35 @@ import {taskDetails} from "./task-details.js"
 import {taskList} from "./task-list.js"
 
 export const root = (): string => render`
-	<div id="root">
-		${header()}
-		${taskList()}
-		${inputForm()}
-		${appStyle()}
-		<div id="settings">
-			${
-				state.isSettingsModalOpen &&
-				modal({
-					title: "Settings",
-					content: settings(),
-					close: closeSettings,
-				})
-			}
-		</div>
-		<div id="task-details">
-			${
-				state.taskDetailId &&
-				modal({
-					title: "Details",
-					content: taskDetails(),
-					close: closeTaskDetails,
-				})
-			}
-		</div>
-		${modalStyle()}
-		${theIntrospector({
-			task_1: state?.tasks?.[0],
-			localStorage: window.localStorage,
-		})}
-	</div>
+  <div id="root">
+    ${header()}
+    ${taskList()}
+    ${inputForm()}
+    ${appStyle()}
+    <div id="settings">
+      ${
+        state.isSettingsModalOpen &&
+        modal({
+          title: "Settings",
+          content: settings(),
+          close: closeSettings,
+        })
+      }
+    </div>
+    <div id="task-details">
+      ${
+        state.taskDetailId &&
+        modal({
+          title: "Details",
+          content: taskDetails(),
+          close: closeTaskDetails,
+        })
+      }
+    </div>
+    ${modalStyle()}
+    ${theIntrospector({
+      task_1: state?.tasks?.[0],
+      localStorage: window.localStorage,
+    })}
+  </div>
 `

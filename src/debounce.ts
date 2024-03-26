@@ -10,21 +10,21 @@ export type Callback<P extends unknown[]> = (...args: P) => void
  */
 
 export const debounce = <P extends unknown[]>(
-	callback: Callback<P>,
-	wait = 100
+  callback: Callback<P>,
+  wait = 100
 ): Callback<P> => {
-	let timeout: number | undefined
+  let timeout: number | undefined
 
-	return (...args) => {
-		if (timeout) {
-			clearTimeout(timeout)
-		} else if (wait < 0) {
-			callback(...args)
-		}
+  return (...args) => {
+    if (timeout) {
+      clearTimeout(timeout)
+    } else if (wait < 0) {
+      callback(...args)
+    }
 
-		timeout = setTimeout(() => {
-			if (wait > 0) callback(...args)
-			timeout = undefined
-		}, Math.abs(wait))
-	}
+    timeout = setTimeout(() => {
+      if (wait > 0) callback(...args)
+      timeout = undefined
+    }, Math.abs(wait))
+  }
 }
