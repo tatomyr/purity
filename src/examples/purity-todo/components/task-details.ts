@@ -12,144 +12,144 @@ import type {Image} from "../app.js"
 import type {EventHandler} from "../../../purity.js"
 
 const makeChangeImage =
-	(direction: "nextPage" | "previousPage" | "current"): EventHandler =>
-	async () => {
-		const task = selectDetailedTask()
-		patchTask({...task, isImageLoading: true})
-		try {
-			const image = await fetchAndNormalizeImages(
-				task,
-				direction === "current" ? 1 : task.image.queries[direction]?.startIndex
-			)
-			await patchTask({...task, image})
-		} catch (err) {
-			handleError(err)
-			patchTask(task)
-		}
-	}
+  (direction: "nextPage" | "previousPage" | "current"): EventHandler =>
+  async () => {
+    const task = selectDetailedTask()
+    patchTask({...task, isImageLoading: true})
+    try {
+      const image = await fetchAndNormalizeImages(
+        task,
+        direction === "current" ? 1 : task.image.queries[direction]?.startIndex
+      )
+      await patchTask({...task, image})
+    } catch (err) {
+      handleError(err)
+      patchTask(task)
+    }
+  }
 
 const handleCaptureImage: EventHandler = async ({target}) => {
-	try {
-		const [file] = target.files as FileList
-		if (!file) {
-			return
-		}
-		const task = selectDetailedTask()
+  try {
+    const [file] = target.files as FileList
+    if (!file) {
+      return
+    }
+    const task = selectDetailedTask()
 
-		const bigImg = await window.createImageBitmap(file)
-		const smallImg = await window.createImageBitmap(bigImg, {
-			...keepRatio(bigImg)(300),
-			resizeQuality: "high",
-		})
-		const croppedImg = await window.createImageBitmap(
-			smallImg,
-			...cropSquare(smallImg)
-		)
-		const link = getImgSrc(croppedImg)
-		if (!link) throw new Error("Cannot read the image.")
-		const image: Image = {
-			link,
-			queries: {
-				previousPage: task?.image.queries.request,
-			},
-		}
-		patchTask({...task, image})
-	} catch (err) {
-		handleError(err)
-	}
+    const bigImg = await window.createImageBitmap(file)
+    const smallImg = await window.createImageBitmap(bigImg, {
+      ...keepRatio(bigImg)(300),
+      resizeQuality: "high",
+    })
+    const croppedImg = await window.createImageBitmap(
+      smallImg,
+      ...cropSquare(smallImg)
+    )
+    const link = getImgSrc(croppedImg)
+    if (!link) throw new Error("Cannot read the image.")
+    const image: Image = {
+      link,
+      queries: {
+        previousPage: task?.image.queries.request,
+      },
+    }
+    patchTask({...task, image})
+  } catch (err) {
+    handleError(err)
+  }
 }
 
 const handleEditTaskDescription: EventHandler = e => {
-	const task = selectDetailedTask()
-	console.log(e.target.value)
-	patchTask({id: task.id, description: sanitize(e.target.value)})
+  const task = selectDetailedTask()
+  console.log(e.target.value)
+  patchTask({id: task.id, description: sanitize(e.target.value)})
 }
 
 const handleAddSubtask: EventHandler = () => {
-	const task = selectDetailedTask()
-	patchTask({
-		id: task.id,
-		subtasks: [...(task.subtasks || []), {checked: false, description: ""}],
-	})
-	document
-		.querySelector<HTMLInputElement>(".subtask:last-child input.subtask-input")
-		?.focus()
+  const task = selectDetailedTask()
+  patchTask({
+    id: task.id,
+    subtasks: [...(task.subtasks || []), {checked: false, description: ""}],
+  })
+  document
+    .querySelector<HTMLInputElement>(".subtask:last-child input.subtask-input")
+    ?.focus()
 }
 
 export const taskDetails = (): string => {
-	const task = selectDetailedTask()
+  const task = selectDetailedTask()
 
-	return render`
-		<div class="task-details--wrapper">
-			<section class="task-details--image">
-				<div
-					id="fullscreen-image"
-					class="fullscreen-image"
-					style="background-image: url('${
-						task.isImageLoading ? IMAGES.LOADING : task?.image.link
-					}');"
-				> 
-					<div class="controls" id="controls">
-						<button ::click=${makeChangeImage("current")}>
-							↻
-						</button>
-				
-						${
-							task?.image.queries.previousPage?.startIndex !== undefined &&
-							render`
-								<button ::click=${makeChangeImage("previousPage")}>
-									←
-								</button>
-							`
-						}
-						
-						${
-							task?.image.queries.nextPage?.startIndex !== undefined &&
-							render`
-								<button ::click=${makeChangeImage("nextPage")}>
-									→
-								</button>
-							`
-						}
+  return render`
+    <div class="task-details--wrapper">
+      <section class="task-details--image">
+        <div
+          id="fullscreen-image"
+          class="fullscreen-image"
+          style="background-image: url('${
+            task.isImageLoading ? IMAGES.LOADING : task?.image.link
+          }');"
+        > 
+          <div class="controls" id="controls">
+            <button ::click=${makeChangeImage("current")}>
+              ↻
+            </button>
+        
+            ${
+              task?.image.queries.previousPage?.startIndex !== undefined &&
+              render`
+                <button ::click=${makeChangeImage("previousPage")}>
+                  ←
+                </button>
+              `
+            }
+            
+            ${
+              task?.image.queries.nextPage?.startIndex !== undefined &&
+              render`
+                <button ::click=${makeChangeImage("nextPage")}>
+                  →
+                </button>
+              `
+            }
 
-						<label for="capture">
-							Capture
-							<input
-								type="file"
-								accept="image/*"
-								capture="environment"
-								id="capture"
-								::change=${handleCaptureImage}
-							/>
-						</label>
-					</div>
-				</div>
-				
-			</section>
+            <label for="capture">
+              Capture
+              <input
+                type="file"
+                accept="image/*"
+                capture="environment"
+                id="capture"
+                ::change=${handleCaptureImage}
+              />
+            </label>
+          </div>
+        </div>
+        
+      </section>
 
-			<section class="task-details--description">
-				<!-- TODO: use debounce	TODO: bound event handlers properly	-->
-				<input
-					id="task-description-edit"
-					class="description-edit"
-					value="${task?.description ?? ""}"
-					placeholder="Task description"
-					autocomplete="off"
-					::input=${handleEditTaskDescription}
-				/>
-				<div id="subtasks-list">
-					${task.subtasks?.map(subtaskItem)}
-				</div>
-				<div style="padding: 4px 8px; ">
-					<button 
-						class="${ACTION_BUTTON} ${SMALL_BUTTON}"
-						::click=${handleAddSubtask}
-					>
-						⊞
-					</button>
-				</div>
-			</section>
-		</div>
-		${taskDetailsStyle()}
-	`
+      <section class="task-details--description">
+        <!-- TODO: use debounce  TODO: bound event handlers properly  -->
+        <input
+          id="task-description-edit"
+          class="description-edit"
+          value="${task?.description ?? ""}"
+          placeholder="Task description"
+          autocomplete="off"
+          ::input=${handleEditTaskDescription}
+        />
+        <div id="subtasks-list">
+          ${task.subtasks?.map(subtaskItem)}
+        </div>
+        <div style="padding: 4px 8px; ">
+          <button 
+            class="${ACTION_BUTTON} ${SMALL_BUTTON}"
+            ::click=${handleAddSubtask}
+          >
+            ⊞
+          </button>
+        </div>
+      </section>
+    </div>
+    ${taskDetailsStyle()}
+  `
 }

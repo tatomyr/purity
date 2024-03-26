@@ -2,3 +2,5 @@
 coverage/
 public/
 *snapshot.js
+package-lock.json
+*.svg

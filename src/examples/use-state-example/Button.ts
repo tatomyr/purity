@@ -4,17 +4,17 @@ import type {EventHandler} from "../../purity.js"
 export type Actions = "inc" | "dec" | "reset"
 
 export type ButtonProps = {
-	action: Actions
-	caption: string
-	handleClick: EventHandler
+  action: Actions
+  caption: string
+  handleClick: EventHandler
 }
 
 export const Button = ({
-	action,
-	caption,
-	handleClick,
+  action,
+  caption,
+  handleClick,
 }: ButtonProps): string => render`
-	<button data-counter="${action}" ::click=${handleClick}>
-		${caption}
-	</button>
+  <button data-counter="${action}" ::click=${handleClick}>
+    ${caption}
+  </button>
 `
