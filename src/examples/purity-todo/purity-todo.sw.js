@@ -4,13 +4,14 @@ const cacheName = `${appScope}@2.15`
 const contentToCache = [
 	"./",
 	"./index.html",
-
+	// FIXME: wrong caching?
 	"./assets/images/todo-icon-48.png",
 	"./assets/images/todo-icon-192.png",
 	"./assets/images/todo-icon-512.png",
 	"./assets/images/preloader.gif",
 	"./assets/images/icon-pack/idea.svg",
 	"./assets/images/icon-pack/forbidden.svg",
+  "manifest.json",
 ]
 
 self.addEventListener("install", e => {

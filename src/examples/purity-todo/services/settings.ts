@@ -12,7 +12,6 @@ export const downloadUserData = async (): Promise<void> => {
 			.toISOString()
 			.replaceAll(/[:.]/g, "_")}.backup.json`
 		download(fileName, JSON.stringify(groomTasks(state.tasks)))
-		window.alert("Downloading your backup file")
 		closeSettings()
 	} catch (err) {
 		handleError(err)
