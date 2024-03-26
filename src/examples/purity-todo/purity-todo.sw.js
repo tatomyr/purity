@@ -1,6 +1,6 @@
 const appScope = self.registration.scope
 
-const cacheName = `${appScope}@2.15`
+const cacheName = `${appScope}@2.16`
 const contentToCache = [
 	"./",
 	"./index.html",
