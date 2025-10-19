@@ -4,12 +4,26 @@ export const ACTION_BUTTON = "action-button"
 
 export const appStyle = (): string => render`
   <style id="app-style">
+    :root {
+      --background-color: #f0f0f0;
+      --text-color: #555;
+      --shadow-color: #555;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background-color: #484848;
+        --text-color: #f0f0f0;
+        --shadow-color: #000;
+      }
+    }
+
     *,
     *::before,
     *::after {
       font-family: sans-serif;
       font-size: 20px;
-      color: #555555;
+      color: var(--text-color);
     }
 
     input[type='file'] {
@@ -19,9 +33,11 @@ export const appStyle = (): string => render`
     body {
       position: relative;
       height: 100vh;
+      background-color: var(--background-color);
+      color: var(--text-color);
     }
 
-    ol, 
+    ol,
     ul {
       list-style-type: none;
       padding: 0;
@@ -56,7 +72,7 @@ export const appStyle = (): string => render`
     }
 
     .${ACTION_BUTTON}.chosen {
-      color: white;
+      color: var(--background-color);
     }
 
   </style>

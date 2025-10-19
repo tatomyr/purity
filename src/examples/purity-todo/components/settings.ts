@@ -10,6 +10,9 @@ const settingsStyle = () => render`
       border-bottom: 1px solid lightgrey;
       ${lineContainerCSS}
     }
+    ul.settings li:last-child  {
+      border-bottom: none;
+    }
 
     ul.settings li p {
       ${lineTextCSS}
