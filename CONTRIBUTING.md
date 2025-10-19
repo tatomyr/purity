@@ -10,6 +10,8 @@ Make sure your code is compiled (run `bash bin/compile.sh` to start compilation 
 
 > **Tip:** You may use `npm start` to combine those two commands.
 
+To explore examples, visit http://localhost:8081/public/examples/.
+
 ## Code minification
 
 To minify files run `bash bin/minify.sh` script.

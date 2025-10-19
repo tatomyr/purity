@@ -21,12 +21,12 @@ export const modalStyle = (): string => render`
       width: 90vh;
 
       overflow-y: auto;
-      background-color: white;
+      background-color: var(--background-color);
     }
 
     .modal {
-      border: 1px solid wheat;
-      box-shadow: 0px 4px 16px 0px;
+      border: 1px solid var(--shadow-color);
+      box-shadow: 0px 4px 16px 0px var(--shadow-color);
     }
 
     .modal .modal-header {

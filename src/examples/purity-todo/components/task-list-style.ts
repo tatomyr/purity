@@ -20,8 +20,10 @@ export const taskListStyle = (): string => render`
       min-height: 3rem;
       box-shadow: ${
         [
-          isTopScrolled(state) && "inset 0px 16px 8px -16px",
-          isBottomScrolled(state) && "inset 0px -16px 8px -16px",
+          isTopScrolled(state) &&
+            "inset 0px 16px 8px -16px var(--shadow-color)",
+          isBottomScrolled(state) &&
+            "inset 0px -16px 8px -16px var(--shadow-color)",
         ]
           .filter(isTruthy)
           .join(",") || "none"
