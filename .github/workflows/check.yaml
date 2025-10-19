@@ -22,7 +22,7 @@ jobs:
         run: npm run coverage
       - name: Coverage Report
         if: always() # Also generate the report if tests are failing
-        uses: davelosert/vitest-coverage-report-action@v1
+        uses: davelosert/vitest-coverage-report-action@v2
       - name: E2E Tests
         run: |
           npx cypress install # FIXME: something is wrong with caching
