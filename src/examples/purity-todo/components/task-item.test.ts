@@ -27,15 +27,22 @@ describe("task-item", () => {
   it("should render correctly for a given task item", () => {
     const item = getTestTask()
     expect(taskItem(item)).toMatchInlineSnapshot(`
-      "<li id="test" class="task-item "><img
+      "<li
+          id="test"
+          class="
+            task-item
+            
+            stale
+          "
+        ><img
             src="image.png"
             onerror="this.onerror = null; this.src = './assets/images/icon-pack/forbidden.svg'"
             loading="lazy"
-          /><div 
-            class="item-description" 
-            data-id="test" 
+          /><div
+            class="item-description"
+            data-id="test"
             data-purity_click_0 data-purity_flag
-          >test</div><button 
+          >test</div><button
             id="delete-test"
             class="action-button delete-button hidden"
             data-id="test"
@@ -54,15 +61,22 @@ describe("task-item", () => {
     const item = getTestTask()
     item.completed = true
     expect(taskItem(item)).toMatchInlineSnapshot(`
-      "<li id="test" class="task-item completed"><img
+      "<li
+          id="test"
+          class="
+            task-item
+            completed
+            stale
+          "
+        ><img
             src="image.png"
             onerror="this.onerror = null; this.src = './assets/images/icon-pack/forbidden.svg'"
             loading="lazy"
-          /><div 
-            class="item-description" 
-            data-id="test" 
+          /><div
+            class="item-description"
+            data-id="test"
             data-purity_click_0 data-purity_flag
-          >test</div><button 
+          >test</div><button
             id="delete-test"
             class="action-button delete-button "
             data-id="test"
@@ -84,15 +98,22 @@ describe("task-item", () => {
       {description: "not checked (should be visible!)", checked: false},
     ]
     expect(taskItem(item)).toMatchInlineSnapshot(`
-      "<li id="test" class="task-item "><img
+      "<li
+          id="test"
+          class="
+            task-item
+            
+            stale
+          "
+        ><img
             src="image.png"
             onerror="this.onerror = null; this.src = './assets/images/icon-pack/forbidden.svg'"
             loading="lazy"
-          /><div 
-            class="item-description" 
-            data-id="test" 
+          /><div
+            class="item-description"
+            data-id="test"
             data-purity_click_0 data-purity_flag
-          >test<span class="subtask-inline">not checked (should be visible!)</span></div><button 
+          >test<span class="subtask-inline">not checked (should be visible!)</span></div><button
             id="delete-test"
             class="action-button delete-button hidden"
             data-id="test"
