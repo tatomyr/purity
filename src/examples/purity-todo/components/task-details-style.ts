@@ -17,7 +17,7 @@ export const taskDetailsStyle = (): string => render`
       height: min(90vw, 33vh);
       max-height: min(90vw, 33vh);
       transition: height .2s ease-in;
-      
+
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -44,7 +44,7 @@ export const taskDetailsStyle = (): string => render`
 
     .task-details--description {
       flex-grow: 1;
-      background: #f0f0f0;
+      background: var(--background-color);
     }
 
     .description-edit, .subtask-input {
@@ -52,6 +52,8 @@ export const taskDetailsStyle = (): string => render`
       padding: 4px 8px;
       border: none;
       height: 2rem;
+      background: var(--background-color);
+      color: var(--text-color);
     }
 
     .subtask {
@@ -59,6 +61,14 @@ export const taskDetailsStyle = (): string => render`
       align-items: center;
       padding: 0 8px;
       gap: 8px;
+    }
+
+    .subtask-completed {
+      text-decoration: line-through;
+      width: 100%;
+      padding: 4px 8px;
+      color: var(--text-color);
+      opacity: 0.6;
     }
 
     .${SMALL_BUTTON} {

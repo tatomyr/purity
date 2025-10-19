@@ -74,5 +74,16 @@ export const taskListStyle = (): string => render`
       filter: grayscale(1);
     }
 
+    ol#task-list .task-item.stale {
+      opacity: 0.4;
+      filter: grayscale(0.3);
+      transition: opacity 0.3s ease-in-out, filter 0.3s ease-in-out;
+    }
+
+    ol#task-list .task-item.stale:hover {
+      opacity: 0.7;
+      filter: grayscale(0.1);
+    }
+
   </style>
 `

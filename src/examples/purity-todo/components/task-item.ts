@@ -41,24 +41,32 @@ export const taskItem = ({
   description,
   id,
   completed,
+  updatedAt,
   image,
   subtasks = [],
 }: Task) => render`
-  <li id="${id}" class="task-item ${completed && "completed"}">
+  <li
+    id="${id}"
+    class="
+      task-item
+      ${completed ? "completed" : ""}
+      ${Date.now() - updatedAt > 7 * 24 * 60 * 60 * 1000 ? "stale" : ""}
+    "
+  >
     <img
       src="${image.link}"
       onerror="this.onerror = null; this.src = '${IMAGES.BROKEN}'"
       loading="lazy"
     />
-    <div 
-      class="${ITEM_DESCRIPTION}" 
-      data-id="${id}" 
+    <div
+      class="${ITEM_DESCRIPTION}"
+      data-id="${id}"
       ::click=${openTaskDetails}
     >
       ${description.trim()}
       ${subtasks.filter(({checked}) => !checked).map(subtaskItem)}
     </div>
-    <button 
+    <button
       id="delete-${id}"
       class="${ACTION_BUTTON} ${DELETE_BUTTON} ${!completed && "hidden"}"
       data-id="${id}"
