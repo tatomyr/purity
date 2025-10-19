@@ -26,7 +26,9 @@ const handleSubtaskChange =
     patchTask({
       id: task.id,
       subtasks: task.subtasks?.map((subtask, i) =>
-        i === subtaskIndex ? {...subtask, description: value} : subtask
+        i === subtaskIndex
+          ? {...subtask, description: sanitize(value)}
+          : subtask
       ),
     })
   }
@@ -44,7 +46,7 @@ export const subtaskItem = (
 ): string => {
   return render`
     <div class="subtask" id="subtask-${subtaskIndex}">
-      <button 
+      <button
         id="toggle-subtask-${subtaskIndex}"
         class="${ACTION_BUTTON} ${SMALL_BUTTON}"
         title="Toggle"
@@ -55,10 +57,10 @@ export const subtaskItem = (
       ${
         checked
           ? render`
-            <div style="text-decoration: line-through; width: 100%; padding: 4px 8px; ">${description}</div>
+            <div class="subtask-completed">${description}</div>
           `
           : render`
-            <input 
+            <input
               class="subtask-input"
               value="${description}"
               ::change=${handleSubtaskChange(subtaskIndex)}

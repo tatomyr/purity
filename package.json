@@ -7,7 +7,7 @@
   "scripts": {
     "json-server": "json-server --watch public/examples/json-server/db.json",
     "test": "vitest src/",
-    "coverage": "vitest run src/ --coverage",
+    "coverage": "vitest run src/ --coverage.enabled",
     "e2e": "bash bin/e2e.sh",
     "cypress": "npx cypress@14.0.0 open --config baseUrl=http://localhost:8081",
     "prettier:check": "npx prettier --check \"**/*.{ts,html,yaml,css,md,json}\"",
