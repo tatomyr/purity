@@ -17,7 +17,6 @@ describe("purity", () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     app = undefined
-    vi.restoreAllMocks()
   })
 
   describe("counter app", () => {

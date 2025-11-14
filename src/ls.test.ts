@@ -10,7 +10,6 @@ describe("ls", () => {
   })
 
   afterEach(() => {
-    vi.restoreAllMocks()
     localStorage.clear()
     storage = null
   })

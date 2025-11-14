@@ -12,7 +12,6 @@ describe("router", () => {
   })
   afterEach(() => {
     document.body.innerHTML = ""
-    vi.restoreAllMocks()
   })
   it("switches between different views depending on the url state", async () => {
     const App = (): string => render`
