@@ -116,6 +116,11 @@ export const init = <State extends Record<string, unknown>>(
    * Forces html re-rendering with the current state
    */
   function rerender() {
+    if (!rootComponent) {
+      throw new Error(
+        "Cannot rerender: app has not been mounted. Call mount() first."
+      )
+    }
     const newNodesMap = rootComponent()
     console.warn("🌀")
     for (const [id, domNode] of domNodesMap) {

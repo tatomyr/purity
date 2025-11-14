@@ -43,9 +43,6 @@ export const setBeforeAndAfter = ({
   beforeEach(() => {
     console.warn = vi.fn()
   })
-  afterEach(() => {
-    vi.restoreAllMocks()
-  })
   afterAll(() => {
     document.body.innerHTML = ""
   })
