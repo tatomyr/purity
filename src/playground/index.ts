@@ -1,4 +1,4 @@
-import {init, makeOnce} from "../index.js"
+import {init} from "../index.js"
 import {playground} from "./components/playground.js"
 
 // Suppressing the main output (iframe output remains):
@@ -14,7 +14,5 @@ export const {mount, getState, setState, rerender} = init<PlaygroundState>({
   code: "",
   placeOverDisplay: "none",
 })
-
-export const once = makeOnce()
 
 mount(playground)
