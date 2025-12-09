@@ -31,7 +31,6 @@ export const modalStyle = (): string => render`
 
     .modal .modal-header {
       background-color: var(--header-bg);
-      color: var(--text-color);
       font-weight: bold;
       position: relative;
       ${lineContainerCSS}

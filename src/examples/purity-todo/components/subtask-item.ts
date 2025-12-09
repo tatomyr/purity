@@ -14,10 +14,7 @@ const toggleSubtask =
     const newSubtasks = subtasks?.map((s, i) =>
       i === subtaskIndex ? {...s, checked: !s.checked} : s
     )
-    patchTask({
-      id: id,
-      subtasks: newSubtasks,
-    })
+    patchTask({id: id, subtasks: newSubtasks})
   }
 
 const handleSubtaskChange =
@@ -27,10 +24,7 @@ const handleSubtaskChange =
     const newSubtasks = task.subtasks?.map((s, i) =>
       i === subtaskIndex ? {...s, description: sanitize(value)} : s
     )
-    patchTask({
-      id: task.id,
-      subtasks: newSubtasks,
-    })
+    patchTask({id: task.id, subtasks: newSubtasks})
   }
 
 const deleteSubtask =
@@ -38,10 +32,7 @@ const deleteSubtask =
   () => {
     const {id, subtasks} = selectDetailedTask()
     const newSubtasks = subtasks?.filter((_, i) => i !== subtaskIndex)
-    patchTask({
-      id,
-      subtasks: newSubtasks,
-    })
+    patchTask({id, subtasks: newSubtasks})
   }
 
 export const subtaskItem = (

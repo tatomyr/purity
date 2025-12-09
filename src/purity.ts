@@ -134,7 +134,7 @@ export const init = <State extends Record<string, unknown>>(
             elementById.innerHTML = newNode.node.innerHTML
             console.warn(`\t🔴 #${id} re-rendered`)
           } else {
-            console.warn(`\t🟡 #${id} no content change`)
+            console.warn(`\t🟡 #${id} not changed`)
           }
         } else {
           throw new Error(`There is no element in the DOM with id "${id}".`)
