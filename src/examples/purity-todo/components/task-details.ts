@@ -88,12 +88,12 @@ export const taskDetails = (): string => {
           style="background-image: url('${
             task.isImageLoading ? IMAGES.LOADING : task?.image.link
           }');"
-        > 
+        >
           <div class="controls" id="controls">
             <button ::click=${makeChangeImage("current")}>
               ↻
             </button>
-        
+
             ${
               task?.image.queries.previousPage?.startIndex !== undefined &&
               render`
@@ -102,7 +102,7 @@ export const taskDetails = (): string => {
                 </button>
               `
             }
-            
+
             ${
               task?.image.queries.nextPage?.startIndex !== undefined &&
               render`
@@ -124,7 +124,6 @@ export const taskDetails = (): string => {
             </label>
           </div>
         </div>
-        
       </section>
 
       <section class="task-details--description">
@@ -141,7 +140,7 @@ export const taskDetails = (): string => {
           ${task.subtasks?.map(subtaskItem)}
         </div>
         <div style="padding: 4px 8px; ">
-          <button 
+          <button
             class="${ACTION_BUTTON} ${SMALL_BUTTON}"
             ::click=${handleAddSubtask}
           >

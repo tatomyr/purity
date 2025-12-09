@@ -10,15 +10,13 @@ export const SMALL_BUTTON = "small-button"
 const toggleSubtask =
   (subtaskIndex: number): EventHandler =>
   ({target: {checked}}) => {
-    const {id, subtasks, completed} = selectDetailedTask()
+    const {id, subtasks} = selectDetailedTask()
     const newSubtasks = subtasks?.map((s, i) =>
       i === subtaskIndex ? {...s, checked: !s.checked} : s
     )
-    const completedSubtasks = newSubtasks?.every(s => s.checked)
     patchTask({
       id: id,
       subtasks: newSubtasks,
-      completed: completedSubtasks ?? completed,
     })
   }
 
@@ -38,13 +36,11 @@ const handleSubtaskChange =
 const deleteSubtask =
   (subtaskIndex: number): EventHandler =>
   () => {
-    const {id, subtasks, completed} = selectDetailedTask()
+    const {id, subtasks} = selectDetailedTask()
     const newSubtasks = subtasks?.filter((_, i) => i !== subtaskIndex)
-    const completedSubtasks = newSubtasks?.every(s => s.checked)
     patchTask({
       id,
       subtasks: newSubtasks,
-      completed: completedSubtasks ?? completed,
     })
   }
 

@@ -36,9 +36,9 @@ export const taskDetailsStyle = (): string => render`
     .task-details--image .controls button,
     .task-details--image .controls label {
       padding: 4px 16px;
-      background: #555;
+      background: var(--control-button-bg);
       color: white;
-      opacity: 0.75;
+      opacity: var(--control-button-opacity);
       border-radius: 8px;
     }
 
@@ -69,6 +69,9 @@ export const taskDetailsStyle = (): string => render`
       padding: 4px 8px;
       color: var(--text-color);
       opacity: 0.6;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .${SMALL_BUTTON} {

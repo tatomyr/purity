@@ -5,25 +5,25 @@ import {ACTION_BUTTON} from "./app-style.js"
 
 const headerStyle = (): string => render`
   <style id="header-style">
-    #header {
-      background-color: lightgrey;
+    .header {
+      background-color: var(--header-bg);
+      border-bottom: var(--header-border);
       height: 3rem;
       min-height: 3rem;
       max-width: 100%;
       z-index: 1;
-    }
 
-    #header ul {
-      display: flex;
-      justify-content: space-around;
-      user-select: none;
+      ul {
+        display: flex;
+        justify-content: space-around;
+        user-select: none;
+      }
     }
-
   </style>
 `
 
 export const header = (): string => render`
-  <nav id="header">
+  <nav id="header" class="header">
     <ul>
       ${navItem({value: "active", label: "⊡"})}
       ${navItem({value: "completed", label: "⊠"})}
