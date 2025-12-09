@@ -122,7 +122,7 @@ export const init = <State extends Record<string, unknown>>(
       )
     }
     const newNodesMap = rootComponent()
-    console.warn("🌀")
+    console.warn("Updating DOM...")
     for (const [id, domNode] of domNodesMap) {
       const newNode = newNodesMap.get(id)
       // Since we depend on the shallow comparison, we must only care about updating changed nodes.
@@ -132,9 +132,9 @@ export const init = <State extends Record<string, unknown>>(
           updateAttributes(elementById, newNode)
           if (domNode.shallow.innerHTML !== newNode.shallow.innerHTML) {
             elementById.innerHTML = newNode.node.innerHTML
-            console.warn(`\t↻ #${id}`)
+            console.warn(`\t🔴 #${id} re-rendered`)
           } else {
-            console.warn(`\t± #${id}`)
+            console.warn(`\t🟡 #${id} not changed`)
           }
         } else {
           throw new Error(`There is no element in the DOM with id "${id}".`)

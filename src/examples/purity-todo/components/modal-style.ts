@@ -8,7 +8,7 @@ export const modalStyle = (): string => render`
       right: 0;
       bottom: 0;
       left: 0;
-      background-color: #50505030;
+      background-color: var(--modal-overlay-bg);
       z-index: 1;
       display: flex;
       align-items: center;
@@ -30,7 +30,7 @@ export const modalStyle = (): string => render`
     }
 
     .modal .modal-header {
-      background-color: lightgrey;
+      background-color: var(--header-bg);
       font-weight: bold;
       position: relative;
       ${lineContainerCSS}

@@ -19,9 +19,15 @@ const inputFormStyle = () => render`
     form#task-form input {
       width: 100%;
       height: 100%;
-      background-color: #303030;
-      color: #eee;
+      background-color: var(--input-bg);
+      color: var(--input-color);
+      border: var(--input-border);
       border-radius: 0;
+    }
+
+    form#task-form input:focus {
+      outline: var(--input-focus-outline);
+      outline-offset: -2px;
     }
 
   </style>

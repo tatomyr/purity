@@ -5,10 +5,21 @@ import type {EventHandler} from "../../../purity.js"
 
 export const closeTaskDetails: EventHandler = () => {
   const task = selectDetailedTask()
-  patchTask({
-    ...task,
-    subtasks: task.subtasks?.filter(({description}) => description),
-  })
+  const validSubtasks =
+    task.subtasks?.filter(({description}) => description) || []
+  const subtasksCompleted =
+    validSubtasks.length > 0
+      ? validSubtasks.every(s => s.checked)
+      : task.completed
+
+  patchTask(
+    {
+      ...task,
+      subtasks: validSubtasks,
+      completed: subtasksCompleted,
+    },
+    true
+  )
   setState(() => ({taskDetailId: undefined}))
 }
 

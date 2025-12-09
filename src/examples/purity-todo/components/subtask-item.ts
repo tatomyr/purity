@@ -11,33 +11,28 @@ const toggleSubtask =
   (subtaskIndex: number): EventHandler =>
   ({target: {checked}}) => {
     const {id, subtasks} = selectDetailedTask()
-    patchTask({
-      id: id,
-      subtasks: subtasks?.map((subtask, i) =>
-        i === subtaskIndex ? {...subtask, checked: !subtask.checked} : subtask
-      ),
-    })
+    const newSubtasks = subtasks?.map((s, i) =>
+      i === subtaskIndex ? {...s, checked: !s.checked} : s
+    )
+    patchTask({id: id, subtasks: newSubtasks})
   }
 
 const handleSubtaskChange =
   (subtaskIndex: number): EventHandler =>
   ({target: {value}}) => {
     const task = selectDetailedTask()
-    patchTask({
-      id: task.id,
-      subtasks: task.subtasks?.map((subtask, i) =>
-        i === subtaskIndex
-          ? {...subtask, description: sanitize(value)}
-          : subtask
-      ),
-    })
+    const newSubtasks = task.subtasks?.map((s, i) =>
+      i === subtaskIndex ? {...s, description: sanitize(value)} : s
+    )
+    patchTask({id: task.id, subtasks: newSubtasks})
   }
 
 const deleteSubtask =
   (subtaskIndex: number): EventHandler =>
   () => {
     const {id, subtasks} = selectDetailedTask()
-    patchTask({id, subtasks: subtasks?.filter((_, i) => i !== subtaskIndex)})
+    const newSubtasks = subtasks?.filter((_, i) => i !== subtaskIndex)
+    patchTask({id, subtasks: newSubtasks})
   }
 
 export const subtaskItem = (

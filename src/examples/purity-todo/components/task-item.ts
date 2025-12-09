@@ -59,6 +59,7 @@ export const taskItem = ({
       loading="lazy"
     />
     <div
+      id="item-description-${id}"
       class="${ITEM_DESCRIPTION}"
       data-id="${id}"
       ::click=${openTaskDetails}

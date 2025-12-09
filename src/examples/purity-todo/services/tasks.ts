@@ -25,12 +25,20 @@ export const prepareTask = (description: string): Task => {
   return task
 }
 
-export const patchTask = (patch: Partial<Task> & Pick<Task, "id">): void => {
+export const patchTask = (
+  patch: Partial<Task> & Pick<Task, "id">,
+  silentUpdate = false
+): void => {
   const now = Date.now()
   setState(({tasks}) => ({
     tasks: tasks.map(({isImageLoading, ...task}) =>
       task.id === patch.id
-        ? {...task, ...patch, updatedAt: now, tmpFlag: true}
+        ? {
+            ...task,
+            ...patch,
+            updatedAt: silentUpdate ? task.updatedAt : now,
+            tmpFlag: true,
+          }
         : task
     ),
   }))

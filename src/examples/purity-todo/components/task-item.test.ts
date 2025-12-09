@@ -39,6 +39,7 @@ describe("task-item", () => {
             onerror="this.onerror = null; this.src = './assets/images/icon-pack/forbidden.svg'"
             loading="lazy"
           /><div
+            id="item-description-test"
             class="item-description"
             data-id="test"
             data-purity_click_0 data-purity_flag
@@ -73,6 +74,7 @@ describe("task-item", () => {
             onerror="this.onerror = null; this.src = './assets/images/icon-pack/forbidden.svg'"
             loading="lazy"
           /><div
+            id="item-description-test"
             class="item-description"
             data-id="test"
             data-purity_click_0 data-purity_flag
@@ -110,6 +112,7 @@ describe("task-item", () => {
             onerror="this.onerror = null; this.src = './assets/images/icon-pack/forbidden.svg'"
             loading="lazy"
           /><div
+            id="item-description-test"
             class="item-description"
             data-id="test"
             data-purity_click_0 data-purity_flag

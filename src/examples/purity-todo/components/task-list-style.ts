@@ -32,7 +32,7 @@ export const taskListStyle = (): string => render`
 
     ol#task-list .task-item {
       display: flex;
-      border-bottom: 1px solid lightgrey;
+      border-bottom: 1px solid var(--border-color);
       align-items: center;
       padding: 0;
     }
@@ -47,18 +47,18 @@ export const taskListStyle = (): string => render`
     }
 
     ol#task-list .task-item.completed .${ITEM_DESCRIPTION} {
-      color: lightgrey;
+      color: var(--completed-color);
     }
 
     .${ITEM_DESCRIPTION} .subtask-inline {
-      color: lightgrey;
+      color: var(--subtask-color);
     }
 
     .${ITEM_DESCRIPTION} .subtask-inline::before {
       content: "⊡";
       margin-right: 0.5rem;
       margin-left: 0.5rem;
-      color: lightgrey;
+      color: var(--subtask-color);
     }
 
     ol#task-list .task-item > img {
@@ -70,19 +70,16 @@ export const taskListStyle = (): string => render`
       z-index: -1;
     }
 
+    ol#task-list .task-item:hover {
+      background-color: var(--task-item-hover-bg);
+    }
+
     ol#task-list .task-item.completed > img {
       filter: grayscale(1);
+      opacity: var(--completed-image-opacity);
     }
 
     ol#task-list .task-item.stale {
-      opacity: 0.4;
-      filter: grayscale(0.3);
-      transition: opacity 0.3s ease-in-out, filter 0.3s ease-in-out;
-    }
-
-    ol#task-list .task-item.stale:hover {
-      opacity: 0.7;
-      filter: grayscale(0.1);
     }
 
   </style>
