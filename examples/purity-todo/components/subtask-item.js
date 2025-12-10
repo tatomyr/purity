@@ -1,0 +1,54 @@
+import { render, sanitize } from "../../../index.js";
+import { patchTask } from "../services/tasks.js";
+import { selectDetailedTask } from "../services/task-details.js";
+import { ACTION_BUTTON } from "./app-style.js";
+export const SMALL_BUTTON = "small-button";
+const toggleSubtask = (subtaskIndex) => ({ target: { checked } }) => {
+    const { id, subtasks } = selectDetailedTask();
+    const newSubtasks = subtasks?.map((s, i) => i === subtaskIndex ? { ...s, checked: !s.checked } : s);
+    patchTask({ id: id, subtasks: newSubtasks });
+};
+const handleSubtaskChange = (subtaskIndex) => ({ target: { value } }) => {
+    const task = selectDetailedTask();
+    const newSubtasks = task.subtasks?.map((s, i) => i === subtaskIndex ? { ...s, description: sanitize(value) } : s);
+    patchTask({ id: task.id, subtasks: newSubtasks });
+};
+const deleteSubtask = (subtaskIndex) => () => {
+    const { id, subtasks } = selectDetailedTask();
+    const newSubtasks = subtasks?.filter((_, i) => i !== subtaskIndex);
+    patchTask({ id, subtasks: newSubtasks });
+};
+export const subtaskItem = ({ description, checked }, subtaskIndex) => {
+    return render `
+    <div class="subtask" id="subtask-${subtaskIndex}">
+      <button
+        id="toggle-subtask-${subtaskIndex}"
+        class="${ACTION_BUTTON} ${SMALL_BUTTON}"
+        title="Toggle"
+        ::click=${toggleSubtask(subtaskIndex)}
+      >
+        ${checked ? "⊠" : "⊡"}
+      </button>
+      ${checked
+        ? render `
+            <div class="subtask-completed">${description}</div>
+          `
+        : render `
+            <input
+              class="subtask-input"
+              value="${description}"
+              ::change=${handleSubtaskChange(subtaskIndex)}
+            />
+          `}
+
+      <button
+        class="${ACTION_BUTTON} ${SMALL_BUTTON}"
+        title="Delete"
+        ::click=${deleteSubtask(subtaskIndex)}
+      >
+        ⊟
+      </button>
+    </div>
+
+  `;
+};

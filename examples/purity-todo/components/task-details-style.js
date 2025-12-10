@@ -1,0 +1,84 @@
+import { render } from "../../../index.js";
+import { SMALL_BUTTON } from "./subtask-item.js";
+export const taskDetailsStyle = () => render `
+  <style id="task-details-style">
+    #task-details .modal-content {
+      height: calc(90vh - 3rem);
+    }
+
+    .task-details--wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .task-details--image .fullscreen-image {
+      height: min(90vw, 33vh);
+      max-height: min(90vw, 33vh);
+      transition: height .2s ease-in;
+
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: relative;
+    }
+
+    .task-details--image .controls {
+      position: absolute;
+      bottom: 0;
+      padding: 8px;
+      display: flex;
+      justify-content: space-evenly;
+      width: 100%;
+    }
+
+    .task-details--image .controls button,
+    .task-details--image .controls label {
+      padding: 4px 16px;
+      background: var(--control-button-bg);
+      color: white;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .task-details--description {
+      flex-grow: 1;
+      background: var(--background-color);
+    }
+
+    .description-edit, .subtask-input {
+      width: 100%;
+      padding: 4px 8px;
+      border: none;
+      height: 2rem;
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+
+    .subtask {
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 8px;
+    }
+
+    .subtask-completed {
+      text-decoration: line-through;
+      width: 100%;
+      padding: 4px 8px;
+      color: var(--text-color);
+      opacity: 0.6;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .${SMALL_BUTTON} {
+      width: 2rem;
+      min-width: 2rem;
+      height: 2rem;
+      font-size: 1.5rem;
+    }
+
+  </style>
+`;
