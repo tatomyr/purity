@@ -24,11 +24,6 @@ const inputFormStyle = () => render`
       border: none;
     }
 
-    form#task-form input:focus {
-      outline: var(--input-focus-outline);
-      outline-offset: -2px;
-    }
-
   </style>
 `
 
