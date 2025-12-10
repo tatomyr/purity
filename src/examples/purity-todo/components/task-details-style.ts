@@ -38,8 +38,8 @@ export const taskDetailsStyle = (): string => render`
       padding: 4px 16px;
       background: var(--control-button-bg);
       color: white;
-      opacity: var(--control-button-opacity);
       border-radius: 8px;
+      border: none;
     }
 
     .task-details--description {

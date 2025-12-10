@@ -6,8 +6,8 @@ import {ACTION_BUTTON} from "./app-style.js"
 const headerStyle = (): string => render`
   <style id="header-style">
     .header {
-      background-color: var(--header-bg);
-      border-bottom: var(--header-border);
+      background-color: var(--bg-color-secondary);
+      border-bottom: none;
       height: 3rem;
       min-height: 3rem;
       max-width: 100%;

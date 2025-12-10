@@ -32,7 +32,7 @@ export const taskListStyle = (): string => render`
 
     ol#task-list .task-item {
       display: flex;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--bg-color-secondary);
       align-items: center;
       padding: 0;
     }
@@ -44,10 +44,6 @@ export const taskListStyle = (): string => render`
       width: 100%;
       word-break: break-word;
       overflow: hidden;
-    }
-
-    ol#task-list .task-item.completed .${ITEM_DESCRIPTION} {
-      color: var(--completed-color);
     }
 
     .${ITEM_DESCRIPTION} .subtask-inline {
@@ -70,13 +66,15 @@ export const taskListStyle = (): string => render`
       z-index: -1;
     }
 
-    ol#task-list .task-item:hover {
-      background-color: var(--task-item-hover-bg);
-    }
+    ol#task-list .task-item.completed {
+      .${ITEM_DESCRIPTION} {
+        opacity: var(--completed-opacity);
+      }
 
-    ol#task-list .task-item.completed > img {
-      filter: grayscale(1);
-      opacity: var(--completed-image-opacity);
+      > img {
+        filter: grayscale(1);
+        opacity: var(--completed-opacity);
+      }
     }
 
     ol#task-list .task-item.stale {
