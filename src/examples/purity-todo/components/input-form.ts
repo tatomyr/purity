@@ -21,8 +21,7 @@ const inputFormStyle = () => render`
       height: 100%;
       background-color: var(--input-bg);
       color: var(--input-color);
-      border: var(--input-border);
-      border-radius: 0;
+      border: none;
     }
 
     form#task-form input:focus {

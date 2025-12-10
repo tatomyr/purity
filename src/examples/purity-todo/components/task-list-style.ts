@@ -32,7 +32,7 @@ export const taskListStyle = (): string => render`
 
     ol#task-list .task-item {
       display: flex;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--bg-color-secondary);
       align-items: center;
       padding: 0;
     }
