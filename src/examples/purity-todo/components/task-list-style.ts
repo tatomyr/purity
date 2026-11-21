@@ -51,6 +51,7 @@ export const taskListStyle = (): string => render`
     }
 
     .${ITEM_DESCRIPTION} .subtask-inline::before {
+      display: inline-block;
       content: "⊡";
       margin-right: 0.5rem;
       margin-left: 0.5rem;
