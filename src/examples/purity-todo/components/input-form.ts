@@ -24,6 +24,7 @@ const inputFormStyle = () => render`
       background-color: var(--input-bg);
       color: var(--input-color);
       border: none;
+      outline: none;
     }
 
     form#task-form .${ACTION_BUTTON} {
@@ -79,7 +80,7 @@ export const inputForm = (): string => render`
       title="Clear"
       ::click=${resetInput}
     >
-      ⨯
+      ×
     </button>
   </form>
   ${inputFormStyle()}

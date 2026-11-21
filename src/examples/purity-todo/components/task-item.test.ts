@@ -43,7 +43,7 @@ describe("task-item", () => {
             class="item-description"
             data-id="test"
             data-purity_click_0 data-purity_flag
-          ><span class="task-inline">test</span></div><button
+          ><span>test</span></div><button
             id="delete-test"
             class="action-button delete-button hidden"
             data-id="test"
@@ -78,7 +78,7 @@ describe("task-item", () => {
             class="item-description"
             data-id="test"
             data-purity_click_0 data-purity_flag
-          ><span class="task-inline">test</span></div><button
+          ><span>test</span></div><button
             id="delete-test"
             class="action-button delete-button "
             data-id="test"
@@ -116,7 +116,7 @@ describe("task-item", () => {
             class="item-description"
             data-id="test"
             data-purity_click_0 data-purity_flag
-          ><span class="task-inline">test</span><span class="subtask-inline">not checked (should be visible!)</span></div><button
+          ><span>test</span><span class="subtask-inline">not checked (should be visible!)</span></div><button
             id="delete-test"
             class="action-button delete-button hidden"
             data-id="test"

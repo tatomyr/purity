@@ -77,6 +77,7 @@ export const appStyle = (): string => render`
       height: 3rem;
       text-align: center;
       font-size: 2rem;
+      font-weight: normal;
       line-height: 1;
     }
 

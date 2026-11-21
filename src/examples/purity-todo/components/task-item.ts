@@ -64,7 +64,7 @@ export const taskItem = ({
       data-id="${id}"
       ::click=${openTaskDetails}
     >
-      <span class="task-inline">${description.trim()}</span>
+      <span>${description.trim()}</span>
       ${subtasks.filter(({checked}) => !checked).map(subtaskItem)}
     </div>
     <button
