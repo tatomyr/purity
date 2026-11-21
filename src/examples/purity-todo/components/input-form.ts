@@ -5,11 +5,13 @@ import {handleError} from "../services/error.js"
 import {fetchAndNormalizeImages} from "../services/images.js"
 import {resetInput} from "../services/input-form.js"
 import {patchTask, prepareTask} from "../services/tasks.js"
+import {ACTION_BUTTON} from "./app-style.js"
 import type {EventHandler} from "../../../purity.js"
 
 const inputFormStyle = () => render`
   <style id="task-form-style">
     form#task-form {
+      display: flex;
       width: 100%;
       max-width: 100%;
       height: 3rem;
@@ -22,6 +24,11 @@ const inputFormStyle = () => render`
       background-color: var(--input-bg);
       color: var(--input-color);
       border: none;
+    }
+
+    form#task-form .${ACTION_BUTTON} {
+      background-color: var(--input-bg);
+      color: var(--input-color);
     }
 
   </style>
@@ -65,6 +72,15 @@ export const inputForm = (): string => render`
       placeholder="Task description"
       autocomplete="off"
     />
+    <button
+      id="clear-input"
+      type="button"
+      class="${ACTION_BUTTON} ${!state.input && "hidden"}"
+      title="Clear"
+      ::click=${resetInput}
+    >
+      ⨯
+    </button>
   </form>
   ${inputFormStyle()}
 `
